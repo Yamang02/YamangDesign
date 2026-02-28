@@ -19,6 +19,8 @@ import {
 import { useTheme } from '../../../themes';
 import { palettePresets } from '../../../themes/presets';
 import { createPalette } from '../../../palettes';
+import { neutralPresets } from '../../../tokens/primitives/neutral-presets';
+import { systemColorPresets } from '../../../tokens/primitives/system-colors';
 import type { PaletteName, SystemPresetName } from '../../../@types/theme';
 import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
 import styles from './PaletteLab.module.css';
@@ -97,17 +99,129 @@ function PaletteDetail({ name }: { name: Exclude<PaletteName, 'custom'> }) {
   );
 }
 
+type DetailSelection =
+  | { type: 'palette'; name: Exclude<PaletteName, 'custom'> }
+  | { type: 'neutral'; name: NeutralPresetName }
+  | { type: 'system'; name: SystemPresetName }
+  | null;
+
 const tocItems: TocItem[] = [
   { id: 'color-scales', label: sectionTitles.colorScales },
   { id: 'neutral-presets', label: sectionTitles.neutralPresets },
   { id: 'system-colors', label: sectionTitles.systemColors },
 ];
 
-function NeutralPresetCard({ presetName }: { presetName: NeutralPresetName }) {
+function NeutralPresetDetail({ presetName }: { presetName: NeutralPresetName }) {
+  const preset = neutralPresets[presetName];
+  if (!preset) return null;
+  const { scale } = preset;
+
+  return (
+    <div className={styles.paletteDetail}>
+      <h4 className={styles.detailSectionTitle}>Neutral 스케일 (50~900)</h4>
+      <div className={styles.scaleGrid}>
+        <div className={styles.scaleColumn}>
+          <span className={styles.scaleLabel}>Neutral</span>
+          <div className={styles.scaleRow}>
+            {scaleSteps.map((step) => {
+              const color = scale[step as keyof typeof scale];
+              if (!color) return null;
+              return (
+                <div
+                  key={step}
+                  className={styles.scaleSwatch}
+                  style={{ backgroundColor: color }}
+                  title={`neutral ${step}: ${color}`}
+                />
+              );
+            })}
+          </div>
+          <div className={styles.scaleLabels}>
+            {scaleSteps.map((step) => (
+              <span key={step} className={styles.scaleStep}>
+                {step}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <h4 className={styles.detailSectionTitle}>색상 값</h4>
+      <div className={styles.colorSwatches}>
+        {scaleSteps.map((step) => {
+          const color = scale[step as keyof typeof scale];
+          if (!color) return null;
+          return (
+            <div key={step} className={styles.colorRow}>
+              <span className={styles.colorLabel}>{step}</span>
+              <span
+                className={styles.colorSample}
+                style={{ backgroundColor: color }}
+                title={color}
+              />
+              <code className={styles.colorHex}>{color}</code>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SystemPresetDetail({ presetName }: { presetName: SystemPresetName }) {
+  const preset = systemColorPresets[presetName];
+  if (!preset) return null;
+
+  return (
+    <div className={styles.paletteDetail}>
+      <h4 className={styles.detailSectionTitle}>시스템 컬러 (50, 500, 700)</h4>
+      <div className={styles.scaleGrid}>
+        {systemColorKeys.map((colorKey) => (
+          <div key={colorKey} className={styles.scaleColumn}>
+            <span className={styles.scaleLabel}>{capitalize(colorKey)}</span>
+            <div className={styles.scaleRow}>
+              {systemScaleSteps.map((step) => {
+                const color = preset.colors[colorKey as keyof typeof preset.colors][
+                  step as 50 | 500 | 700
+                ];
+                return (
+                  <div
+                    key={step}
+                    className={styles.scaleSwatch}
+                    style={{ backgroundColor: color }}
+                    title={`${colorKey} ${step}: ${color}`}
+                  />
+                );
+              })}
+            </div>
+            <div className={styles.scaleLabels}>
+              {systemScaleSteps.map((step) => (
+                <span key={step} className={styles.scaleStep}>
+                  {step}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function NeutralPresetCard({
+  presetName,
+  onClick,
+  selected,
+}: {
+  presetName: NeutralPresetName;
+  onClick: () => void;
+  selected: boolean;
+}) {
   return (
     <ComparisonCard
       title={capitalize(presetName)}
       styleVars={getNeutralPresetVariables(presetName)}
+      onClick={onClick}
+      selected={selected}
     >
       <div className={styles.colorColumn}>
         <p className={styles.colorKeyLabel}>Neutral</p>
@@ -132,17 +246,19 @@ function SystemColorCard({
   presetName,
   selected,
   onSelect,
+  selectedForDetail,
 }: {
   presetName: SystemPresetName;
   selected: boolean;
   onSelect: () => void;
+  selectedForDetail: boolean;
 }) {
   return (
     <ComparisonCard
       title={capitalize(presetName)}
       styleVars={getSystemColorVariables(presetName)}
       onClick={onSelect}
-      selected={selected}
+      selected={selected || selectedForDetail}
     >
       {systemColorKeys.map((colorKey) => (
         <div key={colorKey} className={styles.colorColumn}>
@@ -171,9 +287,25 @@ function SystemColorCard({
 
 export function PaletteLab() {
   const { systemPreset, setSystemPreset } = useTheme();
-  const [selectedPalette, setSelectedPalette] = useState<
-    Exclude<PaletteName, 'custom'> | null
-  >(null);
+  const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
+
+  const handlePaletteSelect = (name: Exclude<PaletteName, 'custom'>) => {
+    setDetailSelection({ type: 'palette', name });
+  };
+
+  const handleNeutralSelect = (name: NeutralPresetName) => {
+    setDetailSelection({ type: 'neutral', name });
+  };
+
+  const handleSystemSelect = (name: SystemPresetName) => {
+    setSystemPreset(name);
+    setDetailSelection({ type: 'system', name });
+  };
+
+  const detailTitle = detailSelection
+    ? capitalize(detailSelection.name)
+    : '';
+  const detailOpen = !!detailSelection;
 
   return (
     <>
@@ -190,11 +322,12 @@ export function PaletteLab() {
                 title={capitalize(paletteName)}
                 styleVars={getPaletteVariables(paletteName)}
                 onClick={() =>
-                  setSelectedPalette(
-                    paletteName as Exclude<PaletteName, 'custom'>
-                  )
+                  handlePaletteSelect(paletteName as Exclude<PaletteName, 'custom'>)
                 }
-                selected={selectedPalette === paletteName}
+                selected={
+                  detailSelection?.type === 'palette' &&
+                  detailSelection.name === paletteName
+                }
               >
                 {colorKeys.map((colorKey) => (
                   <div key={colorKey} className={styles.colorColumn}>
@@ -221,7 +354,15 @@ export function PaletteLab() {
         <LabSection title={sectionTitles.neutralPresets} id="neutral-presets">
           <div className={styles.comparisonGrid}>
             {comparisonPresets.neutralPresets.map((presetName) => (
-              <NeutralPresetCard key={presetName} presetName={presetName} />
+              <NeutralPresetCard
+                key={presetName}
+                presetName={presetName}
+                onClick={() => handleNeutralSelect(presetName)}
+                selected={
+                  detailSelection?.type === 'neutral' &&
+                  detailSelection.name === presetName
+                }
+              />
             ))}
           </div>
         </LabSection>
@@ -233,7 +374,11 @@ export function PaletteLab() {
                 key={presetName}
                 presetName={presetName}
                 selected={systemPreset === presetName}
-                onSelect={() => setSystemPreset(presetName)}
+                onSelect={() => handleSystemSelect(presetName)}
+                selectedForDetail={
+                  detailSelection?.type === 'system' &&
+                  detailSelection.name === presetName
+                }
               />
             ))}
           </div>
@@ -241,11 +386,19 @@ export function PaletteLab() {
       </LabLayout>
 
       <DetailPanel
-        open={!!selectedPalette}
-        onClose={() => setSelectedPalette(null)}
-        title={selectedPalette ? capitalize(selectedPalette) : ''}
+        open={detailOpen}
+        onClose={() => setDetailSelection(null)}
+        title={detailTitle}
       >
-        {selectedPalette && <PaletteDetail name={selectedPalette} />}
+        {detailSelection?.type === 'palette' && (
+          <PaletteDetail name={detailSelection.name} />
+        )}
+        {detailSelection?.type === 'neutral' && (
+          <NeutralPresetDetail presetName={detailSelection.name} />
+        )}
+        {detailSelection?.type === 'system' && (
+          <SystemPresetDetail presetName={detailSelection.name} />
+        )}
       </DetailPanel>
     </>
   );

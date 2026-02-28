@@ -298,6 +298,7 @@ const styles = {
 | [11-component-card.md](./11-component-card.md) | Card 스펙 |
 | [12-component-input.md](./12-component-input.md) | Input 스펙 |
 | [13-component-navigation.md](./13-component-navigation.md) | Navigation 스펙 |
+| [16-semantic-mapping.md](./16-semantic-mapping.md) | Semantic Mapping 독립 축 |
 
 ---
 

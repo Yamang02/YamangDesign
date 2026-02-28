@@ -5,10 +5,34 @@
   gap: var(--ds-spacing-6);
 }
 
-.previewContainer {
+.previewGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ds-spacing-6);
+  align-items: start;
   margin-left: auto;
   margin-right: auto;
-  max-width: 48rem;
+  max-width: 64rem;
+}
+
+@media (max-width: 768px) {
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.previewColumn {
+  min-width: 0;
+}
+
+.previewColumnTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-secondary);
+  margin: 0 0 var(--ds-spacing-3) 0;
+}
+
+.previewContainer {
   padding: var(--ds-spacing-6);
   background-color: var(--ds-color-bg-base);
   border-radius: var(--ds-radius-lg);
@@ -61,4 +85,21 @@
 
 .cardAction {
   margin-top: var(--ds-spacing-4);
+}
+
+.systemPreview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-3);
+}
+
+.statusChip {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
 }
