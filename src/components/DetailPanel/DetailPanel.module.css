@@ -1,10 +1,10 @@
 .detailPanel {
   position: fixed;
-  top: 0;
+  top: var(--nav-height, 56px);
   right: 0;
   width: 320px;
   max-width: 90vw;
-  height: 100vh;
+  height: calc(100vh - var(--nav-height, 56px));
   background-color: var(--ui-bg-elevated);
   border-left: 1px solid var(--ui-border-default);
   box-shadow: var(--ui-shadow-lg);

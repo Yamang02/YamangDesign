@@ -3,6 +3,9 @@
  * 테마와 무관하게 고정된 스타일. 헤더, 설정패널, 접근성 컨트롤에 사용.
  */
 :root {
+  /* E04: Navigation 높이 (DetailPanel, TOC sticky 등에서 사용) */
+  --nav-height: 56px;
+
   /* 배경 */
   --ui-bg-base: #1a1a1a;
   --ui-bg-surface: #2d2d2d;

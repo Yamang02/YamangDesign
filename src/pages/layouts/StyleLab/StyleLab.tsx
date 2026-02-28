@@ -3,7 +3,7 @@
  * E01: 비교 뷰 + lab-content/lab-presets 적용
  */
 import { Button, Card } from '../../../components';
-import { LabLayout, LabSection } from '../../../layouts';
+import { LabLayout, LabSection, type TocItem } from '../../../layouts';
 import {
   getStyleVariables,
   comparisonPresets,
@@ -14,13 +14,18 @@ import {
 
 const shadowKeys = ['sm', 'md', 'lg'] as const;
 
+const tocItems: TocItem[] = [
+  { id: 'shadow-comparison', label: sectionTitles.shadowComparison },
+  { id: 'component-comparison', label: sectionTitles.componentComparison },
+];
+
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export function StyleLab() {
   return (
-    <LabLayout title="Style Lab" subtitle="GUI 스타일 비교">
+    <LabLayout title="Style Lab" subtitle="GUI 스타일 비교" tocItems={tocItems}>
       <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
         <div
           style={{

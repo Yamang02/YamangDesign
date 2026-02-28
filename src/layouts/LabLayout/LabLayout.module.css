@@ -1,7 +1,79 @@
+/* E03: TOC + 본문 wrapper */
+.labLayoutWrapper {
+  display: flex;
+  min-height: 100%;
+}
+
 .labLayout {
+  flex: 1;
   padding: var(--ds-spacing-8) var(--ds-spacing-6);
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* E03: TOC */
+.toc {
+  position: sticky;
+  top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
+  width: 200px;
+  flex-shrink: 0;
+  padding: var(--ds-spacing-6);
+  padding-right: 0;
+  align-self: flex-start;
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.tocItem {
+  display: block;
+  width: 100%;
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  background: none;
+  border: none;
+  border-left: 2px solid var(--ds-color-border-subtle);
+  text-align: left;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.tocItem:hover {
+  color: var(--ds-color-text-primary);
+}
+
+.tocItem:focus-visible {
+  outline: 2px solid var(--ds-color-border-focus);
+  outline-offset: 2px;
+}
+
+.tocItemActive {
+  color: var(--ds-color-text-primary);
+  border-left-color: var(--ds-color-border-focus);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+/* E03: TOC 클릭 시 스크롤 위치 보정 */
+section[id] {
+  scroll-margin-top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
+}
+
+/* E03: 반응형 */
+@media (max-width: 768px) {
+  .toc {
+    display: none;
+  }
+
+  .labLayoutWrapper {
+    display: block;
+  }
 }
 
 .labHeader {
@@ -29,18 +101,26 @@
 }
 
 /* LabSection */
-.sectionDivider {
-  border: none;
-  border-top: 1px solid var(--ds-color-border-subtle);
-  margin: var(--ds-spacing-6) 0;
-}
-
 .labSection {
   padding: var(--ds-spacing-4) 0;
 }
 
-.labSection:first-of-type {
-  padding-top: 0;
+/* E02: 섹션 카드 래퍼 */
+.sectionCard {
+  background-color: var(--ds-color-bg-surface);
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-spacing-6);
+  margin-bottom: var(--ds-spacing-6);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.sectionCard .labSection {
+  padding: 0;
+}
+
+.sectionCard:last-child {
+  margin-bottom: 0;
 }
 
 .sectionTitle {

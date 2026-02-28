@@ -153,10 +153,27 @@ export function LabSection({
 - `id` prop 추가 (E03 TOC 연동 준비)
 - `card` prop은 기본 true이므로 명시 불필요
 
+## 영향 범위
+
+| 파일 | 변경 내용 |
+|------|-----------|
+| `src/layouts/LabLayout/LabSection.tsx` | card prop 추가, withDivider 제거, 카드 래퍼 적용 |
+| `src/layouts/LabLayout/LabLayout.module.css` | sectionCard 스타일 추가, sectionDivider 제거, labSection:first-of-type 제거 |
+| `src/pages/layouts/FontLab/FontLab.tsx` | `withDivider={false}` 제거 |
+| `src/pages/layouts/PaletteLab/PaletteLab.tsx` | 변경 없음 (이미 id 있음) |
+| `src/pages/layouts/StyleLab/StyleLab.tsx` | 변경 없음 (이미 id 있음) |
+| `src/pages/layouts/Playground/Playground.tsx` | 변경 없음 (이미 id 있음) |
+
+**참고**: E03 TOC 연동을 위해 `id`는 `section` 요소에 유지됨 (sectionCard 래퍼 내부).
+
+## 주의사항
+
+- **sectionDivider 제거**: `withDivider` 제거 시 `.sectionDivider` CSS 규칙도 제거 (더 이상 사용 안 함)
+- **labSection:first-of-type**: 카드 구조에서 `.sectionCard .labSection { padding: 0 }` 적용으로 불필요해짐 → 제거
+
 ## 체크리스트
 
-- [ ] LabSection 컴포넌트 수정
-- [ ] CSS 스타일 추가
-- [ ] `withDivider` prop 제거
-- [ ] 각 Lab 페이지에서 `id` prop 추가
+- [x] LabSection 컴포넌트 수정
+- [x] CSS 스타일 추가 (sectionCard) 및 제거 (sectionDivider, labSection:first-of-type)
+- [x] FontLab에서 `withDivider={false}` 제거
 - [ ] 시각적 검증

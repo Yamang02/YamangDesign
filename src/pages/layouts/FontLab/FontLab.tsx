@@ -3,7 +3,7 @@
  * E01: lab-content 중앙화 적용
  */
 import { useState } from 'react';
-import { LabLayout, LabSection, LabCard } from '../../../layouts';
+import { LabLayout, LabSection, LabCard, type TocItem } from '../../../layouts';
 import { DetailPanel } from '../../../components';
 import {
   sampleText,
@@ -29,6 +29,13 @@ const semanticRoles: SemanticTextRole[] = [
 ];
 
 const textStyleNames = Object.keys(textStyles) as TextStyleName[];
+
+const tocItems: TocItem[] = [
+  { id: 'text-styles', label: sectionTitles.textStyles },
+  { id: 'semantic-mapping', label: sectionTitles.semanticMapping },
+  { id: 'type-scale', label: sectionTitles.typeScale },
+  { id: 'font-families', label: sectionTitles.fontFamilies },
+];
 const fontSizeKeys = Object.keys(fontSize) as (keyof typeof fontSize)[];
 
 export function FontLab() {
@@ -36,8 +43,8 @@ export function FontLab() {
 
   return (
     <>
-      <LabLayout title="Font Lab" subtitle="Typography Explorer">
-        <LabSection title={sectionTitles.textStyles} id="text-styles" withDivider={false}>
+      <LabLayout title="Font Lab" subtitle="Typography Explorer" tocItems={tocItems}>
+        <LabSection title={sectionTitles.textStyles} id="text-styles">
           <div
             style={{
               display: 'flex',

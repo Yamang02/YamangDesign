@@ -67,18 +67,21 @@ export function LabLayout({
 }: LabLayoutProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  // Intersection Observer로 현재 보이는 섹션 추적
+  // Intersection Observer: viewport 상단 40% 영역에 들어온 섹션을 active로 설정
   useEffect(() => {
-    if (!showToc || tocItems.length === 0) return;
+    if (!showToc || tocItems.length < 2) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.find(e => e.isIntersecting);
-        if (visible) {
-          setActiveSection(visible.target.id);
-        }
+        const visibleEntries = entries.filter(e => e.isIntersecting);
+        if (visibleEntries.length === 0) return;
+        // viewport 상단에 가장 가까운 섹션 선택 (boundingClientRect.top 기준)
+        const sorted = visibleEntries.sort(
+          (a, b) => (a.boundingClientRect.top ?? 0) - (b.boundingClientRect.top ?? 0)
+        );
+        setActiveSection(sorted[0].target.id);
       },
-      { rootMargin: '-20% 0px -60% 0px' }
+      { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
     tocItems.forEach(item => {
@@ -98,7 +101,7 @@ export function LabLayout({
 
   return (
     <div className={styles.labLayoutWrapper}>
-      {showToc && tocItems.length > 0 && (
+      {showToc && tocItems.length >= 2 && (
         <LabToc
           items={tocItems}
           activeId={activeSection}
@@ -141,6 +144,7 @@ export function LabToc({ items, activeId, onItemClick }: LabTocProps) {
               type="button"
               className={`${styles.tocItem} ${activeId === item.id ? styles.tocItemActive : ''}`}
               onClick={() => onItemClick(item.id)}
+              aria-current={activeId === item.id ? 'location' : undefined}
             >
               {item.label}
             </button>
@@ -200,6 +204,11 @@ export function LabToc({ items, activeId, onItemClick }: LabTocProps) {
   color: var(--ds-color-text-primary);
 }
 
+.tocItem:focus-visible {
+  outline: 2px solid var(--ds-color-border-focus);
+  outline-offset: 2px;
+}
+
 .tocItemActive {
   color: var(--ds-color-text-primary);
   border-left-color: var(--ds-color-border-focus);
@@ -217,6 +226,35 @@ export function LabToc({ items, activeId, onItemClick }: LabTocProps) {
   }
 }
 ```
+
+**LabSection scroll-margin**: 고정 헤더 아래 스크롤 시 섹션이 가려지지 않도록 `section[id]`에 `scroll-margin-top` 적용 (LabLayout.module.css):
+
+```css
+/* E03: TOC 클릭 시 스크롤 위치 보정 */
+section[id] {
+  scroll-margin-top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
+}
+```
+
+## 영향 범위
+
+| 파일 | 변경 내용 |
+|------|-----------|
+| `src/layouts/LabLayout/types.ts` | 신규 - TocItem 인터페이스 |
+| `src/layouts/LabLayout/LabToc.tsx` | 신규 - TOC 컴포넌트 |
+| `src/layouts/LabLayout/LabLayout.tsx` | showToc, tocItems prop, Intersection Observer, LabToc 통합 |
+| `src/layouts/LabLayout/LabLayout.module.css` | labLayoutWrapper, toc 스타일, section scroll-margin-top |
+| `src/layouts/LabLayout/index.ts` | LabToc, TocItem export |
+| `src/pages/layouts/FontLab/FontLab.tsx` | tocItems 추가 |
+| `src/pages/layouts/PaletteLab/PaletteLab.tsx` | tocItems 생략 (1개 섹션만 있어 TOC 미표시) |
+| `src/pages/layouts/StyleLab/StyleLab.tsx` | tocItems 추가 |
+| `src/pages/layouts/Playground/Playground.tsx` | tocItems 생략 (1개 섹션만 있어 TOC 미표시) |
+
+## 주의사항
+
+- **TOC 표시 조건**: `tocItems.length >= 2`일 때만 표시 (1개 섹션만 있으면 TOC 비표시)
+- **E04 호환**: TOC의 sticky `top`은 `--nav-height` 사용. E04 미적용 시 fallback 56px 적용
+- **섹션 id 일치**: tocItems의 `id`는 LabSection의 `id` prop과 정확히 일치해야 함
 
 ## 사용 예시
 
@@ -254,8 +292,8 @@ export function FontLab() {
 - [ ] TocItem 타입 정의
 - [ ] LabToc 컴포넌트 생성
 - [ ] LabLayout에 TOC 통합
-- [ ] Intersection Observer 구현
-- [ ] CSS 스타일 추가
-- [ ] 반응형 처리
-- [ ] 각 Lab 페이지에 tocItems 추가
-- [ ] 스크롤 동작 검증
+- [ ] Intersection Observer 구현 (다중 visible 섹션 시 상단 기준 선택)
+- [ ] CSS 스타일 추가 (focus-visible, scroll-margin-top)
+- [ ] 반응형 처리 (768px 이하 TOC 숨김)
+- [ ] FontLab, StyleLab에 tocItems 추가 (2개 이상 섹션)
+- [ ] 스크롤 동작 및 접근성(aria-current) 검증
