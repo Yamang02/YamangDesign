@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ThemeProvider } from './themes';
 import { Navigation, Button } from './components';
-import { Landing, Components } from './pages';
+import { Landing, Components, PaletteLab, StyleLab, Playground } from './pages';
 
-export type PageName = 'landing' | 'components';
+export type PageName = 'landing' | 'palette' | 'style' | 'playground' | 'components';
 
 function App() {
   const [page, setPage] = useState<PageName>('landing');
@@ -18,6 +18,27 @@ function App() {
         Landing
       </Button>
       <Button
+        variant={page === 'palette' ? 'primary' : 'ghost'}
+        size="sm"
+        onClick={() => setPage('palette')}
+      >
+        Palette
+      </Button>
+      <Button
+        variant={page === 'style' ? 'primary' : 'ghost'}
+        size="sm"
+        onClick={() => setPage('style')}
+      >
+        Style
+      </Button>
+      <Button
+        variant={page === 'playground' ? 'primary' : 'ghost'}
+        size="sm"
+        onClick={() => setPage('playground')}
+      >
+        Playground
+      </Button>
+      <Button
         variant={page === 'components' ? 'primary' : 'ghost'}
         size="sm"
         onClick={() => setPage('components')}
@@ -26,6 +47,16 @@ function App() {
       </Button>
     </>
   );
+
+  const renderPage = () => {
+    switch (page) {
+      case 'palette': return <PaletteLab />;
+      case 'style': return <StyleLab />;
+      case 'playground': return <Playground />;
+      case 'components': return <Components />;
+      default: return <Landing />;
+    }
+  };
 
   return (
     <ThemeProvider
@@ -51,7 +82,7 @@ function App() {
           sticky
           centerContent={pageNavigation}
         />
-        {page === 'landing' ? <Landing /> : <Components />}
+        {renderPage()}
       </div>
     </ThemeProvider>
   );

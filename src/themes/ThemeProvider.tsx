@@ -1,3 +1,6 @@
+/**
+ * E03: Palette × Style 조합 기반 ThemeProvider
+ */
 import {
   createContext,
   useContext,
@@ -6,12 +9,15 @@ import {
   useMemo,
   type ReactNode,
 } from 'react';
-import type { Theme, ThemeName } from '../@types/theme';
+import type { Theme, ThemeName, PaletteName, StyleName } from '../@types/theme';
 import type { ExternalPalette } from '../@types/tokens';
-import { resolvePalette } from '../utils/palette';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';
-import { createMinimalTheme } from './minimal';
-import { createNeumorphismTheme } from './neumorphism';
+import { combineTheme } from './combine';
+import {
+  palettePresets,
+  stylePresets,
+  toCustomPaletteDefinition,
+} from './presets';
 import {
   spacing,
   fontFamily,
@@ -26,61 +32,97 @@ import {
   easing,
   stateLayer,
 } from '../tokens/primitives';
+import { generateTextStyleVars } from '../tokens/typography';
 
-// 기본 팔레트
-const defaultPalette: ExternalPalette = {
-  primary: '#6366F1',
-};
-
-// Context 타입
-interface ThemeContextValue {
+export interface ThemeContextValue {
   theme: Theme;
-  themeName: ThemeName;
+  /** @deprecated setStyleName 사용 */
+  themeName: StyleName;
+  /** @deprecated setStyleName 사용 */
   setThemeName: (name: ThemeName) => void;
+  paletteName: PaletteName;
+  styleName: StyleName;
+  setPaletteName: (name: PaletteName) => void;
+  setStyleName: (name: StyleName) => void;
+  customColors: ExternalPalette | null;
+  setCustomColors: (colors: ExternalPalette | null) => void;
   palette: ExternalPalette;
   setPalette: (palette: ExternalPalette) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-// Provider Props
-interface ThemeProviderProps {
+export interface ThemeProviderProps {
   children: ReactNode;
+  /** @deprecated initialStyleName 사용 */
   initialTheme?: ThemeName;
+  initialStyleName?: StyleName;
+  initialPaletteName?: PaletteName;
   initialPalette?: ExternalPalette;
 }
 
 export function ThemeProvider({
   children,
-  initialTheme = 'minimal',
-  initialPalette = defaultPalette,
+  initialTheme,
+  initialStyleName = initialTheme ?? 'minimal',
+  initialPaletteName = 'default',
+  initialPalette,
 }: ThemeProviderProps) {
-  const [themeName, setThemeName] = useState<ThemeName>(initialTheme);
-  const [palette, setPalette] = useState<ExternalPalette>(initialPalette);
+  const [styleName, setStyleName] = useState<StyleName>(initialStyleName);
+  const [paletteName, setPaletteNameState] = useState<PaletteName>(
+    initialPaletteName
+  );
+  const [customColors, setCustomColorsState] = useState<ExternalPalette | null>(
+    initialPalette ?? null
+  );
 
-  // 테마 객체 생성 (메모이제이션)
-  const theme = useMemo(() => {
-    const resolved = resolvePalette(palette);
+  const setPaletteName = (name: PaletteName) => {
+    setPaletteNameState(name);
+    if (name !== 'custom') setCustomColorsState(null);
+  };
 
-    switch (themeName) {
-      case 'minimal':
-        return createMinimalTheme(resolved);
-      case 'neumorphism':
-        return createNeumorphismTheme(resolved);
-      default:
-        return createMinimalTheme(resolved);
+  const setCustomColors = (colors: ExternalPalette | null) => {
+    setCustomColorsState(colors);
+    if (colors) setPaletteNameState('custom');
+  };
+
+  const setThemeName = (name: ThemeName) => {
+    if (name === 'minimal' || name === 'neumorphism') {
+      setStyleName(name);
     }
-  }, [themeName, palette]);
+  };
 
-  // CSS 변수 주입
+  const paletteDefinition = useMemo(() => {
+    if (customColors) return toCustomPaletteDefinition(customColors);
+    const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
+    return preset ?? palettePresets.default;
+  }, [paletteName, customColors]);
+
+  const theme = useMemo(() => {
+    const styleDef = stylePresets[styleName] ?? stylePresets.minimal;
+    return combineTheme(paletteDefinition, styleDef);
+  }, [paletteDefinition, styleName]);
+
+  const palette: ExternalPalette = useMemo(() => {
+    if (customColors) return customColors;
+    const p = palettePresets[paletteName as Exclude<PaletteName, 'custom'>] ?? palettePresets.default;
+    return p.colors as ExternalPalette;
+  }, [customColors, paletteName]);
+
+  const setPalette = (colors: ExternalPalette) => {
+    setCustomColors(colors);
+  };
+
   useEffect(() => {
-    // 테마 색상 & 그림자
     const themeCSSVars = flattenToCSSVars({
       color: theme.colors,
       shadow: theme.shadows,
+      border: theme.border,
     });
 
-    // Primitive 토큰 (테마 무관)
+    const zIndexAsStrings = Object.fromEntries(
+      Object.entries(zIndex).map(([k, v]) => [k, String(v)])
+    );
     const primitiveCSSVars = flattenToCSSVars({
       spacing,
       font: fontFamily,
@@ -90,12 +132,11 @@ export function ThemeProvider({
       radius: borderRadius,
       border: borderWidth,
       size: componentHeight,
-      z: zIndex,
+      z: zIndexAsStrings,
       duration,
       ease: easing,
     });
 
-    // State layer opacity (number → string, flattenToCSSVars는 string만 처리)
     const stateLayerVars: Record<string, string> = {
       '--ds-state-hover-opacity': String(stateLayer.hover),
       '--ds-state-pressed-opacity': String(stateLayer.pressed),
@@ -104,21 +145,30 @@ export function ThemeProvider({
       '--ds-state-disabled-opacity': String(stateLayer.disabled),
     };
 
-    // 모든 CSS 변수 주입
+    const typographyVars = generateTextStyleVars();
+
     injectCSSVariables({
       ...primitiveCSSVars,
       ...themeCSSVars,
       ...stateLayerVars,
+      ...typographyVars,
     });
 
-    // data 속성으로 테마 표시
-    document.documentElement.setAttribute('data-theme', themeName);
-  }, [theme, themeName]);
+    document.documentElement.setAttribute('data-palette', theme.palette);
+    document.documentElement.setAttribute('data-style', theme.style);
+    document.documentElement.setAttribute('data-theme', styleName);
+  }, [theme, styleName]);
 
   const value: ThemeContextValue = {
     theme,
-    themeName,
+    themeName: styleName,
     setThemeName,
+    paletteName,
+    styleName,
+    setPaletteName,
+    setStyleName,
+    customColors,
+    setCustomColors,
     palette,
     setPalette,
   };
@@ -128,7 +178,6 @@ export function ThemeProvider({
   );
 }
 
-// Hook
 export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
   if (!context) {

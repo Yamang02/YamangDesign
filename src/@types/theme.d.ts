@@ -1,7 +1,13 @@
 /**
- * 테마 이름
+ * 테마 이름 (하위 호환 - deprecated, palette/style 사용)
  */
 export type ThemeName = 'minimal' | 'neumorphism';
+
+/**
+ * Palette/Style 이름 (E03)
+ */
+export type PaletteName = 'default' | 'vivid' | 'pastel' | 'monochrome' | 'earth' | 'custom';
+export type StyleName = 'minimal' | 'neumorphism' | 'glassmorphism' | 'brutalism';
 
 /**
  * 액션 색상 (상태별)
@@ -54,10 +60,15 @@ export interface ThemeShadows {
 }
 
 /**
- * 전체 테마 객체
+ * 전체 테마 객체 (E03: palette, style, border 추가)
  */
 export interface Theme {
-  name: ThemeName;
+  palette: PaletteName;
+  style: StyleName;
   colors: ThemeColors;
   shadows: ThemeShadows;
+  border: {
+    width: string;
+    style: string;
+  };
 }

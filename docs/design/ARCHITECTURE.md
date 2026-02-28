@@ -46,67 +46,72 @@ interface ResolvedPalette {
 }
 ```
 
-### Token Flow
+### Token Flow (v4: Palette × Style 분리)
 
 ```
-ExternalPalette (외부 입력)
-      │
-      ▼
-resolvePalette() → ResolvedPalette (파생 포함)
-      │
-      ▼
-generateColorScales() → 4 × 10 색상 스케일
-      │
-      ▼
-createTheme() → Theme 객체 (colors, shadows)
-      │
-      ▼
-flattenToCSSVars() → CSS 변수 객체
-      │
-      ▼
-injectCSSVariables() → :root 스타일 주입
-      │
-      ▼
-var(--ds-xxx) → 컴포넌트에서 참조
+PaletteDefinition ─────────┐     StyleDefinition ─────────┐
+(배색 프리셋/커스텀)         │     (minimal/neumorphism)    │
+         │                 │              │               │
+         ▼                 │              ▼               │
+   createPalette()         │       createStyle(bgColor)   │
+         │                 │              │               │
+         ▼                 │              ▼               │
+   ExpandedPalette         │       ResolvedStyle          │
+   (scales + semantic)     │       (shadows + border)     │
+         │                 │              │               │
+         └─────────────────┴──────────────┘               │
+                          │                              │
+                          ▼                              │
+                   combineTheme()                        │
+                          │                              │
+                          ▼                              │
+                   Theme 객체 (colors, shadows, border)   │
+                          │                              │
+                          ▼                              │
+               flattenToCSSVars() → injectCSSVariables() │
+                          │                              │
+                          ▼                              │
+               var(--ds-xxx) → 컴포넌트에서 참조          │
 ```
 
-### Theme Switching
+### Theme Switching (v4)
 
 ```
 ThemeProvider
     │
-    ├── state: themeName ('minimal' | 'neumorphism')
-    ├── state: palette (ExternalPalette)
+    ├── state: paletteName (default | vivid | pastel | ...)
+    ├── state: styleName (minimal | neumorphism)
+    ├── state: customColors (ExternalPalette | null)
     │
-    └── useEffect: CSS 변수 주입
+    └── combineTheme() → CSS 변수 주입
             │
             ▼
-       모든 컴포넌트가 var(--ds-xxx) 참조
-            │
-            ▼
-       자동 리렌더링 (CSS 변수 변경으로)
+       data-palette, data-style 속성
 ```
 
 ---
 
-## 폴더 구조
+## 폴더 구조 (v4)
 
 ```
 src/
 ├── @types/              # 전역 타입
-│   ├── tokens.d.ts      # ExternalPalette, ResolvedPalette
-│   └── theme.d.ts       # Theme, ThemeName
-│
-├── tokens/
-│   ├── primitives/      # 원시 토큰 (spacing, typography, borders)
-│   │   └── colors.ts    # 외부 palette 처리
-│   └── semantic/        # 의미 토큰 (bg, text, action)
-│
+├── config/              # Site Style (E06)
+│   └── site-style.ts
+├── palettes/            # Palette 레이어 (E01)
+│   ├── presets/         # default, vivid, pastel
+│   ├── strategies/      # light-bg, colored-bg, dark-bg
+│   └── types.ts
+├── styles/              # Style 레이어 (E02)
+│   ├── presets/         # minimal, neumorphism
+│   └── types.ts
 ├── themes/
-│   ├── minimal/         # Minimal 테마 정의
-│   ├── neumorphism/     # Neumorphism 테마 정의
+│   ├── combine.ts       # combineTheme (E03)
+│   ├── presets.ts       # palettePresets, stylePresets
 │   └── ThemeProvider.tsx
-│
+├── tokens/
+│   ├── primitives/      # 원시 토큰
+│   └── typography/      # Text Styles, Semantic (E05)
 ├── components/
 │   ├── Button/          # 상태/shadow 검증
 │   ├── Card/            # surface/shadow 검증
@@ -242,6 +247,37 @@ const styles = {
 ```
 
 > **핵심**: "시스템 레벨·테마·일관성에 필요한 것만 토큰, 나머지는 컴포넌트 스타일에 둔다."
+
+---
+
+## Z-Index 및 Sticky 레이어 관리
+
+레이어 순서와 sticky 헤더가 콘텐츠에 가려지는 문제를 방지하려면 **토큰 기반 z-index**와 **단일 스케일**을 사용한다.
+
+### 토큰 스케일 (tokens/primitives/sizes.ts)
+
+| 토큰 | 용도 | 권장 사용처 |
+|------|------|-------------|
+| `--ds-z-base` (0) | 기본 문서 흐름 | 페이지 본문·섹션은 지정하지 않거나 0 |
+| `--ds-z-dropdown` (100) | 드롭다운, 팝오버 | Select, Navigation 메뉴 |
+| `--ds-z-sticky` (200) | 고정/스티키 UI | **헤더(Navigation), 푸터** 등 스크롤 시 상단/하단 고정 |
+| `--ds-z-overlay` (300) | 딤, 백드롭 | 모달 뒤 배경 |
+| `--ds-z-modal` (400) | 모달 | 다이얼로그 |
+| `--ds-z-tooltip` (600) | 툴팁 | 말풍선 UI |
+
+### 관리 원칙
+
+1. **Sticky/Fixed에만 `--ds-z-sticky` 사용**  
+   스크롤해도 위에 남아야 하는 요소(Navigation, 고정 푸터 등)에만 적용. 일반 콘텐츠에는 사용하지 않는다.
+
+2. **페이지 본문은 z-index 지정 금지(또는 0)**  
+   본문·카드·섹션에 임의의 `z-index`를 주지 않는다. `transform`, `filter`, `opacity < 1`은 새 **stacking context**를 만들어 sticky 헤더 위로 올라갈 수 있으므로, “강조”용 `transform: scale()` 등은 필요한 경우에만 쓰고, 레이아웃 루트에는 적용하지 않는다.
+
+3. **새 컴포넌트는 토큰 참조**  
+   드롭다운/모달/툴팁 등 레이어가 필요한 UI는 숫자 하드코딩 대신 `var(--ds-z-dropdown)`, `var(--ds-z-modal)` 등을 사용한다.
+
+4. **값 변경은 토큰 한 곳에서**  
+   실제 숫자는 `tokens/primitives/sizes.ts`의 `zIndex` 객체만 수정하고, ThemeProvider에서 CSS 변수로 주입된다. 컴포넌트는 항상 `var(--ds-z-*)`만 참조한다.
 
 ---
 

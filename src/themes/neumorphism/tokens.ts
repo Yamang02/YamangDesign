@@ -18,7 +18,8 @@ export function createNeumorphismTheme(palette: ResolvedPalette): Theme {
   const darkShadow = darken(bgColor, 15);
 
   return {
-    name: 'neumorphism',
+    palette: 'default',
+    style: 'neumorphism',
 
     colors: {
       bg: {
@@ -69,5 +70,6 @@ export function createNeumorphismTheme(palette: ResolvedPalette): Theme {
       xl: `15px 15px 30px ${darkShadow}, -15px -15px 30px ${lightShadow}`,
       inset: `inset 4px 4px 8px ${darkShadow}, inset -4px -4px 8px ${lightShadow}`,
     },
+    border: { width: '0px', style: 'none' },
   };
 }

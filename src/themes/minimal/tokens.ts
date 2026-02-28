@@ -12,7 +12,8 @@ export function createMinimalTheme(palette: ResolvedPalette): Theme {
   const scales: GeneratedScales = generateColorScales(palette);
 
   return {
-    name: 'minimal',
+    palette: 'default',
+    style: 'minimal',
 
     colors: {
       bg: {
@@ -63,5 +64,6 @@ export function createMinimalTheme(palette: ResolvedPalette): Theme {
       xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
       inset: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
     },
+    border: { width: '1px', style: 'solid' },
   };
 }

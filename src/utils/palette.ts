@@ -1,4 +1,9 @@
-import type { ExternalPalette, ResolvedPalette, ColorScale, GeneratedScales } from '../@types/tokens';
+import type {
+  ExternalPalette,
+  ResolvedColors,
+  ColorScale,
+  GeneratedScales,
+} from '../@types/tokens';
 import { lighten, darken, adjustHue, desaturate } from './color';
 
 /**
@@ -26,7 +31,7 @@ function deriveSub(primary: string): string {
  * 외부 팔레트를 완전한 팔레트로 변환
  * 미입력 색상은 primary 기반 파생
  */
-export function resolvePalette(input: ExternalPalette): ResolvedPalette {
+export function resolvePalette(input: ExternalPalette): ResolvedColors {
   const { primary, secondary, accent, sub } = input;
 
   return {
@@ -66,11 +71,46 @@ export function generateColorScale(baseColor: string): ColorScale {
 /**
  * 4개 메인 컬러에서 전체 스케일 생성
  */
-export function generateColorScales(palette: ResolvedPalette): GeneratedScales {
+export function generateColorScales(palette: ResolvedColors): GeneratedScales {
   return {
     primary: generateColorScale(palette.primary),
     secondary: generateColorScale(palette.secondary),
     accent: generateColorScale(palette.accent),
     sub: generateColorScale(palette.sub),
+  };
+}
+
+/** 액션 색상 (버튼 등 상태별) */
+export interface ActionColors {
+  default: string;
+  hover: string;
+  active?: string;
+}
+
+/**
+ * 스케일에서 액션 색상 생성
+ * E03: combineTheme에서 사용
+ */
+export function generateActionColors(scales: GeneratedScales): {
+  primary: ActionColors;
+  secondary: ActionColors;
+  accent: ActionColors;
+} {
+  return {
+    primary: {
+      default: scales.primary[500],
+      hover: scales.primary[600],
+      active: scales.primary[700],
+    },
+    secondary: {
+      default: scales.secondary[500],
+      hover: scales.secondary[600],
+      active: scales.secondary[700],
+    },
+    accent: {
+      default: scales.accent[500],
+      hover: scales.accent[600],
+      active: scales.accent[700],
+    },
   };
 }

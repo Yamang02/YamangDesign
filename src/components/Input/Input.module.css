@@ -78,7 +78,8 @@
 /* Variant: filled */
 .input[data-variant='filled'] {
   border: 1px solid transparent;
-  background-color: var(--ds-color-bg-muted);
+  /* ThemeProvider 미주입 시에도 filled 느낌이 나도록 fallback */
+  background-color: var(--ds-color-bg-muted, #f0f0f0);
   box-shadow: none;
 }
 

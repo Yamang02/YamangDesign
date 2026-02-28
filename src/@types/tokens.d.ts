@@ -17,10 +17,10 @@ export interface ExternalPalette {
 }
 
 /**
- * 파생 처리 완료된 팔레트
+ * 4색 해석 완료 (E01: ResolvedPalette에서 리네이밍)
  * 항상 4개 색상이 존재함을 보장
  */
-export interface ResolvedPalette {
+export interface ResolvedColors {
   primary: string;
   secondary: string;
   accent: string;
@@ -35,6 +35,9 @@ export interface ResolvedPalette {
     };
   };
 }
+
+/** @deprecated E01: ResolvedColors로 마이그레이션 */
+export type ResolvedPalette = ResolvedColors;
 
 /**
  * 색상 스케일 (10단계)

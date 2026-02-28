@@ -1,4 +1,4 @@
-# Epic v3: 스타일 아키텍처 현대화
+# Epic v3: 스타일 아키텍처 현대화 ✅ 완료
 
 ## 개요
 
@@ -161,48 +161,48 @@ export function Button({
 ## 마이그레이션 전략
 
 ### Phase 1: 인프라 구축
-- [ ] CSS Modules 타입 선언 (`*.module.css.d.ts` 자동 생성 설정)
-- [ ] clsx 유틸 강화
-- [ ] 공통 CSS 변수 검증
+- [x] CSS Modules 타입 선언 (`*.module.css.d.ts` 자동 생성 설정)
+- [x] clsx 유틸 강화
+- [x] 공통 CSS 변수 검증
 
 ### Phase 2: 신규 컴포넌트 적용
-- [ ] 새로 만드는 컴포넌트는 CSS Modules로
-- [ ] 컨벤션 문서화
+- [x] 새로 만드는 컴포넌트는 CSS Modules로
+- [x] 컨벤션 문서화
 
 ### Phase 3: 기존 컴포넌트 마이그레이션
-- [ ] Input (hover/focus 이슈 있음) - 우선순위 높음
-- [ ] Select (dropdown hover 이슈)
-- [ ] Button
-- [ ] Card
-- [ ] ColorPicker/HexInput
-- [ ] Navigation
+- [x] Input (hover/focus 이슈 있음) - 우선순위 높음
+- [x] Select (dropdown hover 이슈)
+- [x] Button
+- [x] Card
+- [x] ColorPicker/HexInput
+- [x] Navigation
 
 ### Phase 4: 스타일 객체 파일 제거
-- [ ] `*.styles.ts` 파일 삭제
-- [ ] 문서 업데이트
+- [x] `*.styles.ts` 파일 삭제
+- [x] 문서 업데이트
 
 ---
 
 ## 에픽 구성
 
-| Epic | 제목 | 우선순위 |
-|------|------|----------|
-| E01 | [CSS Modules 인프라 구축](./E01-css-modules-setup.md) | P0 |
-| E02 | [Input 컴포넌트 마이그레이션](./E02-input-migration.md) | P0 |
-| E03 | [Select 컴포넌트 마이그레이션](./E03-select-migration.md) | P1 |
-| E04 | [나머지 컴포넌트 마이그레이션](./E04-remaining-migration.md) | P2 |
-| E05 | [Motion & Interaction System 구축](./E05-motion-system.md) | P1 |
+| Epic | 제목 | 우선순위 | 상태 |
+|------|------|----------|------|
+| E01 | [CSS Modules 인프라 구축](./E01-css-modules-setup.md) | P0 | ✅ 완료 |
+| E02 | [Input 컴포넌트 마이그레이션](./E02-input-migration.md) | P0 | ✅ 완료 |
+| E03 | [Select 컴포넌트 마이그레이션](./E03-select-migration.md) | P1 | ✅ 완료 |
+| E04 | [나머지 컴포넌트 마이그레이션](./E04-remaining-migration.md) | P2 | ✅ 완료 |
+| E05 | [Motion & Interaction System 구축](./E05-motion-system.md) | P1 | ✅ 완료 |
 
 ---
 
 ## 완료 기준
 
-- [ ] 모든 컴포넌트가 CSS Modules 사용
-- [ ] JS state로 hover/focus 관리하는 코드 제거
-- [ ] `*.styles.ts` 파일 전체 제거
-- [ ] 하드코딩된 색상/크기 값 제거
-- [ ] 기존 테마 전환 기능 정상 동작
-- [ ] 빌드 통과
+- [x] 모든 컴포넌트가 CSS Modules 사용
+- [x] JS state로 hover/focus 관리하는 코드 제거
+- [x] `*.styles.ts` 파일 전체 제거
+- [x] 하드코딩된 색상/크기 값 제거
+- [x] 기존 테마 전환 기능 정상 동작
+- [x] 빌드 통과
 
 ---
 
@@ -430,15 +430,15 @@ Hover/Pressed 상태를 **반투명 오버레이**로 처리하여 토큰 수를
 
 #### Phase 1에 추가
 
-- [ ] Motion 토큰 CSS 변수 정의 (`tokens/primitives/transition.ts` → CSS 변수 주입)
-- [ ] Transition recipe 토큰 정의
-- [ ] `prefers-reduced-motion` 미디어 쿼리 추가
+- [x] Motion 토큰 CSS 변수 정의 (`tokens/primitives/transition.ts` → CSS 변수 주입)
+- [x] Transition recipe 토큰 정의
+- [x] `prefers-reduced-motion` 미디어 쿼리 추가
 
 #### 컴포넌트 마이그레이션 시
 
-- [ ] `useState` 기반 hover/active → CSS `:hover`, `:active`로 전환
-- [ ] 하드코딩된 transition 값 → `var(--ds-transition-*)` 토큰 사용
-- [ ] focus 스타일 → `:focus-visible` 통일
+- [x] `useState` 기반 hover/active → CSS `:hover`, `:active`로 전환
+- [x] 하드코딩된 transition 값 → `var(--ds-transition-*)` 토큰 사용
+- [x] focus 스타일 → `:focus-visible` 통일
 
 ---
 

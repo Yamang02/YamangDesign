@@ -5,7 +5,9 @@
       "Bash(npm create:*)",
       "Bash(npm install:*)",
       "Bash(npm run build:*)",
-      "Bash(node ai/generate.js:*)"
+      "Bash(node ai/generate.js:*)",
+      "Bash(dir:*)",
+      "Bash(tree:*)"
     ]
   }
 }
