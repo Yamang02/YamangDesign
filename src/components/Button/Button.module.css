@@ -1,10 +1,12 @@
-/* Base */
+/* Base - semantic: button → label */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: var(--ds-font-sans);
-  font-weight: var(--ds-font-weight-medium);
+  font-size: var(--ds-text-label-size);
+  line-height: var(--ds-text-label-leading);
+  font-weight: var(--ds-text-label-weight);
   border-radius: var(--ds-radius-md);
   cursor: pointer;
   border: none;
@@ -15,19 +17,16 @@
 .button[data-size='sm'] {
   height: var(--ds-size-sm);
   padding: 0 var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
 }
 
 .button[data-size='md'] {
   height: var(--ds-size-md);
   padding: 0 var(--ds-spacing-4);
-  font-size: var(--ds-text-md);
 }
 
 .button[data-size='lg'] {
   height: var(--ds-size-lg);
   padding: 0 var(--ds-spacing-5);
-  font-size: var(--ds-text-lg);
 }
 
 /* Variants - default */

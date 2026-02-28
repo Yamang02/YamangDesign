@@ -1,0 +1,36 @@
+/**
+ * E08: 슬라이드 상세 패널 - Lab 카드 클릭 시 표시
+ */
+import { clsx } from '../../utils/clsx';
+import { Icon } from '../Icon';
+import styles from './DetailPanel.module.css';
+
+export interface DetailPanelProps {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}
+
+export function DetailPanel({ open, onClose, title, children }: DetailPanelProps) {
+  return (
+    <aside
+      className={clsx(styles.detailPanel, open && styles.open)}
+      data-ui
+      aria-hidden={!open}
+    >
+      <header className={styles.header}>
+        <h3 className={styles.title}>{title}</h3>
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="닫기"
+        >
+          <Icon name="close" size="sm" />
+        </button>
+      </header>
+      <div className={styles.panelContent}>{children}</div>
+    </aside>
+  );
+}

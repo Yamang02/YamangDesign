@@ -1,5 +1,7 @@
 # E06: Site Style 정의
 
+> **핵심 구현 완료** (2025-02) — SlidePanel, CodeModal, GuidedTour 미구현
+
 ## 목표
 
 디자인 시스템과 별개로, **이 사이트(YamangDesign)만의 스타일 선호도**를 정의한다.
@@ -333,12 +335,12 @@ function ComponentShowcase({ name, children }) {
 ## 작업 항목
 
 ### 1. Site Style 설정
-- [ ] `config/site-style.ts` 생성
-- [ ] 기본값 정의
+- [x] `config/site-style.ts` 생성
+- [x] 기본값 정의 (uiDensity, guidance, defaults, layout, interaction)
 
 ### 2. Tooltip 컴포넌트
-- [ ] 기본 Tooltip 컴포넌트 구현
-- [ ] Site Style의 delay, position 기본값 연동
+- [x] Tooltip 컴포넌트 구현
+- [x] Site Style의 `tooltipDelay`, `position` 연동
 
 ### 3. 쇼케이스 컴포넌트
 - [ ] `ComponentShowcase` 래퍼 컴포넌트
@@ -352,7 +354,7 @@ function ComponentShowcase({ name, children }) {
 - [ ] 연구 페이지: 적절한 툴팁 배치
 
 ### 5. 레이아웃 기본값
-- [ ] maxContentWidth 적용
+- [x] maxContentWidth (1200px) — 연구 페이지에 적용
 - [ ] 간격 스케일 적용
 
 ### 6. (선택) GuidedTour
@@ -373,9 +375,9 @@ function ComponentShowcase({ name, children }) {
 
 ## 완료 기준
 
-- [ ] `siteStyle` 설정 정의
-- [ ] Tooltip 컴포넌트 구현
-- [ ] 최소 3개 컴포넌트에 Minimal UI 패턴 적용
+- [x] `siteStyle` 설정 정의
+- [x] Tooltip 컴포넌트 구현 (siteStyle.guidance.tooltipDelay 연동)
+- [ ] 최소 3개 컴포넌트에 Minimal UI 패턴 적용 (ColorPicker/Input/Select 툴팁화)
 - [ ] 연구 페이지에서 툴팁 가이드 동작
 
 ---

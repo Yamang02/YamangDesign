@@ -1,60 +1,62 @@
 import { useState } from 'react';
 import { ThemeProvider } from './themes';
-import { Navigation, Button } from './components';
-import { Landing, Components, PaletteLab, StyleLab, Playground } from './pages';
+import { Navigation, NavDropdown } from './components';
+import { navCategories } from './config/nav-categories';
+import { Landing, Components, PaletteLab, StyleLab, Playground, FontLab } from './pages';
 
-export type PageName = 'landing' | 'palette' | 'style' | 'playground' | 'components';
+export type PageName =
+  | 'landing'
+  | 'dashboard'
+  | 'card-grid'
+  | 'components'
+  | 'palette'
+  | 'style'
+  | 'font'
+  | 'playground';
 
 function App() {
   const [page, setPage] = useState<PageName>('landing');
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const pageNavigation = (
-    <>
-      <Button
-        variant={page === 'landing' ? 'primary' : 'ghost'}
-        size="sm"
-        onClick={() => setPage('landing')}
-      >
-        Landing
-      </Button>
-      <Button
-        variant={page === 'palette' ? 'primary' : 'ghost'}
-        size="sm"
-        onClick={() => setPage('palette')}
-      >
-        Palette
-      </Button>
-      <Button
-        variant={page === 'style' ? 'primary' : 'ghost'}
-        size="sm"
-        onClick={() => setPage('style')}
-      >
-        Style
-      </Button>
-      <Button
-        variant={page === 'playground' ? 'primary' : 'ghost'}
-        size="sm"
-        onClick={() => setPage('playground')}
-      >
-        Playground
-      </Button>
-      <Button
-        variant={page === 'components' ? 'primary' : 'ghost'}
-        size="sm"
-        onClick={() => setPage('components')}
-      >
-        Components
-      </Button>
-    </>
+  const handleSelect = (itemId: string) => {
+    setPage(itemId as PageName);
+    setOpenDropdown(null);
+  };
+
+  const centerContent = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-spacing-2)' }}>
+      {navCategories.map((category) => (
+        <NavDropdown
+          key={category.id}
+          category={category}
+          isOpen={openDropdown === category.id}
+          onToggle={() =>
+            setOpenDropdown((prev) => (prev === category.id ? null : category.id))
+          }
+          onSelect={handleSelect}
+          activeItem={page}
+        />
+      ))}
+    </div>
   );
 
   const renderPage = () => {
     switch (page) {
-      case 'palette': return <PaletteLab />;
-      case 'style': return <StyleLab />;
-      case 'playground': return <Playground />;
-      case 'components': return <Components />;
-      default: return <Landing />;
+      case 'palette':
+        return <PaletteLab />;
+      case 'style':
+        return <StyleLab />;
+      case 'font':
+        return <FontLab />;
+      case 'playground':
+        return <Playground />;
+      case 'components':
+        return <Components />;
+      case 'dashboard':
+      case 'card-grid':
+        return <PlaceholderPage title={page === 'dashboard' ? 'Dashboard' : 'Card Grid'} />;
+      default:
+        return <Landing />;
     }
   };
 
@@ -68,23 +70,58 @@ function App() {
         sub: '#E5E7EB',
       }}
     >
-      <div
-        style={{
-          minHeight: '100vh',
-          backgroundColor: 'var(--ds-color-bg-base)',
-          transition: 'background-color 300ms ease-in-out',
-        }}
-      >
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Navigation
           brand="Yamang Design"
           showThemeToggle
           showColorEditor
           sticky
-          centerContent={pageNavigation}
+          centerContent={centerContent}
         />
-        {renderPage()}
+        <main
+          data-showcase="service"
+          style={{
+            flex: 1,
+            backgroundColor: 'var(--ds-color-bg-base)',
+            transition: 'background-color 300ms ease-in-out',
+          }}
+        >
+          {renderPage()}
+        </main>
       </div>
     </ThemeProvider>
+  );
+}
+
+function PlaceholderPage({ title }: { title: string }) {
+  return (
+    <div
+      style={{
+        padding: 'var(--ds-spacing-8)',
+        maxWidth: 600,
+        margin: '0 auto',
+        textAlign: 'center',
+      }}
+    >
+      <h1
+        style={{
+          fontSize: 'var(--ds-text-2xl)',
+          fontWeight: 'var(--ds-font-weight-bold)',
+          color: 'var(--ds-color-text-primary)',
+          marginBottom: 'var(--ds-spacing-4)',
+        }}
+      >
+        {title}
+      </h1>
+      <p
+        style={{
+          fontSize: 'var(--ds-text-md)',
+          color: 'var(--ds-color-text-secondary)',
+        }}
+      >
+        Coming soon
+      </p>
+    </div>
   );
 }
 

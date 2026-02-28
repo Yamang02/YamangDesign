@@ -1,5 +1,7 @@
 # E02: Style 레이어 분리
 
+> **구현 완료** (2025-02)
+
 ## 목표
 
 GUI 스타일(Visual Style)을 독립된 레이어로 추출하여 배색과 무관하게 관리한다.
@@ -280,21 +282,20 @@ export function createStyle(
 ## 작업 항목
 
 ### 1. 타입 정의
-- [ ] `StyleDefinition`, `ResolvedStyle` 타입
-- [ ] `SurfaceType` 타입
-- [ ] 기존 `ThemeShadows` 타입과의 호환
+- [x] `StyleDefinition`, `ResolvedStyle` 타입
+- [x] `SurfaceType` 타입
+- [x] 기존 `ThemeShadows` 타입과의 호환
 
 ### 2. 스타일 프리셋 구현
-- [ ] `minimal.ts` - 현재 Minimal 테마 로직 추출
-- [ ] `neumorphism.ts` - 현재 Neumorphism 테마 로직 추출
+- [x] `minimal.ts` - 플랫 스타일
+- [x] `neumorphism.ts` - 뉴모피즘 스타일
 
 ### 3. Style 해석 함수
-- [ ] `createStyle()` 함수 구현
-- [ ] 배경색을 받아 그림자 생성
+- [x] `createStyle()` 함수 구현 (`styles/index.ts`)
+- [x] 배경색을 받아 그림자 생성
 
 ### 4. 기존 테마 파일 정리
-- [ ] `themes/minimal/tokens.ts` → 스타일 로직 추출
-- [ ] `themes/neumorphism/tokens.ts` → 스타일 로직 추출
+- [x] `styles/presets/minimal.ts`, `neumorphism.ts`로 분리
 
 ---
 
@@ -324,10 +325,10 @@ const shadows = neumorphismStyle.createShadows(resolvedPalette.semantic.bg.base)
 
 ## 완료 기준
 
-- [ ] Style 레이어가 Palette 레이어와 분리됨
-- [ ] 그림자가 배경색을 파라미터로 받아 생성됨
-- [ ] 프리셋 최소 2개 정의 (minimal, neumorphism)
-- [ ] 타입 안전성 유지
+- [x] Style 레이어가 Palette 레이어와 분리됨
+- [x] 그림자가 배경색을 파라미터로 받아 생성됨
+- [x] 프리셋 2개 정의 (minimal, neumorphism)
+- [x] 타입 안전성 유지
 
 ---
 

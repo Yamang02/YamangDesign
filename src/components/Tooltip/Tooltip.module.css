@@ -7,8 +7,9 @@
   position: absolute;
   z-index: var(--ds-z-tooltip);
   padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
-  line-height: var(--ds-leading-normal);
+  font-size: var(--ds-text-body-sm-size);
+  line-height: var(--ds-text-body-sm-leading);
+  font-weight: var(--ds-text-body-sm-weight);
   color: var(--ds-color-text-inverse);
   background-color: rgba(0, 0, 0, 0.85);
   border-radius: var(--ds-radius-sm);

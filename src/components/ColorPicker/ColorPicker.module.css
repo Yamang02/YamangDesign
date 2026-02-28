@@ -11,8 +11,9 @@
 }
 
 .sectionTitle {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-semibold);
+  font-size: var(--ds-text-label-size);
+  line-height: var(--ds-text-label-leading);
+  font-weight: var(--ds-text-label-weight);
   color: var(--ds-color-text-primary);
   display: flex;
   align-items: center;
@@ -90,7 +91,9 @@
 
 .presetName {
   flex: 1;
-  font-size: var(--ds-text-sm);
+  font-size: var(--ds-text-body-sm-size);
+  line-height: var(--ds-text-body-sm-leading);
+  font-weight: var(--ds-text-body-sm-weight);
   color: var(--ds-color-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -125,7 +128,9 @@
   flex: 1;
   height: 32px;
   padding: 0 var(--ds-spacing-2);
-  font-size: var(--ds-text-sm);
+  font-size: var(--ds-text-body-sm-size);
+  line-height: var(--ds-text-body-sm-leading);
+  font-weight: var(--ds-text-body-sm-weight);
   background-color: var(--ds-color-bg-surface);
   border: 1px solid var(--ds-color-border-default);
   border-radius: var(--ds-radius-sm);
@@ -141,7 +146,9 @@
 .savePresetButton {
   height: 32px;
   padding: 0 var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
+  font-size: var(--ds-text-label-size);
+  line-height: var(--ds-text-label-leading);
+  font-weight: var(--ds-text-label-weight);
   background-color: var(--ds-color-action-primary-default);
   border: none;
   border-radius: var(--ds-radius-sm);

@@ -1,0 +1,62 @@
+/**
+ * E07: 사이트 UI 토큰 (--ui-*)
+ * 테마와 무관하게 고정된 스타일. 헤더, 설정패널, 접근성 컨트롤에 사용.
+ */
+:root {
+  /* 배경 */
+  --ui-bg-base: #1a1a1a;
+  --ui-bg-surface: #2d2d2d;
+  --ui-bg-elevated: #3d3d3d;
+
+  /* 텍스트 */
+  --ui-text-primary: #ffffff;
+  --ui-text-secondary: #a0a0a0;
+  --ui-text-muted: #666666;
+
+  /* 경계선 */
+  --ui-border-default: #404040;
+  --ui-border-subtle: #333333;
+
+  /* 액션 (컨트롤 버튼 등) */
+  --ui-action-primary: #6366f1;
+  --ui-action-hover: #818cf8;
+
+  /* 포커스 */
+  --ui-focus-ring: #6366f1;
+
+  /* 섀도우 (테마와 무관하게 고정) */
+  --ui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --ui-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --ui-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+}
+
+/**
+ * Site UI 컨텍스트: data-ui 내부의 DS 컴포넌트가 --ui-* 토큰 사용
+ * Button, Select 등이 테마 전환 영향 없이 고정 스타일 유지
+ */
+[data-ui] {
+  --ds-color-bg-base: var(--ui-bg-base);
+  --ds-color-bg-surface: var(--ui-bg-surface);
+  --ds-color-bg-elevated: var(--ui-bg-elevated);
+  --ds-color-bg-muted: var(--ui-bg-surface);
+
+  --ds-color-text-primary: var(--ui-text-primary);
+  --ds-color-text-secondary: var(--ui-text-secondary);
+  --ds-color-text-muted: var(--ui-text-muted);
+  --ds-color-text-onAction: var(--ui-text-primary);
+
+  --ds-color-border-default: var(--ui-border-default);
+  --ds-color-border-subtle: var(--ui-border-subtle);
+  --ds-color-border-focus: var(--ui-focus-ring);
+
+  --ds-color-action-primary-default: var(--ui-action-primary);
+  --ds-color-action-primary-hover: var(--ui-action-hover);
+  --ds-color-action-primary-active: var(--ui-action-hover);
+
+  --ds-focus-ring-color: var(--ui-focus-ring);
+
+  /* 섀도우도 고정 (Neumorphism 전환 시 영향 방지) */
+  --ds-shadow-sm: var(--ui-shadow-sm);
+  --ds-shadow-md: var(--ui-shadow-md);
+  --ds-shadow-lg: var(--ui-shadow-lg);
+}

@@ -1,5 +1,7 @@
 # E04: 연구 페이지 구축
 
+> **핵심 구현 완료** (2025-02) — BgStrategyPreview, StateDemo, CSSVarsViewer, PropsPanel 등 선택 항목 미구현
+
 ## 목표
 
 배색, 스타일, 조합을 개별적으로 확인하고 학습할 수 있는 연구 페이지 구축.
@@ -251,39 +253,41 @@ const routes = [
 ## 작업 항목
 
 ### 1. 페이지 레이아웃
-- [ ] 공통 레이아웃 컴포넌트 (헤더, 네비게이션)
-- [ ] 간단한 라우팅 시스템
+- [x] 공통 레이아웃 (Navigation, main 영역)
+- [x] 상태 기반 페이지 전환 (App.tsx `page` state)
 
 ### 2. Palette Lab 페이지
-- [ ] `PalettePresetSelector`
-- [ ] `ColorScaleDisplay`
-- [ ] `BgStrategyPreview`
+- [x] PalettePresetSelector (Select)
+- [x] ColorScaleDisplay (스케일 그리드)
+- [ ] BgStrategyPreview (전략별 미리보기)
 
 ### 3. Style Lab 페이지
-- [ ] `StylePresetSelector`
-- [ ] `ShadowSamples`
-- [ ] `StateDemo`
+- [x] StylePresetSelector (Select)
+- [x] ShadowSamples (none/sm/md/lg/inset)
+- [ ] StateDemo (Rest→Hover→Active→Focus)
+- [x] Component Preview
 
 ### 4. Playground 페이지
-- [ ] 조합 선택 UI
-- [ ] `ComponentPreview`
-- [ ] `CSSVarsViewer`
+- [x] 조합 선택 UI (Palette + Style Select)
+- [x] ComponentPreview (Button, Input, Card)
+- [ ] CSSVarsViewer (생성된 CSS 변수 표시)
 
 ### 5. Component Showcase 페이지
-- [ ] `ComponentNav`
-- [ ] `PropsEditor`
-- [ ] `CodeSnippet`
+- [x] Components 페이지 (Button, Input, Select, Card 등)
+- [ ] ComponentNav (사이드 네비) — 현재 상단 버튼으로 페이지 이동
+- [ ] PropsEditor (전용 패널)
+- [ ] CodeSnippet (코드 블록)
 
 ---
 
 ## 완료 기준
 
-- [ ] 4개 페이지 구현 완료
-- [ ] 페이지 간 이동 가능
-- [ ] Palette Lab에서 배색 프리셋 비교 가능
-- [ ] Style Lab에서 스타일 특성 확인 가능
-- [ ] Playground에서 자유 조합 가능
-- [ ] Component Showcase에서 개별 컴포넌트 확인 가능
+- [x] 4개 페이지 구현 완료 (PaletteLab, StyleLab, Playground, Components)
+- [x] 페이지 간 이동 가능 (Landing/Palette/Style/Playground/Components)
+- [x] Palette Lab에서 배색 프리셋 비교 가능
+- [x] Style Lab에서 스타일 특성 확인 가능 (Shadow Samples, Component Preview)
+- [x] Playground에서 자유 조합 가능
+- [x] Component Showcase에서 개별 컴포넌트 확인 가능
 
 ---
 

@@ -111,26 +111,31 @@ function createNeumorphismTheme(palette) {
 
 ## 에픽 구성
 
-| Epic | 제목 | 설명 | 우선순위 |
-|------|------|------|----------|
-| E01 | [Palette 레이어 분리](./E01-palette-layer.md) | 배색 시스템을 독립 레이어로 추출 | P0 |
-| E02 | [Style 레이어 분리](./E02-style-layer.md) | GUI 스타일을 독립 레이어로 추출 | P0 |
-| E03 | [조합 시스템 구축](./E03-combination-system.md) | Palette × Style 조합 로직 | P0 |
-| E04 | [연구 페이지 구축](./E04-research-pages.md) | 배색/스타일/조합 확인 페이지 | P1 |
-| E05 | [Typography 레이어](./E05-typography-layer.md) | Text Styles 조합 및 Semantic 매핑 | P1 |
-| E06 | [Site Style 정의](./E06-site-style.md) | 사이트 전용 스타일 선호도 | P1 |
+| Epic | 제목 | 설명 | 우선순위 | 상태 |
+|------|------|------|----------|------|
+| E01 | [Palette 레이어 분리](./E01-palette-layer.md) | 배색 시스템을 독립 레이어로 추출 | P0 | ✅ 완료 |
+| E02 | [Style 레이어 분리](./E02-style-layer.md) | GUI 스타일을 독립 레이어로 추출 | P0 | ✅ 완료 |
+| E03 | [조합 시스템 구축](./E03-combination-system.md) | Palette × Style 조합 로직 | P0 | ✅ 완료 |
+| E04 | [연구 페이지 구축](./E04-research-pages.md) | 배색/스타일/조합 확인 페이지 | P1 | ✅ 핵심 완료 |
+| E05 | [Typography 레이어](./E05-typography-layer.md) | Text Styles 조합 및 Semantic 매핑 | P1 | ✅ 완료 |
+| E06 | [Site Style 정의](./E06-site-style.md) | 사이트 전용 스타일 선호도 | P1 | ✅ 핵심 완료 |
+| E07 | [UI 네임스페이스 분리](./E07-ui-namespace.md) | 쇼케이스(`--ds-*`)와 사이트 UI(`--ui-*`) 토큰 분리 | P1 | ✅ 완료 |
+| E08 | [Lab 레이아웃 시스템](./E08-lab-layout-system.md) | Page/Component/Lab 쇼케이스 레이아웃 통합 | P1 | 예정 |
 
 ---
 
 ## 완료 기준
 
-- [ ] Palette와 Style이 독립적으로 정의됨
-- [ ] 어떤 Palette든 어떤 Style과 조합 가능
-- [ ] 기존 Minimal, Neumorphism 테마가 새 구조로 동작
-- [ ] 연구 페이지에서 개별 확인 및 조합 테스트 가능
-- [ ] Typography Text Styles 정의 및 Semantic 매핑 완료
-- [ ] Site Style 적용 (Minimal UI + Tooltip 가이드)
-- [ ] 빌드 통과
+- [x] Palette와 Style이 독립적으로 정의됨
+- [x] 어떤 Palette든 어떤 Style과 조합 가능
+- [x] 기존 Minimal, Neumorphism 테마가 새 구조로 동작
+- [x] 연구 페이지에서 개별 확인 및 조합 테스트 가능
+- [x] Typography Text Styles 정의 및 Semantic 매핑 완료
+- [x] Site Style 설정 및 Tooltip 컴포넌트 (Minimal UI 패턴 적용 진행 중)
+- [x] UI 네임스페이스 분리 (`--ds-*` vs `--ui-*`)
+- [ ] Lab 레이아웃 시스템 구축 (E08)
+- [ ] Navigation 확장 (카테고리 기반 탐색)
+- [x] 빌드 통과
 
 ---
 

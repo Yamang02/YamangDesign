@@ -3,9 +3,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--ds-spacing-3) var(--ds-spacing-6);
-  background-color: var(--ds-color-bg-surface);
-  box-shadow: var(--ds-shadow-sm);
-  transition: var(--ds-transition-theme);
+  background-color: var(--ui-bg-base);
+  box-shadow: var(--ui-shadow-sm);
 }
 
 .nav.sticky {
@@ -38,9 +37,10 @@
 }
 
 .brand {
-  font-size: var(--ds-text-xl);
-  font-weight: var(--ds-font-weight-bold);
-  color: var(--ds-color-action-primary-default);
+  font-size: var(--ds-text-heading-2-size);
+  line-height: var(--ds-text-heading-2-leading);
+  font-weight: var(--ds-text-heading-2-weight);
+  color: var(--ui-action-primary);
   cursor: pointer;
   transition: var(--ds-transition-opacity);
 }
@@ -55,17 +55,19 @@
   gap: var(--ds-spacing-1);
   padding: var(--ds-spacing-2) var(--ds-spacing-3);
   border-radius: var(--ds-radius-md);
-  background-color: var(--ds-color-bg-muted);
+  background-color: var(--ui-bg-surface);
   border: none;
   cursor: pointer;
-  font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-primary);
+  font-size: var(--ds-text-label-size);
+  line-height: var(--ds-text-label-leading);
+  font-weight: var(--ds-text-label-weight);
+  color: var(--ui-text-primary);
   transition: var(--ds-transition-color);
 }
 
 .colorEditorTrigger:hover {
-  background-color: var(--ds-color-bg-surface);
-  color: var(--ds-color-action-primary-default);
+  background-color: var(--ui-bg-elevated);
+  color: var(--ui-action-primary);
 }
 
 .colorEditor {
@@ -74,11 +76,12 @@
   right: var(--ds-spacing-6);
   margin-top: var(--ds-spacing-2);
   padding: var(--ds-spacing-4);
-  background-color: var(--ds-color-bg-elevated);
+  background-color: var(--ui-bg-elevated);
   border-radius: var(--ds-radius-lg);
-  box-shadow: var(--ds-shadow-lg);
+  box-shadow: var(--ui-shadow-lg);
   z-index: var(--ds-z-dropdown);
   min-width: 280px;
+  border: 1px solid var(--ui-border-default);
 }
 
 .colorEditorHeader {
@@ -87,7 +90,7 @@
   align-items: center;
   margin-bottom: var(--ds-spacing-4);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
+  color: var(--ui-text-primary);
 }
 
 .colorEditorClose {
@@ -95,11 +98,11 @@
   border: none;
   cursor: pointer;
   font-size: var(--ds-text-lg);
-  color: var(--ds-color-text-secondary);
+  color: var(--ui-text-secondary);
 }
 
 .colorEditorClose:hover {
-  color: var(--ds-color-text-primary);
+  color: var(--ui-text-primary);
 }
 
 .colorEditorActions {

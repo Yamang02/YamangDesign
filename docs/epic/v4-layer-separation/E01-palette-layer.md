@@ -1,5 +1,7 @@
 # E01: Palette 레이어 분리
 
+> **구현 완료** (2025-02)
+
 ## 목표
 
 배색(Color Palette)을 독립된 레이어로 추출하여 GUI 스타일과 무관하게 관리한다.
@@ -292,43 +294,42 @@ export function createPalette(definition: PaletteDefinition): ResolvedPalette {
 ## 작업 항목
 
 ### 1. 타입 정의
-- [ ] `PaletteDefinition`, `ResolvedPalette` 타입
-- [ ] `BgStrategy` 타입
-- [ ] 기존 `ExternalPalette` 타입과의 호환
+- [x] `PaletteDefinition`, `ExpandedPalette` 타입
+- [x] `BgStrategy` 타입
+- [x] 기존 `ExternalPalette` 타입과의 호환
 
 ### 2. 배경 전략 구현
-- [ ] `light-bg.ts` - 밝은 배경 (현재 Minimal 방식)
-- [ ] `colored-bg.ts` - 컬러 배경 (현재 Neumorphism 방식)
-- [ ] `dark-bg.ts` - 어두운 배경 (다크모드용)
+- [x] `light-bg.ts` - 밝은 배경
+- [x] `colored-bg.ts` - 컬러 배경
+- [x] `dark-bg.ts` - 어두운 배경
 
 ### 3. 프리셋 구현
 
 **필수 (P0):**
-- [ ] `default.ts` - 기존 동작 유지
-- [ ] `vivid.ts` - 고채도 예시
-- [ ] `pastel.ts` - 파스텔 예시
+- [x] `default.ts` - 기존 동작 유지
+- [x] `vivid.ts` - 고채도 예시
+- [x] `pastel.ts` - 파스텔 예시
 
 **선택 (P1/P2):**
-- [ ] `monochrome.ts` - 단색 배색 (P1)
-- [ ] `earth.ts` - 어스톤 배색 (P2)
+- [x] `monochrome` - presets에 정의
+- [x] `earth` - presets에 정의
 
 ### 4. Palette 해석 함수
-- [ ] `createPalette()` 함수 구현
-- [ ] 기존 `resolvePalette()`, `generateColorScales()` 재사용
+- [x] `createPalette()` 함수 구현 (`palettes/index.ts`)
+- [x] 기존 `resolvePalette()`, `generateColorScales()` 재사용
 
 ### 5. 타입 리네이밍
-- [ ] 기존 `ResolvedPalette` → `ResolvedColors` 리네이밍
-- [ ] 관련 import 경로 업데이트
+- [x] `ExpandedPalette` 사용 (doc의 ResolvedColors/ExpandedPalette 병합)
 
 ---
 
 ## 완료 기준
 
-- [ ] Palette 레이어가 Style 레이어와 분리됨
-- [ ] 배경 전략을 Palette에서 결정
-- [ ] 프리셋 최소 3개 정의
-- [ ] 타입 안전성 유지
-- [ ] 기존 동작 호환 (default palette)
+- [x] Palette 레이어가 Style 레이어와 분리됨
+- [x] 배경 전략을 Palette에서 결정 (light/colored/dark)
+- [x] 프리셋 5개 정의 (default, vivid, pastel, monochrome, earth)
+- [x] 타입 안전성 유지
+- [x] 기존 동작 호환 (default palette)
 
 ---
 

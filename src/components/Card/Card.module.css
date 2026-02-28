@@ -67,16 +67,18 @@
 .header {
   padding: var(--ds-spacing-4);
   border-bottom: 1px solid var(--ds-color-border-subtle);
-  font-weight: var(--ds-font-weight-semibold);
-  font-size: var(--ds-text-lg);
+  font-size: var(--ds-text-heading-2-size);
+  line-height: var(--ds-text-heading-2-leading);
+  font-weight: var(--ds-text-heading-2-weight);
   color: var(--ds-color-text-primary);
 }
 
 .body {
   padding: var(--ds-spacing-4);
+  font-size: var(--ds-text-body-md-size);
+  line-height: var(--ds-text-body-md-leading);
+  font-weight: var(--ds-text-body-md-weight);
   color: var(--ds-color-text-secondary);
-  font-size: var(--ds-text-md);
-  line-height: var(--ds-leading-normal);
 }
 
 .footer {

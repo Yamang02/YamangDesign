@@ -11,8 +11,9 @@
 }
 
 .label {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
+  font-size: var(--ds-text-label-size);
+  line-height: var(--ds-text-label-leading);
+  font-weight: var(--ds-text-label-weight);
   color: var(--ds-color-text-secondary);
 }
 
@@ -23,32 +24,37 @@
   justify-content: space-between;
   gap: var(--ds-spacing-2);
   font-family: var(--ds-font-sans);
-  font-weight: var(--ds-font-weight-normal);
   border-radius: var(--ds-radius-md);
   cursor: pointer;
   text-align: left;
   transition: var(--ds-transition-interactive);
 }
 
-/* Trigger sizes */
+/* Trigger sizes - semantic: input → body-* */
 .trigger[data-size='sm'] {
   height: var(--ds-size-sm);
   padding: 0 var(--ds-spacing-2);
-  font-size: var(--ds-text-sm);
+  font-size: var(--ds-text-body-sm-size);
+  line-height: var(--ds-text-body-sm-leading);
+  font-weight: var(--ds-text-body-sm-weight);
   min-width: 120px;
 }
 
 .trigger[data-size='md'] {
   height: var(--ds-size-md);
   padding: 0 var(--ds-spacing-3);
-  font-size: var(--ds-text-md);
+  font-size: var(--ds-text-body-md-size);
+  line-height: var(--ds-text-body-md-leading);
+  font-weight: var(--ds-text-body-md-weight);
   min-width: 160px;
 }
 
 .trigger[data-size='lg'] {
   height: var(--ds-size-lg);
   padding: 0 var(--ds-spacing-4);
-  font-size: var(--ds-text-lg);
+  font-size: var(--ds-text-body-lg-size);
+  line-height: var(--ds-text-body-lg-leading);
+  font-weight: var(--ds-text-body-lg-weight);
   min-width: 200px;
 }
 
@@ -185,7 +191,7 @@
 .option[data-selected='true'] {
   background-color: var(--ds-color-action-primary-default);
   color: var(--ds-color-text-onAction);
-  font-weight: var(--ds-font-weight-medium);
+  font-weight: var(--ds-text-body-md-weight);
 }
 
 .option[data-disabled='true'] {

@@ -59,6 +59,7 @@ export function Navigation({
   return (
     <nav
       className={clsx(styles.nav, sticky && styles.sticky, className)}
+      data-ui
     >
       <div className={styles.left}>
         <span

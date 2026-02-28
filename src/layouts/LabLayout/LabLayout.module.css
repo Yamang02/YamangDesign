@@ -1,0 +1,87 @@
+.labLayout {
+  padding: var(--ds-spacing-8) var(--ds-spacing-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.labHeader {
+  text-align: center;
+  margin-bottom: var(--ds-spacing-8);
+}
+
+.title {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-2) 0;
+}
+
+.subtitle {
+  font-size: var(--ds-text-md);
+  color: var(--ds-color-text-secondary);
+  margin: 0;
+}
+
+.labContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* LabSection */
+.sectionDivider {
+  border: none;
+  border-top: 1px solid var(--ds-color-border-subtle);
+  margin: var(--ds-spacing-6) 0;
+}
+
+.labSection {
+  padding: var(--ds-spacing-4) 0;
+}
+
+.labSection:first-of-type {
+  padding-top: 0;
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-4) 0;
+}
+
+.sectionContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-4);
+}
+
+/* LabCard */
+.labCard {
+  padding: var(--ds-spacing-4);
+  background-color: var(--ds-color-bg-surface);
+  border-radius: var(--ds-radius-md);
+  box-shadow: var(--ds-shadow-sm);
+  border: 1px solid var(--ds-color-border-subtle);
+  min-width: 120px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.labCard[role='button'] {
+  cursor: pointer;
+}
+
+.labCard[role='button']:hover {
+  box-shadow: var(--ds-shadow-md);
+  border-color: var(--ds-color-border-default);
+}
+
+.labCard.selected {
+  border-color: var(--ds-color-border-focus);
+  box-shadow: var(--ds-shadow-md);
+}

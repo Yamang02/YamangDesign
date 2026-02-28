@@ -1,5 +1,7 @@
 # E03: 조합 시스템 구축
 
+> **구현 완료** (2025-02)
+
 ## 목표
 
 Palette와 Style을 조합하여 최종 Theme를 생성하는 시스템 구축.
@@ -207,47 +209,26 @@ function App() {
 ## 작업 항목
 
 ### 1. 조합 함수 구현
-- [ ] `combineTheme()` 함수
-- [ ] `generateActionColors(scales)` 함수 추가 (`utils/palette.ts`에 구현)
-- [ ] 타입 정의 업데이트
+- [x] `combineTheme()` 함수 (`themes/combine.ts`)
+- [x] `generateActionColors(scales)` 함수 (`utils/palette.ts`)
+- [x] 타입 정의 업데이트
 
 ### 2. Theme 타입 확장
-현재 `Theme` 타입에는 `palette`, `style`, `border`가 없다. 확장 필요:
-
-```typescript
-// 현재
-interface Theme {
-  name: ThemeName;
-  colors: ThemeColors;
-  shadows: ThemeShadows;
-}
-
-// 목표
-interface Theme {
-  palette: PaletteName;
-  style: StyleName;
-  colors: { scales, bg, text, border, action };
-  shadows: ThemeShadows;
-  border: { width, style };
-}
-```
-
-- [ ] `Theme` 타입에 `palette`, `style` 필드 추가
-- [ ] `Theme` 타입에 `border` 필드 추가
-- [ ] Border CSS 변수 전략: `--ds-border-width`, `--ds-border-style` 주입
+- [x] `Theme` 타입에 `palette`, `style` 필드 추가
+- [x] `Theme` 타입에 `border` 필드 추가
+- [x] Border CSS 변수 주입
 
 ### 3. ThemeProvider 수정
-- [ ] `paletteName`, `styleName` 상태 분리
-- [ ] `setPaletteName()`, `setStyleName()` 제공
-- [ ] `data-palette`, `data-style` 속성 주입
+- [x] `paletteName`, `styleName` 상태 분리
+- [x] `setPaletteName()`, `setStyleName()` 제공
+- [x] `data-palette`, `data-style` 속성 주입
 
 ### 4. 프리셋 레지스트리
-- [ ] `palettePresets` 객체
-- [ ] `stylePresets` 객체
+- [x] `palettePresets` 객체 (`themes/presets.ts`)
+- [x] `stylePresets` 객체
 
 ### 5. 기존 호환성 & 마이그레이션
-- [ ] 기존 `themeName` API deprecated 처리 (또는 유지)
-- [ ] 기존 `setThemeName('minimal')` → `setStyleName('minimal')` 매핑
+- [x] `themeName`/`setThemeName` deprecated 처리 (내부 매핑 유지)
 
 **data-theme 마이그레이션 결정:**
 - `data-theme` 속성은 **제거**하고 `data-palette`, `data-style`로 대체
@@ -276,13 +257,12 @@ interface Theme {
 
 ## 완료 기준
 
-- [ ] `combineTheme()` 함수 동작
-- [ ] Palette와 Style을 개별 선택 가능
-- [ ] 어떤 조합이든 테마 생성 가능
-- [ ] 기존 테마 전환 기능 호환
-- [ ] CSS 변수 정상 주입
-- [ ] **문서 반영**: `docs/design/ARCHITECTURE.md` 업데이트
-- [ ] **문서 반영**: 토큰 아키텍처 문서 업데이트 (해당 시)
+- [x] `combineTheme()` 함수 동작
+- [x] Palette와 Style을 개별 선택 가능
+- [x] 어떤 조합이든 테마 생성 가능
+- [x] 기존 테마 전환 기능 호환
+- [x] CSS 변수 정상 주입
+- [ ] **문서 반영**: `docs/design/ARCHITECTURE.md` (해당 시)
 
 ---
 

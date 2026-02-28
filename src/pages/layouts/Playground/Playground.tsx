@@ -1,22 +1,10 @@
 /**
- * E04: Playground - Palette × Style 조합 테스트
+ * E04: Playground - Palette × Style 조합 테스트 (E08 LabLayout 적용)
  */
 import { useTheme } from '../../../themes';
 import { Select, Button, Card, Input } from '../../../components';
+import { LabLayout, LabSection } from '../../../layouts';
 import type { PaletteName, StyleName } from '../../../@types/theme';
-
-const sectionStyle = {
-  padding: 'var(--ds-spacing-8) var(--ds-spacing-6)',
-  maxWidth: '1200px',
-  margin: '0 auto',
-};
-
-const titleStyle = {
-  fontSize: 'var(--ds-text-3xl)',
-  fontWeight: 'var(--ds-font-weight-bold)' as const,
-  color: 'var(--ds-color-text-primary)',
-  marginBottom: 'var(--ds-spacing-6)',
-};
 
 const paletteOptions: { value: PaletteName; label: string }[] = [
   { value: 'default', label: 'Default' },
@@ -35,38 +23,49 @@ export function Playground() {
   const { paletteName, setPaletteName, styleName, setStyleName } = useTheme();
 
   return (
-    <main style={sectionStyle}>
-      <h1 style={titleStyle}>Playground</h1>
-
-      <div style={{ display: 'flex', gap: 'var(--ds-spacing-6)', marginBottom: 'var(--ds-spacing-8)', flexWrap: 'wrap' }}>
-        <div>
-          <label style={{ fontSize: 'var(--ds-text-sm)', color: 'var(--ds-color-text-secondary)', display: 'block', marginBottom: 'var(--ds-spacing-2)' }}>
-            Palette
-          </label>
-          <Select
-            options={paletteOptions}
-            value={paletteName}
-            onChange={(v) => setPaletteName(v as PaletteName)}
-            variant="outline"
-          />
+    <LabLayout title="Playground" subtitle="Palette × Style × Font 조합 실험">
+      <LabSection title="조합 선택" withDivider={false}>
+        <div style={{ display: 'flex', gap: 'var(--ds-spacing-6)', flexWrap: 'wrap' }}>
+          <div>
+            <label
+              style={{
+                fontSize: 'var(--ds-text-sm)',
+                color: 'var(--ds-color-text-secondary)',
+                display: 'block',
+                marginBottom: 'var(--ds-spacing-2)',
+              }}
+            >
+              Palette
+            </label>
+            <Select
+              options={paletteOptions}
+              value={paletteName}
+              onChange={(v) => setPaletteName(v as PaletteName)}
+              variant="outline"
+            />
+          </div>
+          <div>
+            <label
+              style={{
+                fontSize: 'var(--ds-text-sm)',
+                color: 'var(--ds-color-text-secondary)',
+                display: 'block',
+                marginBottom: 'var(--ds-spacing-2)',
+              }}
+            >
+              Style
+            </label>
+            <Select
+              options={styleOptions}
+              value={styleName}
+              onChange={(v) => setStyleName(v as StyleName)}
+              variant="outline"
+            />
+          </div>
         </div>
-        <div>
-          <label style={{ fontSize: 'var(--ds-text-sm)', color: 'var(--ds-color-text-secondary)', display: 'block', marginBottom: 'var(--ds-spacing-2)' }}>
-            Style
-          </label>
-          <Select
-            options={styleOptions}
-            value={styleName}
-            onChange={(v) => setStyleName(v as StyleName)}
-            variant="outline"
-          />
-        </div>
-      </div>
+      </LabSection>
 
-      <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-        <h2 style={{ fontSize: 'var(--ds-text-xl)', fontWeight: 'var(--ds-font-weight-semibold)', color: 'var(--ds-color-text-primary)', marginBottom: 'var(--ds-spacing-4)' }}>
-          Component Preview
-        </h2>
+      <LabSection title="Component Preview">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)', maxWidth: 400 }}>
           <div style={{ display: 'flex', gap: 'var(--ds-spacing-3)' }}>
             <Button variant="primary">Primary</Button>
@@ -80,7 +79,7 @@ export function Playground() {
             </p>
           </Card>
         </div>
-      </div>
-    </main>
+      </LabSection>
+    </LabLayout>
   );
 }

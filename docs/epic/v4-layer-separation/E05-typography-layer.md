@@ -1,5 +1,7 @@
 # E05: Typography 레이어
 
+> **구현 완료** (2025-02)
+
 ## 목표
 
 Primitive 토큰(fontSize, fontWeight 등)을 조합한 **Text Styles**를 정의하고, 컴포넌트가 참조할 **Semantic 매핑**을 구축한다.
@@ -247,23 +249,28 @@ function getTextStyleCSS(styleName: TextStyleName): CSSProperties {
 ## 작업 항목
 
 ### 1. 타입 정의
-- [ ] `TextStyle`, `TextStyleName` 타입
-- [ ] `SemanticTextRole` 타입
+- [x] `TextStyle`, `TextStyleName` 타입
+- [x] `SemanticTextRole` 타입
 
 ### 2. Text Styles 정의
-- [ ] `textStyles` 객체 (display, heading, body, ui)
-- [ ] 현재 컴포넌트에서 사용 중인 조합 분석하여 반영
+- [x] `textStyles` 객체 (display, heading, body, ui)
+- [x] 현재 컴포넌트에서 사용 중인 조합 분석하여 반영
 
 ### 3. Semantic 매핑
-- [ ] `semanticText` 객체
-- [ ] 컴포넌트별 기본 스타일 매핑
+- [x] `semanticText` 객체
+- [x] 컴포넌트별 기본 스타일 매핑
 
 ### 4. CSS 변수 생성
-- [ ] `generateTextStyleVars()` 함수
-- [ ] ThemeProvider에서 주입
+- [x] `generateTextStyleVars()` 함수
+- [x] ThemeProvider에서 주입
 
-### 5. 기존 컴포넌트 적용 (선택)
-- [ ] Button, Input, Card 등에서 semantic 참조로 전환
+### 5. 기존 컴포넌트 적용
+- [x] Button → label
+- [x] Input (label, body-sm/md/lg, helper-text) → label, body-*, caption
+- [x] Card (header, body) → heading-2, body-md
+- [x] Tooltip → body-sm
+- [x] Select (label, trigger, option) → label, body-*
+- [x] ColorPicker, HexInput, Navigation → label, caption, code, heading-2
 
 ---
 
@@ -283,10 +290,10 @@ Typography는 **Palette/Style과 독립적**이다:
 
 ## 완료 기준
 
-- [ ] Text Styles 최소 10개 정의
-- [ ] Semantic 매핑 최소 5개 정의
-- [ ] CSS 변수 생성 및 주입
-- [ ] 기존 컴포넌트에서 참조 가능
+- [x] Text Styles 최소 10개 정의 (11개: display-lg/md, heading-1~3, body-lg/md/sm, caption, label, code)
+- [x] Semantic 매핑 최소 5개 정의 (9개)
+- [x] CSS 변수 생성 및 주입 (ThemeProvider)
+- [x] 기존 컴포넌트에서 semantic 참조로 전환 완료
 
 ---
 
