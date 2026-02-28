@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\Users\\\\ljj02\\\\Desktop\\\\dev\\\\YamangDesign\" /b)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(node ai/generate.js:*)"
+    ]
+  }
+}

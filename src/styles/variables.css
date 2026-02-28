@@ -1,0 +1,104 @@
+/**
+ * 디자인 토큰 CSS 변수 참조용
+ * 실제 값은 ThemeProvider에서 JS로 주입됨.
+ * IDE 자동완성 및 문서화 목적.
+ */
+:root {
+  /* Colors (테마에서 주입) */
+  --ds-color-bg-base: initial;
+  --ds-color-bg-surface: initial;
+  --ds-color-bg-elevated: initial;
+  --ds-color-bg-muted: initial;
+
+  --ds-color-text-primary: initial;
+  --ds-color-text-secondary: initial;
+  --ds-color-text-muted: initial;
+  --ds-color-text-inverse: initial;
+  --ds-color-text-onAction: initial;
+
+  --ds-color-border-default: initial;
+  --ds-color-border-subtle: initial;
+  --ds-color-border-focus: initial;
+
+  --ds-color-action-primary-default: initial;
+  --ds-color-action-primary-hover: initial;
+  --ds-color-action-primary-active: initial;
+  --ds-color-action-secondary-default: initial;
+  --ds-color-action-secondary-hover: initial;
+  --ds-color-action-secondary-active: initial;
+  --ds-color-action-accent-default: initial;
+  --ds-color-action-accent-hover: initial;
+  --ds-color-action-accent-active: initial;
+
+  /* Spacing (ThemeProvider 주입) */
+  --ds-spacing-0: initial;
+  --ds-spacing-1: initial;
+  --ds-spacing-2: initial;
+  --ds-spacing-3: initial;
+  --ds-spacing-4: initial;
+  --ds-spacing-5: initial;
+  --ds-spacing-6: initial;
+  --ds-spacing-8: initial;
+
+  /* Typography */
+  --ds-font-sans: initial;
+  --ds-font-mono: initial;
+  --ds-text-xs: initial;
+  --ds-text-sm: initial;
+  --ds-text-md: initial;
+  --ds-text-lg: initial;
+  --ds-text-xl: initial;
+  --ds-font-weight-normal: initial;
+  --ds-font-weight-medium: initial;
+  --ds-font-weight-semibold: initial;
+  --ds-font-weight-bold: initial;
+  --ds-leading-normal: initial;
+
+  /* Borders & Radius */
+  --ds-radius-sm: initial;
+  --ds-radius-md: initial;
+  --ds-radius-lg: initial;
+  --ds-radius-full: initial;
+
+  /* Shadows (테마에서 주입) */
+  --ds-shadow-none: initial;
+  --ds-shadow-sm: initial;
+  --ds-shadow-md: initial;
+  --ds-shadow-lg: initial;
+  --ds-shadow-inset: initial;
+
+  /* Sizes */
+  --ds-size-sm: initial;
+  --ds-size-md: initial;
+  --ds-size-lg: initial;
+
+  /* Z-index */
+  --ds-z-dropdown: initial;
+  --ds-z-sticky: initial;
+  --ds-z-overlay: initial;
+  --ds-z-modal: initial;
+  --ds-z-tooltip: initial;
+
+  /* Motion (ThemeProvider 주입) */
+  --ds-duration-instant: initial;
+  --ds-duration-fast: initial;
+  --ds-duration-normal: initial;
+  --ds-duration-slow: initial;
+  --ds-ease-linear: initial;
+  --ds-ease-easeOut: initial;
+  --ds-ease-easeInOut: initial;
+  --ds-ease-productive: initial;
+  --ds-ease-expressive: initial;
+
+  /* State layer opacity */
+  --ds-state-hover-opacity: initial;
+  --ds-state-pressed-opacity: initial;
+  --ds-state-focus-opacity: initial;
+  --ds-state-selected-opacity: initial;
+  --ds-state-disabled-opacity: initial;
+
+  /* Focus ring */
+  --ds-focus-ring-width: initial;
+  --ds-focus-ring-offset: initial;
+  --ds-focus-ring-color: initial;
+}

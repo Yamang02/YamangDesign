@@ -1,0 +1,8 @@
+# Auto-generated from ai/rules.yaml
+# Do not edit directly - run: node ai/generate.js
+
+dist/**
+build/**
+coverage/**
+node_modules/**
+docs/epic/**

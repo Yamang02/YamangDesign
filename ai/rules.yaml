@@ -1,0 +1,26 @@
+# AI Agent Policy - Single Source of Truth
+# 이 파일에서 .claudeignore, .cursorignore 등이 생성됨
+
+ignore:
+  # Build outputs
+  - dist/**
+  - build/**
+  - coverage/**
+  - node_modules/**
+
+  # Epic docs (작업 중일 때만 참조)
+  - docs/epic/**
+
+coding:
+  styling:
+    - "CSS 변수만 사용: var(--ds-xxx)"
+    - "하드코딩 금지: #hex, rgba() 등"
+
+  component_structure:
+    - "*.types.ts: Props 인터페이스"
+    - "*.styles.ts: 스타일 객체"
+    - "*.tsx: 구현"
+    - "index.ts: export"
+
+reference:
+  architecture: docs/design/ARCHITECTURE.md

@@ -1,0 +1,1 @@
+export { createMinimalTheme } from './tokens';
