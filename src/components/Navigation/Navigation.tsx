@@ -121,6 +121,7 @@ export function Navigation({
                   onSavePreset={handleSavePreset}
                   onLoadPreset={handleLoadPreset}
                   onDeletePreset={deletePreset}
+                  onLoadThemePreset={(colors) => setEditingColors(colors)}
                 />
 
                 <div className={styles.colorEditorActions}>

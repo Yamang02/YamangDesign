@@ -9,6 +9,9 @@ export type ThemeName = 'minimal' | 'neumorphism';
 export type PaletteName = 'default' | 'vivid' | 'pastel' | 'monochrome' | 'earth' | 'custom';
 export type StyleName = 'minimal' | 'neumorphism' | 'glassmorphism' | 'brutalism';
 
+/** E08: 시스템 컬러 프리셋 (Error, Warning, Success, Info) */
+export type SystemPresetName = 'default' | 'muted';
+
 /**
  * 액션 색상 (상태별)
  */

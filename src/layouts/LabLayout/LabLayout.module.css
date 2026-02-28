@@ -165,3 +165,49 @@ section[id] {
   border-color: var(--ds-color-border-focus);
   box-shadow: var(--ds-shadow-md);
 }
+
+/* E05: ComparisonCard */
+.comparisonCard {
+  flex: 1;
+  min-width: 240px;
+  padding: var(--ds-spacing-5);
+  background-color: var(--ds-color-bg-surface);
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-lg);
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.comparisonCard[role='button'] {
+  cursor: pointer;
+}
+
+.comparisonCard[role='button']:hover {
+  border-color: var(--ds-color-border-default);
+}
+
+.comparisonCardSelected {
+  border-color: var(--ds-color-border-focus);
+  box-shadow: var(--ds-shadow-md);
+}
+
+.comparisonTitle {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-4) 0;
+  padding-bottom: var(--ds-spacing-3);
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+}
+
+.comparisonContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+/* E05: comparisonGrid - 반응형 */
+.comparisonGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-6);
+}

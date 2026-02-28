@@ -4,6 +4,7 @@ import { HexInput } from './HexInput';
 import { PresetManager } from './PresetManager';
 import { Icon } from '../Icon';
 import type { ExternalPalette } from '../../@types/tokens';
+import { themePresets } from '../../constants/palette-definitions';
 
 const colorFields: {
   key: keyof ExternalPalette;
@@ -16,6 +17,11 @@ const colorFields: {
   { key: 'sub', label: 'Sub', required: false },
 ];
 
+const themePresetEntries = Object.entries(themePresets) as [
+  string,
+  { name: string; colors: ExternalPalette },
+][];
+
 export function ColorPicker({
   palette,
   onChange,
@@ -23,6 +29,7 @@ export function ColorPicker({
   onSavePreset,
   onLoadPreset,
   onDeletePreset,
+  onLoadThemePreset,
 }: ColorPickerProps) {
   const handleColorChange = (key: keyof ExternalPalette, value: string) => {
     onChange({
@@ -66,6 +73,36 @@ export function ColorPicker({
           ))}
         </div>
       </div>
+
+      {onLoadThemePreset && (
+        <div className={styles.section}>
+          <span className={styles.sectionTitle}>
+            <Icon name="palette" library="nucleo" size="sm" />
+            Theme Presets
+          </span>
+          <div className={styles.themePresetRow}>
+            {themePresetEntries.map(([id, def]) => (
+              <button
+                key={id}
+                type="button"
+                className={styles.themePresetChip}
+                onClick={() => onLoadThemePreset(def.colors)}
+                title={def.name}
+              >
+                <span
+                  className={styles.themePresetDot}
+                  style={{
+                    backgroundColor: def.colors.primary || '#CCC',
+                  }}
+                />
+                <span className={styles.themePresetLabel}>
+                  {def.name.charAt(0).toUpperCase() + def.name.slice(1)}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <PresetManager
         presets={presets}

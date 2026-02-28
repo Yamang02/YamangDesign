@@ -1,33 +1,19 @@
 /**
  * E03: Palette/Style 프리셋 매핑
+ * E06: palette-definitions를 단일 소스로 사용
  */
 import type { PaletteDefinition } from '../palettes';
 import type { StyleDefinition } from '../styles';
-import { defaultPalette, vividPalette, pastelPalette } from '../palettes';
 import { minimalStyle, neumorphismStyle } from '../styles';
 import type { ExternalPalette } from '../@types/tokens';
-import type { PaletteName, StyleName } from '../@types/theme';
+import type { StyleName } from '../@types/theme';
+import {
+  themePresets,
+  toThemePreset,
+} from '../constants/palette-definitions';
 
-export const palettePresets: Record<Exclude<PaletteName, 'custom'>, PaletteDefinition> = {
-  default: defaultPalette,
-  vivid: vividPalette,
-  pastel: pastelPalette,
-  monochrome: {
-    name: 'monochrome',
-    colors: { primary: '#4B5563', sub: '#9CA3AF' },
-    bgStrategy: 'light',
-  },
-  earth: {
-    name: 'earth',
-    colors: {
-      primary: '#78716C',
-      secondary: '#A8A29E',
-      accent: '#D97706',
-      sub: '#F5F5F4',
-    },
-    bgStrategy: 'light',
-  },
-};
+/** 테마 프리셋 (palette-definitions re-export, 하위 호환용 palettePresets) */
+export const palettePresets = themePresets;
 
 export const stylePresets: Record<StyleName, StyleDefinition> = {
   minimal: minimalStyle,
@@ -36,11 +22,7 @@ export const stylePresets: Record<StyleName, StyleDefinition> = {
   brutalism: minimalStyle, // placeholder - reuse minimal for now
 };
 
-/** ExternalPalette → PaletteDefinition (custom) */
+/** ExternalPalette → PaletteDefinition (custom, toThemePreset 래퍼) */
 export function toCustomPaletteDefinition(colors: ExternalPalette): PaletteDefinition {
-  return {
-    name: 'custom',
-    colors,
-    bgStrategy: 'light',
-  };
+  return toThemePreset(colors, 'custom');
 }

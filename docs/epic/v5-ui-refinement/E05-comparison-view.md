@@ -331,13 +331,31 @@ return (
 
 ---
 
+## 영향 범위
+
+| 파일 | 변경 내용 |
+|------|-----------|
+| `src/layouts/LabLayout/ComparisonCard.tsx` | 신규 - 비교용 카드 컴포넌트 |
+| `src/layouts/LabLayout/LabLayout.module.css` | comparisonCard, comparisonGrid 스타일 추가 |
+| `src/pages/layouts/PaletteLab/` | ComparisonCard 적용 + DetailPanel + PaletteDetail |
+| `src/pages/layouts/StyleLab/` | ComparisonCard 적용 + DetailPanel + StyleDetail |
+| `src/pages/layouts/FontLab/` | Font Families 섹션에 ComparisonCard 스타일 적용 |
+| `src/pages/layouts/Playground/` | 드롭다운 선택 + Component Preview로 전환 |
+| `src/constants/lab-content.ts` | combinationSelect, componentPreview 섹션 타이틀 추가 |
+
+## 보완 사항 (구현 시 적용)
+
+- **PaletteDetail/StyleDetail**: 명세 예시에서 참조하나 별도 정의 없음 → 각 Lab 내부에 인라인 상세 뷰로 구현
+- **comparisonGrid**: `display: flex; flex-wrap: wrap; gap: var(--ds-spacing-6)` 로 반응형 처리
+- **Playground Font**: Font 선택은 `fontFamilyLabels` (sans/mono) 사용, getThemeVariables는 Palette+Style만 지원
+
 ## 체크리스트
 
-- [ ] ComparisonCard 컴포넌트 생성
-- [ ] ComparisonCard CSS 스타일
-- [ ] PaletteLab 비교 뷰 적용
-- [ ] StyleLab 비교 뷰 적용
-- [ ] FontLab Font Family 비교 섹션 추가
-- [ ] Playground 대표 컴포넌트 프리뷰 구성
-- [ ] DetailPanel 연동 (각 Lab)
-- [ ] 반응형 그리드 처리
+- [x] ComparisonCard 컴포넌트 생성
+- [x] ComparisonCard CSS 스타일
+- [x] PaletteLab 비교 뷰 적용
+- [x] StyleLab 비교 뷰 적용
+- [x] FontLab Font Family 비교 섹션 추가
+- [x] Playground 대표 컴포넌트 프리뷰 구성
+- [x] DetailPanel 연동 (PaletteLab, StyleLab)
+- [x] 반응형 그리드 처리

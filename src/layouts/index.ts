@@ -1,1 +1,8 @@
-export { LabLayout, LabSection, LabCard, LabToc, type TocItem } from './LabLayout';
+export {
+  LabLayout,
+  LabSection,
+  LabCard,
+  ComparisonCard,
+  LabToc,
+  type TocItem,
+} from './LabLayout';

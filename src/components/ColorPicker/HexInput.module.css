@@ -61,7 +61,7 @@
 }
 
 .hexInput[data-error='true'] {
-  border-color: #ef4444;
+  border-color: var(--ds-color-system-error);
 }
 
 .hexInput:disabled {

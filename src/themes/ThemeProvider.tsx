@@ -9,7 +9,13 @@ import {
   useMemo,
   type ReactNode,
 } from 'react';
-import type { Theme, ThemeName, PaletteName, StyleName } from '../@types/theme';
+import type {
+  Theme,
+  ThemeName,
+  PaletteName,
+  StyleName,
+  SystemPresetName,
+} from '../@types/theme';
 import type { ExternalPalette } from '../@types/tokens';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';
 import { combineTheme } from './combine';
@@ -33,6 +39,8 @@ import {
   stateLayer,
 } from '../tokens/primitives';
 import { generateTextStyleVars } from '../tokens/typography';
+import { generateSystemColorVars } from '../utils/system-colors';
+import { systemColorPresets } from '../tokens/primitives/system-colors';
 
 export interface ThemeContextValue {
   theme: Theme;
@@ -48,6 +56,9 @@ export interface ThemeContextValue {
   setCustomColors: (colors: ExternalPalette | null) => void;
   palette: ExternalPalette;
   setPalette: (palette: ExternalPalette) => void;
+  /** E08: 시스템 컬러 프리셋 */
+  systemPreset: SystemPresetName;
+  setSystemPreset: (name: SystemPresetName) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -59,6 +70,8 @@ export interface ThemeProviderProps {
   initialStyleName?: StyleName;
   initialPaletteName?: PaletteName;
   initialPalette?: ExternalPalette;
+  /** E08: 시스템 컬러 프리셋 (기본: 'default') */
+  systemPreset?: SystemPresetName;
 }
 
 export function ThemeProvider({
@@ -67,6 +80,7 @@ export function ThemeProvider({
   initialStyleName = initialTheme ?? 'minimal',
   initialPaletteName = 'default',
   initialPalette,
+  systemPreset: initialSystemPreset = 'default',
 }: ThemeProviderProps) {
   const [styleName, setStyleName] = useState<StyleName>(initialStyleName);
   const [paletteName, setPaletteNameState] = useState<PaletteName>(
@@ -75,6 +89,8 @@ export function ThemeProvider({
   const [customColors, setCustomColorsState] = useState<ExternalPalette | null>(
     initialPalette ?? null
   );
+  const [systemPreset, setSystemPresetState] =
+    useState<SystemPresetName>(initialSystemPreset);
 
   const setPaletteName = (name: PaletteName) => {
     setPaletteNameState(name);
@@ -147,17 +163,27 @@ export function ThemeProvider({
 
     const typographyVars = generateTextStyleVars();
 
+    const systemVars = generateSystemColorVars(
+      systemColorPresets[systemPreset]
+    );
+
     injectCSSVariables({
       ...primitiveCSSVars,
       ...themeCSSVars,
       ...stateLayerVars,
       ...typographyVars,
+      ...systemVars,
     });
 
     document.documentElement.setAttribute('data-palette', theme.palette);
     document.documentElement.setAttribute('data-style', theme.style);
     document.documentElement.setAttribute('data-theme', styleName);
-  }, [theme, styleName]);
+    document.documentElement.setAttribute('data-system-preset', systemPreset);
+  }, [theme, styleName, systemPreset]);
+
+  const setSystemPreset = (name: SystemPresetName) => {
+    setSystemPresetState(name);
+  };
 
   const value: ThemeContextValue = {
     theme,
@@ -171,6 +197,8 @@ export function ThemeProvider({
     setCustomColors,
     palette,
     setPalette,
+    systemPreset,
+    setSystemPreset,
   };
 
   return (

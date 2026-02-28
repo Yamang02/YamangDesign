@@ -15,5 +15,18 @@ export {
   getStyleVariables,
   getPaletteVariables,
   getThemeVariables,
+  getSystemColorVariables,
   comparisonPresets,
 } from './lab-presets';
+
+export {
+  showcaseSections,
+  showcaseLabels,
+  showcaseContent,
+  buttonShowcase,
+  cardShowcase,
+  inputShowcase,
+  selectShowcase,
+  iconShowcase,
+  showcaseFooter,
+} from './showcase-content';

@@ -4,10 +4,12 @@
  */
 import { minimalStyle, neumorphismStyle } from '../styles';
 import { palettePresets, stylePresets } from '../themes/presets';
+import { systemColorPresets } from '../tokens/primitives/system-colors';
+import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
 import { combineTheme } from '../themes/combine';
 import { flattenToCSSVars } from '../utils/css';
-import type { StyleName, PaletteName } from '../@types/theme';
+import type { StyleName, PaletteName, SystemPresetName } from '../@types/theme';
 
 /** CSS 변수 객체 타입 */
 type CSSVariables = Record<string, string>;
@@ -88,8 +90,19 @@ export function getThemeVariables(
   });
 }
 
+/**
+ * E08: System preset → CSS 변수 객체
+ */
+export function getSystemColorVariables(
+  presetName: SystemPresetName
+): CSSVariables {
+  const preset = systemColorPresets[presetName];
+  return preset ? generateSystemColorVars(preset) : {};
+}
+
 /** 비교 대상 프리셋 목록 */
 export const comparisonPresets = {
   styles: ['minimal', 'neumorphism'] as StyleName[],
   palettes: ['default', 'vivid', 'pastel', 'monochrome', 'earth'] as PaletteName[],
+  systemPresets: ['default', 'muted'] as SystemPresetName[],
 };

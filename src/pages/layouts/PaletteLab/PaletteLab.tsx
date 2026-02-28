@@ -1,97 +1,200 @@
 /**
- * E04: Palette Lab - 배색 실험 페이지
- * E01: 비교 뷰 + lab-content/lab-presets 적용
+ * E05: Palette Lab - 배색 비교 뷰 + DetailPanel
  */
-import { LabLayout, LabSection } from '../../../layouts';
+import { useState } from 'react';
+import { LabLayout, LabSection, ComparisonCard } from '../../../layouts';
+import { DetailPanel } from '../../../components';
 import {
   getPaletteVariables,
+  getSystemColorVariables,
   comparisonPresets,
   sectionTitles,
 } from '../../../constants';
+import { useTheme } from '../../../themes';
+import { palettePresets } from '../../../themes/presets';
+import { createPalette } from '../../../palettes';
+import type { PaletteName, SystemPresetName } from '../../../@types/theme';
+import styles from './PaletteLab.module.css';
 
 const colorKeys = ['primary', 'secondary', 'accent', 'sub'] as const;
-const scaleSteps = [100, 300, 500, 700, 900] as const;
+const systemColorKeys = ['error', 'warning', 'success', 'info'] as const;
+const systemScaleSteps = [50, 500, 700] as const;
+const scaleSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function PaletteLab() {
+function PaletteDetail({ name }: { name: Exclude<PaletteName, 'custom'> }) {
+  const preset = palettePresets[name];
+  if (!preset) return null;
+  const expanded = createPalette(preset);
+
   return (
-    <LabLayout title="Palette Lab" subtitle="배색 비교">
-      <LabSection title={sectionTitles.colorScales} id="color-scales">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 'var(--ds-spacing-6)',
-          }}
-        >
-          {comparisonPresets.palettes.map((paletteName) => (
-            <div
-              key={paletteName}
-              style={{
-                ...getPaletteVariables(paletteName),
-                padding: 'var(--ds-spacing-6)',
-                backgroundColor: 'var(--ds-color-bg-surface)',
-                border: '1px solid var(--ds-color-border-subtle)',
-                borderRadius: 'var(--ds-radius-lg)',
-              }}
-            >
-              <h3
-                style={{
-                  margin: '0 0 var(--ds-spacing-4) 0',
-                  fontSize: 'var(--ds-text-lg)',
-                  fontWeight: 'var(--ds-font-weight-semibold)',
-                  color: 'var(--ds-color-text-primary)',
-                }}
-              >
-                {capitalize(paletteName)}
-              </h3>
-              {colorKeys.map((colorKey) => (
-                <div
-                  key={colorKey}
-                  style={{
-                    marginBottom: 'var(--ds-spacing-3)',
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: 'var(--ds-text-xs)',
-                      fontWeight: 'var(--ds-font-weight-medium)',
-                      color: 'var(--ds-color-text-secondary)',
-                      margin: '0 0 var(--ds-spacing-2) 0',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {colorKey}
-                  </p>
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: 2,
-                      flexWrap: 'wrap',
-                    }}
-                  >
-                    {scaleSteps.map((step) => (
-                      <div
-                        key={step}
-                        style={{
-                          width: 24,
-                          height: 24,
-                          backgroundColor: `var(--ds-color-${colorKey}-${step})`,
-                          borderRadius: 4,
-                        }}
-                        title={`${colorKey} ${step}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
+    <div className={styles.paletteDetail}>
+      <h4 className={styles.detailSectionTitle}>기본 색상</h4>
+      <div className={styles.colorSwatches}>
+        {(['primary', 'secondary', 'accent', 'sub'] as const).map((key) => {
+          const scale = expanded.scales[key];
+          if (!scale || Object.keys(scale).length === 0) return null;
+          const base = scale[500] ?? scale[400] ?? Object.values(scale)[0];
+          return (
+            <div key={key} className={styles.colorRow}>
+              <span className={styles.colorLabel}>{capitalize(key)}</span>
+              <span
+                className={styles.colorSample}
+                style={{ backgroundColor: base }}
+                title={base}
+              />
+              <code className={styles.colorHex}>{base}</code>
             </div>
-          ))}
+          );
+        })}
+      </div>
+      <h4 className={styles.detailSectionTitle}>확장 스케일 (50~900)</h4>
+      <div className={styles.scaleGrid}>
+        {colorKeys.map((colorKey) => {
+          const scale = expanded.scales[colorKey];
+          if (!scale) return null;
+          return (
+            <div key={colorKey} className={styles.scaleColumn}>
+              <span className={styles.scaleLabel}>{capitalize(colorKey)}</span>
+              <div className={styles.scaleRow}>
+                {scaleSteps.map((step) => {
+                  const color = scale[step as keyof typeof scale];
+                  if (!color) return null;
+                  return (
+                    <div
+                      key={step}
+                      className={styles.scaleSwatch}
+                      style={{ backgroundColor: color }}
+                      title={`${colorKey} ${step}: ${color}`}
+                    />
+                  );
+                })}
+              </div>
+              <div className={styles.scaleLabels}>
+                {scaleSteps.map((step) => (
+                  <span key={step} className={styles.scaleStep}>
+                    {step}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function SystemColorCard({
+  presetName,
+  selected,
+  onSelect,
+}: {
+  presetName: SystemPresetName;
+  selected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <ComparisonCard
+      title={capitalize(presetName)}
+      styleVars={getSystemColorVariables(presetName)}
+      onClick={onSelect}
+      selected={selected}
+    >
+      {systemColorKeys.map((colorKey) => (
+        <div key={colorKey} className={styles.colorColumn}>
+          <p className={styles.colorKeyLabel}>{capitalize(colorKey)}</p>
+          <div className={styles.swatchRow}>
+            {systemScaleSteps.map((step) => {
+              const varSuffix =
+                step === 50 ? '-bg' : step === 700 ? '-emphasis' : '';
+              return (
+                <div
+                  key={step}
+                  className={styles.swatch}
+                  style={{
+                    backgroundColor: `var(--ds-color-system-${colorKey}${varSuffix})`,
+                  }}
+                  title={`${colorKey} ${step}`}
+                />
+              );
+            })}
+          </div>
         </div>
-      </LabSection>
-    </LabLayout>
+      ))}
+    </ComparisonCard>
+  );
+}
+
+export function PaletteLab() {
+  const { systemPreset, setSystemPreset } = useTheme();
+  const [selectedPalette, setSelectedPalette] = useState<
+    Exclude<PaletteName, 'custom'> | null
+  >(null);
+
+  return (
+    <>
+      <LabLayout title="Palette Lab" subtitle="배색 비교">
+        <LabSection title={sectionTitles.colorScales} id="color-scales">
+          <div className={styles.comparisonGrid}>
+            {comparisonPresets.palettes.map((paletteName) => (
+              <ComparisonCard
+                key={paletteName}
+                title={capitalize(paletteName)}
+                styleVars={getPaletteVariables(paletteName)}
+                onClick={() =>
+                  setSelectedPalette(
+                    paletteName as Exclude<PaletteName, 'custom'>
+                  )
+                }
+                selected={selectedPalette === paletteName}
+              >
+                {colorKeys.map((colorKey) => (
+                  <div key={colorKey} className={styles.colorColumn}>
+                    <p className={styles.colorKeyLabel}>{capitalize(colorKey)}</p>
+                    <div className={styles.swatchRow}>
+                      {[100, 300, 500, 700, 900].map((step) => (
+                        <div
+                          key={step}
+                          className={styles.swatch}
+                          style={{
+                            backgroundColor: `var(--ds-color-${colorKey}-${step})`,
+                          }}
+                          title={`${colorKey} ${step}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </ComparisonCard>
+            ))}
+          </div>
+        </LabSection>
+
+        <LabSection title={sectionTitles.systemColors} id="system-colors">
+          <div className={styles.comparisonGrid}>
+            {comparisonPresets.systemPresets.map((presetName) => (
+              <SystemColorCard
+                key={presetName}
+                presetName={presetName}
+                selected={systemPreset === presetName}
+                onSelect={() => setSystemPreset(presetName)}
+              />
+            ))}
+          </div>
+        </LabSection>
+      </LabLayout>
+
+      <DetailPanel
+        open={!!selectedPalette}
+        onClose={() => setSelectedPalette(null)}
+        title={selectedPalette ? capitalize(selectedPalette) : ''}
+      >
+        {selectedPalette && <PaletteDetail name={selectedPalette} />}
+      </DetailPanel>
+    </>
   );
 }

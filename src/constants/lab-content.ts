@@ -43,14 +43,17 @@ export const sectionTitles = {
 
   // PaletteLab
   colorScales: 'Color Scales',
+  systemColors: 'System Colors',
   paletteComparison: 'Palette Comparison',
 
   // StyleLab
   shadowComparison: 'Shadow Comparison',
   componentComparison: 'Component Comparison',
 
-  // Playground
+  // Playground (E05: 드롭다운 선택 + 프리뷰)
   combinationMatrix: 'Combination Matrix',
+  combinationSelect: '조합 선택',
+  componentPreview: 'Component Preview',
 } as const;
 
 /** 라벨 포맷터 */

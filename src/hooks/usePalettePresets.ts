@@ -1,48 +1,21 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { PalettePreset, PalettePresetsStorage } from '../@types/palette';
 import type { ExternalPalette } from '../@types/tokens';
+import { colorStartPoints } from '../constants/palette-definitions';
 
 const STORAGE_KEY = 'yamang-palette-presets';
 const STORAGE_VERSION = 1;
 
-// 기본 프리셋
-const defaultPresets: PalettePreset[] = [
-  {
-    id: 'default-indigo',
-    name: 'Indigo',
-    palette: { primary: '#6366F1' },
+/** colorStartPoints를 PalettePreset 형식으로 변환 (E06 통합) */
+const defaultPresets: PalettePreset[] = Object.entries(colorStartPoints).map(
+  ([id, palette]) => ({
+    id: `default-${id}`,
+    name: id.charAt(0).toUpperCase() + id.slice(1),
+    palette,
     createdAt: 0,
     isDefault: true,
-  },
-  {
-    id: 'default-emerald',
-    name: 'Emerald',
-    palette: { primary: '#10B981' },
-    createdAt: 0,
-    isDefault: true,
-  },
-  {
-    id: 'default-rose',
-    name: 'Rose',
-    palette: { primary: '#F43F5E' },
-    createdAt: 0,
-    isDefault: true,
-  },
-  {
-    id: 'default-amber',
-    name: 'Amber',
-    palette: { primary: '#F59E0B' },
-    createdAt: 0,
-    isDefault: true,
-  },
-  {
-    id: 'default-cyan',
-    name: 'Cyan',
-    palette: { primary: '#06B6D4' },
-    createdAt: 0,
-    isDefault: true,
-  },
-];
+  })
+);
 
 function generateId(): string {
   return `preset-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;

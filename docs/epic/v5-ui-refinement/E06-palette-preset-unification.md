@@ -176,10 +176,10 @@ export function toThemePreset(colors: ExternalPalette, name = 'custom'): Palette
 
 ## 체크리스트
 
-- [ ] `src/constants/palette-definitions.ts` 생성
-- [ ] `themePresets` 정의 (기존 palettePresets 이동)
-- [ ] `colorStartPoints` 정의 (기존 defaultPresets 이동)
-- [ ] `usePalettePresets` 수정 - 새 정의 파일 import
-- [ ] `themes/presets.ts` 수정 - palette-definitions re-export
-- [ ] ColorPicker에 "Theme Presets" 섹션 추가 (선택적)
-- [ ] PaletteLab에서 새 정의 사용 확인
+- [x] `src/constants/palette-definitions.ts` 생성
+- [x] `themePresets` 정의 (기존 palettePresets 이동)
+- [x] `colorStartPoints` 정의 (기존 defaultPresets 이동)
+- [x] `usePalettePresets` 수정 - 새 정의 파일 import
+- [x] `themes/presets.ts` 수정 - palette-definitions re-export
+- [x] ColorPicker에 "Theme Presets" 섹션 추가 (선택적)
+- [x] PaletteLab에서 새 정의 사용 확인 (palettePresets re-export로 기존 import 유지)

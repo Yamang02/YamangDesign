@@ -3,7 +3,7 @@
  * E01: lab-content 중앙화 적용
  */
 import { useState } from 'react';
-import { LabLayout, LabSection, LabCard, type TocItem } from '../../../layouts';
+import { LabLayout, LabSection, LabCard, ComparisonCard, type TocItem } from '../../../layouts';
 import { DetailPanel } from '../../../components';
 import {
   sampleText,
@@ -197,52 +197,74 @@ export function FontLab() {
               flexWrap: 'wrap',
             }}
           >
-            <LabCard>
-              <div>
-                <p
-                  style={{
-                    fontSize: 'var(--ds-text-sm)',
-                    color: 'var(--ds-color-text-secondary)',
-                    margin: '0 0 var(--ds-spacing-2) 0',
-                  }}
-                >
-                  {fontFamilyLabels.sans}
-                </p>
-                <p
-                  style={{
-                    fontFamily: fontFamily.sans,
-                    fontSize: 'var(--ds-text-lg)',
-                    color: 'var(--ds-color-text-primary)',
-                    margin: 0,
-                  }}
-                >
-                  {sampleText.pangram.en.split(' ').slice(0, 4).join(' ')}
-                </p>
-              </div>
-            </LabCard>
-            <LabCard>
-              <div>
-                <p
-                  style={{
-                    fontSize: 'var(--ds-text-sm)',
-                    color: 'var(--ds-color-text-secondary)',
-                    margin: '0 0 var(--ds-spacing-2) 0',
-                  }}
-                >
-                  {fontFamilyLabels.mono}
-                </p>
-                <p
-                  style={{
-                    fontFamily: fontFamily.mono,
-                    fontSize: 'var(--ds-text-lg)',
-                    color: 'var(--ds-color-text-primary)',
-                    margin: 0,
-                  }}
-                >
-                  {sampleText.pangram.en.split(' ').slice(0, 4).join(' ')}
-                </p>
-              </div>
-            </LabCard>
+            <ComparisonCard title={fontFamilyLabels.sans}>
+              <p
+                style={{
+                  fontFamily: fontFamily.sans,
+                  fontSize: 'var(--ds-text-lg)',
+                  color: 'var(--ds-color-text-primary)',
+                  margin: 0,
+                  lineHeight: 1.5,
+                }}
+              >
+                {sampleText.pangram.en}
+              </p>
+              <p
+                style={{
+                  fontFamily: fontFamily.sans,
+                  fontSize: 'var(--ds-text-md)',
+                  color: 'var(--ds-color-text-secondary)',
+                  margin: 'var(--ds-spacing-2) 0 0 0',
+                }}
+              >
+                {sampleText.numbers}
+              </p>
+              <p
+                style={{
+                  fontFamily: fontFamily.sans,
+                  fontSize: 'var(--ds-text-sm)',
+                  color: 'var(--ds-color-text-secondary)',
+                  margin: 'var(--ds-spacing-1) 0 0 0',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                {sampleText.alphabet}
+              </p>
+            </ComparisonCard>
+            <ComparisonCard title={fontFamilyLabels.mono}>
+              <p
+                style={{
+                  fontFamily: fontFamily.mono,
+                  fontSize: 'var(--ds-text-lg)',
+                  color: 'var(--ds-color-text-primary)',
+                  margin: 0,
+                  lineHeight: 1.5,
+                }}
+              >
+                {sampleText.pangram.en}
+              </p>
+              <p
+                style={{
+                  fontFamily: fontFamily.mono,
+                  fontSize: 'var(--ds-text-md)',
+                  color: 'var(--ds-color-text-secondary)',
+                  margin: 'var(--ds-spacing-2) 0 0 0',
+                }}
+              >
+                {sampleText.numbers}
+              </p>
+              <p
+                style={{
+                  fontFamily: fontFamily.mono,
+                  fontSize: 'var(--ds-text-sm)',
+                  color: 'var(--ds-color-text-secondary)',
+                  margin: 'var(--ds-spacing-1) 0 0 0',
+                  letterSpacing: '0.05em',
+                }}
+              >
+                {sampleText.alphabet}
+              </p>
+            </ComparisonCard>
           </div>
         </LabSection>
       </LabLayout>

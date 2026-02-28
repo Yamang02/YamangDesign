@@ -1,0 +1,119 @@
+/* E05: PaletteLab 비교 그리드 + DetailPanel 상세 */
+.comparisonGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-6);
+}
+
+.colorColumn {
+  margin-bottom: var(--ds-spacing-3);
+}
+
+.colorColumn:last-child {
+  margin-bottom: 0;
+}
+
+.colorKeyLabel {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-text-secondary);
+  margin: 0 0 var(--ds-spacing-2) 0;
+  text-transform: capitalize;
+}
+
+.swatchRow {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+/* PaletteDetail */
+.paletteDetail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.detailSectionTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-2) 0;
+}
+
+.colorSwatches {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.colorRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+}
+
+.colorLabel {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-secondary);
+  min-width: 60px;
+}
+
+.colorSample {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--ds-color-border-subtle);
+}
+
+.colorHex {
+  font-size: var(--ds-text-xs);
+  font-family: ui-monospace, monospace;
+  color: var(--ds-color-text-secondary);
+}
+
+.scaleGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+.scaleColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.scaleLabel {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-secondary);
+}
+
+.scaleRow {
+  display: flex;
+  gap: 2px;
+}
+
+.scaleSwatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--ds-color-border-subtle);
+}
+
+.scaleLabels {
+  display: flex;
+  gap: 2px;
+}
+
+.scaleStep {
+  width: 20px;
+  font-size: 10px;
+  color: var(--ds-color-text-muted);
+}

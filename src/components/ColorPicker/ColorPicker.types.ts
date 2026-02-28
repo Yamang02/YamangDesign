@@ -24,4 +24,6 @@ export interface ColorPickerProps {
   onSavePreset: (name: string) => void;
   onLoadPreset: (preset: PalettePreset) => void;
   onDeletePreset: (id: string) => void;
+  /** E06: 테마 프리셋 불러오기 (선택적) */
+  onLoadThemePreset?: (colors: ExternalPalette) => void;
 }
