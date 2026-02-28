@@ -1,13 +1,19 @@
 /**
  * E08: Font Lab - E05 Typography 시각화
+ * E01: lab-content 중앙화 적용
  */
 import { useState } from 'react';
 import { LabLayout, LabSection, LabCard } from '../../../layouts';
 import { DetailPanel } from '../../../components';
-import { textStyles } from '../../../tokens/typography';
-import { semanticText } from '../../../tokens/typography';
-import { fontSize } from '../../../tokens/primitives/typography';
-import { fontFamily } from '../../../tokens/primitives/typography';
+import {
+  sampleText,
+  formatters,
+  semanticPreviews,
+  fontFamilyLabels,
+  sectionTitles,
+} from '../../../constants';
+import { textStyles, semanticText } from '../../../tokens/typography';
+import { fontSize, fontFamily } from '../../../tokens/primitives/typography';
 import type { TextStyleName, SemanticTextRole } from '../../../tokens/typography';
 
 const semanticRoles: SemanticTextRole[] = [
@@ -31,7 +37,7 @@ export function FontLab() {
   return (
     <>
       <LabLayout title="Font Lab" subtitle="Typography Explorer">
-        <LabSection title="Text Styles" withDivider={false}>
+        <LabSection title={sectionTitles.textStyles} id="text-styles" withDivider={false}>
           <div
             style={{
               display: 'flex',
@@ -67,7 +73,7 @@ export function FontLab() {
                         marginBottom: 'var(--ds-spacing-1)',
                       }}
                     >
-                      The quick brown fox jumps over the lazy dog
+                      {sampleText.pangram.en}
                     </p>
                     <p
                       style={{
@@ -76,10 +82,12 @@ export function FontLab() {
                         margin: 0,
                       }}
                     >
-                      {name} · {textStyles[name].fontSize} · {textStyles[name].fontWeight}
-                      {textStyles[name].lineHeight !== 'normal'
-                        ? ` · ${textStyles[name].lineHeight}`
-                        : ''}
+                      {formatters.textStyleMeta(
+                        name,
+                        textStyles[name].fontSize,
+                        textStyles[name].fontWeight,
+                        textStyles[name].lineHeight
+                      )}
                     </p>
                   </div>
                 </LabCard>
@@ -88,7 +96,7 @@ export function FontLab() {
           </div>
         </LabSection>
 
-        <LabSection title="Semantic Mapping">
+        <LabSection title={sectionTitles.semanticMapping} id="semantic-mapping">
           <div
             style={{
               display: 'grid',
@@ -123,15 +131,7 @@ export function FontLab() {
                         margin: 0,
                       }}
                     >
-                      {role === 'button' && '[ Button ]'}
-                      {role === 'page-title' && 'Page Title'}
-                      {role === 'section-title' && 'Section Title'}
-                      {role === 'card-title' && 'Card Header'}
-                      {role === 'input' && 'Input text'}
-                      {role === 'input-label' && 'Label'}
-                      {role === 'helper-text' && 'Helper text'}
-                      {role === 'tooltip' && 'Tooltip content'}
-                      {role === 'badge' && 'badge'}
+                      {semanticPreviews[role] ?? role}
                     </p>
                   </div>
                 </LabCard>
@@ -140,7 +140,7 @@ export function FontLab() {
           </div>
         </LabSection>
 
-        <LabSection title="Type Scale">
+        <LabSection title={sectionTitles.typeScale} id="type-scale">
           <div
             style={{
               display: 'flex',
@@ -182,7 +182,7 @@ export function FontLab() {
           </div>
         </LabSection>
 
-        <LabSection title="Font Families">
+        <LabSection title={sectionTitles.fontFamilies} id="font-families">
           <div
             style={{
               display: 'flex',
@@ -199,7 +199,7 @@ export function FontLab() {
                     margin: '0 0 var(--ds-spacing-2) 0',
                   }}
                 >
-                  Sans
+                  {fontFamilyLabels.sans}
                 </p>
                 <p
                   style={{
@@ -209,7 +209,7 @@ export function FontLab() {
                     margin: 0,
                   }}
                 >
-                  The quick brown fox
+                  {sampleText.pangram.en.split(' ').slice(0, 4).join(' ')}
                 </p>
               </div>
             </LabCard>
@@ -222,7 +222,7 @@ export function FontLab() {
                     margin: '0 0 var(--ds-spacing-2) 0',
                   }}
                 >
-                  Mono
+                  {fontFamilyLabels.mono}
                 </p>
                 <p
                   style={{
@@ -232,7 +232,7 @@ export function FontLab() {
                     margin: 0,
                   }}
                 >
-                  The quick brown fox
+                  {sampleText.pangram.en.split(' ').slice(0, 4).join(' ')}
                 </p>
               </div>
             </LabCard>
@@ -264,7 +264,7 @@ export function FontLab() {
                 color: 'var(--ui-text-primary)',
               }}
             >
-              The quick brown fox jumps over the lazy dog. 0123456789
+              {sampleText.pangram.en}. {sampleText.numbers}
             </p>
           </div>
         )}

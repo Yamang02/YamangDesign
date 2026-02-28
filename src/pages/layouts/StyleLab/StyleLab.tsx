@@ -1,61 +1,127 @@
 /**
- * E04: Style Lab - GUI 스타일 실험 페이지 (E08 LabLayout 적용)
+ * E04: Style Lab - GUI 스타일 실험 페이지
+ * E01: 비교 뷰 + lab-content/lab-presets 적용
  */
-import { useTheme } from '../../../themes';
-import { Select, Button, Card } from '../../../components';
+import { Button, Card } from '../../../components';
 import { LabLayout, LabSection } from '../../../layouts';
-import type { StyleName } from '../../../@types/theme';
+import {
+  getStyleVariables,
+  comparisonPresets,
+  sampleText,
+  buttonLabels,
+  sectionTitles,
+} from '../../../constants';
 
-const styleOptions: { value: StyleName; label: string }[] = [
-  { value: 'minimal', label: 'Minimal' },
-  { value: 'neumorphism', label: 'Neumorphism' },
-];
+const shadowKeys = ['sm', 'md', 'lg'] as const;
+
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 export function StyleLab() {
-  const { styleName, setStyleName } = useTheme();
-
   return (
-    <LabLayout title="Style Lab" subtitle="GUI 스타일 탐색">
-      <LabSection title="Style 선택" withDivider={false}>
-        <div style={{ maxWidth: 200 }}>
-          <Select
-            options={styleOptions}
-            value={styleName}
-            onChange={(v) => setStyleName(v as StyleName)}
-            variant="outline"
-          />
-        </div>
-      </LabSection>
-
-      <LabSection title="Shadow Samples">
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--ds-spacing-4)' }}>
-          {['none', 'sm', 'md', 'lg', 'inset'].map((key) => (
+    <LabLayout title="Style Lab" subtitle="GUI 스타일 비교">
+      <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
+        <div
+          style={{
+            display: 'flex',
+            gap: 'var(--ds-spacing-6)',
+            flexWrap: 'wrap',
+          }}
+        >
+          {comparisonPresets.styles.map((styleName) => (
             <div
-              key={key}
+              key={styleName}
               style={{
+                ...getStyleVariables(styleName, '#f5f5f5'),
+                flex: 1,
+                minWidth: 200,
                 padding: 'var(--ds-spacing-6)',
-                backgroundColor: 'var(--ds-color-bg-surface)',
-                borderRadius: 'var(--ds-radius-md)',
-                boxShadow: `var(--ds-shadow-${key})`,
-                fontSize: 'var(--ds-text-sm)',
-                color: 'var(--ds-color-text-secondary)',
+                backgroundColor: '#f5f5f5',
+                borderRadius: 'var(--ds-radius-lg)',
               }}
             >
-              {key}
+              <h3
+                style={{
+                  margin: '0 0 var(--ds-spacing-4) 0',
+                  fontSize: 'var(--ds-text-lg)',
+                  fontWeight: 'var(--ds-font-weight-semibold)',
+                  color: 'var(--ds-color-text-primary)',
+                }}
+              >
+                {capitalize(styleName)}
+              </h3>
+              {shadowKeys.map((size) => (
+                <div
+                  key={size}
+                  style={{
+                    padding: 'var(--ds-spacing-4)',
+                    backgroundColor: 'var(--ds-color-bg-surface)',
+                    boxShadow: `var(--ds-shadow-${size})`,
+                    borderRadius: 'var(--ds-radius-md)',
+                    marginBottom: 'var(--ds-spacing-3)',
+                    fontSize: 'var(--ds-text-sm)',
+                    color: 'var(--ds-color-text-secondary)',
+                  }}
+                >
+                  shadow-{size}
+                </div>
+              ))}
             </div>
           ))}
         </div>
       </LabSection>
 
-      <LabSection title="Component Preview">
-        <div style={{ display: 'flex', gap: 'var(--ds-spacing-4)', flexWrap: 'wrap' }}>
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Card padding="md">
-            <p style={{ margin: 0, fontSize: 'var(--ds-text-sm)', color: 'var(--ds-color-text-primary)' }}>
-              Card with {styleName} style
-            </p>
-          </Card>
+      <LabSection title={sectionTitles.componentComparison} id="component-comparison">
+        <div
+          style={{
+            display: 'flex',
+            gap: 'var(--ds-spacing-6)',
+            flexWrap: 'wrap',
+          }}
+        >
+          {comparisonPresets.styles.map((styleName) => (
+            <div
+              key={styleName}
+              style={{
+                ...getStyleVariables(styleName, '#f5f5f5'),
+                flex: 1,
+                minWidth: 200,
+                padding: 'var(--ds-spacing-6)',
+                backgroundColor: '#f5f5f5',
+                borderRadius: 'var(--ds-radius-lg)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--ds-spacing-4)',
+              }}
+            >
+              <h3
+                style={{
+                  margin: 0,
+                  fontSize: 'var(--ds-text-lg)',
+                  fontWeight: 'var(--ds-font-weight-semibold)',
+                  color: 'var(--ds-color-text-primary)',
+                }}
+              >
+                {capitalize(styleName)}
+              </h3>
+              <div style={{ display: 'flex', gap: 'var(--ds-spacing-3)' }}>
+                <Button variant="primary">{buttonLabels.primary}</Button>
+                <Button variant="secondary">{buttonLabels.secondary}</Button>
+              </div>
+              <Card padding="md">
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 'var(--ds-text-sm)',
+                    color: 'var(--ds-color-text-primary)',
+                  }}
+                >
+                  {sampleText.pangram.en}
+                </p>
+              </Card>
+            </div>
+          ))}
         </div>
       </LabSection>
     </LabLayout>

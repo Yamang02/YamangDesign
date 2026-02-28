@@ -7,13 +7,15 @@ export interface LabSectionProps {
   title: string;
   children: React.ReactNode;
   withDivider?: boolean;
+  /** 섹션 ID (E03 TOC 연동용) */
+  id?: string;
 }
 
-export function LabSection({ title, children, withDivider = true }: LabSectionProps) {
+export function LabSection({ title, children, withDivider = true, id }: LabSectionProps) {
   return (
     <>
       {withDivider && <hr className={styles.sectionDivider} />}
-      <section className={styles.labSection}>
+      <section id={id} className={styles.labSection}>
         <h2 className={styles.sectionTitle}>{title}</h2>
         <div className={styles.sectionContent}>{children}</div>
       </section>
