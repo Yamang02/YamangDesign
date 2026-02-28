@@ -12,8 +12,8 @@ import { lighten, darken } from '../../utils/color';
 export function createNeumorphismTheme(palette: ResolvedPalette): Theme {
   const scales: GeneratedScales = generateColorScales(palette);
 
-  // Neumorphism 배경색 = sub 컬러
-  const bgColor = palette.sub;
+  // Neumorphism 배경색 = neutral (E09)
+  const bgColor = palette.neutral;
   const lightShadow = lighten(bgColor, 15);
   const darkShadow = darken(bgColor, 15);
 
@@ -30,9 +30,9 @@ export function createNeumorphismTheme(palette: ResolvedPalette): Theme {
       },
 
       text: {
-        primary: scales.sub[800],
-        secondary: scales.sub[600],
-        muted: scales.sub[500],
+        primary: scales.neutral[800],
+        secondary: scales.neutral[600],
+        muted: scales.neutral[500],
         inverse: '#FFFFFF',
         onAction: '#FFFFFF',
       },

@@ -42,11 +42,14 @@ export interface SemanticColors {
 export interface PaletteDefinition {
   name: PaletteName;
 
-  /** 기본 색상 (사용자 입력 또는 프리셋) */
+  /** 기본 색상 (사용자 입력 또는 프리셋). E09: neutral/sub 분리 */
   colors: {
     primary: string;
     secondary?: string;
     accent?: string;
+    /** Neutral(무채색). 텍스트/테두리/배경용 */
+    neutral?: string;
+    /** Sub(컬러풀 보조색). 지정된 영역에만 사용. 비워두면 미사용 */
     sub?: string;
   };
 

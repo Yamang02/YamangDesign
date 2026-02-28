@@ -15,6 +15,7 @@ const colorFields: {
   { key: 'secondary', label: 'Secondary', required: false },
   { key: 'accent', label: 'Accent', required: false },
   { key: 'sub', label: 'Sub', required: false },
+  { key: 'neutral', label: 'Neutral', required: false },
 ];
 
 const themePresetEntries = Object.entries(themePresets) as [

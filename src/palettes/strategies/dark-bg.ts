@@ -1,5 +1,6 @@
 /**
  * 어두운 배경 전략 (다크모드용)
+ * E09: neutral 스케일
  */
 import type { GeneratedScales } from '../../@types/tokens';
 import type { SemanticColors } from '../types';
@@ -7,20 +8,20 @@ import type { SemanticColors } from '../types';
 export function applyDarkBgStrategy(scales: GeneratedScales): SemanticColors {
   return {
     bg: {
-      base: scales.sub[900],
-      surface: scales.sub[800],
-      elevated: scales.sub[700],
-      muted: scales.sub[800],
+      base: scales.neutral[900],
+      surface: scales.neutral[800],
+      elevated: scales.neutral[700],
+      muted: scales.neutral[800],
     },
     text: {
-      primary: scales.sub[50],
-      secondary: scales.sub[200],
-      muted: scales.sub[400],
-      onAction: scales.sub[900],
+      primary: scales.neutral[50],
+      secondary: scales.neutral[200],
+      muted: scales.neutral[400],
+      onAction: scales.neutral[900],
     },
     border: {
-      default: scales.sub[600],
-      subtle: scales.sub[700],
+      default: scales.neutral[600],
+      subtle: scales.neutral[700],
       focus: scales.primary[400],
     },
   };

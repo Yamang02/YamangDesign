@@ -9,7 +9,7 @@ export const vividPalette: PaletteDefinition = {
     primary: '#6366F1',
     secondary: '#EC4899',
     accent: '#F59E0B',
-    sub: '#1F2937',
+    neutral: '#1F2937',
   },
   bgStrategy: 'light',
   contrast: 'high',

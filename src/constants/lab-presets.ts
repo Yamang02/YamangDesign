@@ -5,6 +5,7 @@
 import { minimalStyle, neumorphismStyle } from '../styles';
 import { palettePresets, stylePresets } from '../themes/presets';
 import { systemColorPresets } from '../tokens/primitives/system-colors';
+import { neutralPresets, type NeutralPresetName } from '../tokens/primitives/neutral-presets';
 import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
 import { combineTheme } from '../themes/combine';
@@ -56,14 +57,16 @@ export function getPaletteVariables(paletteName: PaletteName): CSSVariables {
   const expanded = createPalette(preset);
   const vars: CSSVariables = {};
 
-  (['primary', 'secondary', 'accent', 'sub'] as const).forEach((key) => {
-    const scale = expanded.scales[key];
-    if (scale) {
-      Object.entries(scale).forEach(([step, color]) => {
-        vars[`--ds-color-${key}-${step}`] = color;
-      });
+  (['primary', 'secondary', 'accent', 'sub', 'neutral'] as const).forEach(
+    (key) => {
+      const scale = expanded.scales[key];
+      if (scale) {
+        Object.entries(scale).forEach(([step, color]) => {
+          vars[`--ds-color-${key}-${step}`] = color;
+        });
+      }
     }
-  });
+  );
 
   return vars;
 }
@@ -100,9 +103,26 @@ export function getSystemColorVariables(
   return preset ? generateSystemColorVars(preset) : {};
 }
 
+/**
+ * E09: Neutral preset → CSS 변수 객체 (--ds-color-neutral-*)
+ * Neutral Presets 섹션 비교용
+ */
+export function getNeutralPresetVariables(
+  presetName: NeutralPresetName
+): CSSVariables {
+  const preset = neutralPresets[presetName];
+  if (!preset) return {};
+  const vars: CSSVariables = {};
+  Object.entries(preset.scale).forEach(([step, color]) => {
+    vars[`--ds-color-neutral-${step}`] = color;
+  });
+  return vars;
+}
+
 /** 비교 대상 프리셋 목록 */
 export const comparisonPresets = {
   styles: ['minimal', 'neumorphism'] as StyleName[],
   palettes: ['default', 'vivid', 'pastel', 'monochrome', 'earth'] as PaletteName[],
   systemPresets: ['default', 'muted'] as SystemPresetName[],
+  neutralPresets: ['gray', 'slate', 'zinc', 'stone'] as NeutralPresetName[],
 };

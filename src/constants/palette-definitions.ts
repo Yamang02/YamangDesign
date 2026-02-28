@@ -17,7 +17,7 @@ export const themePresets: Record<
   pastel: pastelPalette,
   monochrome: {
     name: 'monochrome',
-    colors: { primary: '#4B5563', sub: '#9CA3AF' },
+    colors: { primary: '#4B5563', neutral: '#9CA3AF' },
     bgStrategy: 'light',
   },
   earth: {
@@ -26,7 +26,7 @@ export const themePresets: Record<
       primary: '#78716C',
       secondary: '#A8A29E',
       accent: '#D97706',
-      sub: '#F5F5F4',
+      neutral: '#F5F5F4',
     },
     bgStrategy: 'light',
   },

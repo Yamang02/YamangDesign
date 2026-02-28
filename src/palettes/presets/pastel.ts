@@ -9,7 +9,7 @@ export const pastelPalette: PaletteDefinition = {
     primary: '#A5B4FC',
     secondary: '#FBCFE8',
     accent: '#FDE68A',
-    sub: '#F3F4F6',
+    neutral: '#F3F4F6',
   },
   bgStrategy: 'colored',
   contrast: 'normal',

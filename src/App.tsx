@@ -67,7 +67,7 @@ function App() {
         primary: '#6366F1',
         secondary: '#8B5CF6',
         accent: '#F59E0B',
-        sub: '#E5E7EB',
+        neutral: '#E5E7EB',
       }}
     >
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

@@ -43,6 +43,7 @@ export const sectionTitles = {
 
   // PaletteLab
   colorScales: 'Color Scales',
+  neutralPresets: 'Neutral Presets',
   systemColors: 'System Colors',
   paletteComparison: 'Palette Comparison',
 

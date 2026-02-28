@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { PresetManagerProps } from './ColorPicker.types';
 import styles from './ColorPicker.module.css';
 import { Icon } from '../Icon';
-import { resolvePalette } from '../../utils/palette';
+import { resolvePalette, generateColorScales } from '../../utils/palette';
 
 export function PresetManager({
   presets,
@@ -55,6 +55,7 @@ export function PresetManager({
       <div className={styles.presetList}>
         {presets.map((preset) => {
           const resolved = resolvePalette(preset.palette);
+          const scales = generateColorScales(resolved);
           return (
             <div
               key={preset.id}
@@ -72,19 +73,19 @@ export function PresetManager({
               <div className={styles.presetColors}>
                 <div
                   className={styles.presetColorDot}
-                  style={{ backgroundColor: resolved.primary[500] }}
+                  style={{ backgroundColor: scales.primary[500] }}
                 />
                 <div
                   className={styles.presetColorDot}
-                  style={{ backgroundColor: resolved.secondary[500] }}
+                  style={{ backgroundColor: scales.secondary[500] }}
                 />
                 <div
                   className={styles.presetColorDot}
-                  style={{ backgroundColor: resolved.accent[500] }}
+                  style={{ backgroundColor: scales.accent[500] }}
                 />
                 <div
                   className={styles.presetColorDot}
-                  style={{ backgroundColor: resolved.sub[500] }}
+                  style={{ backgroundColor: scales.neutral[500] }}
                 />
               </div>
               <span className={styles.presetName}>

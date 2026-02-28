@@ -18,22 +18,22 @@ export function createMinimalTheme(palette: ResolvedPalette): Theme {
     colors: {
       bg: {
         base: '#FFFFFF',
-        surface: scales.sub[100],
+        surface: scales.neutral[100],
         elevated: '#FFFFFF',
-        muted: scales.sub[200],
+        muted: scales.neutral[200],
       },
 
       text: {
-        primary: scales.sub[900],
-        secondary: scales.sub[600],
-        muted: scales.sub[400],
+        primary: scales.neutral[900],
+        secondary: scales.neutral[600],
+        muted: scales.neutral[400],
         inverse: '#FFFFFF',
         onAction: '#FFFFFF',
       },
 
       border: {
-        default: scales.sub[300],
-        subtle: scales.sub[200],
+        default: scales.neutral[300],
+        subtle: scales.neutral[200],
         focus: scales.primary[500],
       },
 

@@ -16,6 +16,7 @@ export {
   getPaletteVariables,
   getThemeVariables,
   getSystemColorVariables,
+  getNeutralPresetVariables,
   comparisonPresets,
 } from './lab-presets';
 
