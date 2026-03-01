@@ -22,4 +22,9 @@ export function createStyle(
 }
 
 export type { StyleDefinition, ResolvedStyle, StyleName } from './types';
-export { minimalStyle, neumorphismStyle } from './presets';
+export {
+  minimalStyle,
+  neumorphismStyle,
+  glassmorphismStyle,
+  brutalismStyle,
+} from './presets';

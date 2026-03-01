@@ -100,6 +100,8 @@
 /* 강조 카드는 밝은 배경 (elevated) 사용 - 배색 이론 준수 */
 .pricingHighlight [data-variant='elevated'] {
   background-color: var(--ds-color-bg-elevated);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
 }
 
 .badgeWrapper {

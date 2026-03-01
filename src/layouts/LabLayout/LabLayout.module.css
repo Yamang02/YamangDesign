@@ -5,6 +5,9 @@
   max-width: var(--app-max-width);
   margin: 0 auto;
   width: 100%;
+  /* Lab 전역 배경 토큰 (Card 등에서 사용, Overview는 자체 정의로 오버라이드) */
+  --lab-bg-surface: #ffffff;
+  --lab-bg-muted: #f1f2f3;
 }
 
 .labLayout {
@@ -238,4 +241,17 @@ section[id] {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-spacing-6);
+}
+
+/* Lab 컨텍스트: Card 컴포넌트 고정 스타일 (backdrop-filter 제거로 레이아웃 안정화) */
+[data-context="lab"] .card[data-variant="elevated"],
+[data-context="lab"] .card[data-variant="flat"],
+[data-context="lab"] .card[data-variant="outlined"] {
+  background-color: var(--lab-bg-surface, #ffffff);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+[data-context="lab"] .card[data-variant="flat"][data-hoverable="true"]:hover {
+  background-color: var(--lab-bg-muted, #f1f2f3);
 }

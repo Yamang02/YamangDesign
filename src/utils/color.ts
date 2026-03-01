@@ -14,6 +14,14 @@ export function hexToRgb(hex: string): { r: number; g: number; b: number } {
 }
 
 /**
+ * HEX를 rgba 문자열로 변환
+ */
+export function hexToRgba(hex: string, alpha: number): string {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+/**
  * RGB를 HEX로 변환
  */
 export function rgbToHex(r: number, g: number, b: number): string {

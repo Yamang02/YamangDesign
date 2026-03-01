@@ -131,9 +131,22 @@ function NeutralPresetDetail({ presetName }: { presetName: NeutralPresetName }) 
   const preset = neutralPresets[presetName];
   if (!preset) return null;
   const { scale } = preset;
+  const base = scale[500] ?? scale[400] ?? Object.values(scale)[0];
 
   return (
     <div className={styles.paletteDetail}>
+      <h4 className={styles.detailSectionTitle}>기본 색상</h4>
+      <div className={styles.colorSwatches}>
+        <div className={styles.colorRow}>
+          <span className={styles.colorLabel}>Neutral</span>
+          <span
+            className={styles.colorSample}
+            style={{ backgroundColor: base }}
+            title={base}
+          />
+          <code className={styles.colorHex}>{base}</code>
+        </div>
+      </div>
       <h4 className={styles.detailSectionTitle}>Neutral 스케일 (50~900)</h4>
       <div className={styles.scaleGrid}>
         <div className={styles.scaleColumn}>
@@ -171,6 +184,24 @@ function SystemPresetDetail({ presetName }: { presetName: SystemPresetName }) {
 
   return (
     <div className={styles.paletteDetail}>
+      <h4 className={styles.detailSectionTitle}>기본 색상</h4>
+      <div className={styles.colorSwatches}>
+        {systemColorKeys.map((colorKey) => {
+          const base =
+            preset.colors[colorKey as keyof typeof preset.colors][500];
+          return (
+            <div key={colorKey} className={styles.colorRow}>
+              <span className={styles.colorLabel}>{capitalize(colorKey)}</span>
+              <span
+                className={styles.colorSample}
+                style={{ backgroundColor: base }}
+                title={base}
+              />
+              <code className={styles.colorHex}>{base}</code>
+            </div>
+          );
+        })}
+      </div>
       <h4 className={styles.detailSectionTitle}>시스템 컬러 (50, 500, 700)</h4>
       <div className={styles.scaleGrid}>
         {systemColorKeys.map((colorKey) => (
@@ -400,6 +431,7 @@ export function PaletteLab() {
             <ColorUsageDiagram
               palette={overviewPalette?.expanded}
               mapping={overviewPalette?.mapping}
+              hideTokenExample
             />
           </LabOverview>
         </LabSection>

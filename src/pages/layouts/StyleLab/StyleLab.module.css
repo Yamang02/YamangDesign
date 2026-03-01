@@ -1,8 +1,20 @@
 /* E05: StyleLab 비교 그리드 + DetailPanel 상세 */
 .comparisonGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--ds-spacing-6);
+}
+
+@media (max-width: 700px) {
+  .comparisonGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 450px) {
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cardInner {
@@ -62,7 +74,28 @@
 
 .borderInfo {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--ds-spacing-4);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+}
+
+.detailDescription {
+  margin: 0 0 var(--ds-spacing-2) 0;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  line-height: 1.5;
+}
+
+.characteristicsList {
+  margin: 0 0 var(--ds-spacing-4) 0;
+  padding-left: var(--ds-spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.characteristicItem {
   font-size: var(--ds-text-sm);
   color: var(--ds-color-text-secondary);
 }

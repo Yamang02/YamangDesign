@@ -61,6 +61,26 @@ const styleVariants: StyleVariant[] = [
       background: 'var(--lab-bg-muted)',
     },
   },
+  {
+    name: 'Glassmorphism',
+    description: '반투명 글래스 효과',
+    characteristics: ['부드러운 블러 그림자', '얇은 rgba 테두리', '반투명 배경'],
+    preview: {
+      shadow: '0 8px 32px rgba(0,0,0,0.15)',
+      border: '1px solid rgba(255,255,255,0.4)',
+      background: 'rgba(255,255,255,0.5)',
+    },
+  },
+  {
+    name: 'Brutalism',
+    description: '거칠고 강렬한 비주얼',
+    characteristics: ['하드 드롭 섀도우', '굵은 테두리 (3px)', '강한 대비'],
+    preview: {
+      shadow: '6px 6px 0 rgba(0,0,0,0.2)',
+      border: '3px solid var(--lab-text-primary)',
+      background: 'var(--lab-bg-surface)',
+    },
+  },
 ];
 
 function StyleComparisonDiagram() {

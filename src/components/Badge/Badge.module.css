@@ -43,5 +43,7 @@
 
 .badge[data-variant='subtle'] {
   background-color: var(--ds-color-bg-muted);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   color: var(--ds-color-text-primary);
 }

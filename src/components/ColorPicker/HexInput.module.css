@@ -49,6 +49,8 @@
   font-weight: var(--ds-text-code-weight);
   font-family: var(--ds-text-code-font, var(--ds-font-mono));
   background-color: var(--ds-color-bg-surface);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   border: 1px solid var(--ds-color-border-default);
   border-radius: var(--ds-radius-sm);
   color: var(--ds-color-text-primary);

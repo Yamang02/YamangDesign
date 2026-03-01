@@ -5,6 +5,7 @@
   width: 100%;
   box-sizing: border-box;
 
+  /* Overview 전용 고정값 (테마 미상속) */
   --lab-bg-surface: #ffffff;
   --lab-bg-muted: #f1f2f3;
   --lab-bg-base: #ffffff;

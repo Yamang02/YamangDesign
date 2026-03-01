@@ -1,7 +1,7 @@
 /**
  * 테마 이름 (하위 호환 - deprecated, palette/style 사용)
  */
-export type ThemeName = 'minimal' | 'neumorphism';
+export type ThemeName = 'minimal' | 'neumorphism' | 'glassmorphism' | 'brutalism';
 
 /**
  * Palette/Style 이름 (E03)

@@ -408,6 +408,8 @@ export interface ColorUsageDiagramProps {
   onTokenSelect?: (path: SemanticTokenPath) => void;
   /** mapping + component를 가로 배치 (모달용) */
   horizontalLayout?: boolean;
+  /** 토큰 예시 섹션 숨김 (Lab Overview용) */
+  hideTokenExample?: boolean;
 }
 
 export function ColorUsageDiagram({
@@ -418,6 +420,7 @@ export function ColorUsageDiagram({
   hideColorRoles = false,
   onTokenSelect,
   horizontalLayout = false,
+  hideTokenExample = false,
 }: ColorUsageDiagramProps = {}) {
   const scales = palette?.scales;
   const bgStrategy = palette?.bgStrategy;
@@ -435,8 +438,10 @@ export function ColorUsageDiagram({
         onTokenSelect={onTokenSelect}
       />
 
-      {/* Component Diagram */}
-      <ComponentDiagram mapping={mapping} scales={scales} />
+      {/* Component Diagram (토큰 예시) - Overview에서는 hideTokenExample로 숨김 */}
+      {!hideTokenExample && (
+        <ComponentDiagram mapping={mapping} scales={scales} />
+      )}
     </>
   );
 

@@ -66,7 +66,7 @@ export function LabLayout({
   };
 
   return (
-    <div className={styles.labLayoutWrapper}>
+    <div className={styles.labLayoutWrapper} data-context="lab">
       {showToc && idsToObserve.length >= 2 && (
         <LabToc
           items={tocItems}

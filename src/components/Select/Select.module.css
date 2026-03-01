@@ -61,6 +61,8 @@
 /* Trigger variants - default */
 .trigger[data-variant='outline'] {
   background-color: var(--ds-color-bg-surface);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   color: var(--ds-color-text-primary);
   border: 1px solid var(--ds-color-border-default);
   box-shadow: none;
@@ -78,6 +80,8 @@
 
 .trigger[data-variant='filled'] {
   background-color: var(--ds-color-bg-muted);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   color: var(--ds-color-text-primary);
   border: 1px solid transparent;
   box-shadow: var(--ds-shadow-sm);
@@ -100,10 +104,14 @@
 
 .trigger[data-variant='ghost']:hover:not([data-open='true']):not(:disabled) {
   background-color: var(--ds-color-bg-muted);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
 }
 
 .trigger[data-variant='ghost'][data-open='true'] {
   background-color: var(--ds-color-bg-muted);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   box-shadow: 0 0 0 2px var(--ds-color-action-primary-default);
 }
 
@@ -157,6 +165,8 @@
   margin-top: var(--ds-spacing-1);
   padding: var(--ds-spacing-1);
   background-color: var(--ds-color-bg-elevated);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   border: 1px solid var(--ds-color-border-default);
   border-radius: var(--ds-radius-md);
   box-shadow: var(--ds-shadow-lg);
@@ -182,10 +192,14 @@
 
 .option:hover:not([data-disabled='true']):not([data-selected='true']) {
   background-color: var(--ds-color-bg-muted);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
 }
 
 .option[data-highlighted='true']:not([data-selected='true']) {
   background-color: var(--ds-color-bg-muted);
+  backdrop-filter: var(--ds-effect-backdrop-blur);
+  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
 }
 
 .option[data-selected='true'] {

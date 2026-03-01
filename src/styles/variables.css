@@ -11,6 +11,9 @@
   --ds-color-bg-elevated: initial;
   --ds-color-bg-muted: initial;
 
+  /* Effect (glassmorphism 시 ThemeProvider가 12px 주입) */
+  --ds-effect-backdrop-blur: none;
+
   --ds-color-text-primary: initial;
   --ds-color-text-secondary: initial;
   --ds-color-text-muted: initial;

@@ -10,6 +10,7 @@ import type {
 } from '../@types/theme';
 import type { ExternalPalette } from '../@types/tokens';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';
+import { hexToRgba } from '../utils/color';
 import { createPalette } from '../palettes';
 import { combineTheme } from './combine';
 import {
@@ -76,9 +77,7 @@ export function ThemeProvider({
   };
 
   const setThemeName = (name: ThemeName) => {
-    if (name === 'minimal' || name === 'neumorphism') {
-      setStyleName(name);
-    }
+    setStyleName(name);
   };
 
   const paletteDefinition = useMemo(() => {
@@ -116,11 +115,34 @@ export function ThemeProvider({
       }
     );
 
-    const themeCSSVars = flattenToCSSVars({
-      color: theme.colors,
-      shadow: theme.shadows,
-      border: theme.border,
-    });
+    let themeColors = theme.colors;
+    const effectVars: Record<string, string> = {
+      '--ds-effect-backdrop-blur':
+        styleName === 'glassmorphism' ? '12px' : 'none',
+    };
+
+    if (styleName === 'glassmorphism') {
+      const bg = theme.colors.bg;
+      themeColors = {
+        ...theme.colors,
+        bg: {
+          ...bg,
+          surface: hexToRgba(bg.surface, 0.25),
+          surfaceBrand: hexToRgba(bg.surfaceBrand, 0.3),
+          elevated: hexToRgba(bg.elevated, 0.3),
+          muted: hexToRgba(bg.muted, 0.2),
+        },
+      };
+    }
+
+    const themeCSSVars = {
+      ...flattenToCSSVars({
+        color: themeColors,
+        shadow: theme.shadows,
+        border: theme.border,
+      }),
+      ...effectVars,
+    };
 
     const zIndexAsStrings = Object.fromEntries(
       Object.entries(zIndex).map(([k, v]) => [k, String(v)])

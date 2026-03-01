@@ -29,13 +29,61 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+const STYLE_METADATA: Record<
+  StyleName,
+  { description: string; characteristics: string[] }
+> = {
+  minimal: {
+    description: '클린하고 모던한 스타일',
+    characteristics: ['아래 방향 드롭 섀도우', '얇은 테두리 (1px)', '플랫한 배경'],
+  },
+  neumorphism: {
+    description: '소프트하고 입체적인 스타일',
+    characteristics: ['양방향 그림자 (raised)', '테두리 없음', '배경과 융합'],
+  },
+  glassmorphism: {
+    description: '반투명 글래스 효과',
+    characteristics: ['부드러운 블러 그림자', '얇은 rgba 테두리', '반투명 배경'],
+  },
+  brutalism: {
+    description: '거칠고 강렬한 비주얼',
+    characteristics: ['하드 드롭 섀도우', '굵은 테두리 (3px)', '강한 대비'],
+  },
+};
+
 function StyleDetail({ name }: { name: StyleName }) {
   const styleDef = stylePresets[name];
+  const meta = STYLE_METADATA[name];
   if (!styleDef) return null;
   const resolved = createStyle(styleDef, '#f5f5f5');
 
   return (
     <div className={styles.styleDetail}>
+      {meta && (
+        <>
+          <h4 className={styles.detailSectionTitle}>설명</h4>
+          <p className={styles.detailDescription}>{meta.description}</p>
+          <h4 className={styles.detailSectionTitle}>특징</h4>
+          <ul className={styles.characteristicsList}>
+            {meta.characteristics.map((char, i) => (
+              <li key={i} className={styles.characteristicItem}>
+                {char}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      <h4 className={styles.detailSectionTitle}>Surface</h4>
+      <div className={styles.borderInfo}>
+        <span>default: {styleDef.surface.default}</span>
+        <span>interactive: {styleDef.surface.interactive}</span>
+        <span>active: {styleDef.surface.active}</span>
+      </div>
+      <h4 className={styles.detailSectionTitle}>States</h4>
+      <div className={styles.borderInfo}>
+        <span>hover: {styleDef.states.hover}</span>
+        <span>active: {styleDef.states.active}</span>
+      </div>
       <h4 className={styles.detailSectionTitle}>Shadow</h4>
       <div className={styles.shadowList}>
         {(['none', 'sm', 'md', 'lg', 'xl', 'inset'] as const).map((key) => {
@@ -56,6 +104,9 @@ function StyleDetail({ name }: { name: StyleName }) {
       <div className={styles.borderInfo}>
         <span>width: {resolved.border.width}</span>
         <span>style: {resolved.border.style}</span>
+        {styleDef.border.useColor !== undefined && (
+          <span>useColor: {String(styleDef.border.useColor)}</span>
+        )}
       </div>
     </div>
   );

@@ -4,7 +4,12 @@
  */
 import type { PaletteDefinition } from '../palettes';
 import type { StyleDefinition } from '../styles';
-import { minimalStyle, neumorphismStyle } from '../styles';
+import {
+  minimalStyle,
+  neumorphismStyle,
+  glassmorphismStyle,
+  brutalismStyle,
+} from '../styles';
 import type { ExternalPalette } from '../@types/tokens';
 import type { StyleName } from '../@types/theme';
 import {
@@ -18,8 +23,8 @@ export const palettePresets = themePresets;
 export const stylePresets: Record<StyleName, StyleDefinition> = {
   minimal: minimalStyle,
   neumorphism: neumorphismStyle,
-  glassmorphism: minimalStyle, // placeholder - reuse minimal for now
-  brutalism: minimalStyle, // placeholder - reuse minimal for now
+  glassmorphism: glassmorphismStyle,
+  brutalism: brutalismStyle,
 };
 
 /** ExternalPalette → PaletteDefinition (custom, toThemePreset 래퍼) */
