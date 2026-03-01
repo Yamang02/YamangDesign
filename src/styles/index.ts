@@ -25,6 +25,5 @@ export type { StyleDefinition, ResolvedStyle, StyleName } from './types';
 export {
   minimalStyle,
   neumorphismStyle,
-  glassmorphismStyle,
   brutalismStyle,
 } from './presets';

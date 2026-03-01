@@ -170,6 +170,4 @@
 .mappingIconBtn:hover {
   color: var(--ds-color-text-primary);
   background: var(--ds-color-bg-muted);
-  backdrop-filter: var(--ds-effect-backdrop-blur);
-  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
 }

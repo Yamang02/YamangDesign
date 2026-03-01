@@ -2,6 +2,8 @@
 .card {
   border-radius: var(--ds-radius-lg);
   transition: var(--ds-transition-shadow), var(--ds-transition-transform), var(--ds-transition-color);
+  overflow: hidden;
+  min-width: 0;
 }
 
 /* Padding */
@@ -24,7 +26,7 @@
 /* Variants */
 .card[data-variant='elevated'] {
   background-color: var(--ds-color-bg-surfaceBrand);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   box-shadow: var(--ds-shadow-md);
 }
 
@@ -35,7 +37,7 @@
 
 .card[data-variant='outlined'] {
   background-color: var(--ds-color-bg-base);
-  border: 1px solid var(--ds-color-border-default);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
   box-shadow: none;
 }
 
@@ -66,7 +68,7 @@
 /* Sections */
 .header {
   padding: var(--ds-spacing-4);
-  border-bottom: 1px solid var(--ds-color-border-subtle);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   font-size: var(--ds-text-heading-2-size);
   line-height: var(--ds-text-heading-2-leading);
   font-weight: var(--ds-text-heading-2-weight);
@@ -83,8 +85,11 @@
 
 .footer {
   padding: var(--ds-spacing-4);
-  border-top: 1px solid var(--ds-color-border-subtle);
+  border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--ds-spacing-2);
   justify-content: flex-end;
+  flex-shrink: 0;
 }

@@ -78,6 +78,13 @@ const itemWrapperStyle = {
   gap: 'var(--ds-spacing-1)',
 };
 
+/** 카드 섹션: 그리드 셀 전체 너비 사용하여 레이아웃 안정화 */
+const cardItemWrapperStyle = {
+  ...itemWrapperStyle,
+  alignItems: 'stretch' as const,
+  minWidth: 0,
+};
+
 const itemLabelStyle = {
   fontSize: 'var(--ds-text-xs)',
   color: 'var(--ds-color-text-muted)',
@@ -376,7 +383,7 @@ export function Components() {
         <h2 style={sectionTitleStyle}>{showcaseSections.card}</h2>
 
         <div style={gridStyle}>
-          <div style={itemWrapperStyle}>
+          <div style={cardItemWrapperStyle}>
             <span style={itemLabelStyle}>{cardShowcase.variantLabels.elevated}</span>
             <Card variant="elevated" hoverable>
               <Card.Header>{showcaseContent.card.title}</Card.Header>
@@ -388,7 +395,7 @@ export function Components() {
             </Card>
           </div>
 
-          <div style={itemWrapperStyle}>
+          <div style={cardItemWrapperStyle}>
             <span style={itemLabelStyle}>{cardShowcase.variantLabels.outlined}</span>
             <Card variant="outlined" hoverable>
               <Card.Header>{showcaseContent.card.title}</Card.Header>
@@ -399,7 +406,7 @@ export function Components() {
             </Card>
           </div>
 
-          <div style={itemWrapperStyle}>
+          <div style={cardItemWrapperStyle}>
             <span style={itemLabelStyle}>{cardShowcase.variantLabels.flat}</span>
             <Card variant="flat" padding="lg">
               <Card.Body>{showcaseContent.card.body}</Card.Body>

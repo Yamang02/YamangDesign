@@ -81,7 +81,7 @@
 .button[data-variant='outline'] {
   background-color: transparent;
   color: var(--ds-color-action-primary-default);
-  border: 1px solid var(--ds-color-action-primary-default);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-action-primary-default);
   box-shadow: none;
 }
 

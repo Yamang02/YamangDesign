@@ -117,7 +117,7 @@ section[id] {
 /* E02: 섹션 카드 래퍼 */
 .sectionCard {
   background-color: var(--ds-color-bg-base);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-spacing-6);
   margin-bottom: var(--ds-spacing-6);
@@ -151,7 +151,7 @@ section[id] {
   background-color: var(--ds-color-bg-base);
   border-radius: var(--ds-radius-md);
   box-shadow: var(--ds-shadow-sm);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   min-width: 120px;
   min-height: 80px;
   display: flex;
@@ -181,7 +181,7 @@ section[id] {
   min-width: 240px;
   padding: var(--ds-spacing-5);
   background-color: var(--ds-color-bg-base);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-lg);
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
@@ -206,7 +206,7 @@ section[id] {
   gap: var(--ds-spacing-2);
   margin-bottom: var(--ds-spacing-4);
   padding-bottom: var(--ds-spacing-3);
-  border-bottom: 1px solid var(--ds-color-border-subtle);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
 }
 
 .comparisonHeaderMain {
@@ -243,13 +243,11 @@ section[id] {
   gap: var(--ds-spacing-6);
 }
 
-/* Lab 컨텍스트: Card 컴포넌트 고정 스타일 (backdrop-filter 제거로 레이아웃 안정화) */
+/* Lab 컨텍스트: Card 컴포넌트 고정 배경 (일관된 스타일 유지) */
 [data-context="lab"] .card[data-variant="elevated"],
 [data-context="lab"] .card[data-variant="flat"],
 [data-context="lab"] .card[data-variant="outlined"] {
   background-color: var(--lab-bg-surface, #ffffff);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 [data-context="lab"] .card[data-variant="flat"][data-hoverable="true"]:hover {

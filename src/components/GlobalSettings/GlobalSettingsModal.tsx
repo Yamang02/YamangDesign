@@ -40,7 +40,6 @@ const COLOR_FIELDS: {
 const STYLE_OPTIONS: { value: StyleName; label: string }[] = [
   { value: 'minimal', label: 'Minimal' },
   { value: 'neumorphism', label: 'Neumorphism' },
-  { value: 'glassmorphism', label: 'Glassmorphism' },
   { value: 'brutalism', label: 'Brutalism' },
 ];
 

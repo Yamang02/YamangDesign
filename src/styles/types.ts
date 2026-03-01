@@ -7,7 +7,6 @@
 export type StyleName =
   | 'minimal'
   | 'neumorphism'
-  | 'glassmorphism'
   | 'brutalism';
 
 /** 표면 처리 방식 */

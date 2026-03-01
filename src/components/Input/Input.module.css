@@ -60,7 +60,7 @@
 
 /* Variant: outline */
 .input[data-variant='outline'] {
-  border: 1px solid var(--ds-color-border-default);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
   background-color: var(--ds-color-bg-base);
   box-shadow: none;
 }
@@ -84,11 +84,9 @@
 
 /* Variant: filled */
 .input[data-variant='filled'] {
-  border: 1px solid transparent;
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) transparent;
   /* ThemeProvider 미주입 시에도 filled 느낌이 나도록 fallback */
   background-color: var(--ds-color-bg-muted, #f0f0f0);
-  backdrop-filter: var(--ds-effect-backdrop-blur);
-  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   box-shadow: none;
 }
 
@@ -113,7 +111,7 @@
 /* Variant: flushed */
 .input[data-variant='flushed'] {
   border: none;
-  border-bottom: 2px solid var(--ds-color-border-default);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
   border-radius: 0;
   background-color: var(--ds-color-bg-base);
   padding-left: 0;
@@ -141,8 +139,6 @@
 /* Disabled */
 .input:disabled {
   background-color: var(--ds-color-bg-muted);
-  backdrop-filter: var(--ds-effect-backdrop-blur);
-  -webkit-backdrop-filter: var(--ds-effect-backdrop-blur);
   border-color: var(--ds-color-border-subtle);
   color: var(--ds-color-text-muted);
   cursor: not-allowed;

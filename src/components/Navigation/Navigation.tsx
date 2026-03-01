@@ -14,7 +14,6 @@ import type { ThemeName } from '../../@types/theme';
 const themeOptions = [
   { value: 'minimal', label: 'Minimal' },
   { value: 'neumorphism', label: 'Neumorphism' },
-  { value: 'glassmorphism', label: 'Glassmorphism' },
   { value: 'brutalism', label: 'Brutalism' },
 ];
 
