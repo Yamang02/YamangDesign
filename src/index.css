@@ -8,6 +8,11 @@
   min-height: 100vh;
 }
 
+/* App Layout (상위 통합 max-width) */
+:root {
+  --app-max-width: min(100%, 80rem); /* 1280px @ 16px base, rem으로 접근성 확보 */
+}
+
 /* Theme Transition (토큰 기반) */
 :root {
   transition: var(--ds-transition-theme);

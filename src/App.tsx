@@ -89,7 +89,7 @@ function PlaceholderPage({ title }: { title: string }) {
     <div
       style={{
         padding: 'var(--ds-spacing-8)',
-        maxWidth: 600,
+        maxWidth: 'var(--app-max-width)',
         margin: '0 auto',
         textAlign: 'center',
       }}

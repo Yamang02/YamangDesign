@@ -1,14 +1,16 @@
-/* E03: TOC + 본문 wrapper */
+/* E03: app-max-width로 Header와 정렬 (TOC + 본문 통합) */
 .labLayoutWrapper {
   display: flex;
   min-height: 100%;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .labLayout {
   flex: 1;
   padding: var(--ds-spacing-8) var(--ds-spacing-6);
-  max-width: 1200px;
-  margin: 0 auto;
+  min-width: 0;
 }
 
 /* E03: TOC */
