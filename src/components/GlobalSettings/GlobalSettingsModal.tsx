@@ -211,7 +211,6 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
         onClick={(e) => e.stopPropagation()}
         data-ui-light
       >
-        {/* Header */}
         <header className={styles.header}>
           <h2 id="global-settings-title" className={styles.title}>
             디자인 시스템 설정
@@ -226,9 +225,7 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
           </button>
         </header>
 
-        {/* Content */}
         <div className={styles.content}>
-          {/* Section 1: Color Palette */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>컬러 팔레트</h3>
             <div className={styles.paletteList}>
@@ -274,7 +271,6 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
             </div>
           </section>
 
-          {/* Section 2: Presets */}
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
               <h3 className={styles.sectionTitle}>프리셋</h3>
@@ -463,7 +459,6 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
             </div>
           </section>
 
-          {/* Section 3: Style & System */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>스타일 / 시스템</h3>
             <div className={styles.settingsList}>
@@ -493,7 +488,6 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
           </section>
         </div>
 
-        {/* Footer */}
         <footer className={styles.footer}>
           <div className={styles.footerLeft}>
             <Tooltip content="내보내기" portal position="top">

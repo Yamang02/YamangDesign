@@ -2,7 +2,7 @@
  * E06: Tooltip - Site Style 가이드용
  * portal: true 시 document.body에 렌더링 (모달/스크롤 컨테이너 내부에서 스크롤바에 가려지지 않음)
  */
-import { useState, useRef, useEffect, useLayoutEffect, type ReactNode } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, useCallback, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { siteStyle } from '../../config/site-style';
 import styles from './Tooltip.module.css';
@@ -30,7 +30,7 @@ export function Tooltip({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLSpanElement | null>(null);
 
-  const updatePosition = () => {
+  const updatePosition = useCallback(() => {
     const el = triggerRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -53,12 +53,14 @@ export function Tooltip({
         left = rect.right + gap;
         break;
     }
-    setCoords({ top, left });
-  };
+    requestAnimationFrame(() => setCoords({ top, left }));
+  }, [position]);
 
   useLayoutEffect(() => {
-    if (visible && portal) updatePosition();
-  }, [visible, portal, position]);
+    if (visible && portal) {
+      requestAnimationFrame(updatePosition);
+    }
+  }, [visible, portal, updatePosition]);
 
   useEffect(() => {
     if (!visible || !portal) return;
@@ -69,7 +71,7 @@ export function Tooltip({
       window.removeEventListener('scroll', handler, true);
       window.removeEventListener('resize', handler);
     };
-  }, [visible, portal]);
+  }, [visible, portal, updatePosition]);
 
   const handleMouseEnter = () => {
     timeoutRef.current = setTimeout(() => setVisible(true), delay);

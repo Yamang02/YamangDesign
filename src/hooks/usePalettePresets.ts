@@ -6,7 +6,6 @@ import { colorStartPoints } from '../constants/palette-definitions';
 const STORAGE_KEY = 'yamang-palette-presets';
 const STORAGE_VERSION = 1;
 
-/** colorStartPoints를 PalettePreset 형식으로 변환 (E06 통합) */
 const defaultPresets: PalettePreset[] = Object.entries(colorStartPoints).map(
   ([id, palette]) => ({
     id: `default-${id}`,
@@ -28,10 +27,7 @@ function loadFromStorage(): PalettePreset[] {
 
     const data: PalettePresetsStorage = JSON.parse(raw);
 
-    if (data.version !== STORAGE_VERSION) {
-      // 버전 마이그레이션이 필요한 경우 여기서 처리
-      return [];
-    }
+    if (data.version !== STORAGE_VERSION) return [];
 
     return data.presets;
   } catch {
@@ -60,10 +56,8 @@ export interface UsePalettePresetsReturn {
 export function usePalettePresets(): UsePalettePresetsReturn {
   const [userPresets, setUserPresets] = useState<PalettePreset[]>(() => loadFromStorage());
 
-  // 전체 프리셋 (기본 + 사용자)
   const presets = [...defaultPresets, ...userPresets];
 
-  // localStorage와 동기화
   useEffect(() => {
     saveToStorage(userPresets);
   }, [userPresets]);

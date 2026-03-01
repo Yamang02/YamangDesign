@@ -88,7 +88,9 @@ export function Select({
   useEffect(() => {
     if (isOpen) {
       const currentIndex = options.findIndex((opt) => opt.value === value);
-      setHighlightedIndex(currentIndex >= 0 ? currentIndex : 0);
+      queueMicrotask(() => {
+        setHighlightedIndex(currentIndex >= 0 ? currentIndex : 0);
+      });
     }
   }, [isOpen, options, value]);
 

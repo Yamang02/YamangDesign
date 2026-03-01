@@ -37,6 +37,32 @@ function isScaleReference(
   );
 }
 
+function RecommendationIcon({
+  recommendation,
+}: {
+  recommendation: { level: RecommendationLevel; message?: string };
+}) {
+  if (recommendation.level === 'recommended') {
+    return (
+      <Tooltip content={recommendation.message ?? '권장 매핑'} portal position="top">
+        <span className={styles.iconRecommended} aria-label="권장">
+          <Icon name="check" size="sm" />
+        </span>
+      </Tooltip>
+    );
+  }
+  if (recommendation.level === 'warning') {
+    return (
+      <Tooltip content={recommendation.message ?? '주의'} portal position="top">
+        <span className={styles.iconWarning} aria-label="주의">
+          <Icon name="warning" size="sm" />
+        </span>
+      </Tooltip>
+    );
+  }
+  return null;
+}
+
 export interface ScaleSelectionModalProps {
   open: boolean;
   onClose: () => void;
@@ -72,15 +98,17 @@ export function ScaleSelectionModal({
 
   useEffect(() => {
     if (!open) return;
-    if (isScaleReference(currentValue)) {
-      setSelectedScale(currentValue.scale);
-      setSelectedStep(currentValue.step);
-      setUseDirectColor(false);
-      setDirectHex('');
-    } else {
-      setUseDirectColor(true);
-      setDirectHex(currentValue || '');
-    }
+    queueMicrotask(() => {
+      if (isScaleReference(currentValue)) {
+        setSelectedScale(currentValue.scale);
+        setSelectedStep(currentValue.step);
+        setUseDirectColor(false);
+        setDirectHex('');
+      } else {
+        setUseDirectColor(true);
+        setDirectHex(currentValue || '');
+      }
+    });
   }, [open, currentValue]);
 
   useEffect(() => {
@@ -124,28 +152,6 @@ export function ScaleSelectionModal({
 
   if (!open) return null;
 
-  const RecommendationIcon = () => {
-    if (recommendation.level === 'recommended') {
-      return (
-        <Tooltip content={recommendation.message ?? '권장 매핑'} portal position="top">
-          <span className={styles.iconRecommended} aria-label="권장">
-            <Icon name="check" size="sm" />
-          </span>
-        </Tooltip>
-      );
-    }
-    if (recommendation.level === 'warning') {
-      return (
-        <Tooltip content={recommendation.message ?? '주의'} portal position="top">
-          <span className={styles.iconWarning} aria-label="주의">
-            <Icon name="warning" size="sm" />
-          </span>
-        </Tooltip>
-      );
-    }
-    return null;
-  };
-
   return (
     <div
       className={styles.overlay}
@@ -165,7 +171,7 @@ export function ScaleSelectionModal({
             <h2 id="scale-selection-title" className={styles.title}>
               {tokenLabel}
             </h2>
-            <RecommendationIcon />
+            <RecommendationIcon recommendation={recommendation} />
           </div>
           <button
             type="button"

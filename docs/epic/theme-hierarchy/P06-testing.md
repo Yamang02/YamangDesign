@@ -8,30 +8,30 @@
 
 ### 1. 빌드 및 타입
 
-- [ ] `npm run build` 성공
-- [ ] 타입 에러 없음 (`npm run typecheck` 또는 IDE)
-- [ ] 린트 에러 없음
+- [x] `npm run build` 성공
+- [x] 타입 에러 없음 (tsc -b 포함)
+- [x] 린트 에러 없음 (경고 3개만 남음: usePalettePresets, LabLayout)
 
 ### 2. 기존 참조 확인
 
 | 대상 | 확인 내용 |
 |------|----------|
-| ThemeProvider | palette/styles 조합 정상 동작 |
-| ColorPicker | themePresets(default만) 정상 표시 |
-| GlobalSettingsModal | preset 선택 옵션 정상 |
-| usePalettePresets | colorStartPoints, themePresets 호환 |
-| PaletteLab | 비교 그리드, DetailPanel 정상 |
-| lab-presets | getPaletteVariables, getThemeVariables |
+| ThemeProvider | palette/styles 조합 정상 동작 ✓ |
+| ColorPicker | themePresets(default만) 정상 표시 ✓ |
+| GlobalSettingsModal | preset 선택 옵션 정상 (registry 사용) ✓ |
+| usePalettePresets | colorStartPoints 호환 ✓ |
+| PaletteLab | 비교 그리드, DetailPanel 정상 ✓ |
+| lab-presets | getPaletteVariables, getThemeVariables ✓ |
 
 ### 3. 문서 업데이트
 
-- [ ] EPIC-THEME-HIERARCHY.md → epic/theme-hierarchy/로 이동 또는 링크 정리
-- [ ] README 또는 CONTRIBUTING에 새 프리셋 추가 방법 문서화
+- [x] EPIC-THEME-HIERARCHY.md 링크 정리 (epic-overview, ADDING-PRESETS 연결)
+- [x] [ADDING-PRESETS.md](./ADDING-PRESETS.md)에 새 프리셋 추가 방법 문서화
 
 ### 4. 정리
 
-- [ ] 주석/console.log 제거
-- [ ] 미사용 import 제거
+- [x] console.log 없음 (Icon/resolve의 console.warn은 개발자 경고용으로 유지)
+- [x] 미사용 import 없음 (palettes 영역 확인)
 
 ## 의존성
 

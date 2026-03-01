@@ -34,7 +34,6 @@ export const navCategories: NavCategory[] = [
     icon: 'category',
     iconLibrary: 'material',
     tooltip: 'component',
-    // items 없음 → 단일 페이지
   },
   {
     id: 'labs',
@@ -52,6 +51,5 @@ export const navCategories: NavCategory[] = [
     icon: 'tune',
     iconLibrary: 'material',
     tooltip: 'playground',
-    // items 없음 → 단일 페이지, 구분선 후 표시
   },
 ];

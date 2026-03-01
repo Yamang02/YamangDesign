@@ -91,6 +91,7 @@ Transition은 하드코딩하지 않고 `var(--ds-transition-*)` recipe 사용.
 
 ## Reference
 - [docs/design/ARCHITECTURE.md](docs/design/ARCHITECTURE.md) - 토큰 흐름, 테마 구조
+- [docs/epic/theme-hierarchy/ADDING-PRESETS.md](docs/epic/theme-hierarchy/ADDING-PRESETS.md) - 새 프리셋 추가 방법
 
 ## AI Policy
 정책 원천: [ai/rules.yaml](ai/rules.yaml)

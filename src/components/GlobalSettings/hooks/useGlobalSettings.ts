@@ -118,11 +118,12 @@ export function useGlobalSettings() {
   const [localSystemPreset, setLocalSystemPreset] =
     useState<SystemPresetName>(systemPreset);
 
-  // Sync local state when theme changes externally (e.g. from Playground)
   useEffect(() => {
-    setLocalPalette(palette);
-    setLocalStyleName(styleName);
-    setLocalSystemPreset(systemPreset);
+    queueMicrotask(() => {
+      setLocalPalette(palette);
+      setLocalStyleName(styleName);
+      setLocalSystemPreset(systemPreset);
+    });
   }, [palette, styleName, systemPreset]);
 
   const hasChanges = useMemo(() => {

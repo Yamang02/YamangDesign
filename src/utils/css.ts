@@ -13,7 +13,6 @@ export function flattenToCSSVars(
   const result: Record<string, string> = {};
 
   for (const [key, value] of Object.entries(obj)) {
-    // _meta 등 내부 필드 스킵
     if (key.startsWith('_')) continue;
 
     const varName = prefix ? `${prefix}-${key}` : key;

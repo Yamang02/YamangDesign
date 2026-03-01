@@ -36,7 +36,6 @@ export function getScaleRecommendation(
   step: ScaleReference['step'],
   bgStrategy: BgStrategy
 ): RecommendationResult {
-  // light 배경: 어두운 텍스트, 밝은 bg/border
   if (bgStrategy === 'light') {
     if (semanticToken.startsWith('text.')) {
       if (step >= 600 && (scale === 'neutral' || scale === 'sub')) {
@@ -59,7 +58,6 @@ export function getScaleRecommendation(
     }
   }
 
-  // dark 배경: 밝은 텍스트, 어두운 bg/border
   if (bgStrategy === 'dark') {
     if (semanticToken.startsWith('text.')) {
       if (step <= 400 && (scale === 'neutral' || scale === 'sub')) {
@@ -80,7 +78,6 @@ export function getScaleRecommendation(
     }
   }
 
-  // colored 배경: 중간 톤
   if (bgStrategy === 'colored') {
     if (semanticToken.startsWith('text.')) {
       if (step >= 500 && step <= 900) return { level: 'recommended' };

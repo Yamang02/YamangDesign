@@ -35,23 +35,16 @@ export const inputPlaceholders = {
 
 /** 섹션 타이틀 */
 export const sectionTitles = {
-  // FontLab
   textStyles: 'Text Styles',
   semanticMapping: 'Semantic Mapping',
   typeScale: 'Type Scale',
   fontFamilies: 'Font Families',
-
-  // PaletteLab
   colorScales: 'Color Scales',
   neutralPresets: 'Neutral Presets',
   systemColors: 'System Colors',
   paletteComparison: 'Palette Comparison',
-
-  // StyleLab
   shadowComparison: 'Shadow Comparison',
   componentComparison: 'Component Comparison',
-
-  // Playground (E05: 드롭다운 선택 + 프리뷰)
   combinationMatrix: 'Combination Matrix',
   combinationSelect: '조합 선택',
   componentPreview: 'Component Preview',

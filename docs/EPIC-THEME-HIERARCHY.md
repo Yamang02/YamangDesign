@@ -1,7 +1,7 @@
 # Epic: 테마 카테고리 시스템 및 확장 가능한 프리셋 구조
 
 > **페이즈별 분리 문서**: 이 에픽은 `docs/epic/theme-hierarchy/` 에서 P01~P06 페이즈별로 분리 관리됩니다.
-> - [epic-overview.md](./epic/theme-hierarchy/epic-overview.md) | [P01](./epic/theme-hierarchy/P01-foundation.md) | [P02](./epic/theme-hierarchy/P02-migration.md) | [P03](./epic/theme-hierarchy/P03-semantic-mapping.md) | [P04](./epic/theme-hierarchy/P04-ui-components.md) | [P05](./epic/theme-hierarchy/P05-lab-integration.md) | [P06](./epic/theme-hierarchy/P06-testing.md) | [REVIEW](./epic/theme-hierarchy/REVIEW-impact-and-improvements.md)
+> - [epic-overview](./epic/theme-hierarchy/epic-overview.md) | [새 프리셋 추가](./epic/theme-hierarchy/ADDING-PRESETS.md) | [P01](./epic/theme-hierarchy/P01-foundation.md) | [P02](./epic/theme-hierarchy/P02-migration.md) | [P03](./epic/theme-hierarchy/P03-semantic-mapping.md) | [P04](./epic/theme-hierarchy/P04-ui-components.md) | [P05](./epic/theme-hierarchy/P05-lab-integration.md) | [P06](./epic/theme-hierarchy/P06-testing.md) | [REVIEW](./epic/theme-hierarchy/REVIEW-impact-and-improvements.md)
 
 ## 개요
 

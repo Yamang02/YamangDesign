@@ -60,6 +60,7 @@
 
 ## 참조 문서
 
+- [새 프리셋 추가 방법](./ADDING-PRESETS.md)
 - [P01: 기반 구조 변경](./P01-foundation.md)
 - [P02: 프리셋 정리 및 마이그레이션](./P02-migration.md)
 - [P03: 시맨틱 매핑 시스템](./P03-semantic-mapping.md)

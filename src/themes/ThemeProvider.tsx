@@ -1,16 +1,8 @@
 /**
  * E03: Palette × Style 조합 기반 ThemeProvider
  */
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useMemo,
-  type ReactNode,
-} from 'react';
+import { useState, useEffect, useMemo, type ReactNode } from 'react';
 import type {
-  Theme,
   ThemeName,
   PaletteName,
   StyleName,
@@ -42,36 +34,16 @@ import {
 import { generateTextStyleVars } from '../tokens/typography';
 import { generateSystemColorVars } from '../utils/system-colors';
 import { systemColorPresets } from '../tokens/primitives/system-colors';
+import { ThemeContext } from './ThemeContext';
 
-export interface ThemeContextValue {
-  theme: Theme;
-  /** @deprecated setStyleName 사용 */
-  themeName: StyleName;
-  /** @deprecated setStyleName 사용 */
-  setThemeName: (name: ThemeName) => void;
-  paletteName: PaletteName;
-  styleName: StyleName;
-  setPaletteName: (name: PaletteName) => void;
-  setStyleName: (name: StyleName) => void;
-  customColors: ExternalPalette | null;
-  setCustomColors: (colors: ExternalPalette | null) => void;
-  palette: ExternalPalette;
-  setPalette: (palette: ExternalPalette) => void;
-  /** E08: 시스템 컬러 프리셋 */
-  systemPreset: SystemPresetName;
-  setSystemPreset: (name: SystemPresetName) => void;
-}
-
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+export type { ThemeContextValue } from './ThemeContext';
 
 export interface ThemeProviderProps {
   children: ReactNode;
-  /** @deprecated initialStyleName 사용 */
   initialTheme?: ThemeName;
   initialStyleName?: StyleName;
   initialPaletteName?: PaletteName;
   initialPalette?: ExternalPalette;
-  /** E08: 시스템 컬러 프리셋 (기본: 'default') */
   systemPreset?: SystemPresetName;
 }
 
@@ -200,7 +172,7 @@ export function ThemeProvider({
     setSystemPresetState(name);
   };
 
-  const value: ThemeContextValue = {
+  const value = {
     theme,
     themeName: styleName,
     setThemeName,
@@ -219,12 +191,4 @@ export function ThemeProvider({
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
-}
-
-export function useTheme(): ThemeContextValue {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider');
-  }
-  return context;
 }
