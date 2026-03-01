@@ -210,20 +210,6 @@ export function Landing() {
           </Card>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <span className={styles.footerCopyright}>
-            © 2024 Yamang Design System. All rights reserved.
-          </span>
-          <nav className={styles.footerLinks}>
-            <span className={styles.footerLink}>Terms</span>
-            <span className={styles.footerLink}>Privacy</span>
-            <span className={styles.footerLink}>GitHub</span>
-          </nav>
-        </div>
-      </footer>
     </>
   );
 }

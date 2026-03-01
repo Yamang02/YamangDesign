@@ -3,7 +3,7 @@
  */
 import { useState } from 'react';
 import { Button, Card, DetailPanel } from '../../../components';
-import { LabLayout, LabSection, ComparisonCard, type TocItem } from '../../../layouts';
+import { LabLayout, LabSection, LabOverview, ComparisonCard, type TocItem } from '../../../layouts';
 import {
   getStyleVariables,
   comparisonPresets,
@@ -14,6 +14,7 @@ import {
 import { createStyle } from '../../../styles';
 import { minimalStyle, neumorphismStyle } from '../../../styles';
 import type { StyleName } from '../../../@types/theme';
+import { StyleOverviewDiagram } from './StyleOverviewDiagram';
 import styles from './StyleLab.module.css';
 
 const styleMap = {
@@ -24,6 +25,7 @@ const styleMap = {
 const shadowKeys = ['sm', 'md', 'lg'] as const;
 
 const tocItems: TocItem[] = [
+  { id: 'overview', label: 'Overview' },
   { id: 'shadow-comparison', label: sectionTitles.shadowComparison },
   { id: 'component-comparison', label: sectionTitles.componentComparison },
 ];
@@ -71,6 +73,12 @@ export function StyleLab() {
   return (
     <>
       <LabLayout title="Style Lab" subtitle="GUI 스타일 비교" tocItems={tocItems}>
+        <LabSection title="Overview" id="overview" card={false}>
+          <LabOverview>
+            <StyleOverviewDiagram />
+          </LabOverview>
+        </LabSection>
+
         <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
           <div className={styles.comparisonGrid}>
             {comparisonPresets.styles.map((styleName) => (

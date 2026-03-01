@@ -3,22 +3,28 @@
  * 테마와 무관하게 고정된 스타일. 헤더, 설정패널, 접근성 컨트롤에 사용.
  */
 :root {
-  /* E04: Navigation 높이 (DetailPanel, TOC sticky 등에서 사용) */
-  --nav-height: 56px;
+  /* E01/E04: 헤더 높이 (DetailPanel, TOC sticky 등에서 사용) */
+  --nav-height: 64px;
 
   /* 배경 */
   --ui-bg-base: #1a1a1a;
+  --ui-bg-subtle: #222222;
   --ui-bg-surface: #2d2d2d;
   --ui-bg-elevated: #3d3d3d;
+  --ui-bg-hover: rgba(255, 255, 255, 0.08);
 
   /* 텍스트 */
   --ui-text-primary: #ffffff;
   --ui-text-secondary: #a0a0a0;
+  --ui-text-tertiary: #707070;
   --ui-text-muted: #666666;
+  --ui-text-hover: #c8c8c8;
 
   /* 경계선 */
   --ui-border-default: #404040;
   --ui-border-subtle: #333333;
+  --ui-border-strong: #505050;
+  --ui-border-hover: #4a4a4a;
 
   /* 액션 (컨트롤 버튼 등) */
   --ui-action-primary: #6366f1;
@@ -59,6 +65,61 @@
   --ds-focus-ring-color: var(--ui-focus-ring);
 
   /* 섀도우도 고정 (Neumorphism 전환 시 영향 방지) */
+  --ds-shadow-sm: var(--ui-shadow-sm);
+  --ds-shadow-md: var(--ui-shadow-md);
+  --ds-shadow-lg: var(--ui-shadow-lg);
+}
+
+/**
+ * Light UI 컨텍스트: 설정 모달 등 라이트 테마가 필요한 곳
+ */
+[data-ui-light] {
+  /* 배경 */
+  --ui-bg-base: #ffffff;
+  --ui-bg-subtle: #f8f9fa;
+  --ui-bg-surface: #f1f3f5;
+  --ui-bg-elevated: #ffffff;
+  --ui-bg-hover: rgba(0, 0, 0, 0.04);
+
+  /* 텍스트 */
+  --ui-text-primary: #1a1a1a;
+  --ui-text-secondary: #6b7280;
+  --ui-text-tertiary: #9ca3af;
+  --ui-text-muted: #d1d5db;
+  --ui-text-hover: #4b5563;
+
+  /* 경계선 */
+  --ui-border-default: #e5e7eb;
+  --ui-border-subtle: #f3f4f6;
+  --ui-border-strong: #d1d5db;
+  --ui-border-hover: #d1d5db;
+
+  /* 섀도우 (라이트용) */
+  --ui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ui-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --ui-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+
+  /* DS 토큰 오버라이드 */
+  --ds-color-bg-base: var(--ui-bg-base);
+  --ds-color-bg-surface: var(--ui-bg-surface);
+  --ds-color-bg-elevated: var(--ui-bg-elevated);
+  --ds-color-bg-muted: var(--ui-bg-subtle);
+
+  --ds-color-text-primary: var(--ui-text-primary);
+  --ds-color-text-secondary: var(--ui-text-secondary);
+  --ds-color-text-muted: var(--ui-text-muted);
+  --ds-color-text-onAction: #ffffff;
+
+  --ds-color-border-default: var(--ui-border-default);
+  --ds-color-border-subtle: var(--ui-border-subtle);
+  --ds-color-border-focus: var(--ui-focus-ring);
+
+  --ds-color-action-primary-default: var(--ui-action-primary);
+  --ds-color-action-primary-hover: var(--ui-action-hover);
+  --ds-color-action-primary-active: var(--ui-action-hover);
+
+  --ds-focus-ring-color: var(--ui-focus-ring);
+
   --ds-shadow-sm: var(--ui-shadow-sm);
   --ds-shadow-md: var(--ui-shadow-md);
   --ds-shadow-lg: var(--ui-shadow-lg);

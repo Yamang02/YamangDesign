@@ -3,7 +3,7 @@
  * E01: lab-content 중앙화 적용
  */
 import { useState } from 'react';
-import { LabLayout, LabSection, LabCard, ComparisonCard, type TocItem } from '../../../layouts';
+import { LabLayout, LabSection, LabOverview, LabCard, ComparisonCard, type TocItem } from '../../../layouts';
 import { DetailPanel } from '../../../components';
 import {
   sampleText,
@@ -15,6 +15,7 @@ import {
 import { textStyles, semanticText } from '../../../tokens/typography';
 import { fontSize, fontFamily } from '../../../tokens/primitives/typography';
 import type { TextStyleName, SemanticTextRole } from '../../../tokens/typography';
+import { FontOverviewDiagram } from './FontOverviewDiagram';
 
 const semanticRoles: SemanticTextRole[] = [
   'page-title',
@@ -31,6 +32,7 @@ const semanticRoles: SemanticTextRole[] = [
 const textStyleNames = Object.keys(textStyles) as TextStyleName[];
 
 const tocItems: TocItem[] = [
+  { id: 'overview', label: 'Overview' },
   { id: 'text-styles', label: sectionTitles.textStyles },
   { id: 'semantic-mapping', label: sectionTitles.semanticMapping },
   { id: 'type-scale', label: sectionTitles.typeScale },
@@ -44,6 +46,12 @@ export function FontLab() {
   return (
     <>
       <LabLayout title="Font Lab" subtitle="Typography Explorer" tocItems={tocItems}>
+        <LabSection title="Overview" id="overview" card={false}>
+          <LabOverview>
+            <FontOverviewDiagram />
+          </LabOverview>
+        </LabSection>
+
         <LabSection title={sectionTitles.textStyles} id="text-styles">
           <div
             style={{

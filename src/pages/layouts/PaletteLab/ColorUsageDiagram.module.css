@@ -1,0 +1,291 @@
+/* Color Usage Diagram - 브랜드 컬러 용도 시각화 */
+.diagram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-6);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--lab-text-primary);
+  margin: 0;
+  padding-bottom: var(--ds-spacing-2);
+  border-bottom: 1px solid var(--lab-border-subtle);
+}
+
+/* Color Roles */
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--ds-spacing-3);
+}
+
+.roleCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+  padding: var(--ds-spacing-4);
+  background-color: var(--lab-bg-base);
+  border: 1px solid var(--lab-border-subtle);
+  border-radius: var(--ds-radius-md);
+  transition: border-color 150ms ease;
+}
+
+.roleCard:hover {
+  border-color: var(--lab-border-default);
+}
+
+.roleHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ds-spacing-3);
+}
+
+.colorSwatch {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--lab-border-subtle);
+  flex-shrink: 0;
+}
+
+.roleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.roleLabel {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--lab-text-primary);
+}
+
+.roleDesc {
+  font-size: var(--ds-text-xs);
+  color: var(--lab-text-muted);
+}
+
+.usageList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-1);
+}
+
+.usageTag {
+  font-size: 10px;
+  padding: 2px 6px;
+  background-color: var(--lab-bg-muted);
+  border-radius: var(--ds-radius-sm);
+  color: var(--lab-text-secondary);
+}
+
+/* Semantic Mapping - 서브탭 */
+.mappingTabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background-color: var(--lab-bg-base);
+  border: 1px solid var(--lab-border-subtle);
+  border-radius: var(--ds-radius-md);
+  overflow: hidden;
+}
+
+.tabList {
+  display: flex;
+  gap: 0;
+  padding: var(--ds-spacing-2) var(--ds-spacing-4) 0;
+  border-bottom: 1px solid var(--lab-border-subtle);
+  background-color: var(--lab-bg-surface);
+}
+
+.tab {
+  padding: var(--ds-spacing-2) var(--ds-spacing-4);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--lab-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.tab:hover {
+  color: var(--lab-text-primary);
+}
+
+.tab[data-active='true'] {
+  color: var(--lab-action-primary);
+  border-bottom-color: var(--lab-action-primary);
+}
+
+.tabPanel {
+  padding: var(--ds-spacing-4);
+}
+
+.tokenList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+.tokenRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-3);
+  flex-wrap: wrap;
+}
+
+.tokenSwatch {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--lab-border-subtle);
+  flex-shrink: 0;
+}
+
+.tokenName {
+  font-size: var(--ds-text-xs);
+  font-family: ui-monospace, monospace;
+  padding: 2px 6px;
+  background-color: var(--lab-bg-muted);
+  border-radius: 3px;
+  color: var(--lab-text-secondary);
+}
+
+.tokenNote {
+  font-size: var(--ds-text-xs);
+  color: var(--lab-text-muted);
+  margin-left: auto;
+}
+
+/* Component Diagram */
+.componentDiagram {
+  padding: var(--ds-spacing-4);
+  background-color: var(--lab-bg-base);
+  border: 1px solid var(--lab-border-subtle);
+  border-radius: var(--ds-radius-md);
+}
+
+.diagramTitle {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--lab-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--ds-spacing-4);
+}
+
+.mockUI {
+  display: flex;
+  gap: var(--ds-spacing-4);
+  flex-wrap: wrap;
+}
+
+.mockCard {
+  flex: 1;
+  min-width: 200px;
+  padding: var(--ds-spacing-4);
+  background-color: var(--lab-bg-surface);
+  border: 1px solid var(--lab-border-default);
+  border-radius: var(--ds-radius-md);
+}
+
+.mockCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--ds-spacing-3);
+}
+
+.mockTitle {
+  font-size: var(--ds-text-md);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--lab-text-primary);
+}
+
+.mockBadge {
+  font-size: 10px;
+  padding: 2px 8px;
+  background-color: var(--ds-color-accent-500);
+  color: white;
+  border-radius: var(--ds-radius-sm);
+}
+
+.mockBody {
+  font-size: var(--ds-text-sm);
+  color: var(--lab-text-secondary);
+  margin: 0 0 var(--ds-spacing-3) 0;
+  line-height: 1.5;
+}
+
+.mockActions {
+  display: flex;
+  gap: var(--ds-spacing-2);
+}
+
+.mockBtnPrimary {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background-color: var(--ds-color-primary-500);
+  color: white;
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  font-size: var(--ds-text-xs);
+  cursor: pointer;
+}
+
+.mockBtnSecondary {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background-color: var(--ds-color-secondary-500);
+  color: white;
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  font-size: var(--ds-text-xs);
+  cursor: pointer;
+}
+
+.colorTag {
+  font-size: 10px;
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.mockInputGroup {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.mockLabel {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--lab-text-primary);
+}
+
+.mockInput {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background-color: var(--lab-bg-base);
+  border: 1px solid var(--lab-border-default);
+  border-radius: var(--ds-radius-sm);
+}
+
+.mockPlaceholder {
+  font-size: var(--ds-text-sm);
+  color: var(--lab-text-muted);
+}
+
+.mockHelper {
+  font-size: 10px;
+  color: var(--lab-text-muted);
+}

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import {
   LabLayout,
   LabSection,
+  LabOverview,
   ComparisonCard,
   type TocItem,
 } from '../../../layouts';
@@ -16,13 +17,13 @@ import {
   comparisonPresets,
   sectionTitles,
 } from '../../../constants';
-import { useTheme } from '../../../themes';
 import { palettePresets } from '../../../themes/presets';
 import { createPalette } from '../../../palettes';
 import { neutralPresets } from '../../../tokens/primitives/neutral-presets';
 import { systemColorPresets } from '../../../tokens/primitives/system-colors';
 import type { PaletteName, SystemPresetName } from '../../../@types/theme';
 import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
+import { ColorUsageDiagram } from './ColorUsageDiagram';
 import styles from './PaletteLab.module.css';
 
 const colorKeys = ['primary', 'secondary', 'accent', 'sub', 'neutral'] as const;
@@ -106,6 +107,7 @@ type DetailSelection =
   | null;
 
 const tocItems: TocItem[] = [
+  { id: 'overview', label: 'Overview' },
   { id: 'color-scales', label: sectionTitles.colorScales },
   { id: 'neutral-presets', label: sectionTitles.neutralPresets },
   { id: 'system-colors', label: sectionTitles.systemColors },
@@ -244,21 +246,19 @@ function NeutralPresetCard({
 
 function SystemColorCard({
   presetName,
+  onClick,
   selected,
-  onSelect,
-  selectedForDetail,
 }: {
   presetName: SystemPresetName;
+  onClick: () => void;
   selected: boolean;
-  onSelect: () => void;
-  selectedForDetail: boolean;
 }) {
   return (
     <ComparisonCard
       title={capitalize(presetName)}
       styleVars={getSystemColorVariables(presetName)}
-      onClick={onSelect}
-      selected={selected || selectedForDetail}
+      onClick={onClick}
+      selected={selected}
     >
       {systemColorKeys.map((colorKey) => (
         <div key={colorKey} className={styles.colorColumn}>
@@ -286,7 +286,6 @@ function SystemColorCard({
 }
 
 export function PaletteLab() {
-  const { systemPreset, setSystemPreset } = useTheme();
   const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
 
   const handlePaletteSelect = (name: Exclude<PaletteName, 'custom'>) => {
@@ -298,7 +297,6 @@ export function PaletteLab() {
   };
 
   const handleSystemSelect = (name: SystemPresetName) => {
-    setSystemPreset(name);
     setDetailSelection({ type: 'system', name });
   };
 
@@ -314,6 +312,12 @@ export function PaletteLab() {
         subtitle="배색 비교"
         tocItems={tocItems}
       >
+        <LabSection title="Overview" id="overview" card={false}>
+          <LabOverview>
+            <ColorUsageDiagram />
+          </LabOverview>
+        </LabSection>
+
         <LabSection title={sectionTitles.colorScales} id="color-scales">
           <div className={styles.comparisonGrid}>
             {comparisonPresets.palettes.map((paletteName) => (
@@ -373,9 +377,8 @@ export function PaletteLab() {
               <SystemColorCard
                 key={presetName}
                 presetName={presetName}
-                selected={systemPreset === presetName}
-                onSelect={() => handleSystemSelect(presetName)}
-                selectedForDetail={
+                onClick={() => handleSystemSelect(presetName)}
+                selected={
                   detailSelection?.type === 'system' &&
                   detailSelection.name === presetName
                 }

@@ -1,6 +1,8 @@
 export const fontFamily = {
   sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+  /** 브랜드/헤더 전용 - Griun PolSensibility (AI_Portfolio와 동일) */
+  display: "'Griun PolSensibility', 'Cormorant Garamond', 'Noto Serif KR', Georgia, 'Times New Roman', serif",
 } as const;
 
 export const fontSize = {

@@ -1,0 +1,134 @@
+.footer {
+  padding: var(--ds-spacing-5) var(--ds-spacing-8);
+  border-top: 1px solid var(--ui-border-default);
+  background: linear-gradient(
+    180deg,
+    var(--ui-bg-subtle) 0%,
+    var(--ui-bg-base) 100%
+  );
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-spacing-3);
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-spacing-4);
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-family: var(--ds-font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--ui-text-primary);
+  letter-spacing: 0.05em;
+}
+
+.copyright {
+  font-size: 0.8125rem;
+  color: var(--ui-text-secondary);
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  gap: var(--ds-spacing-2);
+  align-items: center;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ds-radius-md);
+  color: var(--ui-text-secondary);
+  background: transparent;
+  border: 1px solid var(--ui-border-default);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.iconLink:hover {
+  background: var(--ui-bg-hover);
+  border-color: var(--ui-border-hover);
+  color: var(--ui-text-primary);
+}
+
+.infoRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ds-spacing-4) var(--ds-spacing-8);
+  margin: 0;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.infoItem dt {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--ui-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.infoItem dd {
+  font-size: 0.75rem;
+  color: var(--ui-text-secondary);
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .footer {
+    padding: var(--ds-spacing-4);
+  }
+
+  .topRow {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .brand {
+    font-size: 0.9375rem;
+  }
+
+  .infoRow {
+    flex-direction: column;
+    gap: var(--ds-spacing-2);
+  }
+
+  .infoItem dd {
+    font-size: 0.6875rem;
+  }
+
+  .copyright {
+    font-size: 0.75rem;
+  }
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .iconLink {
+    transition: none;
+  }
+}

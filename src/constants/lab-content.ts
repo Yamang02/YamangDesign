@@ -73,6 +73,7 @@ export const formatters = {
 export const fontFamilyLabels = {
   sans: 'Sans',
   mono: 'Mono',
+  display: 'Display (Griun PolSensibility)',
 } as const;
 
 /** 시맨틱 역할별 프리뷰 텍스트 */

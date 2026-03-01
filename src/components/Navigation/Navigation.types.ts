@@ -40,4 +40,9 @@ export interface NavigationProps {
    * 우측 영역 커스텀 컨텐츠
    */
   rightContent?: ReactNode;
+
+  /**
+   * E01: Header 슬롯 모드 - nav/left 없이 center+right만 렌더 (Header children용)
+   */
+  asSlot?: boolean;
 }

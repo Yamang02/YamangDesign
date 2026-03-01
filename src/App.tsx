@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ThemeProvider } from './themes';
-import { Navigation, NavDropdown } from './components';
-import { navCategories } from './config/nav-categories';
+import { Footer, Header, HeaderNav } from './components';
+import { GLOBAL_SETTINGS_STORAGE_KEY } from './components/GlobalSettings';
 import { Landing, Components, PaletteLab, StyleLab, Playground, FontLab } from './pages';
 
 export type PageName =
@@ -16,29 +16,22 @@ export type PageName =
 
 function App() {
   const [page, setPage] = useState<PageName>('landing');
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const initialSettings = useMemo(() => {
+    try {
+      const raw = localStorage.getItem(GLOBAL_SETTINGS_STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed?.palette) return null;
+      return parsed;
+    } catch {
+      return null;
+    }
+  }, []);
 
   const handleSelect = (itemId: string) => {
     setPage(itemId as PageName);
-    setOpenDropdown(null);
   };
-
-  const centerContent = (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-spacing-2)' }}>
-      {navCategories.map((category) => (
-        <NavDropdown
-          key={category.id}
-          category={category}
-          isOpen={openDropdown === category.id}
-          onToggle={() =>
-            setOpenDropdown((prev) => (prev === category.id ? null : category.id))
-          }
-          onSelect={handleSelect}
-          activeItem={page}
-        />
-      ))}
-    </div>
-  );
 
   const renderPage = () => {
     switch (page) {
@@ -62,22 +55,19 @@ function App() {
 
   return (
     <ThemeProvider
-      initialTheme="minimal"
-      initialPalette={{
+      initialTheme={initialSettings?.styleName ?? 'minimal'}
+      initialPalette={initialSettings?.palette ?? {
         primary: '#6366F1',
         secondary: '#8B5CF6',
         accent: '#F59E0B',
         neutral: '#E5E7EB',
       }}
+      systemPreset={initialSettings?.systemPreset ?? 'default'}
     >
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <Navigation
-          brand="Yamang Design"
-          showThemeToggle
-          showColorEditor
-          sticky
-          centerContent={centerContent}
-        />
+        <Header onLogoClick={() => setPage('landing')}>
+          <HeaderNav activePage={page} onSelect={handleSelect} />
+        </Header>
         <main
           data-showcase="service"
           style={{
@@ -88,6 +78,7 @@ function App() {
         >
           {renderPage()}
         </main>
+        <Footer />
       </div>
     </ThemeProvider>
   );

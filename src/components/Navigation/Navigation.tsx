@@ -25,6 +25,7 @@ export function Navigation({
   className,
   centerContent,
   rightContent,
+  asSlot = false,
 }: NavigationProps) {
   const { themeName, setThemeName, palette, setPalette } = useTheme();
   const [isColorEditorOpen, setIsColorEditorOpen] = useState(false);
@@ -56,28 +57,8 @@ export function Navigation({
     setEditingColors(preset.palette);
   };
 
-  return (
-    <nav
-      className={clsx(styles.nav, sticky && styles.sticky, className)}
-      data-ui
-    >
-      <div className={styles.left}>
-        <span
-          className={styles.brand}
-          onClick={onBrandClick}
-          role={onBrandClick ? 'button' : undefined}
-          tabIndex={onBrandClick ? 0 : undefined}
-          onKeyDown={(e) => {
-            if (onBrandClick && (e.key === 'Enter' || e.key === ' ')) {
-              e.preventDefault();
-              onBrandClick();
-            }
-          }}
-        >
-          {brand}
-        </span>
-      </div>
-
+  const navContent = (
+    <>
       {centerContent && (
         <div className={styles.center}>
           {centerContent}
@@ -147,6 +128,39 @@ export function Navigation({
           />
         )}
       </div>
+    </>
+  );
+
+  if (asSlot) {
+    return (
+      <div className={clsx(styles.slot, className)} data-ui>
+        {navContent}
+      </div>
+    );
+  }
+
+  return (
+    <nav
+      className={clsx(styles.nav, sticky && styles.sticky, className)}
+      data-ui
+    >
+      <div className={styles.left}>
+        <span
+          className={styles.brand}
+          onClick={onBrandClick}
+          role={onBrandClick ? 'button' : undefined}
+          tabIndex={onBrandClick ? 0 : undefined}
+          onKeyDown={(e) => {
+            if (onBrandClick && (e.key === 'Enter' || e.key === ' ')) {
+              e.preventDefault();
+              onBrandClick();
+            }
+          }}
+        >
+          {brand}
+        </span>
+      </div>
+      {navContent}
     </nav>
   );
 }

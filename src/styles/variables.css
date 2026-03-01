@@ -57,6 +57,7 @@
   /* Typography */
   --ds-font-sans: initial;
   --ds-font-mono: initial;
+  --ds-font-display: initial; /* 브랜드/헤더 전용 - Griun PolSensibility */
   --ds-text-xs: initial;
   --ds-text-sm: initial;
   --ds-text-md: initial;

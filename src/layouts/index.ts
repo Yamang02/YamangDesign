@@ -4,5 +4,7 @@ export {
   LabCard,
   ComparisonCard,
   LabToc,
+  LabOverview,
   type TocItem,
+  type OverviewItem,
 } from './LabLayout';

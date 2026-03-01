@@ -1,0 +1,207 @@
+/* E02: 아이콘 기반 네비게이션 */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ds-spacing-2);
+  flex: 1;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--ui-border-default);
+  margin: 0 var(--ds-spacing-1);
+}
+
+/* 단일 아이템 (아이콘 버튼) */
+.navItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--ds-radius-md);
+  background: transparent;
+  border: none;
+  color: var(--ui-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navItem:hover {
+  background: var(--ui-bg-hover);
+  color: var(--ui-text-primary);
+}
+
+.navItem.active {
+  color: var(--ui-action-primary);
+}
+
+.navItemIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navItemIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 드롭다운 트리거 */
+.dropdown {
+  position: relative;
+}
+
+.dropdownTrigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  border-radius: var(--ds-radius-md);
+  background: transparent;
+  border: none;
+  color: var(--ui-text-secondary);
+  cursor: pointer;
+  font-size: var(--ds-text-body-md-size);
+  line-height: var(--ds-text-body-md-leading);
+  transition: all 0.2s ease;
+}
+
+.dropdownTrigger:hover {
+  background: var(--ui-bg-hover);
+  color: var(--ui-text-primary);
+}
+
+.dropdownTrigger.open,
+.dropdownTrigger.active {
+  color: var(--ui-action-primary);
+}
+
+.dropdownLabel {
+  white-space: nowrap;
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 메뉴 */
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: var(--ds-spacing-1);
+  min-width: 180px;
+  padding: var(--ds-spacing-1);
+  background: var(--ui-bg-elevated);
+  border: 1px solid var(--ui-border-default);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ui-shadow-lg);
+  z-index: var(--ds-z-dropdown);
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  width: 100%;
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  border-radius: var(--ds-radius-sm);
+  border: none;
+  background: none;
+  color: var(--ui-text-primary);
+  cursor: pointer;
+  font-size: var(--ds-text-body-md-size);
+  line-height: var(--ds-text-body-md-leading);
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdownItem:hover {
+  background: var(--ui-bg-hover);
+}
+
+.dropdownItemActive {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--ui-action-primary);
+}
+
+/* 설정 버튼 및 패널 */
+.settingsWrapper {
+  position: relative;
+}
+
+
+.settingsPanel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: var(--ds-spacing-1);
+  min-width: 280px;
+  max-width: 320px;
+  padding: var(--ds-spacing-4);
+  background: var(--ui-bg-elevated);
+  border: 1px solid var(--ui-border-default);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ui-shadow-lg);
+  z-index: var(--ds-z-dropdown);
+}
+
+.settingsPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--ds-spacing-4);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ui-text-primary);
+}
+
+.settingsPanelClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-spacing-1);
+  background: none;
+  border: none;
+  color: var(--ui-text-secondary);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.settingsPanelClose:hover {
+  background: var(--ui-bg-hover);
+  color: var(--ui-text-primary);
+}
+
+.settingsPanelBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.settingsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.settingsSectionLabel {
+  font-size: var(--ds-text-label-size);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ui-text-secondary);
+}
+
+.settingsPanelActions {
+  display: flex;
+  gap: var(--ds-spacing-2);
+  margin-top: var(--ds-spacing-4);
+  justify-content: flex-end;
+}

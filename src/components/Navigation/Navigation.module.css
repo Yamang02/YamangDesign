@@ -28,6 +28,24 @@
   flex: 1 1 auto;
 }
 
+/* E01: Header 슬롯 모드 - center+right만 */
+.slot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ds-spacing-2);
+  flex: 1;
+}
+
+.slot .center {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.slot .right {
+  flex: 0 0 auto;
+}
+
 .right {
   display: flex;
   align-items: center;

@@ -1,0 +1,66 @@
+/* Lab Overview - 조정 가능 요소 요약 카드
+ * 색상 값: monochrome 프리셋에서 복사 (palette-definitions.ts)
+ */
+.overview {
+  width: 100%;
+  box-sizing: border-box;
+
+  --lab-bg-surface: #ffffff;
+  --lab-bg-muted: #f1f2f3;
+  --lab-bg-base: #ffffff;
+  --lab-text-primary: #393e46;
+  --lab-text-secondary: #666f7f;
+  --lab-text-muted: #9ca3af;
+  --lab-border-default: #d4d7dd;
+  --lab-border-subtle: #f1f2f3;
+  --lab-action-primary: #4b5563;
+
+  background: linear-gradient(
+    135deg,
+    var(--lab-bg-surface) 0%,
+    var(--lab-bg-muted) 100%
+  );
+  border: 1px solid var(--lab-border-subtle);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-spacing-6);
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.description {
+  font-size: var(--ds-text-md);
+  color: var(--lab-text-secondary);
+  margin: 0 0 var(--ds-spacing-4) 0;
+  line-height: 1.6;
+}
+
+.itemGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-3);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+  padding: var(--ds-spacing-3) var(--ds-spacing-4);
+  background-color: var(--lab-bg-base);
+  border: 1px solid var(--lab-border-subtle);
+  border-radius: var(--ds-radius-md);
+  min-width: 140px;
+}
+
+.itemLabel {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--lab-text-primary);
+}
+
+.itemDesc {
+  font-size: var(--ds-text-xs);
+  color: var(--lab-text-muted);
+}
+
+.customContent {
+  margin-top: var(--ds-spacing-4);
+}
