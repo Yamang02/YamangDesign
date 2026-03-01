@@ -309,7 +309,6 @@ export function PaletteLab() {
     <>
       <LabLayout
         title="Palette Lab"
-        subtitle="배색 비교"
         tocItems={tocItems}
       >
         <LabSection title="Overview" id="overview" card={false}>

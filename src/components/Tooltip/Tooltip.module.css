@@ -18,6 +18,11 @@
   box-shadow: var(--ds-shadow-md);
 }
 
+/* 포털 렌더링 시 모달 위에 표시 (overflow에 가려지지 않음) */
+.tooltip.portal {
+  z-index: 1200;
+}
+
 .tooltip.top {
   bottom: 100%;
   left: 50%;

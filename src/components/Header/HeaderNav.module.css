@@ -15,20 +15,32 @@
   margin: 0 var(--ds-spacing-1);
 }
 
-/* 단일 아이템 (아이콘 버튼) */
+/* 단일 아이템 (아이콘 또는 아이콘+메뉴명) */
 .navItem {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  gap: var(--ds-spacing-1);
+  min-width: 40px;
   height: 40px;
-  padding: 0;
+  padding: 0 var(--ds-spacing-2);
   border-radius: var(--ds-radius-md);
   background: transparent;
   border: none;
   color: var(--ui-text-secondary);
   cursor: pointer;
+  font-size: var(--ds-text-body-md-size);
+  line-height: var(--ds-text-body-md-leading);
   transition: all 0.2s ease;
+}
+
+.navItemWithLabel {
+  justify-content: flex-start;
+  padding: 0 var(--ds-spacing-3);
+}
+
+.navItemLabel {
+  white-space: nowrap;
 }
 
 .navItem:hover {

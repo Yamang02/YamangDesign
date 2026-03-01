@@ -105,17 +105,11 @@
   transform: scale(1.05);
 }
 
-.pricingBadge {
+.badgeWrapper {
   position: absolute;
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--ds-color-action-accent-default);
-  color: var(--ds-color-text-onAction);
-  padding: var(--ds-spacing-1) var(--ds-spacing-3);
-  border-radius: var(--ds-radius-full);
-  font-size: var(--ds-text-xs);
-  font-weight: var(--ds-font-weight-semibold);
   z-index: 1;
 }
 
@@ -163,35 +157,6 @@
   font-style: italic;
   margin-bottom: var(--ds-spacing-4);
   line-height: 1.6;
-}
-
-.testimonialAuthor {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-3);
-}
-
-.testimonialAvatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--ds-color-action-secondary-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ds-color-text-onAction);
-  font-weight: var(--ds-font-weight-semibold);
-}
-
-.testimonialName {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
-}
-
-.testimonialRole {
-  font-size: var(--ds-text-xs);
-  color: var(--ds-color-text-muted);
 }
 
 /* Contact */

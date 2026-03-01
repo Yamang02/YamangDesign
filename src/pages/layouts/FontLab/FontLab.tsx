@@ -45,7 +45,7 @@ export function FontLab() {
 
   return (
     <>
-      <LabLayout title="Font Lab" subtitle="Typography Explorer" tocItems={tocItems}>
+      <LabLayout title="Font Lab" tocItems={tocItems}>
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
             <FontOverviewDiagram />

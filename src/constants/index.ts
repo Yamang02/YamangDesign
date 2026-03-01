@@ -24,10 +24,12 @@ export {
   showcaseSections,
   showcaseLabels,
   showcaseContent,
+  badgeShowcase,
+  avatarShowcase,
   buttonShowcase,
   cardShowcase,
   inputShowcase,
   selectShowcase,
   iconShowcase,
-  showcaseFooter,
+  formExample,
 } from './showcase-content';

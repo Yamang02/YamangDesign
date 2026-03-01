@@ -1,111 +1,38 @@
-import { Button, Card, Icon, Input } from '../../../components';
+import { Badge, Button, Card, Icon, Input, Profile } from '../../../components';
 import { clsx } from '../../../utils/clsx';
+import {
+  landingHero,
+  landingFeatures,
+  landingPlans,
+  landingTestimonials,
+  landingSections,
+  landingContact,
+} from '../../../constants/landing-content';
 import styles from './Landing.module.css';
-
-// Feature data
-const features = [
-  {
-    icon: 'speed',
-    title: 'Lightning Fast',
-    description: 'Optimized for performance with minimal bundle size and instant theme switching.',
-  },
-  {
-    icon: 'palette',
-    title: 'Fully Themeable',
-    description: 'Switch between themes instantly. Create custom color palettes with ease.',
-  },
-  {
-    icon: 'code',
-    title: 'Developer First',
-    description: 'Built with TypeScript. Full type safety and excellent IDE support.',
-  },
-  {
-    icon: 'devices',
-    title: 'Responsive',
-    description: 'Components work seamlessly across all screen sizes and devices.',
-  },
-];
-
-// Pricing data
-const plans = [
-  {
-    name: 'Starter',
-    price: '$0',
-    period: '/month',
-    features: ['5 projects', 'Basic themes', 'Community support', 'Core components'],
-    highlighted: false,
-    buttonVariant: 'outline' as const,
-  },
-  {
-    name: 'Pro',
-    price: '$29',
-    period: '/month',
-    features: ['Unlimited projects', 'All themes', 'Priority support', 'All components', 'Custom branding'],
-    highlighted: true,
-    buttonVariant: 'primary' as const,
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom',
-    period: '',
-    features: ['Dedicated support', 'Custom development', 'SLA guarantee', 'On-premise option'],
-    highlighted: false,
-    buttonVariant: 'outline' as const,
-  },
-];
-
-// Testimonial data
-const testimonials = [
-  {
-    quote: 'This design system transformed our development workflow. Switching themes is now effortless.',
-    name: 'Sarah Kim',
-    role: 'Lead Developer, TechCorp',
-    initials: 'SK',
-  },
-  {
-    quote: 'The attention to detail in the neumorphism theme is incredible. Our users love the new look.',
-    name: 'James Chen',
-    role: 'Product Designer, DesignLab',
-    initials: 'JC',
-  },
-  {
-    quote: 'Finally, a design system that prioritizes both aesthetics and developer experience.',
-    name: 'Emily Park',
-    role: 'CTO, StartupXYZ',
-    initials: 'EP',
-  },
-];
 
 export function Landing() {
   return (
     <>
       {/* Hero Section */}
       <section className={styles.hero}>
-        <h1 className={styles.heroTitle}>
-          Build Something Amazing
-        </h1>
-        <p className={styles.heroSubtitle}>
-          A modern design system with beautiful themes, powerful components,
-          and seamless customization. From minimal to neumorphism — your choice.
-        </p>
+        <h1 className={styles.heroTitle}>{landingHero.title}</h1>
+        <p className={styles.heroSubtitle}>{landingHero.subtitle}</p>
         <div className={styles.heroButtons}>
           <Button variant="primary" size="lg">
-            Get Started
+            {landingHero.primaryCta}
           </Button>
           <Button variant="outline" size="lg">
-            View Components
+            {landingHero.secondaryCta}
           </Button>
         </div>
       </section>
 
       {/* Features Section */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Features</h2>
-        <p className={styles.sectionSubtitle}>
-          Everything you need to build modern, themeable interfaces
-        </p>
+        <h2 className={styles.sectionTitle}>{landingSections.features.title}</h2>
+        <p className={styles.sectionSubtitle}>{landingSections.features.subtitle}</p>
         <div className={styles.featuresGrid}>
-          {features.map((feature) => (
+          {landingFeatures.map((feature) => (
             <Card key={feature.title} variant="elevated" hoverable>
               <Card.Body>
                 <div className={styles.featureCard}>
@@ -123,19 +50,19 @@ export function Landing() {
 
       {/* Pricing Section */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Pricing</h2>
-        <p className={styles.sectionSubtitle}>
-          Choose the plan that fits your needs
-        </p>
+        <h2 className={styles.sectionTitle}>{landingSections.pricing.title}</h2>
+        <p className={styles.sectionSubtitle}>{landingSections.pricing.subtitle}</p>
         <div className={styles.pricingGrid}>
-          {plans.map((plan) => (
+          {landingPlans.map((plan) => (
             <div
               key={plan.name}
               className={clsx(styles.pricingCard, plan.highlighted && styles.pricingHighlight)}
             >
               <Card variant={plan.highlighted ? 'elevated' : 'outlined'}>
                 {plan.highlighted && (
-                  <div className={styles.pricingBadge}>Most Popular</div>
+                  <div className={styles.badgeWrapper}>
+                    <Badge>Most Popular</Badge>
+                  </div>
                 )}
                 <Card.Header>{plan.name}</Card.Header>
                 <Card.Body>
@@ -165,24 +92,18 @@ export function Landing() {
 
       {/* Testimonials Section */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>What People Say</h2>
-        <p className={styles.sectionSubtitle}>
-          Trusted by developers and designers worldwide
-        </p>
+        <h2 className={styles.sectionTitle}>{landingSections.testimonials.title}</h2>
+        <p className={styles.sectionSubtitle}>{landingSections.testimonials.subtitle}</p>
         <div className={styles.testimonialsGrid}>
-          {testimonials.map((testimonial) => (
+          {landingTestimonials.map((testimonial) => (
             <Card key={testimonial.name} variant="flat" padding="lg">
               <Card.Body>
                 <p className={styles.testimonialQuote}>"{testimonial.quote}"</p>
-                <div className={styles.testimonialAuthor}>
-                  <div className={styles.testimonialAvatar}>
-                    {testimonial.initials}
-                  </div>
-                  <div>
-                    <div className={styles.testimonialName}>{testimonial.name}</div>
-                    <div className={styles.testimonialRole}>{testimonial.role}</div>
-                  </div>
-                </div>
+                <Profile
+                  initials={testimonial.initials}
+                  name={testimonial.name}
+                  role={testimonial.role}
+                />
               </Card.Body>
             </Card>
           ))}
@@ -191,19 +112,30 @@ export function Landing() {
 
       {/* Contact Section */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Get in Touch</h2>
-        <p className={styles.sectionSubtitle}>
-          Have questions? We'd love to hear from you
-        </p>
+        <h2 className={styles.sectionTitle}>{landingContact.title}</h2>
+        <p className={styles.sectionSubtitle}>{landingContact.subtitle}</p>
         <div className={styles.contactWrapper}>
           <Card variant="elevated" padding="lg">
             <Card.Body>
               <div className={styles.contactForm}>
-                <Input label="Name" placeholder="Your name" fullWidth />
-                <Input label="Email" type="email" placeholder="you@example.com" fullWidth />
-                <Input label="Message" placeholder="How can we help?" fullWidth />
+                <Input
+                  label={landingContact.fields.name}
+                  placeholder={landingContact.fields.namePlaceholder}
+                  fullWidth
+                />
+                <Input
+                  label={landingContact.fields.email}
+                  type="email"
+                  placeholder={landingContact.fields.emailPlaceholder}
+                  fullWidth
+                />
+                <Input
+                  label={landingContact.fields.message}
+                  placeholder={landingContact.fields.messagePlaceholder}
+                  fullWidth
+                />
                 <Button variant="primary" fullWidth>
-                  Send Message
+                  {landingContact.submitLabel}
                 </Button>
               </div>
             </Card.Body>

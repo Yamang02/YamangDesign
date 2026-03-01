@@ -5,7 +5,17 @@
 import { useState, useEffect } from 'react';
 import { LabToc } from './LabToc';
 import styles from './LabLayout.module.css';
-import type { TocItem } from './types';
+import type { TocItem, TocItemTree } from './types';
+
+function flattenTocIds(items: (TocItem | TocItemTree)[]): string[] {
+  return items.flatMap((item) => {
+    const ids = [item.id];
+    if ('children' in item && Array.isArray(item.children) && item.children.length > 0) {
+      ids.push(...flattenTocIds(item.children));
+    }
+    return ids;
+  });
+}
 
 export interface LabLayoutProps {
   title: string;
@@ -13,8 +23,8 @@ export interface LabLayoutProps {
   children: React.ReactNode;
   /** TOC 표시 여부 (기본: true) */
   showToc?: boolean;
-  /** TOC 항목 목록 (2개 이상일 때만 표시) */
-  tocItems?: TocItem[];
+  /** TOC 항목 목록 (2개 이상일 때만 표시, flat 또는 tree) */
+  tocItems?: TocItem[] | TocItemTree[];
 }
 
 export function LabLayout({
@@ -25,9 +35,10 @@ export function LabLayout({
   tocItems = [],
 }: LabLayoutProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const idsToObserve = flattenTocIds(tocItems);
 
   useEffect(() => {
-    if (!showToc || tocItems.length < 2) return;
+    if (!showToc || idsToObserve.length < 2) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -41,13 +52,13 @@ export function LabLayout({
       { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
-    tocItems.forEach((item) => {
-      const el = document.getElementById(item.id);
+    idsToObserve.forEach((id) => {
+      const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [showToc, tocItems]);
+  }, [showToc, idsToObserve.join(',')]);
 
   const handleTocClick = (id: string) => {
     const el = document.getElementById(id);
@@ -56,7 +67,7 @@ export function LabLayout({
 
   return (
     <div className={styles.labLayoutWrapper}>
-      {showToc && tocItems.length >= 2 && (
+      {showToc && idsToObserve.length >= 2 && (
         <LabToc
           items={tocItems}
           activeId={activeSection}

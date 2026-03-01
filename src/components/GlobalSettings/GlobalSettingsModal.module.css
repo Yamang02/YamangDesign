@@ -18,8 +18,9 @@
 
 .modal {
   width: 90%;
-  max-width: 420px;
+  max-width: 400px;
   max-height: 85vh;
+  min-width: 0;
   background: var(--ui-bg-base);
   border-radius: 12px;
   box-shadow: var(--ui-shadow-lg);
@@ -45,14 +46,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 14px 16px;
   border-bottom: 1px solid var(--ui-border-default);
   background: var(--ui-bg-subtle);
 }
 
 .title {
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--ui-text-primary);
 }
@@ -81,16 +82,25 @@
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: 16px 20px;
+  overflow-x: hidden;
+  min-width: 0;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 /* Section common */
 .section {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
@@ -103,42 +113,144 @@
   margin: 0;
 }
 
+/* Save preset inline input */
+.saveInline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.saveInlineInput {
+  width: 100px;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 11px;
+  color: var(--ui-text-primary);
+  background: var(--ui-bg-base);
+  border: 1px solid var(--ui-action-primary);
+  border-radius: 4px;
+  outline: none;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--ui-text-tertiary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.iconBtn:hover {
+  color: var(--ui-action-primary);
+  background: var(--ui-bg-hover);
+}
+
+.iconBtn.primary {
+  color: var(--ui-action-primary);
+}
+
+.iconBtn.danger:hover {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
 /* Footer */
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 10px 16px;
   border-top: 1px solid var(--ui-border-default);
   background: var(--ui-bg-subtle);
-  gap: 12px;
 }
 
 .footerLeft,
 .footerRight {
   display: flex;
-  gap: 8px;
+  gap: 4px;
+}
+
+.footerBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--ui-text-secondary);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+  position: relative;
+}
+
+.footerBtn:hover {
+  color: var(--ui-text-primary);
+  background: var(--ui-bg-hover);
+  border-color: var(--ui-border-default);
+}
+
+.footerBtn.primary {
+  background: var(--ui-action-primary);
+  color: #fff;
+  border-color: var(--ui-action-primary);
+}
+
+.footerBtn.primary:hover {
+  background: var(--ui-action-hover);
+  border-color: var(--ui-action-hover);
+}
+
+.footerBtn.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.footerBtn:hover::after {
+  opacity: 1;
+}
+
+/* ===== Flat Card Row (공통) ===== */
+.flatCard {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  background: var(--ui-bg-subtle);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.flatCard:hover {
+  border-color: var(--ui-border-default);
+  background: var(--ui-bg-base);
+}
+
+.flatCardClickable {
+  cursor: pointer;
 }
 
 /* ===== Section 1: Color Palette ===== */
-.paletteGrid {
+.paletteList {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  background: var(--ui-bg-surface);
-  border-radius: 8px;
-  overflow: hidden;
+  gap: 4px;
 }
 
 .paletteRow {
   display: flex;
   flex-direction: column;
-  padding: 8px 12px;
-  background: var(--ui-bg-base);
-}
-
-.paletteRow:not(:last-child) {
-  border-bottom: 1px solid var(--ui-border-subtle);
+  gap: 4px;
 }
 
 .paletteLabel {
@@ -154,12 +266,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
 }
 
 .colorSwatch {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
   border: 1px solid var(--ui-border-default);
   flex-shrink: 0;
   cursor: pointer;
@@ -169,9 +282,9 @@
 
 .colorSwatch input[type="color"] {
   position: absolute;
-  inset: -4px;
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   border: none;
   cursor: pointer;
   opacity: 0;
@@ -179,12 +292,13 @@
 
 .hexInput {
   flex: 1;
+  min-width: 0;
   height: 28px;
   padding: 0 8px;
   font-size: 12px;
   font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
   color: var(--ui-text-primary);
-  background: var(--ui-bg-surface);
+  background: var(--ui-bg-base);
   border: 1px solid var(--ui-border-default);
   border-radius: 4px;
   outline: none;
@@ -195,32 +309,42 @@
   border-color: var(--ui-action-primary);
 }
 
-.autoBtn {
-  height: 28px;
-  padding: 0 10px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--ui-text-secondary);
-  background: var(--ui-bg-surface);
-  border: 1px solid var(--ui-border-default);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
+/* 고정 슬롯: 레이아웃 유지를 위해 삭제 버튼 자리 확보 */
+.paletteDeleteSlot {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.autoBtn:hover {
-  background: var(--ui-bg-hover);
-  color: var(--ui-text-primary);
+.paletteClearBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--ui-text-tertiary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.paletteClearBtn:hover {
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 /* ===== Section 2: Presets ===== */
 .presetList {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  background: var(--ui-bg-surface);
-  border-radius: 8px;
-  overflow: hidden;
+  gap: 4px;
 }
 
 .presetItem {
@@ -228,20 +352,18 @@
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
-  background: var(--ui-bg-base);
-  border: none;
+  background: var(--ui-bg-subtle);
+  border: 1px solid transparent;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: all 0.15s;
   text-align: left;
   width: 100%;
 }
 
 .presetItem:hover {
-  background: var(--ui-bg-hover);
-}
-
-.presetItem:not(:last-child) {
-  border-bottom: 1px solid var(--ui-border-subtle);
+  border-color: var(--ui-border-default);
+  background: var(--ui-bg-base);
 }
 
 .presetBadge {
@@ -266,6 +388,7 @@
 
 .presetName {
   flex: 1;
+  min-width: 0;
   font-size: 13px;
   font-weight: 500;
   color: var(--ui-text-primary);
@@ -280,7 +403,17 @@
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* 프리셋 삭제 슬롯: Yamang은 비활성화, Custom만 삭제 가능 */
+.presetDeleteSlot {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .deleteBtn {
@@ -304,70 +437,24 @@
   color: #dc2626;
 }
 
-/* Save preset row */
-.savePresetRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: var(--ui-bg-base);
-  border-top: 1px solid var(--ui-border-subtle);
-}
-
-.savePresetInput {
-  flex: 1;
-  height: 28px;
-  padding: 0 8px;
-  font-size: 12px;
-  color: var(--ui-text-primary);
-  background: var(--ui-bg-surface);
-  border: 1px solid var(--ui-border-default);
-  border-radius: 4px;
-  outline: none;
-}
-
-.savePresetInput:focus {
-  border-color: var(--ui-action-primary);
-}
-
-.addPresetBtn {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0 10px;
-  height: 28px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ui-action-primary);
-  background: none;
-  border: 1px dashed var(--ui-border-default);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.addPresetBtn:hover {
-  border-color: var(--ui-border-hover);
-  background: var(--ui-bg-hover);
-  color: var(--ui-text-hover);
-}
-
 /* ===== Section 3: Style & System ===== */
-.inlineRow {
+.settingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settingRow {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  background: var(--ui-bg-base);
-  border: 1px solid var(--ui-border-default);
+  background: var(--ui-bg-subtle);
+  border: 1px solid transparent;
   border-radius: 8px;
 }
 
-.inlineRow:not(:last-child) {
-  margin-bottom: 8px;
-}
-
-.inlineLabel {
+.settingLabel {
   font-size: 12px;
   font-weight: 500;
   color: var(--ui-text-primary);
@@ -375,16 +462,12 @@
   min-width: 70px;
 }
 
-.inlineSelect {
+.settingSelect {
   flex: 1;
+  min-width: 140px;
 }
 
-/* Select override for light theme */
-.inlineSelect select,
-.inlineSelect [class*="selectTrigger"] {
-  background: var(--ui-bg-surface) !important;
-  border-color: var(--ui-border-default) !important;
-  color: var(--ui-text-primary) !important;
-  font-size: 12px !important;
-  height: 32px !important;
+/* Select 컴포넌트 스타일 오버라이드 */
+.settingSelect > div {
+  width: 100%;
 }

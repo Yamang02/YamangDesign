@@ -72,7 +72,7 @@ export function StyleLab() {
 
   return (
     <>
-      <LabLayout title="Style Lab" subtitle="GUI 스타일 비교" tocItems={tocItems}>
+      <LabLayout title="Style Lab" tocItems={tocItems}>
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
             <StyleOverviewDiagram />

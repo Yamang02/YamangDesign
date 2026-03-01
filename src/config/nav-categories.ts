@@ -20,9 +20,9 @@ export interface NavCategory {
 export const navCategories: NavCategory[] = [
   {
     id: 'pages',
-    icon: 'layers',
-    iconLibrary: 'nucleo',
-    tooltip: 'Page Showcase',
+    icon: 'auto-awesome-mosaic',
+    iconLibrary: 'material',
+    tooltip: 'layout',
     items: [
       { id: 'landing', label: 'Landing' },
       { id: 'dashboard', label: 'Dashboard' },
@@ -31,21 +31,27 @@ export const navCategories: NavCategory[] = [
   },
   {
     id: 'components',
-    icon: 'widgets',
+    icon: 'category',
     iconLibrary: 'material',
-    tooltip: 'Components',
+    tooltip: 'component',
     // items 없음 → 단일 페이지
   },
   {
     id: 'labs',
     icon: 'science',
     iconLibrary: 'material',
-    tooltip: 'Design Labs',
+    tooltip: 'lab',
     items: [
       { id: 'palette', label: 'Palette', icon: 'palette' },
       { id: 'style', label: 'Style', icon: 'auto-awesome' },
       { id: 'font', label: 'Font', icon: 'text-fields' },
-      { id: 'playground', label: 'Playground', icon: 'tune' },
     ],
+  },
+  {
+    id: 'playground',
+    icon: 'tune',
+    iconLibrary: 'material',
+    tooltip: 'playground',
+    // items 없음 → 단일 페이지, 구분선 후 표시
   },
 ];

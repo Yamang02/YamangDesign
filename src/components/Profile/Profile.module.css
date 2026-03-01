@@ -1,0 +1,23 @@
+.profile {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-3);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+}
+
+.role {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+}

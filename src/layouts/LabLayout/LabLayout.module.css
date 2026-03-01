@@ -60,6 +60,10 @@
   font-weight: var(--ds-font-weight-medium);
 }
 
+.tocItemChild {
+  font-size: var(--ds-text-xs);
+}
+
 /* E03: TOC 클릭 시 스크롤 위치 보정 */
 section[id] {
   scroll-margin-top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));

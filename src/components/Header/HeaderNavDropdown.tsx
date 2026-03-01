@@ -1,10 +1,9 @@
 /**
- * E02: 아이콘 기반 네비게이션 - 드롭다운 메뉴 아이템
+ * E02: 아이콘 기반 네비게이션 - 드롭다운 메뉴 아이템 (아이콘 + 메뉴명)
  */
 import { useEffect, useRef, type ReactNode } from 'react';
 import { clsx } from '../../utils/clsx';
 import { Icon } from '../Icon';
-import { Tooltip } from '../Tooltip';
 import styles from './HeaderNav.module.css';
 
 export interface HeaderNavDropdownItem {
@@ -16,7 +15,6 @@ export interface HeaderNavDropdownItem {
 export interface HeaderNavDropdownProps {
   icon: ReactNode;
   label: string;
-  tooltip?: string;
   items: HeaderNavDropdownItem[];
   active?: boolean;
   activeItemId?: string;
@@ -28,7 +26,6 @@ export interface HeaderNavDropdownProps {
 export function HeaderNavDropdown({
   icon,
   label,
-  tooltip,
   items,
   active,
   activeItemId,
@@ -77,9 +74,7 @@ export function HeaderNavDropdown({
 
   return (
     <div className={styles.dropdown} ref={containerRef}>
-      <Tooltip content={tooltip ?? label} position="bottom">
-        {trigger}
-      </Tooltip>
+      {trigger}
 
       {isOpen && (
         <div className={styles.dropdownMenu} role="menu">

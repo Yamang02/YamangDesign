@@ -5,6 +5,8 @@
 
 /** 섹션 제목 */
 export const showcaseSections = {
+  badge: 'Badge',
+  avatar: 'Avatar',
   button: 'Button',
   card: 'Card',
   select: 'Select',
@@ -22,6 +24,35 @@ export const showcaseLabels = {
   nucleoIcons: 'Nucleo Icons',
 } as const;
 
+/** 배지 데모용 라벨 */
+export const badgeShowcase = {
+  variants: {
+    primary: 'Primary',
+    secondary: 'Secondary',
+    accent: 'Accent',
+    outline: 'Outline',
+    subtle: 'Subtle',
+  },
+  sizes: {
+    sm: 'Small',
+    md: 'Medium',
+  },
+} as const;
+
+/** 아바타 데모용 라벨 */
+export const avatarShowcase = {
+  sizes: {
+    sm: 'Small',
+    md: 'Medium',
+    lg: 'Large',
+  },
+  variants: {
+    primary: 'Primary',
+    secondary: 'Secondary',
+    accent: 'Accent',
+  },
+} as const;
+
 /** 섹션별 통일 콘텐츠 - 동일 섹션 내 모든 컴포넌트가 표시하는 내용 */
 export const showcaseContent = {
   button: 'Button',
@@ -32,6 +63,8 @@ export const showcaseContent = {
   },
   select: 'Select',
   icon: 'Icon',
+  badge: 'New',
+  avatar: 'AB',
 } as const;
 
 /** 버튼 데모용 라벨 (차이점 표시용) */
@@ -140,8 +173,17 @@ export const iconShowcase = {
   ],
 } as const;
 
-/** 푸터 텍스트 */
-export const showcaseFooter = {
-  text: 'Yamang Design System POC',
-  themeInfo: 'Theme: Minimal / Neumorphism',
+/** 폼 예시 (연락처 패턴) */
+export const formExample = {
+  title: 'Form Example',
+  subtitle: 'Input + Button in Card (Contact pattern)',
+  fields: {
+    name: 'Name',
+    namePlaceholder: 'Your name',
+    email: 'Email',
+    emailPlaceholder: 'you@example.com',
+    message: 'Message',
+    messagePlaceholder: 'How can we help?',
+  },
+  submitLabel: 'Send Message',
 } as const;

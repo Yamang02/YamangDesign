@@ -3,8 +3,8 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../Icon';
-import { Button } from '../Button';
 import { Select } from '../Select';
+import { Tooltip } from '../Tooltip';
 import { useGlobalSettings } from './hooks/useGlobalSettings';
 import { themePresets } from '../../constants/palette-definitions';
 import type { ExternalPalette } from '../../@types/tokens';
@@ -146,9 +146,9 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
           {/* Section 1: Color Palette */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>컬러 팔레트</h3>
-            <div className={styles.paletteGrid}>
+            <div className={styles.paletteList}>
               {COLOR_FIELDS.map((field) => (
-                <div key={field.key} className={styles.paletteRow}>
+                <div key={field.key} className={`${styles.flatCard} ${styles.paletteRow}`}>
                   <span className={styles.paletteLabel}>
                     {field.label}
                     {field.required && ' *'}
@@ -171,15 +171,18 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                       onChange={(e) => handleColorChange(field.key, e.target.value)}
                       placeholder={field.required ? '' : 'Auto'}
                     />
-                    {!field.required && palette[field.key] && (
-                      <button
-                        type="button"
-                        className={styles.autoBtn}
-                        onClick={() => handleClearColor(field.key)}
-                      >
-                        Auto
-                      </button>
-                    )}
+                    <div className={styles.paletteDeleteSlot}>
+                      {!field.required && palette[field.key] && (
+                        <button
+                          type="button"
+                          className={styles.paletteClearBtn}
+                          onClick={() => handleClearColor(field.key)}
+                          aria-label={`${field.label} 초기화`}
+                        >
+                          <Icon name="delete" size="sm" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -188,7 +191,58 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
 
           {/* Section 2: Presets */}
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>프리셋</h3>
+            <div className={styles.sectionHeader}>
+              <h3 className={styles.sectionTitle}>프리셋</h3>
+              <div className={styles.saveInline}>
+                {showSaveInput ? (
+                  <>
+                    <input
+                      type="text"
+                      className={styles.saveInlineInput}
+                      placeholder="프리셋 이름"
+                      value={saveName}
+                      onChange={(e) => setSaveName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSavePreset();
+                        if (e.key === 'Escape') setShowSaveInput(false);
+                      }}
+                      autoFocus
+                    />
+                    <Tooltip content="저장" portal position="top">
+                      <button
+                        type="button"
+                        className={styles.iconBtn}
+                        onClick={handleSavePreset}
+                        aria-label="저장"
+                      >
+                        <Icon name="check" size="sm" />
+                      </button>
+                    </Tooltip>
+                    <Tooltip content="취소" portal position="top">
+                      <button
+                        type="button"
+                        className={styles.iconBtn}
+                        onClick={() => setShowSaveInput(false)}
+                        aria-label="취소"
+                      >
+                        <Icon name="close" size="sm" />
+                      </button>
+                    </Tooltip>
+                  </>
+                ) : (
+                  <Tooltip content="현재 설정 저장" portal position="top">
+                    <button
+                      type="button"
+                      className={styles.iconBtn}
+                      onClick={() => setShowSaveInput(true)}
+                      aria-label="현재 설정 저장"
+                    >
+                      <Icon name="save" size="sm" />
+                    </button>
+                  </Tooltip>
+                )}
+              </div>
+            </div>
             <div className={styles.presetList}>
               {/* Yamang Presets */}
               {YAMANG_PRESETS.map(([id, def]) => (
@@ -211,6 +265,7 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                       />
                     ))}
                   </div>
+                  <div className={styles.presetDeleteSlot} aria-hidden />
                 </button>
               ))}
 
@@ -237,81 +292,49 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                       />
                     ))}
                   </div>
-                  <button
-                    type="button"
-                    className={styles.deleteBtn}
-                    onClick={() => deleteUserPreset(preset.id)}
-                    aria-label={`${preset.name} 삭제`}
-                  >
-                    <Icon name="close" size="sm" />
-                  </button>
-                </div>
-              ))}
-
-              {/* Save Preset */}
-              <div className={styles.savePresetRow}>
-                {showSaveInput ? (
-                  <>
-                    <input
-                      type="text"
-                      className={styles.savePresetInput}
-                      placeholder="프리셋 이름"
-                      value={saveName}
-                      onChange={(e) => setSaveName(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleSavePreset();
-                        if (e.key === 'Escape') setShowSaveInput(false);
-                      }}
-                      autoFocus
-                    />
-                    <Button variant="primary" size="sm" onClick={handleSavePreset}>
-                      저장
-                    </Button>
+                  <div className={styles.presetDeleteSlot}>
                     <button
                       type="button"
                       className={styles.deleteBtn}
-                      onClick={() => setShowSaveInput(false)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteUserPreset(preset.id);
+                      }}
+                      aria-label={`${preset.name} 삭제`}
                     >
-                      <Icon name="close" size="sm" />
+                      <Icon name="delete" size="sm" />
                     </button>
-                  </>
-                ) : (
-                  <button
-                    type="button"
-                    className={styles.addPresetBtn}
-                    onClick={() => setShowSaveInput(true)}
-                  >
-                    <Icon name="add" size="sm" />
-                    현재 설정 저장
-                  </button>
-                )}
-              </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
           {/* Section 3: Style & System */}
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>스타일 / 시스템</h3>
-            <div className={styles.inlineRow}>
-              <span className={styles.inlineLabel}>스타일</span>
-              <div className={styles.inlineSelect}>
-                <Select
-                  options={STYLE_OPTIONS}
-                  value={styleName}
-                  onChange={(v) => setStyleName(v as StyleName)}
-                  size="sm"
-                />
+            <div className={styles.settingsList}>
+              <div className={styles.settingRow}>
+                <span className={styles.settingLabel}>스타일</span>
+                <div className={styles.settingSelect}>
+                  <Select
+                    options={STYLE_OPTIONS}
+                    value={styleName}
+                    onChange={(v) => setStyleName(v as StyleName)}
+                    size="sm"
+                  />
+                </div>
               </div>
-            </div>
-            <div className={styles.inlineRow}>
-              <span className={styles.inlineLabel}>시스템 색상</span>
-              <div className={styles.inlineSelect}>
-                <Select
-                  options={SYSTEM_OPTIONS}
-                  value={systemPreset}
-                  onChange={(v) => setSystemPreset(v as SystemPresetName)}
-                  size="sm"
-                />
+              <div className={styles.settingRow}>
+                <span className={styles.settingLabel}>시스템 색상</span>
+                <div className={styles.settingSelect}>
+                  <Select
+                    options={SYSTEM_OPTIONS}
+                    value={systemPreset}
+                    onChange={(v) => setSystemPreset(v as SystemPresetName)}
+                    size="sm"
+                  />
+                </div>
               </div>
             </div>
           </section>
@@ -320,25 +343,49 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
         {/* Footer */}
         <footer className={styles.footer}>
           <div className={styles.footerLeft}>
-            <Button variant="ghost" size="sm" onClick={exportSettings}>
-              내보내기
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => importSettings()}>
-              가져오기
-            </Button>
+            <Tooltip content="내보내기" portal position="top">
+              <button
+                type="button"
+                className={styles.footerBtn}
+                onClick={exportSettings}
+                aria-label="내보내기"
+              >
+                <Icon name="download" library="nucleo" size="sm" />
+              </button>
+            </Tooltip>
+            <Tooltip content="가져오기" portal position="top">
+              <button
+                type="button"
+                className={styles.footerBtn}
+                onClick={() => importSettings()}
+                aria-label="가져오기"
+              >
+                <Icon name="upload" library="nucleo" size="sm" />
+              </button>
+            </Tooltip>
           </div>
           <div className={styles.footerRight}>
-            <Button variant="ghost" size="sm" onClick={reset}>
-              초기화
-            </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleApply}
-              disabled={!hasChanges}
-            >
-              적용
-            </Button>
+            <Tooltip content="초기화" portal position="top">
+              <button
+                type="button"
+                className={styles.footerBtn}
+                onClick={reset}
+                aria-label="초기화"
+              >
+                <Icon name="refresh" library="nucleo" size="sm" />
+              </button>
+            </Tooltip>
+            <Tooltip content="적용" portal position="top">
+              <button
+                type="button"
+                className={`${styles.footerBtn} ${styles.primary}`}
+                onClick={handleApply}
+                disabled={!hasChanges}
+                aria-label="적용"
+              >
+                <Icon name="check" size="sm" />
+              </button>
+            </Tooltip>
           </div>
         </footer>
       </div>

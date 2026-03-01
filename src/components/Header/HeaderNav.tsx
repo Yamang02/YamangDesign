@@ -1,6 +1,6 @@
 /**
- * E02: 아이콘 기반 네비게이션 - 2단계 하이브리드
- * [Pages▾] [Components] [Labs▾] | [⚙️설정]
+ * E02: 아이콘 기반 네비게이션 - 아이콘 + 메뉴명 통일
+ * [layout▾] [component] [lab▾] | [playground] | [settings]
  */
 import { useState } from 'react';
 import { Icon } from '../Icon';
@@ -12,9 +12,10 @@ import type { IconLibrary } from '../Icon';
 import styles from './HeaderNav.module.css';
 
 const categoryLabels: Record<string, string> = {
-  pages: 'Pages',
-  components: 'Components',
-  labs: 'Labs',
+  pages: 'layout',
+  components: 'component',
+  labs: 'lab',
+  playground: 'playground',
 };
 
 export interface HeaderNavProps {
@@ -43,7 +44,6 @@ export function HeaderNav({ activePage, onSelect }: HeaderNavProps) {
               key={category.id}
               icon={icon}
               label={label}
-              tooltip={category.tooltip}
               items={category.items.map((item) => ({
                 id: item.id,
                 label: item.label,
@@ -62,14 +62,15 @@ export function HeaderNav({ activePage, onSelect }: HeaderNavProps) {
         }
 
         return (
-          <HeaderNavItem
-            key={category.id}
-            icon={icon}
-            label={label}
-            tooltip={category.tooltip}
-            active={category.id === activePage}
-            onClick={() => onSelect(category.id)}
-          />
+          <span key={category.id} style={{ display: 'contents' }}>
+            {category.id === 'playground' && <span className={styles.divider} aria-hidden />}
+            <HeaderNavItem
+              icon={icon}
+              label={label}
+              active={category.id === activePage}
+              onClick={() => onSelect(category.id)}
+            />
+          </span>
         );
       })}
 
