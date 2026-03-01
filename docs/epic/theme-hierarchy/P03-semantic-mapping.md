@@ -8,37 +8,37 @@
 
 ### 1. 타입 정의 (types.ts)
 
-- [ ] `SemanticMapping` 인터페이스
-- [ ] `ScaleReference` 인터페이스
-- [ ] `PaletteDefinition.semanticMapping?: SemanticMapping` 추가
+- [x] `SemanticMapping` 인터페이스
+- [x] `ScaleReference` 인터페이스
+- [x] `PaletteDefinition.semanticMapping?: SemanticMapping` 추가
 
 ### 2. 기본 매핑 정의
 
 **파일:** `src/palettes/strategies/default-mappings.ts` (신규)
 
-- [ ] `defaultSemanticMappings: Record<BgStrategy, SemanticMapping>`
-- [ ] light, colored, dark 각 전략별 매핑 정의
+- [x] `defaultSemanticMappings: Record<BgStrategy, SemanticMapping>`
+- [x] light, colored, dark 각 전략별 매핑 정의
 
 ### 3. 매핑 해석 로직
 
 **파일:** `src/palettes/mapping/resolve.ts` (신규)
 
-- [ ] `resolveColorValue(value, scales)` - ScaleReference 또는 직접 색상 → string
-- [ ] `resolveSemanticMapping(mapping, scales)` → SemanticColors
-- [ ] (선택) `getMergedMapping(custom, bgStrategy)` - 부분 오버라이드 지원
+- [x] `resolveColorValue(value, scales)` - ScaleReference 또는 직접 색상 → string
+- [x] `resolveSemanticMapping(mapping, scales)` → SemanticColors
+- [x] (선택) `getMergedMapping(base, custom)` - 부분 오버라이드 지원
 
 ### 4. createPalette 업데이트
 
 **파일:** `src/palettes/index.ts`
 
-- [ ] strategyFn 호출 제거. 항상 resolve 경로만 사용
-- [ ] `getMergedMapping(definition.semanticMapping, definition.bgStrategy)` → `resolveSemanticMapping` 적용
-- [ ] semanticMapping 없으면 defaultSemanticMappings[bgStrategy] 사용
+- [x] strategyFn 호출 제거. 항상 resolve 경로만 사용
+- [x] `getMergedMapping(baseMapping, definition.semanticMapping)` → `resolveSemanticMapping` 적용
+- [x] semanticMapping 없으면 defaultSemanticMappings[bgStrategy] 사용
 
 ### 5. strategy 파일 제거
 
-- [ ] `light-bg.ts`, `colored-bg.ts`, `dark-bg.ts` 삭제
-- [ ] default-mappings.ts 생성 시 기존 strategy 로직을 ScaleReference 형태로 이전
+- [x] `light-bg.ts`, `colored-bg.ts`, `dark-bg.ts` 삭제
+- [x] default-mappings.ts 생성 시 기존 strategy 로직을 ScaleReference 형태로 이전
 
 ### 6. 영향 범위
 
@@ -57,3 +57,40 @@
 
 - 선행: P01, P02
 - 후행: P04 (ScaleSelectionModal에서 매핑 편집)
+
+---
+
+## 특이사항 검토 (2026-03-01)
+
+### 1. ScaleReference와 sub 스케일
+
+- **sub 항상 포함 (2026-03-01 적용)**: Primary 제외 secondary, accent, neutral, sub 모두 일관된 Auto 파생
+- `GeneratedScales.sub`는 **항상 존재**: `resolvePalette`에서 `sub ?? deriveSub(primary)` 적용
+- ScaleReference `scale: 'sub'` 사용 시 fallback 불필요
+
+### 2. text.inverse
+
+- `SemanticColors`/`SemanticMapping`에 `inverse` 없음
+- `combine.ts`에서 별도 계산: `palette.bgStrategy === 'dark' ? text.primary : '#FFFFFF'`
+- P03에서 inverse 관련 변경 없음 (기존 로직 유지)
+
+### 3. Action colors
+
+- Action(primary/secondary/accent 500/600/700)은 semanticMapping 범위 밖
+- `generateActionColors(palette.scales)`가 scales 직접 사용
+- P03 영향 없음
+
+### 4. 부분 오버라이드 병합
+
+- `deepmerge`/lodash 패키지 없음 → 1~2 depth shallow merge **직접 구현**
+- `getMergedMapping(base, override)`: category(bg/text/border) 단위 shallow merge
+
+### 5. ColorUsageDiagram
+
+- 현재 "light-bg 기준" 하드코딩, palette/theme props 없음
+- P03에서는 변경 없음. P04에서 bgStrategy 연동 및 매핑 편집 UI 연동 예정
+
+### 6. strategies/index.ts
+
+- `palettes/index.ts`만 strategies 직접 import (개별 파일)
+- strategy 파일 삭제 시 `strategies/index.ts`도 함께 제거

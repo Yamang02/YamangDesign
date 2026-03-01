@@ -9,6 +9,7 @@ import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
 import { combineTheme } from '../themes/combine';
 import { flattenToCSSVars } from '../utils/css';
+import type { PaletteDefinition } from '../palettes';
 import type { StyleName, PaletteName, SystemPresetName } from '../@types/theme';
 
 /** CSS 변수 객체 타입 */
@@ -39,15 +40,12 @@ export function getStyleVariables(
 }
 
 /**
- * Palette 프리셋 → CSS 변수 객체 (스케일 변수)
- * Color Scales 스와치 표시용
+ * PaletteDefinition → CSS 변수 객체 (스케일 변수)
+ * P05: Custom 팔레트 등 임의 정의용
  */
-export function getPaletteVariables(paletteName: PaletteName): CSSVariables {
-  if (paletteName === 'custom') return {};
-
-  const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
-  if (!preset) return {};
-
+export function getPaletteVariablesFromDefinition(
+  preset: PaletteDefinition
+): CSSVariables {
   const expanded = createPalette(preset);
   const vars: CSSVariables = {};
 
@@ -63,6 +61,19 @@ export function getPaletteVariables(paletteName: PaletteName): CSSVariables {
   );
 
   return vars;
+}
+
+/**
+ * Palette 프리셋 → CSS 변수 객체 (스케일 변수)
+ * Color Scales 스와치 표시용
+ */
+export function getPaletteVariables(paletteName: PaletteName): CSSVariables {
+  if (paletteName === 'custom') return {};
+
+  const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
+  if (!preset) return {};
+
+  return getPaletteVariablesFromDefinition(preset);
 }
 
 /**

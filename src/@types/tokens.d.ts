@@ -20,7 +20,7 @@ export interface ExternalPalette {
 }
 
 /**
- * 해석 완료된 팔레트 색상 (E09: neutral 추가, sub 선택적)
+ * 해석 완료된 팔레트 색상 (E09: neutral, sub 항상 존재. Primary 제외 Auto 파생 통일)
  */
 export interface ResolvedColors {
   primary: string;
@@ -28,8 +28,8 @@ export interface ResolvedColors {
   accent: string;
   /** Neutral - 항상 존재. 텍스트/테두리/배경용 */
   neutral: string;
-  /** Sub - 선택적. 컬러풀 보조색 */
-  sub?: string;
+  /** Sub - 항상 존재. 컬러풀 보조색. 미입력 시 deriveSub(primary) */
+  sub: string;
 
   /** 메타 정보: 어떤 색상이 파생인지 추적 */
   _meta: {
@@ -62,7 +62,7 @@ export interface ColorScale {
 }
 
 /**
- * 생성된 색상 스케일 모음 (E09: neutral 추가, sub 선택적)
+ * 생성된 색상 스케일 모음 (E09: neutral, sub 항상 존재)
  */
 export interface GeneratedScales {
   primary: ColorScale;
@@ -70,6 +70,6 @@ export interface GeneratedScales {
   accent: ColorScale;
   /** Neutral - 항상 존재. 텍스트/테두리/배경용 */
   neutral: ColorScale;
-  /** Sub - sub 입력 시에만 존재. 컬러풀 보조색 */
-  sub?: ColorScale;
+  /** Sub - 항상 존재. 컬러풀 보조색 */
+  sub: ColorScale;
 }

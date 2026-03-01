@@ -1,9 +1,33 @@
 /**
  * Color Usage Diagram - 브랜드 컬러 용도 시각화
  * PaletteLab 상단에 표시되는 인터랙티브 다이어그램
+ * P04: 인터랙티브 모드 - 스와치 클릭 시 ScaleSelectionModal
  */
 import { useState } from 'react';
+import { resolveColorValue } from '../../../palettes/mapping/resolve';
+import { ScaleSelectionModal } from './ScaleSelectionModal';
+import type { SemanticTokenPath } from '../../../palettes/mapping/recommendations';
+import type { BgStrategy, SemanticMapping } from '../../../palettes/types';
+import type { ExpandedPalette } from '../../../palettes/types';
+import type { GeneratedScales } from '../../../@types/tokens';
 import styles from './ColorUsageDiagram.module.css';
+
+/** 편집 가능한 토큰 → SemanticTokenPath 매핑 (text.inverse, action-* 제외) */
+const TOKEN_TO_PATH: Record<string, SemanticTokenPath> = {
+  '--ds-color-bg-base': 'bg.base',
+  '--ds-color-bg-surface': 'bg.surface',
+  '--ds-color-bg-surfaceBrand': 'bg.surfaceBrand',
+  '--ds-color-bg-elevated': 'bg.elevated',
+  '--ds-color-bg-muted': 'bg.muted',
+  '--ds-color-text-primary': 'text.primary',
+  '--ds-color-text-secondary': 'text.secondary',
+  '--ds-color-text-muted': 'text.muted',
+  '--ds-color-text-onAction': 'text.onAction',
+  '--ds-color-border-default': 'border.default',
+  '--ds-color-border-subtle': 'border.subtle',
+  '--ds-color-border-accent': 'border.accent',
+  '--ds-color-border-focus': 'border.focus',
+};
 
 interface ColorRole {
   key: string;
@@ -105,19 +129,55 @@ const semanticMappings: Array<{ category: string; items: SemanticToken[] }> = [
   },
 ];
 
+function getValueByPath(
+  mapping: SemanticMapping,
+  path: SemanticTokenPath
+): string | import('../../../palettes/types').ScaleReference {
+  const [cat, key] = path.split('.');
+  const category = mapping[cat as keyof SemanticMapping];
+  if (!category || typeof category !== 'object') return '#999';
+  return (category as Record<string, string | import('../../../palettes/types').ScaleReference>)[key] ?? '#999';
+}
+
 function SemanticMappingTabs({
   mappings,
+  interactive,
+  mapping,
+  scales,
+  bgStrategy,
+  onMappingChange,
 }: {
   mappings: Array<{ category: string; items: SemanticToken[] }>;
+  interactive?: boolean;
+  mapping?: SemanticMapping;
+  scales?: GeneratedScales;
+  bgStrategy?: BgStrategy;
+  onMappingChange?: (path: SemanticTokenPath, value: string | import('../../../palettes/types').ScaleReference) => void;
 }) {
   const [activeCategory, setActiveCategory] = useState(mappings[0]?.category ?? '');
+  const [modalToken, setModalToken] = useState<SemanticTokenPath | null>(null);
   const activeMapping = mappings.find((m) => m.category === activeCategory);
+
+  const handleSwatchClick = (item: SemanticToken) => {
+    const path = TOKEN_TO_PATH[item.token];
+    if (!path || !interactive || !mapping || !onMappingChange) return;
+    setModalToken(path);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, item: SemanticToken) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleSwatchClick(item);
+    }
+  };
 
   return (
     <div className={styles.section}>
       <h4 className={styles.sectionTitle}>
         시맨틱 컬러 매핑
-        <span className={styles.sectionHint}> (light-bg 기준)</span>
+        <span className={styles.sectionHint}>
+          {bgStrategy ? ` (${bgStrategy}-bg 기준)` : ' (light-bg 기준)'}
+        </span>
       </h4>
       <div className={styles.mappingTabs}>
         <div className={styles.tabList} role="tablist">
@@ -127,9 +187,12 @@ function SemanticMappingTabs({
               type="button"
               role="tab"
               aria-selected={activeCategory === m.category}
+              aria-controls={`panel-${m.category}`}
+              id={`tab-${m.category}`}
               className={styles.tab}
               data-active={activeCategory === m.category}
               onClick={() => setActiveCategory(m.category)}
+              tabIndex={activeCategory === m.category ? 0 : -1}
             >
               {m.category}
             </button>
@@ -139,16 +202,27 @@ function SemanticMappingTabs({
           {activeMapping && (
             <div className={styles.tokenList}>
               {activeMapping.items.map((item) => {
+                const path = TOKEN_TO_PATH[item.token];
+                const isEditable = !!path && interactive && !!mapping && !!scales && !!onMappingChange;
+                const displayColor =
+                  mapping && scales && path
+                    ? resolveColorValue(getValueByPath(mapping, path), scales)
+                    : `var(${item.token})`;
                 const sourceVar = item.source && `--ds-color-${item.source}`;
                 return (
                   <div key={item.token} className={styles.tokenRow}>
                     <div
                       className={styles.tokenSwatch}
-                      style={{ backgroundColor: `var(${item.token})` }}
+                      style={{ backgroundColor: displayColor }}
                       title={item.token}
+                      role={isEditable ? 'button' : undefined}
+                      tabIndex={isEditable ? 0 : undefined}
+                      onClick={isEditable ? () => handleSwatchClick(item) : undefined}
+                      onKeyDown={isEditable ? (e) => handleKeyDown(e, item) : undefined}
+                      aria-label={isEditable ? `${item.token} 매핑 편집` : undefined}
                     />
                     <code className={styles.tokenName}>{item.token}</code>
-                    {item.source && sourceVar && (
+                    {item.source && sourceVar && !mapping && (
                       <span
                         className={styles.sourceBadge}
                         style={{
@@ -166,7 +240,14 @@ function SemanticMappingTabs({
                         → {item.source}
                       </span>
                     )}
-                    {item.note && (
+                    {mapping && path && (
+                      <span className={styles.tokenNote}>
+                        {typeof getValueByPath(mapping, path) === 'object'
+                          ? `${(getValueByPath(mapping, path) as { scale: string; step: number }).scale}-${(getValueByPath(mapping, path) as { scale: string; step: number }).step}`
+                          : (getValueByPath(mapping, path) as string)}
+                      </span>
+                    )}
+                    {!mapping && item.note && (
                       <span className={styles.tokenNote}>{item.note}</span>
                     )}
                   </div>
@@ -176,6 +257,26 @@ function SemanticMappingTabs({
           )}
         </div>
       </div>
+      {interactive &&
+        modalToken &&
+        mapping &&
+        scales &&
+        bgStrategy &&
+        onMappingChange && (
+          <ScaleSelectionModal
+            open={!!modalToken}
+            onClose={() => setModalToken(null)}
+            semanticToken={modalToken}
+            tokenLabel={modalToken}
+            currentValue={getValueByPath(mapping, modalToken)}
+            scales={scales}
+            bgStrategy={bgStrategy}
+            onSelect={(value) => {
+              onMappingChange(modalToken, value);
+              setModalToken(null);
+            }}
+          />
+        )}
     </div>
   );
 }
@@ -216,7 +317,26 @@ function ComponentDiagram() {
   );
 }
 
-export function ColorUsageDiagram() {
+export interface ColorUsageDiagramProps {
+  /** 인터랙티브 모드 (스와치 클릭 시 매핑 편집) */
+  interactive?: boolean;
+  /** 팔레트 (scales + semantic) */
+  palette?: ExpandedPalette;
+  /** 현재 시맨틱 매핑 (편집 시) */
+  mapping?: SemanticMapping;
+  /** 매핑 변경 콜백 */
+  onMappingChange?: (path: SemanticTokenPath, value: string | import('../../../palettes/types').ScaleReference) => void;
+}
+
+export function ColorUsageDiagram({
+  interactive = false,
+  palette,
+  mapping,
+  onMappingChange,
+}: ColorUsageDiagramProps = {}) {
+  const scales = palette?.scales;
+  const bgStrategy = palette?.bgStrategy;
+
   return (
     <div className={styles.diagram}>
       {/* Color Roles Section */}
@@ -248,7 +368,14 @@ export function ColorUsageDiagram() {
       </div>
 
       {/* Semantic Mapping Section */}
-      <SemanticMappingTabs mappings={semanticMappings} />
+      <SemanticMappingTabs
+        mappings={semanticMappings}
+        interactive={interactive}
+        mapping={mapping}
+        scales={scales}
+        bgStrategy={bgStrategy}
+        onMappingChange={onMappingChange}
+      />
 
       {/* Component Diagram */}
       <ComponentDiagram />

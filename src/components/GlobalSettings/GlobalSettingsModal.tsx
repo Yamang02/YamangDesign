@@ -1,14 +1,23 @@
 /**
  * E03: 전역 설정 모달 - Light Theme, 새 UI 구조
+ * P05: 프리셋 섹션에 탭(Custom/Default/Natural) + 검색 UI
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Icon } from '../Icon';
 import { Select } from '../Select';
 import { Tooltip } from '../Tooltip';
 import { useGlobalSettings } from './hooks/useGlobalSettings';
-import { themePresets } from '../../constants/palette-definitions';
+import {
+  getThemesByCategory,
+  searchThemesByName,
+} from '../../palettes/presets/registry';
+import type { ThemeCategory } from '../../palettes/types';
 import type { ExternalPalette } from '../../@types/tokens';
 import type { StyleName, SystemPresetName } from '../../@types/theme';
+import { ThemeTabNavigation } from '../../pages/layouts/PaletteLab/ThemeTabNavigation';
+import { ThemeSearchBar } from '../../pages/layouts/PaletteLab/ThemeSearchBar';
+import { EmptyCategory } from '../../pages/layouts/PaletteLab/EmptyCategory';
+import type { StoredPreset } from './types';
 import styles from './GlobalSettingsModal.module.css';
 
 export interface GlobalSettingsModalProps {
@@ -38,10 +47,64 @@ const SYSTEM_OPTIONS: { value: SystemPresetName; label: string }[] = [
   { value: 'muted', label: 'Muted' },
 ];
 
-const YAMANG_PRESETS = Object.entries(themePresets) as [
-  string,
-  { name: string; colors: ExternalPalette }
-][];
+function getPresetColorsFromPalette(p: ExternalPalette) {
+  return [
+    p.primary || '#ccc',
+    p.secondary || '#ccc',
+    p.accent || '#ccc',
+    p.sub || '#ccc',
+    p.neutral || '#ccc',
+  ];
+}
+
+function PresetItemCustom({
+  preset,
+  onLoad,
+  onDelete,
+}: {
+  preset: StoredPreset;
+  onLoad: (p: StoredPreset) => void;
+  onDelete: (id: string) => void;
+}) {
+  const palette = preset.settings.palette || {};
+  return (
+    <div className={styles.presetItem}>
+      <span className={`${styles.presetBadge} ${styles.custom}`}>
+        Custom
+      </span>
+      <button
+        type="button"
+        className={styles.presetName}
+        onClick={() => onLoad(preset)}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
+      >
+        {preset.name}
+      </button>
+      <div className={styles.presetColors}>
+        {getPresetColorsFromPalette(palette).map((color, i) => (
+          <span
+            key={i}
+            className={styles.presetDot}
+            style={{ backgroundColor: color }}
+          />
+        ))}
+      </div>
+      <div className={styles.presetDeleteSlot}>
+        <button
+          type="button"
+          className={styles.deleteBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(preset.id);
+          }}
+          aria-label={`${preset.name} 삭제`}
+        >
+          <Icon name="delete" size="sm" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps) {
   const {
@@ -65,6 +128,35 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
   const modalRef = useRef<HTMLDivElement>(null);
   const [showSaveInput, setShowSaveInput] = useState(false);
   const [saveName, setSaveName] = useState('');
+  const [presetTab, setPresetTab] = useState<ThemeCategory>('custom');
+  const [presetSearch, setPresetSearch] = useState('');
+
+  const defaultThemes = useMemo(() => getThemesByCategory('default'), []);
+  const naturalThemes = useMemo(() => getThemesByCategory('natural'), []);
+
+  const filteredDefaultThemes = useMemo(() => {
+    if (!presetSearch.trim()) return defaultThemes;
+    const all = searchThemesByName(presetSearch);
+    return defaultThemes.filter((t) =>
+      all.some((a) => a.metadata?.id === t.metadata?.id)
+    );
+  }, [defaultThemes, presetSearch]);
+
+  const filteredNaturalThemes = useMemo(() => {
+    if (!presetSearch.trim()) return naturalThemes;
+    const all = searchThemesByName(presetSearch);
+    return naturalThemes.filter((t) =>
+      all.some((a) => a.metadata?.id === t.metadata?.id)
+    );
+  }, [naturalThemes, presetSearch]);
+
+  const filteredUserPresets = useMemo(() => {
+    if (!presetSearch.trim()) return userPresets;
+    const q = presetSearch.toLowerCase();
+    return userPresets.filter((p) =>
+      p.name.toLowerCase().includes(q)
+    );
+  }, [userPresets, presetSearch]);
 
   useEffect(() => {
     if (!open) return;
@@ -102,13 +194,6 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
     }
   };
 
-  const getPresetColors = (p: ExternalPalette) => [
-    p.primary || '#ccc',
-    p.secondary || '#ccc',
-    p.accent || '#ccc',
-    p.sub || '#ccc',
-    p.neutral || '#ccc',
-  ];
 
   if (!open) return null;
 
@@ -243,70 +328,138 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                 )}
               </div>
             </div>
-            <div className={styles.presetList}>
-              {/* Yamang Presets */}
-              {YAMANG_PRESETS.map(([id, def]) => (
-                <button
-                  key={id}
-                  type="button"
-                  className={styles.presetItem}
-                  onClick={() => setPalette(def.colors)}
-                >
-                  <span className={`${styles.presetBadge} ${styles.yamang}`}>
-                    Yamang
-                  </span>
-                  <span className={styles.presetName}>{def.name}</span>
-                  <div className={styles.presetColors}>
-                    {getPresetColors(def.colors).map((color, i) => (
-                      <span
-                        key={i}
-                        className={styles.presetDot}
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
-                  </div>
-                  <div className={styles.presetDeleteSlot} aria-hidden />
-                </button>
-              ))}
-
-              {/* User Presets */}
-              {userPresets.map((preset) => (
-                <div key={preset.id} className={styles.presetItem}>
-                  <span className={`${styles.presetBadge} ${styles.custom}`}>
-                    Custom
-                  </span>
-                  <button
-                    type="button"
-                    className={styles.presetName}
-                    onClick={() => loadUserPreset(preset)}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
-                  >
-                    {preset.name}
-                  </button>
-                  <div className={styles.presetColors}>
-                    {getPresetColors(preset.settings.palette || {}).map((color, i) => (
-                      <span
-                        key={i}
-                        className={styles.presetDot}
-                        style={{ backgroundColor: color }}
-                      />
-                    ))}
-                  </div>
-                  <div className={styles.presetDeleteSlot}>
-                    <button
-                      type="button"
-                      className={styles.deleteBtn}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteUserPreset(preset.id);
-                      }}
-                      aria-label={`${preset.name} 삭제`}
-                    >
-                      <Icon name="delete" size="sm" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+            <div className={styles.presetTabsWrapper}>
+              <ThemeTabNavigation
+                activeTab={presetTab}
+                onTabChange={setPresetTab}
+              />
+              <ThemeSearchBar
+                value={presetSearch}
+                onChange={setPresetSearch}
+                placeholder="프리셋 검색..."
+              />
+            </div>
+            <div
+              id="panel-custom"
+              role="tabpanel"
+              aria-labelledby="tab-custom"
+              hidden={presetTab !== 'custom'}
+              className={styles.presetPanel}
+            >
+              {presetTab === 'custom' && (
+                <>
+                  {filteredUserPresets.length === 0 ? (
+                    <EmptyCategory
+                      message={
+                        presetSearch
+                          ? '검색 결과가 없습니다'
+                          : '저장된 Custom 프리셋이 없습니다'
+                      }
+                    />
+                  ) : (
+                    <div className={styles.presetList}>
+                      {filteredUserPresets.map((preset) => (
+                        <PresetItemCustom
+                          key={preset.id}
+                          preset={preset}
+                          onLoad={loadUserPreset}
+                          onDelete={deleteUserPreset}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <div
+              id="panel-default"
+              role="tabpanel"
+              aria-labelledby="tab-default"
+              hidden={presetTab !== 'default'}
+              className={styles.presetPanel}
+            >
+              {presetTab === 'default' && (
+                <>
+                  {filteredDefaultThemes.length === 0 ? (
+                    <EmptyCategory
+                      message={
+                        presetSearch ? '검색 결과가 없습니다' : 'Default 테마가 없습니다'
+                      }
+                    />
+                  ) : (
+                    <div className={styles.presetList}>
+                      {filteredDefaultThemes.map((def) => (
+                        <button
+                          key={def.metadata?.id ?? def.name}
+                          type="button"
+                          className={styles.presetItem}
+                          onClick={() => setPalette(def.colors as ExternalPalette)}
+                        >
+                          <span className={`${styles.presetBadge} ${styles.yamang}`}>
+                            Default
+                          </span>
+                          <span className={styles.presetName}>
+                            {def.metadata?.displayName ?? def.name}
+                          </span>
+                          <div className={styles.presetColors}>
+                            {getPresetColorsFromPalette(def.colors as ExternalPalette).map((color, i) => (
+                              <span
+                                key={i}
+                                className={styles.presetDot}
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+                          <div className={styles.presetDeleteSlot} aria-hidden />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <div
+              id="panel-natural"
+              role="tabpanel"
+              aria-labelledby="tab-natural"
+              hidden={presetTab !== 'natural'}
+              className={styles.presetPanel}
+            >
+              {presetTab === 'natural' && (
+                <>
+                  {filteredNaturalThemes.length === 0 ? (
+                    <EmptyCategory />
+                  ) : (
+                    <div className={styles.presetList}>
+                      {filteredNaturalThemes.map((def) => (
+                        <button
+                          key={def.metadata?.id ?? def.name}
+                          type="button"
+                          className={styles.presetItem}
+                          onClick={() => setPalette(def.colors as ExternalPalette)}
+                        >
+                          <span className={`${styles.presetBadge} ${styles.natural}`}>
+                            Natural
+                          </span>
+                          <span className={styles.presetName}>
+                            {def.metadata?.displayName ?? def.name}
+                          </span>
+                          <div className={styles.presetColors}>
+                            {getPresetColorsFromPalette(def.colors as ExternalPalette).map((color, i) => (
+                              <span
+                                key={i}
+                                className={styles.presetDot}
+                                style={{ backgroundColor: color }}
+                              />
+                            ))}
+                          </div>
+                          <div className={styles.presetDeleteSlot} aria-hidden />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </section>
 

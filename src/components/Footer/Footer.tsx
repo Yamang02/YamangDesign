@@ -9,10 +9,6 @@ export function Footer({ className }: FooterProps) {
   const githubUrl = 'https://github.com/Yamang02';
   const currentYear = new Date().getFullYear();
 
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:yamang.solution@gmail.com';
-  };
-
   return (
     <footer className={`${styles.footer} ${className ?? ''}`} data-ui>
       <div className={styles.container}>
@@ -31,13 +27,6 @@ export function Footer({ className }: FooterProps) {
             >
               <Icon name="github" library="nucleo" size="sm" />
             </a>
-            <button
-              onClick={handleEmailClick}
-              className={styles.iconLink}
-              aria-label="Email"
-            >
-              <Icon name="email" library="material" size="sm" />
-            </button>
           </div>
         </div>
         <dl className={styles.infoRow}>

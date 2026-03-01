@@ -1,7 +1,8 @@
 /**
  * E05: Palette Lab - 배색 비교 뷰 + DetailPanel
+ * P05: Default/Natural 카테고리를 별도 섹션으로 표시 (탭/검색/Custom은 모달에서)
  */
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   LabLayout,
   LabSection,
@@ -11,19 +12,23 @@ import {
 } from '../../../layouts';
 import { DetailPanel } from '../../../components';
 import {
-  getPaletteVariables,
+  getPaletteVariablesFromDefinition,
   getSystemColorVariables,
   getNeutralPresetVariables,
   comparisonPresets,
   sectionTitles,
 } from '../../../constants';
-import { palettePresets } from '../../../themes/presets';
 import { createPalette } from '../../../palettes';
+import { getThemesByCategory } from '../../../palettes/presets/registry';
+import { getMergedMapping } from '../../../palettes/mapping/resolve';
+import { defaultSemanticMappings } from '../../../palettes/strategies/default-mappings';
 import { neutralPresets } from '../../../tokens/primitives/neutral-presets';
 import { systemColorPresets } from '../../../tokens/primitives/system-colors';
-import type { PaletteName, SystemPresetName } from '../../../@types/theme';
+import type { SystemPresetName } from '../../../@types/theme';
 import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
+import type { PaletteDefinition } from '../../../palettes/types';
 import { ColorUsageDiagram } from './ColorUsageDiagram';
+import { EmptyCategory } from './EmptyCategory';
 import styles from './PaletteLab.module.css';
 
 const colorKeys = ['primary', 'secondary', 'accent', 'sub', 'neutral'] as const;
@@ -35,15 +40,17 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function PaletteDetail({ name }: { name: Exclude<PaletteName, 'custom'> }) {
-  const preset = palettePresets[name];
-  if (!preset) return null;
-  const expanded = createPalette(preset);
+function PaletteDetail({
+  definition,
+}: {
+  definition: PaletteDefinition;
+}) {
+  const expanded = createPalette(definition);
 
   return (
     <div className={styles.paletteDetail}>
-      {preset.subname && (
-        <p className={styles.paletteSubname}>{preset.subname}</p>
+      {definition.subname && (
+        <p className={styles.paletteSubname}>{definition.subname}</p>
       )}
       <h4 className={styles.detailSectionTitle}>기본 색상</h4>
       <div className={styles.colorSwatches}>
@@ -104,14 +111,15 @@ function PaletteDetail({ name }: { name: Exclude<PaletteName, 'custom'> }) {
 }
 
 type DetailSelection =
-  | { type: 'palette'; name: Exclude<PaletteName, 'custom'> }
+  | { type: 'palette'; definition: PaletteDefinition }
   | { type: 'neutral'; name: NeutralPresetName }
   | { type: 'system'; name: SystemPresetName }
   | null;
 
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
-  { id: 'color-scales', label: sectionTitles.colorScales },
+  { id: 'default', label: 'Default' },
+  { id: 'natural', label: 'Natural' },
   { id: 'neutral-presets', label: sectionTitles.neutralPresets },
   { id: 'system-colors', label: sectionTitles.systemColors },
 ];
@@ -288,11 +296,65 @@ function SystemColorCard({
   );
 }
 
+function ThemeCard({
+  def,
+  onClick,
+  selected,
+}: {
+  def: PaletteDefinition;
+  onClick: () => void;
+  selected: boolean;
+}) {
+  const expanded = createPalette(def);
+  const styleVars = getPaletteVariablesFromDefinition(def);
+
+  return (
+    <ComparisonCard
+      key={def.metadata?.id ?? def.name}
+      title={def.metadata?.displayName ?? capitalize(def.name)}
+      subtitle={def.subname}
+      styleVars={styleVars}
+      onClick={onClick}
+      selected={selected}
+    >
+      {colorKeys.map((colorKey) => (
+        <div key={colorKey} className={styles.colorColumn}>
+          <p className={styles.colorKeyLabel}>{capitalize(colorKey)}</p>
+          <div className={styles.swatchRow}>
+            {[100, 300, 500, 700, 900].map((step) => {
+              const scale = expanded.scales[colorKey];
+              const color = scale?.[step as keyof typeof scale];
+              if (!color) return null;
+              return (
+                <div
+                  key={step}
+                  className={styles.swatch}
+                  style={{ backgroundColor: color }}
+                  title={`${colorKey} ${step}`}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </ComparisonCard>
+  );
+}
+
 export function PaletteLab() {
   const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
 
-  const handlePaletteSelect = (name: Exclude<PaletteName, 'custom'>) => {
-    setDetailSelection({ type: 'palette', name });
+  const defaultThemes = useMemo(
+    () => getThemesByCategory('default'),
+    []
+  );
+  const naturalThemes = useMemo(
+    () => getThemesByCategory('natural'),
+    []
+  );
+
+  const handlePaletteSelect = (def: PaletteDefinition) => {
+    setDetailSelection({ type: 'palette', definition: def });
   };
 
   const handleNeutralSelect = (name: NeutralPresetName) => {
@@ -304,59 +366,71 @@ export function PaletteLab() {
   };
 
   const detailTitle = detailSelection
-    ? capitalize(detailSelection.name)
+    ? detailSelection.type === 'palette'
+      ? detailSelection.definition.metadata?.displayName ??
+        capitalize(detailSelection.definition.name)
+      : capitalize(detailSelection.name)
     : '';
   const detailOpen = !!detailSelection;
 
+  const showSemanticMapping =
+    detailSelection?.type === 'palette';
+  const editingPalette = showSemanticMapping
+    ? createPalette(detailSelection.definition)
+    : null;
+  const editingMapping = showSemanticMapping && editingPalette
+    ? getMergedMapping(
+        defaultSemanticMappings[detailSelection.definition.bgStrategy],
+        detailSelection.definition.semanticMapping
+      )
+    : null;
+
   return (
     <>
-      <LabLayout
-        title="Palette Lab"
-        tocItems={tocItems}
-      >
+      <LabLayout title="Palette Lab" tocItems={tocItems}>
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
             <ColorUsageDiagram />
           </LabOverview>
         </LabSection>
 
-        <LabSection title={sectionTitles.colorScales} id="color-scales">
+        <LabSection title="Default" id="default">
           <div className={styles.comparisonGrid}>
-            {comparisonPresets.palettes.map((paletteName) => {
-              const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
-              return (
-              <ComparisonCard
-                key={paletteName}
-                title={capitalize(paletteName)}
-                subtitle={preset?.subname}
-                styleVars={getPaletteVariables(paletteName)}
-                onClick={() =>
-                  handlePaletteSelect(paletteName as Exclude<PaletteName, 'custom'>)
-                }
-                selected={
-                  detailSelection?.type === 'palette' &&
-                  detailSelection.name === paletteName
-                }
-              >
-                {colorKeys.map((colorKey) => (
-                  <div key={colorKey} className={styles.colorColumn}>
-                    <p className={styles.colorKeyLabel}>{capitalize(colorKey)}</p>
-                    <div className={styles.swatchRow}>
-                      {[100, 300, 500, 700, 900].map((step) => (
-                        <div
-                          key={step}
-                          className={styles.swatch}
-                          style={{
-                            backgroundColor: `var(--ds-color-${colorKey}-${step})`,
-                          }}
-                          title={`${colorKey} ${step}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </ComparisonCard>
-            );})}
+            {defaultThemes.length === 0 ? (
+              <EmptyCategory message="등록된 Default 테마가 없습니다" />
+            ) : (
+              defaultThemes.map((def) => (
+                <ThemeCard
+                  key={def.metadata?.id ?? def.name}
+                  def={def}
+                  onClick={() => handlePaletteSelect(def)}
+                  selected={
+                    detailSelection?.type === 'palette' &&
+                    detailSelection.definition.metadata?.id === def.metadata?.id
+                  }
+                />
+              ))
+            )}
+          </div>
+        </LabSection>
+
+        <LabSection title="Natural" id="natural">
+          <div className={styles.comparisonGrid}>
+            {naturalThemes.length === 0 ? (
+              <EmptyCategory />
+            ) : (
+              naturalThemes.map((def) => (
+                <ThemeCard
+                  key={def.metadata?.id ?? def.name}
+                  def={def}
+                  onClick={() => handlePaletteSelect(def)}
+                  selected={
+                    detailSelection?.type === 'palette' &&
+                    detailSelection.definition.metadata?.id === def.metadata?.id
+                  }
+                />
+              ))
+            )}
           </div>
         </LabSection>
 
@@ -399,7 +473,21 @@ export function PaletteLab() {
         title={detailTitle}
       >
         {detailSelection?.type === 'palette' && (
-          <PaletteDetail name={detailSelection.name} />
+          <>
+            <PaletteDetail definition={detailSelection.definition} />
+            {editingPalette && editingMapping && (
+              <div className={styles.semanticSection}>
+                <h4 className={styles.detailSectionTitle}>
+                  {sectionTitles.semanticMapping}
+                </h4>
+                <ColorUsageDiagram
+                  interactive={false}
+                  palette={editingPalette}
+                  mapping={editingMapping}
+                />
+              </div>
+            )}
+          </>
         )}
         {detailSelection?.type === 'neutral' && (
           <NeutralPresetDetail presetName={detailSelection.name} />

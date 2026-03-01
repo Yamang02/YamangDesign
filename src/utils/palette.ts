@@ -29,19 +29,28 @@ function deriveNeutral(primary: string): string {
 }
 
 /**
+ * Sub 파생: Primary 기반 연한 컬러풀 보조색
+ * 미입력 시 Auto로 적용. E09 Sub 적용 정책 참고
+ */
+function deriveSub(primary: string): string {
+  return lighten(primary, 40);
+}
+
+/**
  * 외부 팔레트를 완전한 팔레트로 변환
- * E09: neutral 추가, sub 선택적
+ * E09: neutral 항상, sub 항상 (Primary 제외 일관된 Auto 파생)
  */
 export function resolvePalette(input: ExternalPalette): ResolvedColors {
   const { primary, secondary, accent, neutral, sub } = input;
   const neutralSource = neutral ?? sub ?? deriveNeutral(primary);
+  const subResolved = sub ?? deriveSub(primary);
 
   return {
     primary,
     secondary: secondary ?? deriveSecondary(primary),
     accent: accent ?? deriveAccent(primary),
     neutral: neutralSource,
-    ...(sub && { sub }),
+    sub: subResolved,
 
     _meta: {
       derived: {
@@ -74,19 +83,16 @@ export function generateColorScale(baseColor: string): ColorScale {
 
 /**
  * 팔레트에서 전체 스케일 생성
- * E09: neutral 항상, sub는 있을 때만
+ * E09: neutral, sub 항상 포함 (Primary 제외 Auto 파생 통일)
  */
 export function generateColorScales(palette: ResolvedColors): GeneratedScales {
-  const scales: GeneratedScales = {
+  return {
     primary: generateColorScale(palette.primary),
     secondary: generateColorScale(palette.secondary),
     accent: generateColorScale(palette.accent),
     neutral: generateColorScale(palette.neutral),
+    sub: generateColorScale(palette.sub),
   };
-  if (palette.sub) {
-    scales.sub = generateColorScale(palette.sub);
-  }
-  return scales;
 }
 
 /** 액션 색상 (버튼 등 상태별) */

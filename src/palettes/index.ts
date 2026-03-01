@@ -1,19 +1,13 @@
 /**
  * Palette 레이어 - 배색을 독립적으로 관리
  * E01: Palette × Style 분리
+ * P03: strategyFn 제거, resolve 경로로 통일
  */
 import type { ExternalPalette } from '../@types/tokens';
 import { resolvePalette, generateColorScales } from '../utils/palette';
-import { applyLightBgStrategy } from './strategies/light-bg';
-import { applyColoredBgStrategy } from './strategies/colored-bg';
-import { applyDarkBgStrategy } from './strategies/dark-bg';
+import { defaultSemanticMappings } from './strategies/default-mappings';
+import { getMergedMapping, resolveSemanticMapping } from './mapping/resolve';
 import type { PaletteDefinition, ExpandedPalette } from './types';
-
-const STRATEGY_MAP = {
-  light: applyLightBgStrategy,
-  colored: applyColoredBgStrategy,
-  dark: applyDarkBgStrategy,
-} as const;
 
 /**
  * Palette 정의로부터 ExpandedPalette 생성
@@ -21,8 +15,13 @@ const STRATEGY_MAP = {
 export function createPalette(definition: PaletteDefinition): ExpandedPalette {
   const resolved = resolvePalette(definition.colors as ExternalPalette);
   const scales = generateColorScales(resolved);
-  const strategyFn = STRATEGY_MAP[definition.bgStrategy];
-  const semantic = strategyFn(scales);
+
+  const baseMapping = defaultSemanticMappings[definition.bgStrategy];
+  const mergedMapping = getMergedMapping(
+    baseMapping,
+    definition.semanticMapping
+  );
+  const semantic = resolveSemanticMapping(mergedMapping, scales);
 
   return {
     name: definition.name,
@@ -33,10 +32,4 @@ export function createPalette(definition: PaletteDefinition): ExpandedPalette {
 }
 
 export type { PaletteDefinition, ExpandedPalette, PaletteName, BgStrategy } from './types';
-export {
-  defaultPalette,
-  vividPalette,
-  pastelPalette,
-  monochromePalette,
-  earthPalette,
-} from './presets';
+export { defaultPalette } from './presets';

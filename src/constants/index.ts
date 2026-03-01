@@ -14,6 +14,7 @@ export {
 export {
   getStyleVariables,
   getPaletteVariables,
+  getPaletteVariablesFromDefinition,
   getThemeVariables,
   getSystemColorVariables,
   getNeutralPresetVariables,

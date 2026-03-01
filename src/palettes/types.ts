@@ -5,14 +5,8 @@
 
 import type { GeneratedScales } from '../@types/tokens';
 
-/** 배색 프리셋 이름 */
-export type PaletteName =
-  | 'default'
-  | 'vivid'
-  | 'pastel'
-  | 'monochrome'
-  | 'earth'
-  | 'custom';
+/** 배색 프리셋 이름 (P02: default만 유지) */
+export type PaletteName = 'default' | 'custom';
 
 /** 배경 전략 */
 export type BgStrategy = 'light' | 'colored' | 'dark';
@@ -33,6 +27,35 @@ export interface ThemeMetadata {
   category: ThemeCategory;
   /** 설명 */
   description?: string;
+}
+
+/** 스케일 참조 (예: primary-500, neutral-900) */
+export interface ScaleReference {
+  scale: 'primary' | 'secondary' | 'accent' | 'neutral' | 'sub';
+  step: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+}
+
+/** 시맨틱 토큰 매핑 정의 (ScaleReference 또는 직접 색상) */
+export interface SemanticMapping {
+  bg: {
+    base: string | ScaleReference;
+    surface: string | ScaleReference;
+    surfaceBrand: string | ScaleReference;
+    elevated: string | ScaleReference;
+    muted: string | ScaleReference;
+  };
+  text: {
+    primary: string | ScaleReference;
+    secondary: string | ScaleReference;
+    muted: string | ScaleReference;
+    onAction: string | ScaleReference;
+  };
+  border: {
+    default: string | ScaleReference;
+    subtle: string | ScaleReference;
+    accent: string | ScaleReference;
+    focus: string | ScaleReference;
+  };
 }
 
 /** 시맨틱 색상 (배경 전략에서 생성) */
@@ -84,6 +107,9 @@ export interface PaletteDefinition {
 
   /** 테마 메타데이터 (선택적, 카테고리/검색용) */
   metadata?: ThemeMetadata;
+
+  /** 시맨틱 매핑 (선택적, 없으면 bgStrategy 기본값 사용) */
+  semanticMapping?: SemanticMapping;
 }
 
 /** 확장된 Palette (스케일 + 시맨틱 포함, createPalette 반환값) */

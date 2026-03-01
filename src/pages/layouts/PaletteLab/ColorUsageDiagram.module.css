@@ -159,6 +159,19 @@
   flex-shrink: 0;
 }
 
+.tokenSwatch[role='button'] {
+  cursor: pointer;
+}
+
+.tokenSwatch[role='button']:hover {
+  box-shadow: 0 0 0 2px var(--ds-color-primary-500);
+}
+
+.tokenSwatch[role='button']:focus-visible {
+  outline: 2px solid var(--ds-color-primary-500);
+  outline-offset: 2px;
+}
+
 .tokenName {
   font-size: var(--ds-text-xs);
   font-family: ui-monospace, monospace;

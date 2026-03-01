@@ -1,17 +1,12 @@
 /**
  * E06: Palette 프리셋 통합
  * ColorPicker(색상 편집)와 PaletteLab(테마 비교)에서 공통 타입/유틸 공유
+ * P02: default만 유지, vivid/pastel/monochrome/earth 제거
  */
 import type { PaletteDefinition } from '../palettes';
 import type { ExternalPalette } from '../@types/tokens';
 import type { PaletteName } from '../@types/theme';
-import {
-  defaultPalette,
-  vividPalette,
-  pastelPalette,
-  monochromePalette,
-  earthPalette,
-} from '../palettes';
+import { defaultPalette } from '../palettes';
 
 /** 테마 프리셋 (PaletteLab용 - 완전한 색상 세트) */
 export const themePresets: Record<
@@ -19,10 +14,6 @@ export const themePresets: Record<
   PaletteDefinition
 > = {
   default: defaultPalette,
-  vivid: vividPalette,
-  pastel: pastelPalette,
-  monochrome: monochromePalette,
-  earth: earthPalette,
 };
 
 /** 색상 시작점 (ColorPicker용 - 단일 primary 베이스) */

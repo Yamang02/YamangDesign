@@ -5,7 +5,6 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTheme } from '../../../themes';
 import type { ExternalPalette } from '../../../@types/tokens';
 import type { StyleName, SystemPresetName } from '../../../@types/theme';
-import { themePresets } from '../../../constants/palette-definitions';
 import {
   GLOBAL_SETTINGS_STORAGE_KEY,
   GLOBAL_PRESETS_STORAGE_KEY,
@@ -171,13 +170,6 @@ export function useGlobalSettings() {
     if (data.systemPreset) setLocalSystemPreset(data.systemPreset as SystemPresetName);
   }, []);
 
-  const applyThemePreset = useCallback((presetName: string) => {
-    const preset = themePresets[presetName as keyof typeof themePresets];
-    if (preset?.colors) {
-      setLocalPalette(preset.colors as ExternalPalette);
-    }
-  }, []);
-
   const [userPresets, setUserPresets] = useState<StoredPreset[]>(() =>
     loadStoredPresets()
   );
@@ -231,7 +223,6 @@ export function useGlobalSettings() {
     reset,
     exportSettings,
     importSettings,
-    applyThemePreset,
     userPresets,
     saveAsPreset,
     loadUserPreset,
