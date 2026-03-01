@@ -272,6 +272,24 @@ export function Components() {
           </div>
         </div>
 
+        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
+          <p style={labelStyle}>With Icon (Feature card 패턴)</p>
+          <div style={{ ...rowStyle, alignItems: 'center' }}>
+            <Avatar size="lg" variant="primary">
+              <Icon name="speed" size="lg" color="var(--ds-color-text-onAction)" />
+            </Avatar>
+            <Avatar size="lg" variant="secondary">
+              <Icon name="palette" size="lg" color="var(--ds-color-text-onAction)" />
+            </Avatar>
+            <Avatar size="lg" variant="accent">
+              <Icon name="code" size="lg" color="var(--ds-color-text-onAction)" />
+            </Avatar>
+            <Avatar size="md" variant="primary">
+              <Icon name="star" size="md" color="var(--ds-color-text-onAction)" />
+            </Avatar>
+          </div>
+        </div>
+
         <div>
           <p style={labelStyle}>Profile (Avatar + name + role)</p>
           <div style={rowStyle}>

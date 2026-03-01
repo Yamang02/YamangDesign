@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Icon, Input, Profile } from '../../../components';
+import { Avatar, Badge, Button, Card, Icon, Input, Profile } from '../../../components';
 import { clsx } from '../../../utils/clsx';
 import {
   landingHero,
@@ -36,9 +36,9 @@ export function Landing() {
             <Card key={feature.title} variant="elevated" hoverable>
               <Card.Body>
                 <div className={styles.featureCard}>
-                  <div className={styles.featureIcon}>
-                    <Icon name={feature.icon} size="lg" color="currentColor" />
-                  </div>
+                  <Avatar size="lg" variant="primary" className={styles.featureIcon}>
+                    <Icon name={feature.icon} size="lg" color="var(--ds-color-text-onAction)" />
+                  </Avatar>
                   <h3 className={styles.featureTitle}>{feature.title}</h3>
                   <p className={styles.featureDescription}>{feature.description}</p>
                 </div>

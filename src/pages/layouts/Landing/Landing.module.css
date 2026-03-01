@@ -63,14 +63,6 @@
 }
 
 .featureIcon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: var(--ds-color-action-primary-default);
-  color: var(--ds-color-text-onAction);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 0 auto var(--ds-spacing-4);
 }
 

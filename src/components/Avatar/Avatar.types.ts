@@ -22,7 +22,7 @@ export interface AvatarProps {
   size?: 'sm' | 'md' | 'lg';
 
   /**
-   * 배경색 변형 (initials 사용 시)
+   * 배경색 변형 (initials, icon/children 사용 시)
    */
   variant?: 'primary' | 'secondary' | 'accent';
 
@@ -32,7 +32,7 @@ export interface AvatarProps {
   className?: string;
 
   /**
-   * 커스텀 콘텐츠 (initials, src 외)
+   * 커스텀 콘텐츠 (이미지/이니셜 대신 아이콘 등)
    */
   children?: ReactNode;
 }
