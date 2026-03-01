@@ -1,37 +1,39 @@
 /**
  * E07: 사이트 UI 토큰 (--ui-*)
- * 테마와 무관하게 고정된 스타일. 헤더, 설정패널, 접근성 컨트롤에 사용.
+ * 베이스는 다크모드. hover/활성화만 Default 팔레트(브랜드 그린) 반영.
  */
 :root {
   /* E01/E04: 헤더 높이 (DetailPanel, TOC sticky 등에서 사용) */
   --nav-height: 64px;
 
-  /* 배경 */
+  /* 배경 - 다크모드 유지 */
   --ui-bg-base: #1a1a1a;
   --ui-bg-subtle: #222222;
   --ui-bg-surface: #2d2d2d;
   --ui-bg-elevated: #3d3d3d;
-  --ui-bg-hover: rgba(255, 255, 255, 0.08);
+  /* hover: 흰색 배경 + primary 텍스트 (다크 네비 모범 사례) */
+  --ui-bg-hover: #ffffff;
+  --ui-text-hover: #5F9070;
 
-  /* 텍스트 */
+  /* 텍스트 - 비활성 메뉴도 흰색 기준 */
   --ui-text-primary: #ffffff;
-  --ui-text-secondary: #a0a0a0;
-  --ui-text-tertiary: #707070;
-  --ui-text-muted: #666666;
-  --ui-text-hover: #c8c8c8;
+  --ui-text-secondary: #ffffff;
+  --ui-text-tertiary: #a0a0a0;
+  --ui-text-muted: #707070;
 
   /* 경계선 */
   --ui-border-default: #404040;
   --ui-border-subtle: #333333;
   --ui-border-strong: #505050;
-  --ui-border-hover: #4a4a4a;
+  --ui-border-hover: #5F9070;
 
-  /* 액션 (컨트롤 버튼 등) */
-  --ui-action-primary: #6366f1;
-  --ui-action-hover: #818cf8;
+  /* 액션 - Default palette primary (hover/활성화) */
+  --ui-action-primary: #5F9070;
+  --ui-action-hover: #4F8060;
+  --ui-action-active: #A8E6C7;
 
   /* 포커스 */
-  --ui-focus-ring: #6366f1;
+  --ui-focus-ring: #5F9070;
 
   /* 섀도우 (테마와 무관하게 고정) */
   --ui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -46,6 +48,7 @@
 [data-ui] {
   --ds-color-bg-base: var(--ui-bg-base);
   --ds-color-bg-surface: var(--ui-bg-surface);
+  --ds-color-bg-surfaceBrand: var(--ui-bg-elevated);
   --ds-color-bg-elevated: var(--ui-bg-elevated);
   --ds-color-bg-muted: var(--ui-bg-surface);
 
@@ -56,6 +59,7 @@
 
   --ds-color-border-default: var(--ui-border-default);
   --ds-color-border-subtle: var(--ui-border-subtle);
+  --ds-color-border-accent: var(--ui-border-hover);
   --ds-color-border-focus: var(--ui-focus-ring);
 
   --ds-color-action-primary-default: var(--ui-action-primary);
@@ -79,20 +83,27 @@
   --ui-bg-subtle: #f8f9fa;
   --ui-bg-surface: #f1f3f5;
   --ui-bg-elevated: #ffffff;
-  --ui-bg-hover: rgba(0, 0, 0, 0.04);
+  --ui-bg-hover: rgba(95, 144, 112, 0.08);
 
   /* 텍스트 */
   --ui-text-primary: #1a1a1a;
   --ui-text-secondary: #6b7280;
   --ui-text-tertiary: #9ca3af;
   --ui-text-muted: #d1d5db;
-  --ui-text-hover: #4b5563;
+  --ui-text-hover: #2F6040;
 
   /* 경계선 */
   --ui-border-default: #e5e7eb;
   --ui-border-subtle: #f3f4f6;
   --ui-border-strong: #d1d5db;
-  --ui-border-hover: #d1d5db;
+  --ui-border-hover: #5F9070;
+
+  /* 액션 - Default palette primary */
+  --ui-action-primary: #5F9070;
+  --ui-action-hover: #4F8060;
+
+  /* 포커스 */
+  --ui-focus-ring: #5F9070;
 
   /* 섀도우 (라이트용) */
   --ui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -102,6 +113,7 @@
   /* DS 토큰 오버라이드 */
   --ds-color-bg-base: var(--ui-bg-base);
   --ds-color-bg-surface: var(--ui-bg-surface);
+  --ds-color-bg-surfaceBrand: var(--ui-bg-subtle);
   --ds-color-bg-elevated: var(--ui-bg-elevated);
   --ds-color-bg-muted: var(--ui-bg-subtle);
 
@@ -112,6 +124,7 @@
 
   --ds-color-border-default: var(--ui-border-default);
   --ds-color-border-subtle: var(--ui-border-subtle);
+  --ds-color-border-accent: var(--ui-border-strong);
   --ds-color-border-focus: var(--ui-focus-ring);
 
   --ds-color-action-primary-default: var(--ui-action-primary);

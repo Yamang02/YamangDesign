@@ -97,6 +97,11 @@
   transform: scale(1.05);
 }
 
+/* 강조 카드는 밝은 배경 (elevated) 사용 - 배색 이론 준수 */
+.pricingHighlight [data-variant='elevated'] {
+  background-color: var(--ds-color-bg-elevated);
+}
+
 .badgeWrapper {
   position: absolute;
   top: -12px;

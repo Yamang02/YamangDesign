@@ -33,4 +33,10 @@ export function createPalette(definition: PaletteDefinition): ExpandedPalette {
 }
 
 export type { PaletteDefinition, ExpandedPalette, PaletteName, BgStrategy } from './types';
-export { defaultPalette, vividPalette, pastelPalette } from './presets';
+export {
+  defaultPalette,
+  vividPalette,
+  pastelPalette,
+  monochromePalette,
+  earthPalette,
+} from './presets';

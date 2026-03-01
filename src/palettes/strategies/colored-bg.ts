@@ -10,6 +10,7 @@ export function applyColoredBgStrategy(scales: GeneratedScales): SemanticColors 
     bg: {
       base: scales.neutral[100],
       surface: scales.neutral[50],
+      surfaceBrand: scales.primary[50],
       elevated: '#FFFFFF',
       muted: scales.neutral[200],
     },
@@ -22,6 +23,7 @@ export function applyColoredBgStrategy(scales: GeneratedScales): SemanticColors 
     border: {
       default: scales.neutral[300],
       subtle: scales.neutral[200],
+      accent: scales.primary[200],
       focus: scales.primary[500],
     },
   };

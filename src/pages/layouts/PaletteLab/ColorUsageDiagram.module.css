@@ -20,6 +20,11 @@
   border-bottom: 1px solid var(--lab-border-subtle);
 }
 
+.sectionHint {
+  font-weight: var(--ds-font-weight-normal);
+  color: var(--lab-text-muted);
+}
+
 /* Color Roles */
 .roleGrid {
   display: grid;
@@ -161,6 +166,14 @@
   background-color: var(--lab-bg-muted);
   border-radius: 3px;
   color: var(--lab-text-secondary);
+}
+
+.sourceBadge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: var(--ds-radius-sm);
+  font-weight: var(--ds-font-weight-medium);
+  white-space: nowrap;
 }
 
 .tokenNote {

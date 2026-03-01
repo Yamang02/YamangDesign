@@ -273,7 +273,7 @@ export function Components() {
         </div>
 
         <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>With Icon (Feature card 패턴)</p>
+          <p style={labelStyle}>With Icon</p>
           <div style={{ ...rowStyle, alignItems: 'center' }}>
             <Avatar size="lg" variant="primary">
               <Icon name="speed" size="lg" color="var(--ds-color-text-onAction)" />

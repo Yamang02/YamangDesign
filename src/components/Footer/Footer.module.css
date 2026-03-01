@@ -63,7 +63,7 @@
 .iconLink:hover {
   background: var(--ui-bg-hover);
   border-color: var(--ui-border-hover);
-  color: var(--ui-text-primary);
+  color: var(--ui-text-hover);
 }
 
 .infoRow {

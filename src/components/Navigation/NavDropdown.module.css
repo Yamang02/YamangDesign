@@ -16,13 +16,13 @@
 }
 
 .navTrigger:hover {
-  background: var(--ui-bg-surface);
-  color: var(--ui-text-primary);
+  background: var(--ui-bg-hover);
+  color: var(--ui-text-hover);
 }
 
 .navTrigger.open,
 .navTrigger.active {
-  color: var(--ui-action-primary);
+  color: var(--ui-action-active);
 }
 
 .expandIcon {
@@ -65,10 +65,11 @@
 }
 
 .dropdownItem:hover {
-  background: var(--ui-bg-surface);
+  background: var(--ui-bg-hover);
+  color: var(--ui-text-hover);
 }
 
 .dropdownItem.active {
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--ui-action-primary);
+  background: rgba(95, 144, 112, 0.15);
+  color: var(--ui-action-active);
 }

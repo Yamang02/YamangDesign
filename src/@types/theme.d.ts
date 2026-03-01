@@ -5,8 +5,9 @@ export type ThemeName = 'minimal' | 'neumorphism';
 
 /**
  * Palette/Style 이름 (E03)
+ * PaletteName은 palettes/types.ts에서 SOT로 관리
  */
-export type PaletteName = 'default' | 'vivid' | 'pastel' | 'monochrome' | 'earth' | 'custom';
+export type { PaletteName } from '../palettes';
 export type StyleName = 'minimal' | 'neumorphism' | 'glassmorphism' | 'brutalism';
 
 /** E08: 시스템 컬러 프리셋 (Error, Warning, Success, Info) */
@@ -28,6 +29,7 @@ export interface ThemeColors {
   bg: {
     base: string;
     surface: string;
+    surfaceBrand: string;
     elevated: string;
     muted: string;
   };
@@ -41,6 +43,7 @@ export interface ThemeColors {
   border: {
     default: string;
     subtle: string;
+    accent: string;
     focus: string;
   };
   action: {

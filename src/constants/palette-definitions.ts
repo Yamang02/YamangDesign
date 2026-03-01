@@ -5,7 +5,13 @@
 import type { PaletteDefinition } from '../palettes';
 import type { ExternalPalette } from '../@types/tokens';
 import type { PaletteName } from '../@types/theme';
-import { defaultPalette, vividPalette, pastelPalette } from '../palettes';
+import {
+  defaultPalette,
+  vividPalette,
+  pastelPalette,
+  monochromePalette,
+  earthPalette,
+} from '../palettes';
 
 /** 테마 프리셋 (PaletteLab용 - 완전한 색상 세트) */
 export const themePresets: Record<
@@ -15,21 +21,8 @@ export const themePresets: Record<
   default: defaultPalette,
   vivid: vividPalette,
   pastel: pastelPalette,
-  monochrome: {
-    name: 'monochrome',
-    colors: { primary: '#4B5563', neutral: '#9CA3AF' },
-    bgStrategy: 'light',
-  },
-  earth: {
-    name: 'earth',
-    colors: {
-      primary: '#78716C',
-      secondary: '#A8A29E',
-      accent: '#D97706',
-      neutral: '#F5F5F4',
-    },
-    bgStrategy: 'light',
-  },
+  monochrome: monochromePalette,
+  earth: earthPalette,
 };
 
 /** 색상 시작점 (ColorPicker용 - 단일 primary 베이스) */

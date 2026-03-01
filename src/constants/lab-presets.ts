@@ -2,7 +2,6 @@
  * E01: Lab 비교용 CSS 변수 프리셋
  * 각 Lab에서 프리셋을 나란히 비교하기 위한 inline style 오버라이드
  */
-import { minimalStyle, neumorphismStyle } from '../styles';
 import { palettePresets, stylePresets } from '../themes/presets';
 import { systemColorPresets } from '../tokens/primitives/system-colors';
 import { neutralPresets, type NeutralPresetName } from '../tokens/primitives/neutral-presets';
@@ -15,11 +14,6 @@ import type { StyleName, PaletteName, SystemPresetName } from '../@types/theme';
 /** CSS 변수 객체 타입 */
 type CSSVariables = Record<string, string>;
 
-const styleMap = {
-  minimal: minimalStyle,
-  neumorphism: neumorphismStyle,
-} as const;
-
 /**
  * Style 프리셋 → CSS 변수 객체
  * 배경색을 받아 해당 스타일의 shadow 변수들 생성
@@ -28,7 +22,7 @@ export function getStyleVariables(
   styleName: StyleName,
   bgColor: string = '#f5f5f5'
 ): CSSVariables {
-  const style = styleMap[styleName as keyof typeof styleMap];
+  const style = stylePresets[styleName];
   if (!style) return {};
 
   const shadows = style.createShadows(bgColor);
@@ -119,10 +113,10 @@ export function getNeutralPresetVariables(
   return vars;
 }
 
-/** 비교 대상 프리셋 목록 */
+/** 비교 대상 프리셋 목록 (SOT: 각 preset 객체의 key에서 파생) */
 export const comparisonPresets = {
-  styles: ['minimal', 'neumorphism'] as StyleName[],
-  palettes: ['default', 'vivid', 'pastel', 'monochrome', 'earth'] as PaletteName[],
-  systemPresets: ['default', 'muted'] as SystemPresetName[],
-  neutralPresets: ['gray', 'slate', 'zinc', 'stone'] as NeutralPresetName[],
+  styles: Object.keys(stylePresets) as StyleName[],
+  palettes: Object.keys(palettePresets) as Exclude<PaletteName, 'custom'>[],
+  systemPresets: Object.keys(systemColorPresets) as SystemPresetName[],
+  neutralPresets: Object.keys(neutralPresets) as NeutralPresetName[],
 };

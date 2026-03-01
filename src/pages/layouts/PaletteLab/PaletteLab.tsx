@@ -42,6 +42,9 @@ function PaletteDetail({ name }: { name: Exclude<PaletteName, 'custom'> }) {
 
   return (
     <div className={styles.paletteDetail}>
+      {preset.subname && (
+        <p className={styles.paletteSubname}>{preset.subname}</p>
+      )}
       <h4 className={styles.detailSectionTitle}>기본 색상</h4>
       <div className={styles.colorSwatches}>
         {(['primary', 'secondary', 'accent', 'sub', 'neutral'] as const).map(
@@ -319,10 +322,13 @@ export function PaletteLab() {
 
         <LabSection title={sectionTitles.colorScales} id="color-scales">
           <div className={styles.comparisonGrid}>
-            {comparisonPresets.palettes.map((paletteName) => (
+            {comparisonPresets.palettes.map((paletteName) => {
+              const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
+              return (
               <ComparisonCard
                 key={paletteName}
                 title={capitalize(paletteName)}
+                subtitle={preset?.subname}
                 styleVars={getPaletteVariables(paletteName)}
                 onClick={() =>
                   handlePaletteSelect(paletteName as Exclude<PaletteName, 'custom'>)
@@ -350,7 +356,7 @@ export function PaletteLab() {
                   </div>
                 ))}
               </ComparisonCard>
-            ))}
+            );})}
           </div>
         </LabSection>
 

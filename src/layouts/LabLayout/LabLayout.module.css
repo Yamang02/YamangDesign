@@ -111,7 +111,7 @@ section[id] {
 
 /* E02: 섹션 카드 래퍼 */
 .sectionCard {
-  background-color: var(--ds-color-bg-surface);
+  background-color: var(--ds-color-bg-base);
   border: 1px solid var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-spacing-6);
@@ -143,7 +143,7 @@ section[id] {
 /* LabCard */
 .labCard {
   padding: var(--ds-spacing-4);
-  background-color: var(--ds-color-bg-surface);
+  background-color: var(--ds-color-bg-base);
   border-radius: var(--ds-radius-md);
   box-shadow: var(--ds-shadow-sm);
   border: 1px solid var(--ds-color-border-subtle);
@@ -175,7 +175,7 @@ section[id] {
   flex: 1;
   min-width: 240px;
   padding: var(--ds-spacing-5);
-  background-color: var(--ds-color-bg-surface);
+  background-color: var(--ds-color-bg-base);
   border: 1px solid var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-lg);
   transition: border-color 150ms ease, box-shadow 150ms ease;
@@ -194,13 +194,23 @@ section[id] {
   box-shadow: var(--ds-shadow-md);
 }
 
+.comparisonHeader {
+  margin-bottom: var(--ds-spacing-4);
+  padding-bottom: var(--ds-spacing-3);
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+}
+
 .comparisonTitle {
   font-size: var(--ds-text-lg);
   font-weight: var(--ds-font-weight-semibold);
   color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-4) 0;
-  padding-bottom: var(--ds-spacing-3);
-  border-bottom: 1px solid var(--ds-color-border-subtle);
+  margin: 0;
+}
+
+.comparisonSubtitle {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  margin: var(--ds-spacing-1) 0 0 0;
 }
 
 .comparisonContent {

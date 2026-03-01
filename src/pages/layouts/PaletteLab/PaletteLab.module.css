@@ -40,6 +40,14 @@
   gap: var(--ds-spacing-4);
 }
 
+.paletteSubname {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  margin: 0 0 var(--ds-spacing-2) 0;
+  padding-bottom: var(--ds-spacing-2);
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+}
+
 .detailSectionTitle {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);

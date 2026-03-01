@@ -5,6 +5,7 @@ import type { PaletteDefinition } from '../types';
 
 export const vividPalette: PaletteDefinition = {
   name: 'vivid',
+  subname: '고채도 대비 강조 배색',
   colors: {
     primary: '#6366F1',
     secondary: '#EC4899',

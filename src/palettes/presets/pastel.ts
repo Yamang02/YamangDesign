@@ -5,6 +5,7 @@ import type { PaletteDefinition } from '../types';
 
 export const pastelPalette: PaletteDefinition = {
   name: 'pastel',
+  subname: '부드러운 파스텔 톤',
   colors: {
     primary: '#A5B4FC',
     secondary: '#FBCFE8',

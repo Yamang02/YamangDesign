@@ -25,6 +25,7 @@ export function createNeumorphismTheme(palette: ResolvedPalette): Theme {
       bg: {
         base: bgColor,
         surface: bgColor,
+        surfaceBrand: bgColor,
         elevated: bgColor,
         muted: darken(bgColor, 5),
       },
@@ -40,6 +41,7 @@ export function createNeumorphismTheme(palette: ResolvedPalette): Theme {
       border: {
         default: 'transparent',
         subtle: 'transparent',
+        accent: 'transparent',
         focus: scales.primary[500],
       },
 

@@ -45,11 +45,11 @@
 
 .navItem:hover {
   background: var(--ui-bg-hover);
-  color: var(--ui-text-primary);
+  color: var(--ui-text-hover);
 }
 
 .navItem.active {
-  color: var(--ui-action-primary);
+  color: var(--ui-action-active);
 }
 
 .navItemIcon {
@@ -85,12 +85,12 @@
 
 .dropdownTrigger:hover {
   background: var(--ui-bg-hover);
-  color: var(--ui-text-primary);
+  color: var(--ui-text-hover);
 }
 
 .dropdownTrigger.open,
 .dropdownTrigger.active {
-  color: var(--ui-action-primary);
+  color: var(--ui-action-active);
 }
 
 .dropdownLabel {
@@ -139,11 +139,12 @@
 
 .dropdownItem:hover {
   background: var(--ui-bg-hover);
+  color: var(--ui-text-hover);
 }
 
 .dropdownItemActive {
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--ui-action-primary);
+  background: rgba(95, 144, 112, 0.15);
+  color: var(--ui-action-active);
 }
 
 /* 설정 버튼 및 패널 */
@@ -190,7 +191,7 @@
 
 .settingsPanelClose:hover {
   background: var(--ui-bg-hover);
-  color: var(--ui-text-primary);
+  color: var(--ui-text-hover);
 }
 
 .settingsPanelBody {

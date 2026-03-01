@@ -6,6 +6,8 @@ import styles from './LabLayout.module.css';
 
 export interface ComparisonCardProps {
   title: string;
+  /** 서브타이틀 (설명) */
+  subtitle?: string;
   /** CSS 변수 오버라이드 (Palette/Style 적용용) */
   styleVars?: Record<string, string>;
   children: React.ReactNode;
@@ -15,6 +17,7 @@ export interface ComparisonCardProps {
 
 export function ComparisonCard({
   title,
+  subtitle,
   styleVars = {},
   children,
   onClick,
@@ -34,7 +37,10 @@ export function ComparisonCard({
         }
       }}
     >
-      <h3 className={styles.comparisonTitle}>{title}</h3>
+      <div className={styles.comparisonHeader}>
+        <h3 className={styles.comparisonTitle}>{title}</h3>
+        {subtitle && <p className={styles.comparisonSubtitle}>{subtitle}</p>}
+      </div>
       <div className={styles.comparisonContent}>{children}</div>
     </div>
   );

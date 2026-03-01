@@ -55,48 +55,52 @@ const colorRoles: ColorRole[] = [
 interface SemanticToken {
   token: string;
   note: string;
+  /** light-bg 기준 프리미티브 매핑 (예: neutral-300, primary-500) */
+  source?: string | null;
 }
 
 const semanticMappings: Array<{ category: string; items: SemanticToken[] }> = [
   {
     category: 'Background',
     items: [
-      { token: '--ds-color-bg-base', note: '페이지 배경' },
-      { token: '--ds-color-bg-surface', note: '카드, 패널' },
-      { token: '--ds-color-bg-elevated', note: '모달, 팝오버' },
-      { token: '--ds-color-bg-muted', note: '비활성 영역' },
+      { token: '--ds-color-bg-base', note: '페이지 배경', source: null },
+      { token: '--ds-color-bg-surface', note: 'Flat 카드', source: 'neutral-50' },
+      { token: '--ds-color-bg-surfaceBrand', note: '브랜드톤이 가미된 배경', source: 'primary-50' },
+      { token: '--ds-color-bg-elevated', note: '모달, 팝오버', source: null },
+      { token: '--ds-color-bg-muted', note: '비활성 영역', source: 'neutral-100' },
     ],
   },
   {
     category: 'Text',
     items: [
-      { token: '--ds-color-text-primary', note: '본문' },
-      { token: '--ds-color-text-secondary', note: '부제목' },
-      { token: '--ds-color-text-muted', note: '플레이스홀더, 힌트' },
-      { token: '--ds-color-text-inverse', note: '어두운 배경 위' },
-      { token: '--ds-color-text-onAction', note: '버튼 위 텍스트' },
+      { token: '--ds-color-text-primary', note: '본문', source: 'neutral-900' },
+      { token: '--ds-color-text-secondary', note: '부제목', source: 'neutral-700' },
+      { token: '--ds-color-text-muted', note: '플레이스홀더, 힌트', source: 'neutral-500' },
+      { token: '--ds-color-text-inverse', note: '어두운 배경 위', source: null },
+      { token: '--ds-color-text-onAction', note: '버튼 위 텍스트', source: null },
     ],
   },
   {
     category: 'Border',
     items: [
-      { token: '--ds-color-border-default', note: '기본' },
-      { token: '--ds-color-border-subtle', note: '미묘한 구분선' },
-      { token: '--ds-color-border-focus', note: '포커스 링' },
+      { token: '--ds-color-border-default', note: '기본', source: 'neutral-300' },
+      { token: '--ds-color-border-subtle', note: '미묘한 구분선', source: 'neutral-200' },
+      { token: '--ds-color-border-accent', note: 'Outlined 카드/강조 테두리', source: 'primary-200' },
+      { token: '--ds-color-border-focus', note: '포커스 링', source: 'primary-500' },
     ],
   },
   {
     category: 'Action',
     items: [
-      { token: '--ds-color-action-primary-default', note: 'Primary 기본' },
-      { token: '--ds-color-action-primary-hover', note: 'Primary 호버' },
-      { token: '--ds-color-action-primary-active', note: 'Primary 액티브' },
-      { token: '--ds-color-action-secondary-default', note: 'Secondary 기본' },
-      { token: '--ds-color-action-secondary-hover', note: 'Secondary 호버' },
-      { token: '--ds-color-action-secondary-active', note: 'Secondary 액티브' },
-      { token: '--ds-color-action-accent-default', note: 'Accent 기본' },
-      { token: '--ds-color-action-accent-hover', note: 'Accent 호버' },
-      { token: '--ds-color-action-accent-active', note: 'Accent 액티브' },
+      { token: '--ds-color-action-primary-default', note: 'Primary 기본', source: 'primary-500' },
+      { token: '--ds-color-action-primary-hover', note: 'Primary 호버', source: 'primary-600' },
+      { token: '--ds-color-action-primary-active', note: 'Primary 액티브', source: 'primary-700' },
+      { token: '--ds-color-action-secondary-default', note: 'Secondary 기본', source: 'secondary-500' },
+      { token: '--ds-color-action-secondary-hover', note: 'Secondary 호버', source: 'secondary-600' },
+      { token: '--ds-color-action-secondary-active', note: 'Secondary 액티브', source: 'secondary-700' },
+      { token: '--ds-color-action-accent-default', note: 'Accent 기본', source: 'accent-500' },
+      { token: '--ds-color-action-accent-hover', note: 'Accent 호버', source: 'accent-600' },
+      { token: '--ds-color-action-accent-active', note: 'Accent 액티브', source: 'accent-700' },
     ],
   },
 ];
@@ -111,7 +115,10 @@ function SemanticMappingTabs({
 
   return (
     <div className={styles.section}>
-      <h4 className={styles.sectionTitle}>시맨틱 컬러 매핑</h4>
+      <h4 className={styles.sectionTitle}>
+        시맨틱 컬러 매핑
+        <span className={styles.sectionHint}> (light-bg 기준)</span>
+      </h4>
       <div className={styles.mappingTabs}>
         <div className={styles.tabList} role="tablist">
           {mappings.map((m) => (
@@ -131,17 +138,40 @@ function SemanticMappingTabs({
         <div className={styles.tabPanel} role="tabpanel">
           {activeMapping && (
             <div className={styles.tokenList}>
-              {activeMapping.items.map((item) => (
-                <div key={item.token} className={styles.tokenRow}>
-                  <div
-                    className={styles.tokenSwatch}
-                    style={{ backgroundColor: `var(${item.token})` }}
-                    title={item.token}
-                  />
-                  <code className={styles.tokenName}>{item.token}</code>
-                  {item.note && <span className={styles.tokenNote}>{item.note}</span>}
-                </div>
-              ))}
+              {activeMapping.items.map((item) => {
+                const sourceVar = item.source && `--ds-color-${item.source}`;
+                return (
+                  <div key={item.token} className={styles.tokenRow}>
+                    <div
+                      className={styles.tokenSwatch}
+                      style={{ backgroundColor: `var(${item.token})` }}
+                      title={item.token}
+                    />
+                    <code className={styles.tokenName}>{item.token}</code>
+                    {item.source && sourceVar && (
+                      <span
+                        className={styles.sourceBadge}
+                        style={{
+                          backgroundColor: `var(${sourceVar})`,
+                          color: (() => {
+                            const step = parseInt(
+                              item.source!.split('-').pop() ?? '500',
+                              10
+                            );
+                            return step <= 400 ? 'var(--lab-text-primary)' : '#fff';
+                          })(),
+                        }}
+                        title={`light-bg 기준: ${item.source}`}
+                      >
+                        → {item.source}
+                      </span>
+                    )}
+                    {item.note && (
+                      <span className={styles.tokenNote}>{item.note}</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

@@ -12,15 +12,10 @@ import {
   sectionTitles,
 } from '../../../constants';
 import { createStyle } from '../../../styles';
-import { minimalStyle, neumorphismStyle } from '../../../styles';
+import { stylePresets } from '../../../themes/presets';
 import type { StyleName } from '../../../@types/theme';
 import { StyleOverviewDiagram } from './StyleOverviewDiagram';
 import styles from './StyleLab.module.css';
-
-const styleMap = {
-  minimal: minimalStyle,
-  neumorphism: neumorphismStyle,
-} as const;
 
 const shadowKeys = ['sm', 'md', 'lg'] as const;
 
@@ -35,7 +30,7 @@ function capitalize(str: string): string {
 }
 
 function StyleDetail({ name }: { name: StyleName }) {
-  const styleDef = styleMap[name as keyof typeof styleMap];
+  const styleDef = stylePresets[name];
   if (!styleDef) return null;
   const resolved = createStyle(styleDef, '#f5f5f5');
 
@@ -99,7 +94,7 @@ export function StyleLab() {
                       className={styles.shadowDemo}
                       style={{
                         boxShadow: `var(--ds-shadow-${size})`,
-                        backgroundColor: 'var(--ds-color-bg-surface)',
+                        backgroundColor: 'var(--ds-color-bg-base)',
                       }}
                     >
                       shadow-{size}

@@ -18,6 +18,7 @@ import type {
 } from '../@types/theme';
 import type { ExternalPalette } from '../@types/tokens';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';
+import { createPalette } from '../palettes';
 import { combineTheme } from './combine';
 import {
   palettePresets,
@@ -130,6 +131,19 @@ export function ThemeProvider({
   };
 
   useEffect(() => {
+    const expandedPalette = createPalette(paletteDefinition);
+    const paletteScaleVars: Record<string, string> = {};
+    (['primary', 'secondary', 'accent', 'sub', 'neutral'] as const).forEach(
+      (key) => {
+        const scale = expandedPalette.scales[key];
+        if (scale) {
+          Object.entries(scale).forEach(([step, color]) => {
+            paletteScaleVars[`--ds-color-${key}-${step}`] = color;
+          });
+        }
+      }
+    );
+
     const themeCSSVars = flattenToCSSVars({
       color: theme.colors,
       shadow: theme.shadows,
@@ -169,6 +183,7 @@ export function ThemeProvider({
 
     injectCSSVariables({
       ...primitiveCSSVars,
+      ...paletteScaleVars,
       ...themeCSSVars,
       ...stateLayerVars,
       ...typographyVars,
@@ -179,7 +194,7 @@ export function ThemeProvider({
     document.documentElement.setAttribute('data-style', theme.style);
     document.documentElement.setAttribute('data-theme', styleName);
     document.documentElement.setAttribute('data-system-preset', systemPreset);
-  }, [theme, styleName, systemPreset]);
+  }, [theme, styleName, systemPreset, paletteDefinition]);
 
   const setSystemPreset = (name: SystemPresetName) => {
     setSystemPresetState(name);

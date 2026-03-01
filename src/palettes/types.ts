@@ -17,11 +17,30 @@ export type PaletteName =
 /** 배경 전략 */
 export type BgStrategy = 'light' | 'colored' | 'dark';
 
+/** 테마 카테고리 */
+export type ThemeCategory =
+  | 'default'
+  | 'custom'
+  | 'natural';
+
+/** 테마 메타데이터 */
+export interface ThemeMetadata {
+  /** 테마 ID (고유 키) */
+  id: string;
+  /** 표시 이름 */
+  displayName: string;
+  /** 카테고리 */
+  category: ThemeCategory;
+  /** 설명 */
+  description?: string;
+}
+
 /** 시맨틱 색상 (배경 전략에서 생성) */
 export interface SemanticColors {
   bg: {
     base: string;
     surface: string;
+    surfaceBrand: string;
     elevated: string;
     muted: string;
   };
@@ -34,6 +53,7 @@ export interface SemanticColors {
   border: {
     default: string;
     subtle: string;
+    accent: string;
     focus: string;
   };
 }
@@ -41,6 +61,9 @@ export interface SemanticColors {
 /** Palette 정의 (프리셋 또는 사용자 정의) */
 export interface PaletteDefinition {
   name: PaletteName;
+
+  /** 프리셋 서브네임 (설명) */
+  subname?: string;
 
   /** 기본 색상 (사용자 입력 또는 프리셋). E09: neutral/sub 분리 */
   colors: {
@@ -58,6 +81,9 @@ export interface PaletteDefinition {
 
   /** 대비 설정 */
   contrast?: 'normal' | 'high';
+
+  /** 테마 메타데이터 (선택적, 카테고리/검색용) */
+  metadata?: ThemeMetadata;
 }
 
 /** 확장된 Palette (스케일 + 시맨틱 포함, createPalette 반환값) */
