@@ -7,6 +7,7 @@ import { Icon } from '../Icon';
 import { Select } from '../Select';
 import { Tooltip } from '../Tooltip';
 import { useGlobalSettings } from './hooks/useGlobalSettings';
+import { useTheme } from '../../themes';
 import {
   getThemesByCategory,
   searchThemesByName,
@@ -17,7 +18,10 @@ import type { StyleName, SystemPresetName } from '../../@types/theme';
 import { ThemeTabNavigation } from '../../pages/layouts/PaletteLab/ThemeTabNavigation';
 import { ThemeSearchBar } from '../../pages/layouts/PaletteLab/ThemeSearchBar';
 import { EmptyCategory } from '../../pages/layouts/PaletteLab/EmptyCategory';
+import { themePresets } from '../../constants/palette-definitions';
+import { presetToPaletteDefinition } from '../../constants/semantic-presets';
 import type { StoredPreset } from './types';
+import type { CustomSemanticPreset } from '../../constants/semantic-presets';
 import styles from './GlobalSettingsModal.module.css';
 
 export interface GlobalSettingsModalProps {
@@ -107,6 +111,61 @@ function PresetItemCustom({
   );
 }
 
+function PresetItemSemanticCustom({
+  preset,
+  onLoad,
+  onDelete,
+}: {
+  preset: CustomSemanticPreset;
+  onLoad: (p: CustomSemanticPreset) => void;
+  onDelete: (id: string) => void;
+}) {
+  const def = presetToPaletteDefinition(preset);
+  const colors = def
+    ? getPresetColorsFromPalette(def.colors as ExternalPalette)
+    : ['#ccc', '#ccc', '#ccc', '#ccc', '#ccc'];
+  const displayName =
+    preset.displayName ??
+    `${themePresets[preset.basePaletteId as keyof typeof themePresets]?.metadata?.displayName ?? preset.basePaletteId} (커스텀)`;
+  return (
+    <div className={styles.presetItem}>
+      <span className={`${styles.presetBadge} ${styles.semantic}`}>
+        시맨틱
+      </span>
+      <button
+        type="button"
+        className={styles.presetName}
+        onClick={() => onLoad(preset)}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}
+      >
+        {displayName}
+      </button>
+      <div className={styles.presetColors}>
+        {colors.map((color, i) => (
+          <span
+            key={i}
+            className={styles.presetDot}
+            style={{ backgroundColor: color }}
+          />
+        ))}
+      </div>
+      <div className={styles.presetDeleteSlot}>
+        <button
+          type="button"
+          className={styles.deleteBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(preset.id);
+          }}
+          aria-label={`${displayName} 삭제`}
+        >
+          <Icon name="delete" size="sm" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps) {
   const {
     palette,
@@ -125,6 +184,12 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
     loadUserPreset,
     deleteUserPreset,
   } = useGlobalSettings();
+
+  const {
+    customSemanticPresets,
+    applyCustomSemanticPreset,
+    deleteCustomSemanticPreset,
+  } = useTheme();
 
   const modalRef = useRef<HTMLDivElement>(null);
   const [showSaveInput, setShowSaveInput] = useState(false);
@@ -158,6 +223,21 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
       p.name.toLowerCase().includes(q)
     );
   }, [userPresets, presetSearch]);
+
+  const filteredCustomSemanticPresets = useMemo(() => {
+    if (!presetSearch.trim()) return customSemanticPresets;
+    const q = presetSearch.toLowerCase();
+    const baseNames = Object.fromEntries(
+      Object.entries(themePresets).map(([id, def]) => [
+        id,
+        (def.metadata?.displayName ?? id).toLowerCase(),
+      ])
+    );
+    return customSemanticPresets.filter((p) => {
+      const name = (p.displayName ?? baseNames[p.basePaletteId] ?? p.basePaletteId).toLowerCase();
+      return name.includes(q);
+    });
+  }, [customSemanticPresets, presetSearch]);
 
   useEffect(() => {
     if (!open) return;
@@ -345,19 +425,27 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
             >
               {presetTab === 'custom' && (
                 <>
-                  {filteredUserPresets.length === 0 ? (
+                  {filteredUserPresets.length === 0 && filteredCustomSemanticPresets.length === 0 ? (
                     <EmptyCategory
                       message={
                         presetSearch
                           ? '검색 결과가 없습니다'
-                          : '저장된 Custom 프리셋이 없습니다'
+                          : '저장된 Custom 프리셋이 없습니다. 색상 편집 후 저장하거나 Palette Lab에서 시맨틱 매핑을 적용해 보세요.'
                       }
                     />
                   ) : (
                     <div className={styles.presetList}>
+                      {filteredCustomSemanticPresets.map((preset) => (
+                        <PresetItemSemanticCustom
+                          key={`semantic-${preset.id}`}
+                          preset={preset}
+                          onLoad={applyCustomSemanticPreset}
+                          onDelete={deleteCustomSemanticPreset}
+                        />
+                      ))}
                       {filteredUserPresets.map((preset) => (
                         <PresetItemCustom
-                          key={preset.id}
+                          key={`color-${preset.id}`}
                           preset={preset}
                           onLoad={loadUserPreset}
                           onDelete={deleteUserPreset}

@@ -5,9 +5,9 @@ export type ThemeName = 'minimal' | 'neumorphism' | 'brutalism';
 
 /**
  * Palette/Style 이름 (E03)
- * PaletteName은 palettes/types.ts에서 SOT로 관리
+ * PaletteName은 theme-presets에서 유도 (registry → themePresets 단일 소스)
  */
-export type { PaletteName } from '../palettes';
+export type { PaletteName } from '../constants/theme-presets';
 export type StyleName = 'minimal' | 'neumorphism' | 'brutalism';
 
 /** E08: 시스템 컬러 프리셋 (Error, Warning, Success, Info) */

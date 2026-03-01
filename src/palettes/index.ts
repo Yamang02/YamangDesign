@@ -31,5 +31,6 @@ export function createPalette(definition: PaletteDefinition): ExpandedPalette {
   };
 }
 
-export type { PaletteDefinition, ExpandedPalette, PaletteName, BgStrategy } from './types';
+export type { PaletteDefinition, ExpandedPalette, BgStrategy } from './types';
+// PaletteName은 @types/theme 또는 constants/theme-presets에서 import
 export { defaultPalette } from './presets';

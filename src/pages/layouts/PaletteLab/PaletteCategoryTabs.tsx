@@ -1,13 +1,17 @@
 /**
- * 브랜드 컬러 서브탭 - Default | Natural
+ * 브랜드 컬러 서브탭 - Default | Natural | Custom
+ * GenericTabs 컴포넌트를 래핑하여 사용
  */
-import styles from './ThemeTabNavigation.module.css';
+import type { ThemeCategory } from '../../../palettes/types';
+import { GenericTabs } from '../../../components/GenericTabs';
 
-export type BrandColorTabId = 'default' | 'natural';
+/** BrandColorTabId는 ThemeCategory의 alias */
+export type BrandColorTabId = ThemeCategory;
 
-const TABS: { id: BrandColorTabId; label: string }[] = [
-  { id: 'default', label: 'Default' },
-  { id: 'natural', label: 'Natural' },
+const TABS = [
+  { id: 'default' as const, label: 'Default' },
+  { id: 'natural' as const, label: 'Natural' },
+  { id: 'custom' as const, label: 'Custom' },
 ];
 
 export interface PaletteCategoryTabsProps {
@@ -20,27 +24,11 @@ export function PaletteCategoryTabs({
   onTabChange,
 }: PaletteCategoryTabsProps) {
   return (
-    <div
-      className={styles.tabList}
-      role="tablist"
-      aria-label="브랜드 컬러"
-    >
-      {TABS.map((tab) => (
-        <button
-          key={tab.id}
-          type="button"
-          role="tab"
-          aria-selected={activeTab === tab.id}
-          aria-controls={`panel-${tab.id}`}
-          id={`tab-${tab.id}`}
-          className={styles.tab}
-          data-active={activeTab === tab.id}
-          onClick={() => onTabChange(tab.id)}
-          tabIndex={activeTab === tab.id ? 0 : -1}
-        >
-          {tab.label}
-        </button>
-      ))}
-    </div>
+    <GenericTabs
+      tabs={TABS}
+      activeTab={activeTab}
+      onTabChange={onTabChange}
+      ariaLabel="브랜드 컬러"
+    />
   );
 }

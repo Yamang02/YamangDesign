@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Avatar, Badge, Button, Card, Icon, Input, Profile, Select } from '../../../components';
+import { useState, useEffect } from 'react';
+import { Avatar, Badge, Button, Card, DetailPanel, Icon, Input, Profile, Select } from '../../../components';
 import { LabLayout, type TocItem } from '../../../layouts';
 import {
   showcaseSections,
   showcaseLabels,
   showcaseContent,
+  showcaseSectionTokens,
   buttonShowcase,
   cardShowcase,
   inputShowcase,
@@ -12,6 +13,8 @@ import {
   iconShowcase,
   formExample,
 } from '../../../constants';
+import type { ShowcaseSectionId } from '../../../constants';
+import styles from './Components.module.css';
 
 /** 복잡도 순: Badge → Icon → Avatar → Button → Input → Select → Card → Form Example */
 const tocItems: TocItem[] = [
@@ -40,14 +43,6 @@ const sectionStyle = {
   padding: 'var(--ds-spacing-8) 0',
   width: '100%',
   boxSizing: 'border-box' as const,
-};
-
-const sectionTitleStyle = {
-  fontSize: 'var(--ds-text-2xl)',
-  fontWeight: 'var(--ds-font-weight-bold)',
-  color: 'var(--ds-color-text-primary)',
-  marginBottom: 'var(--ds-spacing-6)',
-  textAlign: 'left' as const,
 };
 
 const gridStyle = {
@@ -100,7 +95,137 @@ function SectionDivider() {
   return <div style={dividerStyle} />;
 }
 
-function SelectSection({ id }: { id: string }) {
+type TokenCategory = 'color' | 'spacing' | 'typography' | 'size' | 'shadow' | 'other';
+
+function getTokenCategory(token: string): TokenCategory {
+  if (token.includes('color')) return 'color';
+  if (token.includes('spacing') || token.includes('radius') || token.includes('z-')) return 'spacing';
+  if (token.includes('font') || token.includes('text-') || token.includes('weight') || token.includes('leading')) return 'typography';
+  if (token.includes('size') || token.includes('border')) return 'size';
+  if (token.includes('shadow') || token.includes('transition')) return 'shadow';
+  return 'other';
+}
+
+const CATEGORY_LABELS: Record<TokenCategory, string> = {
+  color: '색상',
+  spacing: '간격 / 모양',
+  typography: '타이포그래피',
+  size: '크기 / 테두리',
+  shadow: '그림자 / 트랜지션',
+  other: '기타',
+};
+
+function ComponentDetail({ sectionId }: { sectionId: ShowcaseSectionId }) {
+  const [tokenValues, setTokenValues] = useState<Record<string, string>>({});
+  const tokens = showcaseSectionTokens[sectionId] ?? [];
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const computed = getComputedStyle(root);
+    const list = showcaseSectionTokens[sectionId] ?? [];
+    const unique = Array.from(new Map(list.map((t) => [t.token, t])).values());
+    const next: Record<string, string> = {};
+    unique.forEach(({ token }) => {
+      const val = computed.getPropertyValue(token).trim();
+      next[token] = val || '(미정의)';
+    });
+    setTokenValues(next);
+  }, [sectionId]);
+
+  const uniqueTokens = Array.from(
+    new Map(tokens.map((t) => [t.token, t])).values()
+  );
+  const tokensByCategory = uniqueTokens.reduce<Record<TokenCategory, typeof uniqueTokens>>(
+    (acc, t) => {
+      const cat = getTokenCategory(t.token);
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push(t);
+      return acc;
+    },
+    {} as Record<TokenCategory, typeof uniqueTokens>
+  );
+  const order: TokenCategory[] = ['color', 'spacing', 'typography', 'size', 'shadow', 'other'];
+
+  if (!tokens.length) return null;
+
+  return (
+    <div className={styles.componentDetail}>
+      {order.map((cat) => {
+        const list = tokensByCategory[cat];
+        if (!list?.length) return null;
+        return (
+          <section key={cat} className={styles.tokenGroup}>
+            <h4 className={styles.tokenGroupTitle}>{CATEGORY_LABELS[cat]}</h4>
+            <div className={styles.tokenTable}>
+              {list.map(({ token, label }) => {
+                const value = tokenValues[token] ?? '(로딩 중…)';
+                const isColor =
+                  token.includes('color') &&
+                  (value.startsWith('#') || value.startsWith('rgb') || value.startsWith('hsl'));
+                const isLongValue = value.length > 50;
+                const shortName = token.replace(/^--ds-/, '');
+                const displayValue =
+                  isLongValue && value.includes(', ')
+                    ? value.split(', ').join(',\n  ')
+                    : value;
+                return (
+                  <div
+                    key={token}
+                    className={
+                      isLongValue
+                        ? `${styles.tokenRow} ${styles.tokenRowLong}`
+                        : styles.tokenRow
+                    }
+                  >
+                    <div className={styles.tokenMeta}>
+                      <code className={styles.tokenName}>{shortName}</code>
+                      {label && <span className={styles.tokenLabel}>{label}</span>}
+                    </div>
+                    <div className={styles.tokenValueCell}>
+                      {isColor && (
+                        <span
+                          className={styles.tokenSwatch}
+                          style={{ backgroundColor: value }}
+                          title={value}
+                        />
+                      )}
+                      <code className={styles.tokenValue}>{displayValue}</code>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+interface SectionHeaderProps {
+  title: string;
+  onInfoClick: () => void;
+}
+
+function SectionHeader({ title, onInfoClick }: SectionHeaderProps) {
+  return (
+    <div className={styles.sectionHeader}>
+      <h2 className={styles.sectionTitle}>
+        {title}
+      </h2>
+      <button
+        type="button"
+        className={styles.infoButton}
+        onClick={onInfoClick}
+        aria-label={`${title} 상세 정보 보기`}
+      >
+        <Icon name="info" size="sm" />
+      </button>
+    </div>
+  );
+}
+
+function SelectSection({ id, onInfoClick }: { id: string; onInfoClick: () => void }) {
   const [value1, setValue1] = useState('apple');
   const [value2, setValue2] = useState('');
   const [value3, setValue3] = useState('banana');
@@ -108,7 +233,7 @@ function SelectSection({ id }: { id: string }) {
   const options = [...selectShowcase.fruitOptions];
   return (
     <section id={id} style={sectionStyle}>
-      <h2 style={sectionTitleStyle}>{showcaseSections.select}</h2>
+      <SectionHeader title={showcaseSections.select} onInfoClick={onInfoClick} />
 
       <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
         <p style={labelStyle}>{showcaseLabels.variants}</p>
@@ -182,12 +307,15 @@ function SelectSection({ id }: { id: string }) {
 }
 
 export function Components() {
+  const [detailSection, setDetailSection] = useState<ShowcaseSectionId | null>(null);
+
   return (
+    <>
     <LabLayout title="Components"  tocItems={tocItems}>
       <div style={contentAreaStyle}>
       {/* Badge Section */}
       <section id="badge" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{showcaseSections.badge}</h2>
+        <SectionHeader title={showcaseSections.badge} onInfoClick={() => setDetailSection('badge')} />
 
         <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
           <p style={labelStyle}>{showcaseLabels.variants}</p>
@@ -213,7 +341,7 @@ export function Components() {
 
       {/* Icon Section */}
       <section id="icon" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{showcaseSections.icon}</h2>
+        <SectionHeader title={showcaseSections.icon} onInfoClick={() => setDetailSection('icon')} />
 
         <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
           <p style={labelStyle}>{showcaseLabels.materialIcons}</p>
@@ -259,7 +387,7 @@ export function Components() {
 
       {/* Avatar Section */}
       <section id="avatar" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{showcaseSections.avatar}</h2>
+        <SectionHeader title={showcaseSections.avatar} onInfoClick={() => setDetailSection('avatar')} />
 
         <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
           <p style={labelStyle}>{showcaseLabels.sizes}</p>
@@ -311,7 +439,7 @@ export function Components() {
 
       {/* Button Section */}
       <section id="button" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{showcaseSections.button}</h2>
+        <SectionHeader title={showcaseSections.button} onInfoClick={() => setDetailSection('button')} />
 
         <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
           <p style={labelStyle}>{showcaseLabels.variants}</p>
@@ -380,7 +508,7 @@ export function Components() {
 
       {/* Card Section */}
       <section id="card" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{showcaseSections.card}</h2>
+        <SectionHeader title={showcaseSections.card} onInfoClick={() => setDetailSection('card')} />
 
         <div style={gridStyle}>
           <div style={cardItemWrapperStyle}>
@@ -418,13 +546,13 @@ export function Components() {
       <SectionDivider />
 
       {/* Select Section */}
-      <SelectSection id="select" />
+      <SelectSection id="select" onInfoClick={() => setDetailSection('select')} />
 
       <SectionDivider />
 
       {/* Input Section */}
       <section id="input" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{showcaseSections.input}</h2>
+        <SectionHeader title={showcaseSections.input} onInfoClick={() => setDetailSection('input')} />
 
         <div style={gridStyle}>
           <div>
@@ -491,7 +619,7 @@ export function Components() {
 
       {/* Form Example (랜딩 Contact 패턴 이식) */}
       <section id="form-example" style={sectionStyle}>
-        <h2 style={sectionTitleStyle}>{formExample.title}</h2>
+        <SectionHeader title={formExample.title} onInfoClick={() => setDetailSection('form-example')} />
         <p style={{ ...labelStyle, marginBottom: 'var(--ds-spacing-4)' }}>{formExample.subtitle}</p>
         <div style={{ maxWidth: 400 }}>
           <Card variant="elevated" padding="lg">
@@ -510,5 +638,14 @@ export function Components() {
       </section>
       </div>
     </LabLayout>
+
+    <DetailPanel
+      open={!!detailSection}
+      onClose={() => setDetailSection(null)}
+      title={detailSection === 'form-example' ? formExample.title : detailSection ? showcaseSections[detailSection] ?? '' : ''}
+    >
+      {detailSection && <ComponentDetail sectionId={detailSection} />}
+    </DetailPanel>
+    </>
   );
 }

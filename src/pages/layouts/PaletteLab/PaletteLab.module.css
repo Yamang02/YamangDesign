@@ -22,10 +22,10 @@
   gap: var(--ds-spacing-6);
 }
 
-/* 카드가 내부 콘텐츠 너비에 맞춰 공간만 차지, 여러 카드가 같은 행에 배치 */
+/* 카드 너비 고정 (일관된 그리드) */
 .comparisonGrid > * {
-  flex: 0 1 auto;
-  min-width: fit-content;
+  flex: 0 0 260px;
+  min-width: 0;
 }
 
 .colorColumn {
@@ -152,6 +152,13 @@
   width: 20px;
   font-size: 10px;
   color: var(--ds-color-text-muted);
+}
+
+/* Custom 카드 액션 그룹 */
+.customCardActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
 }
 
 /* P05: 시맨틱 매핑 아이콘 (테마 카드 우측 상단) */

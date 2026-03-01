@@ -1,7 +1,8 @@
 /**
  * E03: Palette × Style 조합 기반 ThemeProvider
+ * Refactored: usePaletteResolution, useCustomSemanticPresets 훅 사용
  */
-import { useState, useEffect, useMemo, type ReactNode } from 'react';
+import { useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
 import type {
   ThemeName,
   PaletteName,
@@ -12,11 +13,12 @@ import type { ExternalPalette } from '../@types/tokens';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';
 import { createPalette } from '../palettes';
 import { combineTheme } from './combine';
-import {
-  palettePresets,
-  stylePresets,
-  toCustomPaletteDefinition,
-} from './presets';
+import { stylePresets } from './presets';
+import type { CustomSemanticPreset } from '../constants/semantic-presets';
+import { isCustomSemanticPaletteId } from '../constants/theme-presets';
+import { usePaletteResolution } from '../hooks/usePaletteResolution';
+import { useCustomSemanticPresets } from '../hooks/useCustomSemanticPresets';
+import { PALETTE_SCALES } from '../constants/palette-scales';
 import {
   spacing,
   fontFamily,
@@ -65,9 +67,17 @@ export function ThemeProvider({
   const [systemPreset, setSystemPresetState] =
     useState<SystemPresetName>(initialSystemPreset);
 
+  // 커스텀 시맨틱 프리셋 관리 (localStorage 연동)
+  const {
+    presets: customSemanticPresets,
+    add: addCustomSemanticPresetInternal,
+    update: updateCustomSemanticPreset,
+    remove: removeCustomSemanticPresetInternal,
+  } = useCustomSemanticPresets();
+
   const setPaletteName = (name: PaletteName) => {
     setPaletteNameState(name);
-    if (name !== 'custom') setCustomColorsState(null);
+    if (name !== 'custom' && !isCustomSemanticPaletteId(name)) setCustomColorsState(null);
   };
 
   const setCustomColors = (colors: ExternalPalette | null) => {
@@ -79,40 +89,58 @@ export function ThemeProvider({
     setStyleName(name);
   };
 
-  const paletteDefinition = useMemo(() => {
-    if (customColors) return toCustomPaletteDefinition(customColors);
-    const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
-    return preset ?? palettePresets.default;
-  }, [paletteName, customColors]);
+  // 팔레트 해석 (단일 소스)
+  const { definition: basePaletteDefinition, colors: palette } = usePaletteResolution(
+    paletteName,
+    customColors,
+    customSemanticPresets
+  );
+
+  const paletteDefinition = basePaletteDefinition;
 
   const theme = useMemo(() => {
     const styleDef = stylePresets[styleName] ?? stylePresets.minimal;
     return combineTheme(paletteDefinition, styleDef);
   }, [paletteDefinition, styleName]);
 
-  const palette: ExternalPalette = useMemo(() => {
-    if (customColors) return customColors;
-    const p = palettePresets[paletteName as Exclude<PaletteName, 'custom'>] ?? palettePresets.default;
-    return p.colors as ExternalPalette;
-  }, [customColors, paletteName]);
+  // 커스텀 프리셋 CRUD 래퍼 (삭제 시 현재 팔레트 초기화 포함)
+  const addCustomSemanticPreset = useCallback(
+    (preset: Omit<CustomSemanticPreset, 'id' | 'createdAt'>) => {
+      return addCustomSemanticPresetInternal(preset);
+    },
+    [addCustomSemanticPresetInternal]
+  );
+
+  const deleteCustomSemanticPreset = useCallback(
+    (id: string) => {
+      removeCustomSemanticPresetInternal(id);
+      // 현재 선택된 프리셋이 삭제되면 기본값으로 초기화
+      if (paletteName === `custom-semantic:${id}`) {
+        setPaletteNameState('default' as PaletteName);
+      }
+    },
+    [paletteName, removeCustomSemanticPresetInternal]
+  );
+
+  const applyCustomSemanticPreset = useCallback((preset: CustomSemanticPreset) => {
+    setPaletteNameState(`custom-semantic:${preset.id}` as PaletteName);
+  }, []);
 
   const setPalette = (colors: ExternalPalette) => {
     setCustomColors(colors);
   };
 
   useEffect(() => {
-    const expandedPalette = createPalette(paletteDefinition);
+    const expandedPalette = createPalette(basePaletteDefinition);
     const paletteScaleVars: Record<string, string> = {};
-    (['primary', 'secondary', 'accent', 'sub', 'neutral'] as const).forEach(
-      (key) => {
-        const scale = expandedPalette.scales[key];
-        if (scale) {
-          Object.entries(scale).forEach(([step, color]) => {
-            paletteScaleVars[`--ds-color-${key}-${step}`] = color;
-          });
-        }
+    PALETTE_SCALES.forEach((key) => {
+      const scale = expandedPalette.scales[key];
+      if (scale) {
+        Object.entries(scale).forEach(([step, color]) => {
+          paletteScaleVars[`--ds-color-${key}-${step}`] = color;
+        });
       }
-    );
+    });
 
     const themeCSSVars = {
       ...flattenToCSSVars({
@@ -166,7 +194,7 @@ export function ThemeProvider({
     document.documentElement.setAttribute('data-style', theme.style);
     document.documentElement.setAttribute('data-theme', styleName);
     document.documentElement.setAttribute('data-system-preset', systemPreset);
-  }, [theme, styleName, systemPreset, paletteDefinition]);
+  }, [theme, styleName, systemPreset, basePaletteDefinition]);
 
   const setSystemPreset = (name: SystemPresetName) => {
     setSystemPresetState(name);
@@ -186,6 +214,12 @@ export function ThemeProvider({
     setPalette,
     systemPreset,
     setSystemPreset,
+    customSemanticPresets,
+    addCustomSemanticPreset,
+    updateCustomSemanticPreset,
+    deleteCustomSemanticPreset,
+    applyCustomSemanticPreset,
+    paletteDefinition: basePaletteDefinition,
   };
 
   return (

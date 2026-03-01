@@ -5,8 +5,8 @@
 
 import type { GeneratedScales } from '../@types/tokens';
 
-/** 배색 프리셋 이름 (P02: default만 유지) */
-export type PaletteName = 'default' | 'custom';
+// PaletteName은 constants/theme-presets.ts에서 정의됨
+// PaletteDefinition.name은 내부 유연성을 위해 string 유지
 
 /** 배경 전략 */
 export type BgStrategy = 'light' | 'colored' | 'dark';
@@ -83,7 +83,7 @@ export interface SemanticColors {
 
 /** Palette 정의 (프리셋 또는 사용자 정의) */
 export interface PaletteDefinition {
-  name: PaletteName;
+  name: string;
 
   /** 프리셋 서브네임 (설명) */
   subname?: string;
@@ -114,7 +114,7 @@ export interface PaletteDefinition {
 
 /** 확장된 Palette (스케일 + 시맨틱 포함, createPalette 반환값) */
 export interface ExpandedPalette {
-  name: PaletteName;
+  name: string;
   bgStrategy: BgStrategy;
 
   /** 색상 스케일 */

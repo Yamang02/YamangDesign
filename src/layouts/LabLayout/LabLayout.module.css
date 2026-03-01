@@ -222,12 +222,18 @@ section[id] {
   font-weight: var(--ds-font-weight-semibold);
   color: var(--ds-color-text-primary);
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .comparisonSubtitle {
   font-size: var(--ds-text-sm);
   color: var(--ds-color-text-secondary);
   margin: var(--ds-spacing-1) 0 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .comparisonContent {

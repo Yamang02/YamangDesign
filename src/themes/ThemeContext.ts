@@ -11,6 +11,8 @@ import type {
   SystemPresetName,
 } from '../@types/theme';
 import type { ExternalPalette } from '../@types/tokens';
+import type { CustomSemanticPreset } from '../constants/semantic-presets';
+import type { PaletteDefinition } from '../palettes/types';
 
 export interface ThemeContextValue {
   theme: Theme;
@@ -28,6 +30,14 @@ export interface ThemeContextValue {
   setPalette: (palette: ExternalPalette) => void;
   systemPreset: SystemPresetName;
   setSystemPreset: (name: SystemPresetName) => void;
+  /** 시맨틱 매핑 커스텀 프리셋 (localStorage) */
+  customSemanticPresets: CustomSemanticPreset[];
+  addCustomSemanticPreset: (preset: Omit<CustomSemanticPreset, 'id' | 'createdAt'>) => CustomSemanticPreset;
+  updateCustomSemanticPreset: (id: string, updates: Partial<Pick<CustomSemanticPreset, 'semanticOverrides' | 'displayName'>>) => void;
+  deleteCustomSemanticPreset: (id: string) => void;
+  applyCustomSemanticPreset: (preset: CustomSemanticPreset) => void;
+  /** 현재 적용된 팔레트 정의 (Overview 등에서 사용) */
+  paletteDefinition: PaletteDefinition;
 }
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);

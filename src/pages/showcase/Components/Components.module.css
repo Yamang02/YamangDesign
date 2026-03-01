@@ -1,0 +1,153 @@
+/* E07: Components 쇼케이스 + DetailPanel 상세 */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+  margin: 0;
+  text-align: left;
+}
+
+.infoButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: var(--ds-radius-md);
+  background: transparent;
+  color: var(--ds-color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.infoButton:hover {
+  color: var(--ds-color-action-primary-default);
+  background: var(--ds-color-action-primary-subtle);
+}
+
+/* ComponentDetail - DetailPanel 내부 */
+.componentDetail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.detailSectionTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-2) 0;
+}
+
+/* 토큰 그룹 (카테고리별) */
+.tokenGroup {
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.tokenGroup:last-child {
+  margin-bottom: 0;
+}
+
+.tokenGroupTitle {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 var(--ds-spacing-3) 0;
+  padding-bottom: var(--ds-spacing-1);
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+}
+
+.tokenTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tokenRow {
+  display: grid;
+  grid-template-columns: minmax(0, 140px) 1fr;
+  align-items: center;
+  gap: var(--ds-spacing-4);
+  padding: var(--ds-spacing-2) 0;
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+  font-size: var(--ds-text-sm);
+}
+
+.tokenRowLong {
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.tokenRowLong .tokenValueCell {
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tokenRow:last-child {
+  border-bottom: none;
+}
+
+.tokenMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+  min-width: 0;
+}
+
+.tokenName {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-primary);
+  overflow-wrap: break-word;
+}
+
+.tokenLabel {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+}
+
+.tokenValueCell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--ds-spacing-2);
+  min-width: 0;
+}
+
+.tokenSwatch {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--ds-color-border-subtle);
+  flex-shrink: 0;
+}
+
+.tokenValue {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-secondary);
+  text-align: right;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+.tokenRowLong .tokenValue {
+  text-align: left;
+  padding: var(--ds-spacing-2);
+  background: var(--ds-color-bg-muted);
+  border-radius: var(--ds-radius-sm);
+}

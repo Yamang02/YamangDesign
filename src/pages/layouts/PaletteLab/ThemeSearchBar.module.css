@@ -25,6 +25,13 @@
   border-radius: var(--ds-radius-md);
 }
 
+/* 브라우저 기본 search 취소 버튼 숨김 (커스텀 clearBtn 사용) */
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .input::placeholder {
   color: var(--lab-text-muted);
 }

@@ -64,19 +64,6 @@ export function getPaletteVariablesFromDefinition(
 }
 
 /**
- * Palette 프리셋 → CSS 변수 객체 (스케일 변수)
- * Color Scales 스와치 표시용
- */
-export function getPaletteVariables(paletteName: PaletteName): CSSVariables {
-  if (paletteName === 'custom') return {};
-
-  const preset = palettePresets[paletteName as Exclude<PaletteName, 'custom'>];
-  if (!preset) return {};
-
-  return getPaletteVariablesFromDefinition(preset);
-}
-
-/**
  * Palette + Style 조합 → 전체 테마 CSS 변수
  * Playground 매트릭스에서 Button/Card 시맨틱 변수 적용용
  */
