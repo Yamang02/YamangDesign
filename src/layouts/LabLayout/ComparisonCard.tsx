@@ -13,6 +13,8 @@ export interface ComparisonCardProps {
   children: React.ReactNode;
   onClick?: () => void;
   selected?: boolean;
+  /** 헤더 우측 상단 액션 (아이콘 버튼 등) */
+  headerAction?: React.ReactNode;
 }
 
 export function ComparisonCard({
@@ -22,6 +24,7 @@ export function ComparisonCard({
   children,
   onClick,
   selected,
+  headerAction,
 }: ComparisonCardProps) {
   return (
     <div
@@ -38,8 +41,19 @@ export function ComparisonCard({
       }}
     >
       <div className={styles.comparisonHeader}>
-        <h3 className={styles.comparisonTitle}>{title}</h3>
-        {subtitle && <p className={styles.comparisonSubtitle}>{subtitle}</p>}
+        <div className={styles.comparisonHeaderMain}>
+          <h3 className={styles.comparisonTitle}>{title}</h3>
+          {subtitle && <p className={styles.comparisonSubtitle}>{subtitle}</p>}
+        </div>
+        {headerAction && (
+          <div
+            className={styles.comparisonHeaderAction}
+            onClick={(e) => e.stopPropagation()}
+            role="presentation"
+          >
+            {headerAction}
+          </div>
+        )}
       </div>
       <div className={styles.comparisonContent}>{children}</div>
     </div>

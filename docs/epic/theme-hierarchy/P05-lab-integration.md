@@ -8,6 +8,7 @@ P04에서 구현한 컴포넌트를 통합합니다. **탭/검색/Custom**은 **
 
 ### 1. Lab 페이지 (섹션 구조)
 
+- [x] Overview: ColorUsageDiagram에 기본 팔레트+매핑 연결 (read-only)
 - [x] Default 섹션: `getThemesByCategory('default')` 테마 카드
 - [x] Natural 섹션: `getThemesByCategory('natural')` 또는 EmptyCategory
 - [x] Custom 카테고리: Lab 페이지에 미포함 (모달에서만)
@@ -21,10 +22,12 @@ P04에서 구현한 컴포넌트를 통합합니다. **탭/검색/Custom**은 **
 - [x] Natural 탭: getThemesByCategory('natural') 또는 EmptyCategory
 - [x] 검색 필터링, 결과 없음 처리
 
-### 3. DetailPanel 시맨틱 매핑
+### 3. 시맨틱 매핑 UI (2026-03-01 수정)
 
-- [x] Lab에서 Default/Natural 테마 클릭 시 Semantic Mapping 섹션 (read-only)
-- [ ] 모달에서 Custom 선택 시 인터랙티브 편집, Reset to Default
+- **DetailPanel 배치 제외**: 복잡도 감소를 위해 DetailPanel 내 Semantic Mapping 섹션은 구현하지 않음
+- **Lab Overview**: ColorUsageDiagram read-only 표시
+- **편집**: 별도 SemanticMappingModal. 각 sub-theme(Default/Natural) 카드 우측 상단 톱니/튜닝 아이콘 클릭 시 모달 오픈. ColorUsageDiagram interactive + ScaleSelectionModal, Reset to Default 버튼
+- [x] 기존 프리셋(Default/Natural) 시맨틱 매핑 편집: 별도 모달, 각 테마 카드 우측 상단 아이콘으로 접근
 
 ### 4. 저장 방식
 
@@ -57,16 +60,15 @@ P04에서 구현한 컴포넌트를 통합합니다. **탭/검색/Custom**은 **
 - **comparisonPresets.palettes**: palettePresets keys (현재 default 1개). themeRegistry default와 사실상 동일
 - Default 탭: `getThemesByCategory('default')` 사용. 검색은 `searchThemesByName(query)` (metadata.displayName, description)
 
-### 4. DetailPanel 시맨틱 매핑 표시 조건
+### 4. ColorUsageDiagram 배치 (2026-03-01 수정)
 
-- **표시 시점**: 팔레트(테마) 선택 시에만 Semantic Mapping 섹션 표시. neutral/system 프리셋 선택 시에는 기존 PaletteDetail/NeutralPresetDetail/SystemPresetDetail만 표시
-- **ColorUsageDiagram 위치**: DetailPanel 내부에 "Semantic Mapping" 섹션으로 ColorUsageDiagram(interactive=true) 배치. Overview의 ColorUsageDiagram은 read-only 프리뷰 유지
+- **Overview 전용**: ColorUsageDiagram은 Lab Overview 섹션에만 배치
+- **팔레트 연결**: 기본(Default) 테마 팔레트 + `defaultSemanticMappings[bgStrategy]`를 전달하여 시맨틱 매핑 read-only 표시
+- DetailPanel에는 PaletteDetail(기본 색상, 확장 스케일)만 표시
 
 ### 5. 시맨틱 매핑 편집 대상
 
-- **Default 탭 테마 편집**: default는 read-only. 편집 시 "Custom으로 복사" 후 runtime mapping 오버라이드 applied, 또는 편집용 클론 상태로 전환
-- **Custom 탭**: 사용자가 만든 palette + semanticMapping 오버라이드를 runtime 상태로 관리
-- **저장**: P05 범위는 런타임만. 새로고침 시 초기화
+- **Default/Natural 테마**: Lab 카드 아이콘 → SemanticMappingModal. runtime 오버라이드(새로고침 시 초기화)
 
 ### 6. ThemeTabNavigation 탭 비활성화
 
@@ -76,9 +78,9 @@ P04에서 구현한 컴포넌트를 통합합니다. **탭/검색/Custom**은 **
 
 ### 7. ColorUsageDiagram / ScaleSelectionModal props
 
-- ColorUsageDiagram interactive 모드: `palette`, `mapping`, `onMappingChange` 필수
-- mapping은 `getMergedMapping(baseMapping, customOverrides)` 결과. baseMapping = defaultSemanticMappings[bgStrategy], customOverrides = 편집 중인 오버라이드
-- ScaleSelectionModal: ColorUsageDiagram 내부 SemanticMappingTabs에서 이미 연동됨. DetailPanel에서 ColorUsageDiagram(interactive) 사용 시 palette/mapping/onMappingChange 전달 필요
+- **read-only 모드**: `palette`, `mapping` 전달 시 scale-step 표시 (neutral-300 등). Overview Lab 연결용
+- **interactive 모드**: `palette`, `mapping`, `onMappingChange` 필수. 모달 Custom 탭 등에서 사용 (향후)
+- ScaleSelectionModal: ColorUsageDiagram 내부 SemanticMappingTabs에서 연동됨
 
 ### 8. Reset to Default
 

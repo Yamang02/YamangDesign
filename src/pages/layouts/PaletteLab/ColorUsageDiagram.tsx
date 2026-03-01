@@ -1,7 +1,7 @@
 /**
  * Color Usage Diagram - 브랜드 컬러 용도 시각화
  * PaletteLab 상단에 표시되는 인터랙티브 다이어그램
- * P04: 인터랙티브 모드 - 스와치 클릭 시 ScaleSelectionModal
+ * P04: 인터랙티브 모드 - 스와치 클릭 시 ScaleSelectionModal 또는 onTokenSelect (인라인)
  */
 import { useState } from 'react';
 import { resolveColorValue } from '../../../palettes/mapping/resolve';
@@ -146,6 +146,7 @@ function SemanticMappingTabs({
   scales,
   bgStrategy,
   onMappingChange,
+  onTokenSelect,
 }: {
   mappings: Array<{ category: string; items: SemanticToken[] }>;
   interactive?: boolean;
@@ -153,14 +154,22 @@ function SemanticMappingTabs({
   scales?: GeneratedScales;
   bgStrategy?: BgStrategy;
   onMappingChange?: (path: SemanticTokenPath, value: string | import('../../../palettes/types').ScaleReference) => void;
+  /** 인라인 모드: 스와치 클릭 시 모달 대신 콜백 호출 */
+  onTokenSelect?: (path: SemanticTokenPath) => void;
 }) {
   const [activeCategory, setActiveCategory] = useState(mappings[0]?.category ?? '');
   const [modalToken, setModalToken] = useState<SemanticTokenPath | null>(null);
   const activeMapping = mappings.find((m) => m.category === activeCategory);
+  const useInline = !!onTokenSelect;
 
   const handleSwatchClick = (item: SemanticToken) => {
     const path = TOKEN_TO_PATH[item.token];
-    if (!path || !interactive || !mapping || !onMappingChange) return;
+    if (!path || !interactive) return;
+    if (useInline && onTokenSelect) {
+      onTokenSelect(path);
+      return;
+    }
+    if (!mapping || !onMappingChange) return;
     setModalToken(path);
   };
 
@@ -203,7 +212,10 @@ function SemanticMappingTabs({
             <div className={styles.tokenList}>
               {activeMapping.items.map((item) => {
                 const path = TOKEN_TO_PATH[item.token];
-                const isEditable = !!path && interactive && !!mapping && !!scales && !!onMappingChange;
+                const isEditable =
+                  !!path &&
+                  interactive &&
+                  (useInline ? !!onTokenSelect : !!(mapping && scales && onMappingChange));
                 const displayColor =
                   mapping && scales && path
                     ? resolveColorValue(getValueByPath(mapping, path), scales)
@@ -258,6 +270,7 @@ function SemanticMappingTabs({
         </div>
       </div>
       {interactive &&
+        !useInline &&
         modalToken &&
         mapping &&
         scales &&
@@ -281,37 +294,100 @@ function SemanticMappingTabs({
   );
 }
 
-function ComponentDiagram() {
+const COMPONENT_TOKENS: Array<{
+  path: SemanticTokenPath;
+  type: 'bg' | 'text' | 'border' | 'button';
+}> = [
+  { path: 'bg.base', type: 'bg' },
+  { path: 'bg.surface', type: 'bg' },
+  { path: 'bg.muted', type: 'bg' },
+  { path: 'text.primary', type: 'text' },
+  { path: 'text.secondary', type: 'text' },
+  { path: 'text.muted', type: 'text' },
+  { path: 'border.default', type: 'border' },
+  { path: 'border.subtle', type: 'border' },
+  { path: 'text.onAction', type: 'button' },
+];
+
+function ComponentDiagram({
+  mapping,
+  scales,
+}: {
+  mapping?: SemanticMapping;
+  scales?: GeneratedScales;
+}) {
   return (
     <div className={styles.componentDiagram}>
-      <div className={styles.diagramTitle}>컴포넌트 예시</div>
-      <div className={styles.mockUI}>
-        {/* Mock Card */}
-        <div className={styles.mockCard}>
-          <div className={styles.mockCardHeader}>
-            <span className={styles.mockTitle}>Card Title</span>
-            <span className={styles.mockBadge}>Accent</span>
-          </div>
-          <p className={styles.mockBody}>
-            본문 텍스트는 <span className={styles.colorTag} data-color="neutral">neutral</span>을 사용합니다.
-          </p>
-          <div className={styles.mockActions}>
-            <button className={styles.mockBtnPrimary}>
-              <span className={styles.colorTag} data-color="primary">Primary</span>
-            </button>
-            <button className={styles.mockBtnSecondary}>
-              <span className={styles.colorTag} data-color="secondary">Secondary</span>
-            </button>
-          </div>
-        </div>
-        {/* Mock Input */}
-        <div className={styles.mockInputGroup}>
-          <label className={styles.mockLabel}>Input Label</label>
-          <div className={styles.mockInput}>
-            <span className={styles.mockPlaceholder}>Placeholder text</span>
-          </div>
-          <span className={styles.mockHelper}>Helper text uses muted color</span>
-        </div>
+      <div className={styles.diagramTitle}>토큰 예시</div>
+      <div className={styles.tokenExampleList}>
+        {COMPONENT_TOKENS.map(({ path, type }) => {
+          const color =
+            mapping && scales
+              ? resolveColorValue(getValueByPath(mapping, path), scales)
+              : `var(--ds-color-${path.replace(/\./g, '-')})`;
+          if (type === 'bg') {
+            return (
+              <div key={path} className={styles.tokenExampleRow}>
+                <div className={styles.tokenExampleSample}>
+                  <div
+                    className={styles.tokenExampleSwatch}
+                    style={{ backgroundColor: color }}
+                  />
+                </div>
+                <span className={styles.tokenExampleLabel}>{path}</span>
+              </div>
+            );
+          }
+          if (type === 'text') {
+            return (
+              <div key={path} className={styles.tokenExampleRow}>
+                <div className={styles.tokenExampleSample}>
+                  <span
+                    className={styles.tokenExampleText}
+                    style={{ color }}
+                  >
+                    Aa
+                  </span>
+                </div>
+                <span className={styles.tokenExampleLabel}>{path}</span>
+              </div>
+            );
+          }
+          if (type === 'border') {
+            return (
+              <div key={path} className={styles.tokenExampleRow}>
+                <div className={styles.tokenExampleSample}>
+                  <div
+                    className={styles.tokenExampleBorder}
+                    style={{ borderColor: color }}
+                  />
+                </div>
+                <span className={styles.tokenExampleLabel}>{path}</span>
+              </div>
+            );
+          }
+          if (type === 'button') {
+            const btnBg =
+              scales?.primary?.[500] ?? 'var(--ds-color-primary-500)';
+            return (
+              <div key={path} className={styles.tokenExampleRow}>
+                <div className={styles.tokenExampleSample}>
+                  <div
+                    className={styles.tokenExampleBtn}
+                    style={{
+                      backgroundColor: btnBg,
+                      color,
+                    }}
+                  >
+                    Btn
+                  </div>
+                </div>
+                <span className={styles.tokenExampleLabel}>{path}</span>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
     </div>
   );
@@ -326,6 +402,12 @@ export interface ColorUsageDiagramProps {
   mapping?: SemanticMapping;
   /** 매핑 변경 콜백 */
   onMappingChange?: (path: SemanticTokenPath, value: string | import('../../../palettes/types').ScaleReference) => void;
+  /** 브랜드 컬러 역할 섹션 숨김 (모달 등에서 mapping+component만 표시) */
+  hideColorRoles?: boolean;
+  /** 인라인 모드: 스와치 클릭 시 onTokenSelect 호출, ScaleSelectionModal 미사용 */
+  onTokenSelect?: (path: SemanticTokenPath) => void;
+  /** mapping + component를 가로 배치 (모달용) */
+  horizontalLayout?: boolean;
 }
 
 export function ColorUsageDiagram({
@@ -333,13 +415,35 @@ export function ColorUsageDiagram({
   palette,
   mapping,
   onMappingChange,
+  hideColorRoles = false,
+  onTokenSelect,
+  horizontalLayout = false,
 }: ColorUsageDiagramProps = {}) {
   const scales = palette?.scales;
   const bgStrategy = palette?.bgStrategy;
 
+  const mainContent = (
+    <>
+      {/* Semantic Mapping Section */}
+      <SemanticMappingTabs
+        mappings={semanticMappings}
+        interactive={interactive}
+        mapping={mapping}
+        scales={scales}
+        bgStrategy={bgStrategy}
+        onMappingChange={onMappingChange}
+        onTokenSelect={onTokenSelect}
+      />
+
+      {/* Component Diagram */}
+      <ComponentDiagram mapping={mapping} scales={scales} />
+    </>
+  );
+
   return (
-    <div className={styles.diagram}>
+    <div className={styles.diagram} data-layout={horizontalLayout ? 'horizontal' : undefined}>
       {/* Color Roles Section */}
+      {!hideColorRoles && (
       <div className={styles.section}>
         <h4 className={styles.sectionTitle}>브랜드 컬러 역할</h4>
         <div className={styles.roleGrid}>
@@ -366,19 +470,13 @@ export function ColorUsageDiagram({
           ))}
         </div>
       </div>
+      )}
 
-      {/* Semantic Mapping Section */}
-      <SemanticMappingTabs
-        mappings={semanticMappings}
-        interactive={interactive}
-        mapping={mapping}
-        scales={scales}
-        bgStrategy={bgStrategy}
-        onMappingChange={onMappingChange}
-      />
-
-      {/* Component Diagram */}
-      <ComponentDiagram />
+      {horizontalLayout ? (
+        <div className={styles.diagramRow}>{mainContent}</div>
+      ) : (
+        mainContent
+      )}
     </div>
   );
 }

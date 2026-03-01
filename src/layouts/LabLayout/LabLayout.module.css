@@ -195,9 +195,21 @@ section[id] {
 }
 
 .comparisonHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-spacing-2);
   margin-bottom: var(--ds-spacing-4);
   padding-bottom: var(--ds-spacing-3);
   border-bottom: 1px solid var(--ds-color-border-subtle);
+}
+
+.comparisonHeaderMain {
+  min-width: 0;
+}
+
+.comparisonHeaderAction {
+  flex-shrink: 0;
 }
 
 .comparisonTitle {

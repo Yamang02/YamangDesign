@@ -5,6 +5,24 @@
   gap: var(--ds-spacing-6);
 }
 
+.diagramRow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--ds-spacing-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.diagramRow .section:first-of-type {
+  flex: 1;
+  min-width: 0;
+}
+
+.diagramRow .componentDiagram {
+  flex: 0 0 200px;
+  min-width: 160px;
+}
+
 .section {
   display: flex;
   flex-direction: column;
@@ -195,123 +213,76 @@
   margin-left: auto;
 }
 
-/* Component Diagram */
+/* Component Diagram - 모달용 간단 토큰 예시 */
 .componentDiagram {
-  padding: var(--ds-spacing-4);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  padding: var(--ds-spacing-3);
+  background-color: var(--lab-bg-surface, var(--ds-color-bg-surface));
+  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
   border-radius: var(--ds-radius-md);
 }
 
 .diagramTitle {
-  font-size: var(--ds-text-xs);
+  font-size: 10px;
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: var(--ds-spacing-4);
+  margin: 0 0 var(--ds-spacing-2) 0;
 }
 
-.mockUI {
-  display: flex;
-  gap: var(--ds-spacing-4);
-  flex-wrap: wrap;
-}
-
-.mockCard {
-  flex: 1;
-  min-width: 200px;
-  padding: var(--ds-spacing-4);
-  background-color: var(--lab-bg-surface);
-  border: 1px solid var(--lab-border-default);
-  border-radius: var(--ds-radius-md);
-}
-
-.mockCardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--ds-spacing-3);
-}
-
-.mockTitle {
-  font-size: var(--ds-text-md);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
-}
-
-.mockBadge {
-  font-size: 10px;
-  padding: 2px 8px;
-  background-color: var(--ds-color-accent-500);
-  color: white;
-  border-radius: var(--ds-radius-sm);
-}
-
-.mockBody {
-  font-size: var(--ds-text-sm);
-  color: var(--lab-text-secondary);
-  margin: 0 0 var(--ds-spacing-3) 0;
-  line-height: 1.5;
-}
-
-.mockActions {
-  display: flex;
-  gap: var(--ds-spacing-2);
-}
-
-.mockBtnPrimary {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  background-color: var(--ds-color-primary-500);
-  color: white;
-  border: none;
-  border-radius: var(--ds-radius-sm);
-  font-size: var(--ds-text-xs);
-  cursor: pointer;
-}
-
-.mockBtnSecondary {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  background-color: var(--ds-color-secondary-500);
-  color: white;
-  border: none;
-  border-radius: var(--ds-radius-sm);
-  font-size: var(--ds-text-xs);
-  cursor: pointer;
-}
-
-.colorTag {
-  font-size: 10px;
-  font-weight: var(--ds-font-weight-medium);
-}
-
-.mockInputGroup {
-  flex: 1;
-  min-width: 180px;
+.tokenExampleList {
   display: flex;
   flex-direction: column;
   gap: var(--ds-spacing-2);
 }
 
-.mockLabel {
+.tokenExampleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+}
+
+.tokenExampleSample {
+  flex: 0 0 36px;
+  min-width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tokenExampleSwatch {
+  width: 24px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+}
+
+.tokenExampleText {
   font-size: var(--ds-text-xs);
   font-weight: var(--ds-font-weight-medium);
-  color: var(--lab-text-primary);
+  line-height: 1;
 }
 
-.mockInput {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-default);
-  border-radius: var(--ds-radius-sm);
+.tokenExampleBorder {
+  width: 28px;
+  height: 0;
+  border-top: 2px solid;
 }
 
-.mockPlaceholder {
-  font-size: var(--ds-text-sm);
-  color: var(--lab-text-muted);
-}
-
-.mockHelper {
+.tokenExampleBtn {
+  padding: 2px 8px;
   font-size: 10px;
-  color: var(--lab-text-muted);
+  font-weight: var(--ds-font-weight-medium);
+  border: none;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.tokenExampleLabel {
+  font-size: 10px;
+  color: var(--ui-text-primary, #1a1a1a);
+  font-family: ui-monospace, monospace;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

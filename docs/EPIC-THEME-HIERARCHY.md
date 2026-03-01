@@ -485,9 +485,8 @@ export function createPalette(definition: PaletteDefinition): ExpandedPalette {
 - [ ] 검색 기능 통합
   - 검색어 입력 시 필터링
   - 결과 없는 탭 비활성화
-- [ ] 시맨틱 매핑 편집 UI
-  - DetailPanel에 Semantic Mapping 섹션 추가
-  - ColorUsageDiagram를 인터랙티브 모드로 통합
+- [x] Lab Overview 연결: ColorUsageDiagram에 기본 팔레트+매핑 전달 (read-only)
+- [x] 시맨틱 매핑 편집: SemanticMappingModal, 테마 카드 우측 상단 아이콘으로 접근
   - ScaleSelectionModal 연동
   - 추천/경고 아이콘 및 툴팁 표시
   - 실시간 프리뷰

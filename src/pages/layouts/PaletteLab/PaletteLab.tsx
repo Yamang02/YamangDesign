@@ -20,15 +20,19 @@ import {
 } from '../../../constants';
 import { createPalette } from '../../../palettes';
 import { getThemesByCategory } from '../../../palettes/presets/registry';
-import { getMergedMapping } from '../../../palettes/mapping/resolve';
 import { defaultSemanticMappings } from '../../../palettes/strategies/default-mappings';
+import { getMergedMapping } from '../../../palettes/mapping/resolve';
 import { neutralPresets } from '../../../tokens/primitives/neutral-presets';
 import { systemColorPresets } from '../../../tokens/primitives/system-colors';
 import type { SystemPresetName } from '../../../@types/theme';
 import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
-import type { PaletteDefinition } from '../../../palettes/types';
+import type { PaletteDefinition, SemanticMapping } from '../../../palettes/types';
 import { ColorUsageDiagram } from './ColorUsageDiagram';
 import { EmptyCategory } from './EmptyCategory';
+import { PaletteCategoryTabs, type BrandColorTabId } from './PaletteCategoryTabs';
+import { SemanticMappingModal } from './SemanticMappingModal';
+import { Icon } from '../../../components';
+import { Tooltip } from '../../../components';
 import styles from './PaletteLab.module.css';
 
 const colorKeys = ['primary', 'secondary', 'accent', 'sub', 'neutral'] as const;
@@ -118,8 +122,7 @@ type DetailSelection =
 
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
-  { id: 'default', label: 'Default' },
-  { id: 'natural', label: 'Natural' },
+  { id: 'brand-colors', label: 'Brand Colors' },
   { id: 'neutral-presets', label: sectionTitles.neutralPresets },
   { id: 'system-colors', label: sectionTitles.systemColors },
 ];
@@ -157,24 +160,6 @@ function NeutralPresetDetail({ presetName }: { presetName: NeutralPresetName }) 
             ))}
           </div>
         </div>
-      </div>
-      <h4 className={styles.detailSectionTitle}>색상 값</h4>
-      <div className={styles.colorSwatches}>
-        {scaleSteps.map((step) => {
-          const color = scale[step as keyof typeof scale];
-          if (!color) return null;
-          return (
-            <div key={step} className={styles.colorRow}>
-              <span className={styles.colorLabel}>{step}</span>
-              <span
-                className={styles.colorSample}
-                style={{ backgroundColor: color }}
-                title={color}
-              />
-              <code className={styles.colorHex}>{color}</code>
-            </div>
-          );
-        })}
       </div>
     </div>
   );
@@ -299,10 +284,12 @@ function SystemColorCard({
 function ThemeCard({
   def,
   onClick,
+  onMappingClick,
   selected,
 }: {
   def: PaletteDefinition;
   onClick: () => void;
+  onMappingClick: (e: React.MouseEvent) => void;
   selected: boolean;
 }) {
   const expanded = createPalette(def);
@@ -316,6 +303,18 @@ function ThemeCard({
       styleVars={styleVars}
       onClick={onClick}
       selected={selected}
+      headerAction={
+        <Tooltip content="시맨틱 매핑 편집" portal position="top">
+          <button
+            type="button"
+            className={styles.mappingIconBtn}
+            onClick={onMappingClick}
+            aria-label="시맨틱 매핑 편집"
+          >
+            <Icon name="tune" size="sm" />
+          </button>
+        </Tooltip>
+      }
     >
       {colorKeys.map((colorKey) => (
         <div key={colorKey} className={styles.colorColumn}>
@@ -343,6 +342,9 @@ function ThemeCard({
 
 export function PaletteLab() {
   const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
+  const [mappingModalDef, setMappingModalDef] = useState<PaletteDefinition | null>(null);
+  const [mappingOverrides, setMappingOverrides] = useState<Record<string, Partial<SemanticMapping>>>({});
+  const [activeBrandTab, setActiveBrandTab] = useState<BrandColorTabId>('default');
 
   const defaultThemes = useMemo(
     () => getThemesByCategory('default'),
@@ -352,10 +354,27 @@ export function PaletteLab() {
     () => getThemesByCategory('natural'),
     []
   );
+  const overviewPalette = useMemo(() => {
+    const def = defaultThemes[0];
+    if (!def) return undefined;
+    const expanded = createPalette(def);
+    const mapping = getMergedMapping(
+      defaultSemanticMappings[def.bgStrategy],
+      def.semanticMapping
+    );
+    return { expanded, mapping };
+  }, [defaultThemes]);
 
   const handlePaletteSelect = (def: PaletteDefinition) => {
     setDetailSelection({ type: 'palette', definition: def });
   };
+
+  const handleMappingIconClick = (def: PaletteDefinition) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMappingModalDef(def);
+  };
+
+  const themeId = (def: PaletteDefinition) => def.metadata?.id ?? def.name;
 
   const handleNeutralSelect = (name: NeutralPresetName) => {
     setDetailSelection({ type: 'neutral', name });
@@ -373,64 +392,66 @@ export function PaletteLab() {
     : '';
   const detailOpen = !!detailSelection;
 
-  const showSemanticMapping =
-    detailSelection?.type === 'palette';
-  const editingPalette = showSemanticMapping
-    ? createPalette(detailSelection.definition)
-    : null;
-  const editingMapping = showSemanticMapping && editingPalette
-    ? getMergedMapping(
-        defaultSemanticMappings[detailSelection.definition.bgStrategy],
-        detailSelection.definition.semanticMapping
-      )
-    : null;
-
   return (
     <>
       <LabLayout title="Palette Lab" tocItems={tocItems}>
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
-            <ColorUsageDiagram />
+            <ColorUsageDiagram
+              palette={overviewPalette?.expanded}
+              mapping={overviewPalette?.mapping}
+            />
           </LabOverview>
         </LabSection>
 
-        <LabSection title="Default" id="default">
-          <div className={styles.comparisonGrid}>
-            {defaultThemes.length === 0 ? (
-              <EmptyCategory message="등록된 Default 테마가 없습니다" />
-            ) : (
-              defaultThemes.map((def) => (
-                <ThemeCard
-                  key={def.metadata?.id ?? def.name}
-                  def={def}
-                  onClick={() => handlePaletteSelect(def)}
-                  selected={
-                    detailSelection?.type === 'palette' &&
-                    detailSelection.definition.metadata?.id === def.metadata?.id
-                  }
-                />
-              ))
+        <LabSection title="Brand Colors" id="brand-colors">
+          <div className={styles.brandColorsBody}>
+            <PaletteCategoryTabs
+              activeTab={activeBrandTab}
+              onTabChange={setActiveBrandTab}
+            />
+            <div className={styles.categoryContent}>
+            {activeBrandTab === 'default' && (
+              <div className={styles.comparisonGrid}>
+                {defaultThemes.length === 0 ? (
+                  <EmptyCategory message="등록된 Default 테마가 없습니다" />
+                ) : (
+                  defaultThemes.map((def) => (
+                    <ThemeCard
+                      key={def.metadata?.id ?? def.name}
+                      def={def}
+                      onClick={() => handlePaletteSelect(def)}
+                      onMappingClick={handleMappingIconClick(def)}
+                      selected={
+                        detailSelection?.type === 'palette' &&
+                        detailSelection.definition.metadata?.id === def.metadata?.id
+                      }
+                    />
+                  ))
+                )}
+              </div>
             )}
-          </div>
-        </LabSection>
-
-        <LabSection title="Natural" id="natural">
-          <div className={styles.comparisonGrid}>
-            {naturalThemes.length === 0 ? (
-              <EmptyCategory />
-            ) : (
-              naturalThemes.map((def) => (
-                <ThemeCard
-                  key={def.metadata?.id ?? def.name}
-                  def={def}
-                  onClick={() => handlePaletteSelect(def)}
-                  selected={
-                    detailSelection?.type === 'palette' &&
-                    detailSelection.definition.metadata?.id === def.metadata?.id
-                  }
-                />
-              ))
+            {activeBrandTab === 'natural' && (
+              <div className={styles.comparisonGrid}>
+                {naturalThemes.length === 0 ? (
+                  <EmptyCategory />
+                ) : (
+                  naturalThemes.map((def) => (
+                    <ThemeCard
+                      key={def.metadata?.id ?? def.name}
+                      def={def}
+                      onClick={() => handlePaletteSelect(def)}
+                      onMappingClick={handleMappingIconClick(def)}
+                      selected={
+                        detailSelection?.type === 'palette' &&
+                        detailSelection.definition.metadata?.id === def.metadata?.id
+                      }
+                    />
+                  ))
+                )}
+              </div>
             )}
+            </div>
           </div>
         </LabSection>
 
@@ -467,27 +488,32 @@ export function PaletteLab() {
         </LabSection>
       </LabLayout>
 
+      {mappingModalDef && (
+        <SemanticMappingModal
+          open={!!mappingModalDef}
+          onClose={() => setMappingModalDef(null)}
+          definition={mappingModalDef}
+          overrides={mappingModalDef ? mappingOverrides[themeId(mappingModalDef)] : undefined}
+          onOverridesChange={(overrides) => {
+            if (!mappingModalDef) return;
+            const id = themeId(mappingModalDef);
+            setMappingOverrides((prev) => {
+              const next = { ...prev };
+              if (overrides) next[id] = overrides;
+              else delete next[id];
+              return next;
+            });
+          }}
+        />
+      )}
+
       <DetailPanel
         open={detailOpen}
         onClose={() => setDetailSelection(null)}
         title={detailTitle}
       >
         {detailSelection?.type === 'palette' && (
-          <>
-            <PaletteDetail definition={detailSelection.definition} />
-            {editingPalette && editingMapping && (
-              <div className={styles.semanticSection}>
-                <h4 className={styles.detailSectionTitle}>
-                  {sectionTitles.semanticMapping}
-                </h4>
-                <ColorUsageDiagram
-                  interactive={false}
-                  palette={editingPalette}
-                  mapping={editingMapping}
-                />
-              </div>
-            )}
-          </>
+          <PaletteDetail definition={detailSelection.definition} />
         )}
         {detailSelection?.type === 'neutral' && (
           <NeutralPresetDetail presetName={detailSelection.name} />

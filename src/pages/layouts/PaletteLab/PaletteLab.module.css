@@ -6,13 +6,33 @@
   border-top: 1px solid var(--ds-color-border-subtle);
 }
 
+.brandColorsBody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.brandColorsBody .categoryContent {
+  padding-top: var(--ds-spacing-4);
+}
+
 .comparisonGrid {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ds-spacing-6);
 }
 
+/* 카드가 내부 콘텐츠 너비에 맞춰 공간만 차지, 여러 카드가 같은 행에 배치 */
+.comparisonGrid > * {
+  flex: 0 1 auto;
+  min-width: fit-content;
+}
+
 .colorColumn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ds-spacing-2);
   margin-bottom: var(--ds-spacing-3);
 }
 
@@ -24,7 +44,8 @@
   font-size: var(--ds-text-xs);
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-color-text-secondary);
-  margin: 0 0 var(--ds-spacing-2) 0;
+  margin: 0;
+  min-width: 64px;
   text-transform: capitalize;
 }
 
@@ -131,4 +152,22 @@
   width: 20px;
   font-size: 10px;
   color: var(--ds-color-text-muted);
+}
+
+/* P05: 시맨틱 매핑 아이콘 (테마 카드 우측 상단) */
+.mappingIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-spacing-2);
+  background: none;
+  border: none;
+  color: var(--ds-color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.mappingIconBtn:hover {
+  color: var(--ds-color-text-primary);
+  background: var(--ds-color-bg-muted);
 }
