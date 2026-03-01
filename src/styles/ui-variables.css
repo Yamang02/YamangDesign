@@ -55,7 +55,7 @@
   --ds-color-text-primary: var(--ui-text-primary);
   --ds-color-text-secondary: var(--ui-text-secondary);
   --ds-color-text-muted: var(--ui-text-muted);
-  --ds-color-text-onAction: var(--ui-text-primary);
+  --ds-color-text-on-action: var(--ui-text-primary);
 
   --ds-color-border-default: var(--ui-border-default);
   --ds-color-border-subtle: var(--ui-border-subtle);
@@ -120,7 +120,7 @@
   --ds-color-text-primary: var(--ui-text-primary);
   --ds-color-text-secondary: var(--ui-text-secondary);
   --ds-color-text-muted: var(--ui-text-muted);
-  --ds-color-text-onAction: #ffffff;
+  --ds-color-text-on-action: #ffffff;
 
   --ds-color-border-default: var(--ui-border-default);
   --ds-color-border-subtle: var(--ui-border-subtle);

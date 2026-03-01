@@ -7,7 +7,7 @@
   overflow: hidden;
   font-family: var(--ds-font-sans);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
 }
 
 /* Sizes */

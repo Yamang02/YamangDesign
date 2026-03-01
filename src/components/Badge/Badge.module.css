@@ -22,17 +22,17 @@
 /* Variants */
 .badge[data-variant='primary'] {
   background-color: var(--ds-color-action-primary-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
 }
 
 .badge[data-variant='secondary'] {
   background-color: var(--ds-color-action-secondary-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
 }
 
 .badge[data-variant='accent'] {
   background-color: var(--ds-color-action-accent-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
 }
 
 .badge[data-variant='outline'] {

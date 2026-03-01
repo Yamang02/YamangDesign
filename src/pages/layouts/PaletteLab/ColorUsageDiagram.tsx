@@ -22,7 +22,7 @@ const TOKEN_TO_PATH: Record<string, SemanticTokenPath> = {
   '--ds-color-text-primary': 'text.primary',
   '--ds-color-text-secondary': 'text.secondary',
   '--ds-color-text-muted': 'text.muted',
-  '--ds-color-text-onAction': 'text.onAction',
+  '--ds-color-text-on-action': 'text.onAction',
   '--ds-color-border-default': 'border.default',
   '--ds-color-border-subtle': 'border.subtle',
   '--ds-color-border-accent': 'border.accent',
@@ -101,7 +101,7 @@ const semanticMappings: Array<{ category: string; items: SemanticToken[] }> = [
       { token: '--ds-color-text-secondary', note: '부제목', source: 'neutral-700' },
       { token: '--ds-color-text-muted', note: '플레이스홀더, 힌트', source: 'neutral-500' },
       { token: '--ds-color-text-inverse', note: '어두운 배경 위', source: null },
-      { token: '--ds-color-text-onAction', note: '버튼 위 텍스트', source: null },
+      { token: '--ds-color-text-on-action', note: '버튼 위 텍스트', source: null },
     ],
   },
   {

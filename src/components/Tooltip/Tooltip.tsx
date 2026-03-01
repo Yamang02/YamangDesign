@@ -29,36 +29,50 @@ export function Tooltip({
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLSpanElement | null>(null);
+  const tooltipRef = useRef<HTMLSpanElement | null>(null);
 
   const updatePosition = useCallback(() => {
-    const el = triggerRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
+    const triggerEl = triggerRef.current;
+    const tooltipEl = tooltipRef.current;
+    if (!triggerEl) return;
+
+    const triggerRect = triggerEl.getBoundingClientRect();
+    const tooltipRect = tooltipEl?.getBoundingClientRect();
+    const tooltipWidth = tooltipRect?.width ?? 0;
+    const tooltipHeight = tooltipRect?.height ?? 0;
     const gap = 4;
+
     let top = 0;
-    let left = rect.left + rect.width / 2;
+    let left = 0;
+
     switch (position) {
       case 'top':
-        top = rect.top - gap;
+        top = triggerRect.top - gap - tooltipHeight;
+        left = triggerRect.left + triggerRect.width / 2 - tooltipWidth / 2;
         break;
       case 'bottom':
-        top = rect.bottom + gap;
+        top = triggerRect.bottom + gap;
+        left = triggerRect.left + triggerRect.width / 2 - tooltipWidth / 2;
         break;
       case 'left':
-        top = rect.top + rect.height / 2;
-        left = rect.left - gap;
+        top = triggerRect.top + triggerRect.height / 2 - tooltipHeight / 2;
+        left = triggerRect.left - gap - tooltipWidth;
         break;
       case 'right':
-        top = rect.top + rect.height / 2;
-        left = rect.right + gap;
+        top = triggerRect.top + triggerRect.height / 2 - tooltipHeight / 2;
+        left = triggerRect.right + gap;
         break;
     }
-    requestAnimationFrame(() => setCoords({ top, left }));
+
+    setCoords({ top, left });
   }, [position]);
 
   useLayoutEffect(() => {
     if (visible && portal) {
-      requestAnimationFrame(updatePosition);
+      // 첫 렌더링 후 툴팁 크기가 측정된 후 위치 계산
+      requestAnimationFrame(() => {
+        requestAnimationFrame(updatePosition);
+      });
     }
   }, [visible, portal, updatePosition]);
 
@@ -94,22 +108,16 @@ export function Tooltip({
 
   const tooltipEl = visible && (
     <span
-      className={`${styles.tooltip} ${styles[position]} ${portal ? styles.portal : ''}`}
+      ref={tooltipRef}
+      className={`${styles.tooltip} ${portal ? styles.portal : styles[position]}`}
       style={{
         maxWidth,
-        ...(portal && coords
+        ...(portal
           ? {
               position: 'fixed' as const,
-              top: coords.top,
-              left: coords.left,
-              transform:
-                position === 'top'
-                  ? 'translate(-50%, -100%)'
-                  : position === 'bottom'
-                    ? 'translate(-50%, 0)'
-                    : position === 'left'
-                      ? 'translate(-100%, -50%)'
-                      : 'translate(0, -50%)',
+              top: coords?.top ?? -9999,
+              left: coords?.left ?? -9999,
+              visibility: coords ? 'visible' : 'hidden',
             }
           : {}),
       }}

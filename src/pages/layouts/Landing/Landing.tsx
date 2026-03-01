@@ -37,7 +37,7 @@ export function Landing() {
               <Card.Body>
                 <div className={styles.featureCard}>
                   <Avatar size="lg" variant="primary" className={styles.featureIcon}>
-                    <Icon name={feature.icon} size="lg" color="var(--ds-color-text-onAction)" />
+                    <Icon name={feature.icon} size="lg" color="var(--ds-color-text-on-action)" />
                   </Avatar>
                   <h3 className={styles.featureTitle}>{feature.title}</h3>
                   <p className={styles.featureDescription}>{feature.description}</p>

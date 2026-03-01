@@ -39,6 +39,7 @@ import { ColorUsageDiagram } from './ColorUsageDiagram';
 import { EmptyCategory } from './EmptyCategory';
 import { PaletteCategoryTabs, type BrandColorTabId } from './PaletteCategoryTabs';
 import { SemanticMappingModal } from './SemanticMappingModal';
+import { ScaleGuide } from './ScaleGuide';
 import { Icon } from '../../../components';
 import { Tooltip } from '../../../components';
 import styles from './PaletteLab.module.css';
@@ -553,6 +554,7 @@ export function PaletteLab() {
               mapping={overviewColorPalette?.mapping}
               hideTokenExample
             />
+            <ScaleGuide primaryScale={overviewColorPalette?.expanded?.scales.primary} />
           </LabOverview>
         </LabSection>
 
@@ -606,7 +608,7 @@ export function PaletteLab() {
             {activeBrandTab === 'custom' && (
               <div className={styles.comparisonGrid}>
                 {customSemanticPresets.length === 0 ? (
-                  <EmptyCategory message="저장된 커스텀 프리셋이 없습니다. Default 또는 Natural 탭에서 시맨틱 매핑을 편집한 뒤 적용해 보세요." />
+                  <EmptyCategory message="저장된 커스텀 프리셋이 없습니다. 다른 탭에서 시맨틱 매핑을 편집한 뒤 적용해 보세요." />
                 ) : (
                   customSemanticPresets.map((preset) => (
                     <CustomPresetCard

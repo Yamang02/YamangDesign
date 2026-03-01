@@ -1,52 +1,62 @@
 .wrapper {
   position: relative;
   display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
 }
 
+/* 테마(미니멀/브루탈리즘/뉴모피즘)와 무관하게 동일한 툴팁 - 깔끔한 오버레이 */
 .tooltip {
   position: absolute;
   z-index: var(--ds-z-tooltip);
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  font-size: var(--ds-text-body-sm-size);
-  line-height: var(--ds-text-body-sm-leading);
-  font-weight: var(--ds-text-body-sm-weight);
-  color: var(--ds-color-text-inverse);
+  padding: 6px 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: #ffffff;
   background-color: rgba(0, 0, 0, 0.85);
-  border-radius: var(--ds-radius-sm);
+  border-radius: 6px;
   pointer-events: none;
   white-space: normal;
-  box-shadow: var(--ds-shadow-md);
+  box-shadow: none;
 }
 
 /* 포털 렌더링 시 모달 위에 표시 (overflow에 가려지지 않음) */
+/* portal 모드에서는 JS로 직접 위치 계산하므로 position 관련 CSS 초기화 */
 .tooltip.portal {
   z-index: 1200;
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  margin: 0;
+  transform: none;
 }
 
 .tooltip.top {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-4px);
-  margin-bottom: var(--ds-spacing-1);
+  margin-bottom: 4px;
 }
 
 .tooltip.bottom {
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(4px);
-  margin-top: var(--ds-spacing-1);
+  margin-top: 4px;
 }
 
 .tooltip.left {
   right: 100%;
   top: 50%;
   transform: translateY(-50%) translateX(-4px);
-  margin-right: var(--ds-spacing-1);
+  margin-right: 4px;
 }
 
 .tooltip.right {
   left: 100%;
   top: 50%;
   transform: translateY(-50%) translateX(4px);
-  margin-left: var(--ds-spacing-1);
+  margin-left: 4px;
 }

@@ -411,16 +411,16 @@ export function Components() {
           <p style={labelStyle}>With Icon</p>
           <div style={{ ...rowStyle, alignItems: 'center' }}>
             <Avatar size="lg" variant="primary">
-              <Icon name="speed" size="lg" color="var(--ds-color-text-onAction)" />
+              <Icon name="speed" size="lg" color="var(--ds-color-text-on-action)" />
             </Avatar>
             <Avatar size="lg" variant="secondary">
-              <Icon name="palette" size="lg" color="var(--ds-color-text-onAction)" />
+              <Icon name="palette" size="lg" color="var(--ds-color-text-on-action)" />
             </Avatar>
             <Avatar size="lg" variant="accent">
-              <Icon name="code" size="lg" color="var(--ds-color-text-onAction)" />
+              <Icon name="code" size="lg" color="var(--ds-color-text-on-action)" />
             </Avatar>
             <Avatar size="md" variant="primary">
-              <Icon name="star" size="md" color="var(--ds-color-text-onAction)" />
+              <Icon name="star" size="md" color="var(--ds-color-text-on-action)" />
             </Avatar>
           </div>
         </div>

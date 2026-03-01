@@ -191,7 +191,7 @@
   background-color: var(--ds-color-action-primary-default);
   border: none;
   border-radius: var(--ds-radius-sm);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
   cursor: pointer;
   display: flex;
   align-items: center;

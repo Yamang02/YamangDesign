@@ -32,7 +32,7 @@
 /* Variants - default */
 .button[data-variant='primary'] {
   background-color: var(--ds-color-action-primary-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
   box-shadow: var(--ds-shadow-sm);
 }
 
@@ -48,7 +48,7 @@
 
 .button[data-variant='secondary'] {
   background-color: var(--ds-color-action-secondary-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
   box-shadow: var(--ds-shadow-sm);
 }
 
@@ -64,7 +64,7 @@
 
 .button[data-variant='accent'] {
   background-color: var(--ds-color-action-accent-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
   box-shadow: var(--ds-shadow-sm);
 }
 
@@ -87,7 +87,7 @@
 
 .button[data-variant='outline']:hover {
   background-color: var(--ds-color-action-primary-default);
-  color: var(--ds-color-text-onAction);
+  color: var(--ds-color-text-on-action);
   box-shadow: var(--ds-shadow-sm);
 }
 

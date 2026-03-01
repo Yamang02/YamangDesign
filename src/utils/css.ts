@@ -1,10 +1,21 @@
 const CSS_VAR_PREFIX = 'ds';
 
 /**
+ * camelCase를 kebab-case로 변환
+ * surfaceBrand → surface-brand
+ * onAction → on-action
+ */
+function toKebabCase(str: string): string {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+/**
  * 중첩 객체를 평탄화하여 CSS 변수명 생성
  *
- * 입력: { color: { bg: { primary: '#fff' } } }
- * 출력: { '--ds-color-bg-primary': '#fff' }
+ * 입력: { color: { bg: { surfaceBrand: '#fff' } } }
+ * 출력: { '--ds-color-bg-surface-brand': '#fff' }
+ *
+ * camelCase 키는 자동으로 kebab-case로 변환됨
  */
 export function flattenToCSSVars(
   obj: Record<string, unknown>,
@@ -15,7 +26,8 @@ export function flattenToCSSVars(
   for (const [key, value] of Object.entries(obj)) {
     if (key.startsWith('_')) continue;
 
-    const varName = prefix ? `${prefix}-${key}` : key;
+    const kebabKey = toKebabCase(key);
+    const varName = prefix ? `${prefix}-${kebabKey}` : kebabKey;
 
     if (typeof value === 'object' && value !== null) {
       Object.assign(
