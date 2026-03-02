@@ -1,0 +1,1 @@
+export { orientalChineseRestaurant01Palette } from './OrientalChineseRestaurant01';

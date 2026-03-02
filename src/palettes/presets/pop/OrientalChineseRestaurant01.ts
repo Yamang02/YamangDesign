@@ -14,7 +14,6 @@
  *      export { myPresetPalette } from './MyPreset';
  *
  * ### 새 카테고리를 만드는 경우
- *   탭/패널은 themeRegistry 기반으로 동적 생성됩니다. (Custom 선두, 이후 registry 순서)
  *   1. src/palettes/types.ts 의 ThemeCategory 타입에 새 카테고리 추가
  *      export type ThemeCategory = 'default' | 'custom' | 'natural' | 'mycategory';
  *   2. src/palettes/presets/mycategory/ 폴더 생성
@@ -29,7 +28,8 @@
  *        description: '설명',
  *        themes: Object.values(mycategoryThemes).filter(...),
  *      },
- *   ※ Lab, 전역설정 모달 탭/패널은 registry에서 자동 반영됩니다.
+ *   6. src/pages/layouts/PaletteLab/ThemeTabNavigation.tsx 의 TABS 배열에 추가
+ *      { id: 'mycategory', label: 'My Category' },
  *
  * ## 2. 시맨틱 매핑 오버라이드 방법
  *
@@ -60,41 +60,47 @@
  * =============================================================================
  */
 
-import type { PaletteDefinition } from '../palettes/types';
+import type { PaletteDefinition } from '../../types';
 
-export const myPresetPalette: PaletteDefinition = {
-  name: 'myPreset', // camelCase, 고유 식별자
-  subname: '내 프리셋 이름', // 사용자에게 보여줄 이름
+export const orientalChineseRestaurant01Palette: PaletteDefinition = {
+  name: 'orientalChineseRestaurant01', // camelCase, 고유 식별자
+  subname: '오리엔탈 중화반점', // 사용자에게 보여줄 이름
   colors: {
-    primary: '#E94E70', // 필수
-    secondary: '#72333E', // 선택
-    accent: '#C2D95C', // 선택
-    sub: '#F7C9DD', // 선택, 컬러풀 보조색
-    neutral: '#7f4a6f', // 선택, 무채색 (텍스트/테두리/배경용)
+    primary: '#E72D29', // 필수
+    secondary: '#FFE329', // 선택
+    accent: '#00A63C', // 선택
+    sub: '#002C2B', // 선택, 컬러풀 보조색
+    neutral: '#6B7280', // 선택, 무채색 (텍스트/테두리/배경용)
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
   contrast: 'normal', // 'normal' | 'high'
 
   metadata: {
-    id: 'myPreset', // theme-presets 키로 사용됨. 고유해야 함
-    displayName: '내 프리셋 이름',
-    category: 'natural', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
-    description: '프리셋 설명',
+    id: 'orientalChineseRestaurant01', // theme-presets 키로 사용됨. 고유해야 함
+    displayName: '오리엔탈 중화반점',
+    category: 'pop', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
+    description: '요비요헤이_팔레트 오리엔탈 중화반점',
   },
 
-  // ---------------------------------------------------------------------------
-  // 시맨틱 매핑 오버라이드 (선택)
-  // 기본 매핑(bgStrategy 기반)에서 변경할 토큰만 partial로 지정
-  // ---------------------------------------------------------------------------
-  // semanticMapping: {
-  //   bg: {
-  //     surfaceBrand: { scale: 'accent', step: 100 }, // primary 대신 accent 사용
-  //   },
-  //   text: {
-  //     onAction: '#FFFFFF', // 버튼 위 텍스트를 항상 흰색으로
-  //   },
-  //   border: {
-  //     accent: { scale: 'secondary', step: 400 },
-  //   },
-  // } as Partial<SemanticMapping>,
+  semanticMapping: {
+    bg: {
+      base: { scale: 'secondary', step: 400 },
+      surface: { scale: 'secondary', step: 500 },
+      surfaceBrand: { scale: 'secondary', step: 600 },
+      elevated: { scale: 'secondary', step: 100 },
+      muted: { scale: 'secondary', step: 900 },
+    },
+    text: {
+      primary: { scale: 'primary', step: 900 },
+      secondary: { scale: 'primary', step: 800 },
+      muted: { scale: 'primary', step: 700 },
+      onAction: { scale: 'primary', step: 50 },
+    },
+    border: {
+      default: { scale: 'primary', step: 700 },
+      subtle: { scale: 'primary', step: 600 },
+      focus: { scale: 'primary', step: 400 },
+      accent: { scale: 'primary', step: 500 },
+    },
+  },
 };

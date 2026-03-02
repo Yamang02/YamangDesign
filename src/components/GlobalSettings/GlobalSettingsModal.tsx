@@ -1,6 +1,7 @@
 /**
  * E03: 전역 설정 모달 - Light Theme, 새 UI 구조
  * P05: 프리셋 섹션에 탭(Custom/Default/Natural) + 검색 UI
+ * PaletteSelection 기반 마이그레이션
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Icon } from '../Icon';
@@ -9,6 +10,7 @@ import { Tooltip } from '../Tooltip';
 import { useGlobalSettings } from './hooks/useGlobalSettings';
 import { useTheme } from '../../themes';
 import {
+  themeRegistry,
   getThemesByCategory,
   searchThemesByName,
 } from '../../palettes/presets/registry';
@@ -20,6 +22,7 @@ import { ThemeSearchBar } from '../../pages/layouts/PaletteLab/ThemeSearchBar';
 import { EmptyCategory } from '../../pages/layouts/PaletteLab/EmptyCategory';
 import { themePresets } from '../../constants/palette-definitions';
 import { presetToPaletteDefinition } from '../../constants/semantic-presets';
+import { createCustomSemanticSelection } from '../../utils/palette-selection';
 import type { StoredPreset } from './types';
 import type { CustomSemanticPreset } from '../../constants/semantic-presets';
 import styles from './GlobalSettingsModal.module.css';
@@ -174,6 +177,8 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
     setPalette,
     setStyleName,
     setSystemPreset,
+    setSelection,
+    selectPreset,
     hasChanges,
     apply,
     reset,
@@ -187,9 +192,13 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
 
   const {
     customSemanticPresets,
-    applyCustomSemanticPreset,
     deleteCustomSemanticPreset,
   } = useTheme();
+
+  // 커스텀 시맨틱 프리셋 로드 (로컬 상태로)
+  const handleLoadCustomSemanticPreset = (preset: CustomSemanticPreset) => {
+    setSelection(createCustomSemanticSelection(preset.id));
+  };
 
   const modalRef = useRef<HTMLDivElement>(null);
   const [showSaveInput, setShowSaveInput] = useState(false);
@@ -197,24 +206,26 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
   const [presetTab, setPresetTab] = useState<ThemeCategory>('custom');
   const [presetSearch, setPresetSearch] = useState('');
 
-  const defaultThemes = useMemo(() => getThemesByCategory('default'), []);
-  const naturalThemes = useMemo(() => getThemesByCategory('natural'), []);
+  const themesByCategory = useMemo(
+    () =>
+      Object.fromEntries(
+        themeRegistry.map((g) => [g.category, getThemesByCategory(g.category)])
+      ),
+    []
+  );
 
-  const filteredDefaultThemes = useMemo(() => {
-    if (!presetSearch.trim()) return defaultThemes;
+  const filteredThemesByCategory = useMemo(() => {
+    if (!presetSearch.trim()) return themesByCategory;
     const all = searchThemesByName(presetSearch);
-    return defaultThemes.filter((t) =>
-      all.some((a) => a.metadata?.id === t.metadata?.id)
+    return Object.fromEntries(
+      Object.entries(themesByCategory).map(([cat, themes]) => [
+        cat,
+        themes.filter((t) =>
+          all.some((a) => a.metadata?.id === t.metadata?.id)
+        ),
+      ])
     );
-  }, [defaultThemes, presetSearch]);
-
-  const filteredNaturalThemes = useMemo(() => {
-    if (!presetSearch.trim()) return naturalThemes;
-    const all = searchThemesByName(presetSearch);
-    return naturalThemes.filter((t) =>
-      all.some((a) => a.metadata?.id === t.metadata?.id)
-    );
-  }, [naturalThemes, presetSearch]);
+  }, [themesByCategory, presetSearch]);
 
   const filteredUserPresets = useMemo(() => {
     if (!presetSearch.trim()) return userPresets;
@@ -416,6 +427,7 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                 placeholder="프리셋 검색..."
               />
             </div>
+            <>
             <div
               id="panel-custom"
               role="tabpanel"
@@ -439,7 +451,7 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                         <PresetItemSemanticCustom
                           key={`semantic-${preset.id}`}
                           preset={preset}
-                          onLoad={applyCustomSemanticPreset}
+                          onLoad={handleLoadCustomSemanticPreset}
                           onDelete={deleteCustomSemanticPreset}
                         />
                       ))}
@@ -456,96 +468,82 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
                 </>
               )}
             </div>
-            <div
-              id="panel-default"
-              role="tabpanel"
-              aria-labelledby="tab-default"
-              hidden={presetTab !== 'default'}
-              className={styles.presetPanel}
-            >
-              {presetTab === 'default' && (
-                <>
-                  {filteredDefaultThemes.length === 0 ? (
-                    <EmptyCategory
-                      message={
-                        presetSearch ? '검색 결과가 없습니다' : 'Default 테마가 없습니다'
-                      }
-                    />
-                  ) : (
-                    <div className={styles.presetList}>
-                      {filteredDefaultThemes.map((def) => (
-                        <button
-                          key={def.metadata?.id ?? def.name}
-                          type="button"
-                          className={styles.presetItem}
-                          onClick={() => setPalette(def.colors as ExternalPalette)}
-                        >
-                          <span className={`${styles.presetBadge} ${styles.yamang}`}>
-                            Default
-                          </span>
-                          <span className={styles.presetName}>
-                            {def.metadata?.displayName ?? def.name}
-                          </span>
-                          <div className={styles.presetColors}>
-                            {getPresetColorsFromPalette(def.colors as ExternalPalette).map((color, i) => (
+            {themeRegistry.map((group) => {
+              const filtered = filteredThemesByCategory[group.category] ?? [];
+              const badgeClass =
+                group.category === 'default'
+                  ? styles.yamang
+                  : group.category === 'natural'
+                    ? styles.natural
+                    : styles.category;
+              return (
+                <div
+                  key={group.category}
+                  id={`panel-${group.category}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${group.category}`}
+                  hidden={presetTab !== group.category}
+                  className={styles.presetPanel}
+                >
+                  {presetTab === group.category && (
+                    <>
+                      {filtered.length === 0 ? (
+                        <EmptyCategory
+                          message={
+                            presetSearch
+                              ? '검색 결과가 없습니다'
+                              : `${group.displayName} 테마가 없습니다`
+                          }
+                        />
+                      ) : (
+                        <div className={styles.presetList}>
+                          {filtered.map((def) => (
+                            <button
+                              key={def.metadata?.id ?? def.name}
+                              type="button"
+                              className={styles.presetItem}
+                              onClick={() => {
+                                // 프리셋 선택 시 새 API 사용
+                                if (def.metadata?.id) {
+                                  selectPreset(def.metadata.id);
+                                } else {
+                                  setPalette(def.colors as ExternalPalette);
+                                }
+                              }}
+                            >
                               <span
-                                key={i}
-                                className={styles.presetDot}
-                                style={{ backgroundColor: color }}
+                                className={styles.presetBadge + ' ' + badgeClass}
+                              >
+                                {group.displayName}
+                              </span>
+                              <span className={styles.presetName}>
+                                {def.metadata?.displayName ?? def.name}
+                              </span>
+                              <div className={styles.presetColors}>
+                                {getPresetColorsFromPalette(
+                                  def.colors as ExternalPalette
+                                ).map((color, i) => (
+                                  <span
+                                    key={i}
+                                    className={styles.presetDot}
+                                    style={{ backgroundColor: color }}
+                                  />
+                                ))}
+                              </div>
+                              <div
+                                className={styles.presetDeleteSlot}
+                                aria-hidden
                               />
-                            ))}
-                          </div>
-                          <div className={styles.presetDeleteSlot} aria-hidden />
-                        </button>
-                      ))}
-                    </div>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   )}
-                </>
-              )}
-            </div>
-            <div
-              id="panel-natural"
-              role="tabpanel"
-              aria-labelledby="tab-natural"
-              hidden={presetTab !== 'natural'}
-              className={styles.presetPanel}
-            >
-              {presetTab === 'natural' && (
-                <>
-                  {filteredNaturalThemes.length === 0 ? (
-                    <EmptyCategory />
-                  ) : (
-                    <div className={styles.presetList}>
-                      {filteredNaturalThemes.map((def) => (
-                        <button
-                          key={def.metadata?.id ?? def.name}
-                          type="button"
-                          className={styles.presetItem}
-                          onClick={() => setPalette(def.colors as ExternalPalette)}
-                        >
-                          <span className={`${styles.presetBadge} ${styles.natural}`}>
-                            Natural
-                          </span>
-                          <span className={styles.presetName}>
-                            {def.metadata?.displayName ?? def.name}
-                          </span>
-                          <div className={styles.presetColors}>
-                            {getPresetColorsFromPalette(def.colors as ExternalPalette).map((color, i) => (
-                              <span
-                                key={i}
-                                className={styles.presetDot}
-                                style={{ backgroundColor: color }}
-                              />
-                            ))}
-                          </div>
-                          <div className={styles.presetDeleteSlot} aria-hidden />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+                </div>
+              );
+            })}
+            </>
           </section>
 
           <section className={styles.section}>

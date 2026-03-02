@@ -406,6 +406,11 @@
   color: #ffffff;
 }
 
+.presetBadge.category {
+  background: var(--ui-text-muted, #6b7280);
+  color: #ffffff;
+}
+
 .presetName {
   flex: 1;
   min-width: 0;

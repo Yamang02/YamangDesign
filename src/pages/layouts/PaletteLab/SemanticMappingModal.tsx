@@ -9,6 +9,11 @@ import { createPalette } from '../../../palettes';
 import { defaultSemanticMappings } from '../../../palettes/strategies/default-mappings';
 import { getMergedMapping } from '../../../palettes/mapping/resolve';
 import type { PaletteDefinition, SemanticMapping } from '../../../palettes/types';
+import {
+  extractSemanticOverrides,
+  parseYamangJSON,
+  getImportErrorMessage,
+} from '../../../utils/yamang-export';
 import type { SemanticTokenPath } from '../../../palettes/mapping/recommendations';
 import type { ScaleReference } from '../../../palettes/types';
 import { ColorUsageDiagram } from './ColorUsageDiagram';
@@ -97,29 +102,23 @@ export function SemanticMappingModal({
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !onImport) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const text = reader.result as string;
-        const parsed = JSON.parse(text) as
-          | { semanticOverrides?: Partial<SemanticMapping> }
-          | Partial<SemanticMapping>;
-        const overrides =
-          parsed && 'semanticOverrides' in parsed
-            ? parsed.semanticOverrides
-            : (parsed as Partial<SemanticMapping>);
-        if (overrides && typeof overrides === 'object') {
-          onImport(overrides);
-        }
-      } catch {
-        // ignore parse errors
-      }
-    };
-    reader.readAsText(file);
     e.target.value = '';
+    if (!file || !onImport) return;
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text) as unknown;
+      const overrides = extractSemanticOverrides(parsed);
+      if (overrides && typeof overrides === 'object') {
+        onImport(overrides);
+      } else {
+        const payload = parseYamangJSON(text);
+        window.alert(getImportErrorMessage('semantic-mapping', payload));
+      }
+    } catch {
+      window.alert(getImportErrorMessage('semantic-mapping', null));
+    }
   };
 
   if (!open) return null;

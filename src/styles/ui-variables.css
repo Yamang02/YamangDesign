@@ -136,4 +136,18 @@
   --ds-shadow-sm: var(--ui-shadow-sm);
   --ds-shadow-md: var(--ui-shadow-md);
   --ds-shadow-lg: var(--ui-shadow-lg);
+
+  /* Lab 토큰: 모달/전역설정 등 data-ui-light 내부에서 --lab-* 사용 시 theme 무관 고정 */
+  --lab-bg-base: var(--ui-bg-base);
+  --lab-bg-surface: var(--ui-bg-subtle);
+  --lab-bg-muted: var(--ui-bg-subtle);
+  --lab-text-primary: var(--ui-text-primary);
+  --lab-text-secondary: var(--ui-text-secondary);
+  --lab-text-muted: var(--ui-text-muted);
+  --lab-border-default: var(--ui-border-default);
+  --lab-border-subtle: var(--ui-border-subtle);
+  --lab-action-primary: var(--ui-action-primary);
+
+  /* focus ring 등에서 사용하는 primary 색상 */
+  --ds-color-primary-500: var(--ui-action-primary);
 }

@@ -1,10 +1,17 @@
 /**
  * E03: 전역 설정 상태 관리 (Phase 1: palette, styleName, systemPreset)
+ * PaletteSelection 기반으로 마이그레이션
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTheme } from '../../../themes';
 import type { ExternalPalette } from '../../../@types/tokens';
 import type { StyleName, SystemPresetName } from '../../../@types/theme';
+import type { PaletteSelection } from '../../../palettes/types';
+import {
+  createPresetSelection,
+  createCustomSelection,
+  isPaletteSelectionEqual,
+} from '../../../utils/palette-selection';
 import {
   GLOBAL_SETTINGS_STORAGE_KEY,
   GLOBAL_PRESETS_STORAGE_KEY,
@@ -12,6 +19,15 @@ import {
   type StoredPreset,
   type StoredPresets,
 } from '../types';
+import {
+  downloadYamangJSON,
+  createGlobalSettingsPayload,
+  parseYamangJSON,
+  extractGlobalSettings,
+  pickYamangJSONFile,
+  YAMANG_FILENAMES,
+  getImportErrorMessage,
+} from '../../../utils/yamang-export';
 
 const DEFAULT_PALETTE: ExternalPalette = {
   primary: '#6366F1',
@@ -19,6 +35,8 @@ const DEFAULT_PALETTE: ExternalPalette = {
   accent: '#F59E0B',
   neutral: '#E5E7EB',
 };
+
+const DEFAULT_SELECTION: PaletteSelection = createCustomSelection(DEFAULT_PALETTE);
 
 const STORAGE_VERSION = '1.0';
 
@@ -54,45 +72,6 @@ function generatePresetId(): string {
   return `preset-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
-function downloadJSON(data: object, filename: string): void {
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: 'application/json',
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-async function pickJSONFile(): Promise<Partial<StoredSettings> | null> {
-  return new Promise((resolve) => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json,application/json';
-    input.onchange = () => {
-      const file = input.files?.[0];
-      if (!file) {
-        resolve(null);
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const text = reader.result as string;
-          const data = JSON.parse(text) as Partial<StoredSettings>;
-          resolve(data);
-        } catch {
-          resolve(null);
-        }
-      };
-      reader.readAsText(file);
-    };
-    input.click();
-  });
-}
-
 function validateImportedSettings(data: unknown): data is Partial<StoredSettings> {
   if (!data || typeof data !== 'object') return false;
   const o = data as Record<string, unknown>;
@@ -103,86 +82,126 @@ function validateImportedSettings(data: unknown): data is Partial<StoredSettings
   );
 }
 
+/** selection에서 palette 추출 (custom일 때만 colors 반환) */
+function extractPaletteFromSelection(selection: PaletteSelection): ExternalPalette {
+  return selection.type === 'custom' ? selection.colors : DEFAULT_PALETTE;
+}
+
 export function useGlobalSettings() {
   const {
-    palette,
+    selection,
+    setPaletteSelection,
     styleName,
     systemPreset,
-    setPalette,
     setStyleName,
     setSystemPreset,
   } = useTheme();
 
-  const [localPalette, setLocalPalette] = useState<ExternalPalette>(palette);
+  // 로컬 상태 (모달 내에서 편집용)
+  const [localSelection, setLocalSelection] = useState<PaletteSelection>(selection);
   const [localStyleName, setLocalStyleName] = useState<StyleName>(styleName);
   const [localSystemPreset, setLocalSystemPreset] =
     useState<SystemPresetName>(systemPreset);
 
+  // 전역 상태가 바뀌면 로컬 상태 동기화
   useEffect(() => {
     queueMicrotask(() => {
-      setLocalPalette(palette);
+      setLocalSelection(selection);
       setLocalStyleName(styleName);
       setLocalSystemPreset(systemPreset);
     });
-  }, [palette, styleName, systemPreset]);
+  }, [selection, styleName, systemPreset]);
 
+  // 변경 여부 확인
   const hasChanges = useMemo(() => {
     return (
-      JSON.stringify(localPalette) !== JSON.stringify(palette) ||
+      !isPaletteSelectionEqual(localSelection, selection) ||
       localStyleName !== styleName ||
       localSystemPreset !== systemPreset
     );
-  }, [localPalette, localStyleName, localSystemPreset, palette, styleName, systemPreset]);
+  }, [localSelection, localStyleName, localSystemPreset, selection, styleName, systemPreset]);
 
+  // 적용: 전역 상태에 반영
   const apply = useCallback(() => {
-    setPalette(localPalette);
-    setStyleName(localStyleName);
-    setSystemPreset(localSystemPreset);
+    if (!isPaletteSelectionEqual(localSelection, selection)) {
+      setPaletteSelection(localSelection);
+    }
+    if (localStyleName !== styleName) {
+      setStyleName(localStyleName);
+    }
+    if (localSystemPreset !== systemPreset) {
+      setSystemPreset(localSystemPreset);
+    }
+    // legacy storage 호환
+    const paletteForStorage = extractPaletteFromSelection(localSelection);
     saveStoredSettings({
       version: STORAGE_VERSION,
-      palette: localPalette,
+      palette: paletteForStorage,
       styleName: localStyleName,
       systemPreset: localSystemPreset,
     });
-  }, [localPalette, localStyleName, localSystemPreset, setPalette, setStyleName, setSystemPreset]);
+  }, [localSelection, localStyleName, localSystemPreset, selection, styleName, systemPreset, setPaletteSelection, setStyleName, setSystemPreset]);
 
+  // 초기화
   const reset = useCallback(() => {
-    setLocalPalette(DEFAULT_PALETTE);
+    setLocalSelection(DEFAULT_SELECTION);
     setLocalStyleName('minimal');
     setLocalSystemPreset('default');
   }, []);
 
+  // 내보내기
   const exportSettings = useCallback(() => {
-    const data: StoredSettings = {
+    const paletteForExport = extractPaletteFromSelection(localSelection);
+    const settings: StoredSettings = {
       version: STORAGE_VERSION,
-      palette: localPalette,
+      palette: paletteForExport,
       styleName: localStyleName,
       systemPreset: localSystemPreset,
       updatedAt: new Date().toISOString(),
     };
-    downloadJSON(data, 'yamang-design-settings.json');
-  }, [localPalette, localStyleName, localSystemPreset]);
+    const payload = createGlobalSettingsPayload(settings);
+    downloadYamangJSON(payload, YAMANG_FILENAMES.GLOBAL_SETTINGS);
+  }, [localSelection, localStyleName, localSystemPreset]);
 
+  // 가져오기
   const importSettings = useCallback(async () => {
-    const data = await pickJSONFile();
-    if (!data || !validateImportedSettings(data)) return;
-    if (data.palette) setLocalPalette(data.palette as ExternalPalette);
+    const raw = await pickYamangJSONFile();
+    if (!raw) return;
+    const payload = parseYamangJSON(raw);
+    let data: Partial<StoredSettings> | null = payload ? extractGlobalSettings(payload) : null;
+    if (!data) {
+      try {
+        const legacy = JSON.parse(raw) as Partial<StoredSettings>;
+        if (validateImportedSettings(legacy)) data = legacy;
+      } catch {
+        /* ignore */
+      }
+    }
+    if (!data || !validateImportedSettings(data)) {
+      window.alert(getImportErrorMessage('global-settings', payload));
+      return;
+    }
+    if (data.palette) {
+      setLocalSelection(createCustomSelection(data.palette as ExternalPalette));
+    }
     if (data.styleName) setLocalStyleName(data.styleName as StyleName);
     if (data.systemPreset) setLocalSystemPreset(data.systemPreset as SystemPresetName);
   }, []);
 
+  // 사용자 프리셋 관리
   const [userPresets, setUserPresets] = useState<StoredPreset[]>(() =>
     loadStoredPresets()
   );
 
   const saveAsPreset = useCallback(
     (name: string) => {
+      const paletteForPreset = extractPaletteFromSelection(localSelection);
       const newPreset: StoredPreset = {
         id: generatePresetId(),
         name: name.trim() || 'Untitled',
         settings: {
           version: STORAGE_VERSION,
-          palette: localPalette,
+          palette: paletteForPreset,
           styleName: localStyleName,
           systemPreset: localSystemPreset,
         },
@@ -194,12 +213,14 @@ export function useGlobalSettings() {
         return next;
       });
     },
-    [localPalette, localStyleName, localSystemPreset]
+    [localSelection, localStyleName, localSystemPreset]
   );
 
   const loadUserPreset = useCallback((preset: StoredPreset) => {
     const s = preset.settings;
-    if (s.palette) setLocalPalette(s.palette);
+    if (s.palette) {
+      setLocalSelection(createCustomSelection(s.palette));
+    }
     if (s.styleName) setLocalStyleName(s.styleName);
     if (s.systemPreset) setLocalSystemPreset(s.systemPreset);
   }, []);
@@ -212,7 +233,26 @@ export function useGlobalSettings() {
     });
   }, []);
 
+  // ============================================================================
+  // 하위 호환: palette(ExternalPalette) 인터페이스 유지
+  // ============================================================================
+  const localPalette = useMemo(() => extractPaletteFromSelection(localSelection), [localSelection]);
+
+  const setLocalPalette = useCallback((colors: ExternalPalette) => {
+    setLocalSelection(createCustomSelection(colors));
+  }, []);
+
+  /** 프리셋 선택 (새 API) */
+  const selectPreset = useCallback((presetId: string) => {
+    setLocalSelection(createPresetSelection(presetId));
+  }, []);
+
   return {
+    // 새 API
+    selection: localSelection,
+    setSelection: setLocalSelection,
+    selectPreset,
+    // 하위 호환 API
     palette: localPalette,
     styleName: localStyleName,
     systemPreset: localSystemPreset,

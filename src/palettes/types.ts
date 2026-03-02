@@ -3,7 +3,32 @@
  * E01: 배색을 독립 레이어로 관리
  */
 
-import type { GeneratedScales } from '../@types/tokens';
+import type { ExternalPalette, GeneratedScales } from '../@types/tokens';
+
+// ============================================================================
+// PaletteSelection: 팔레트 선택 의도를 명시하는 단일 타입
+// ============================================================================
+
+/**
+ * 팔레트 선택 상태 (discriminated union)
+ *
+ * 기존 paletteName + customColors 조합을 단일 타입으로 통합.
+ * 선택 의도가 타입에 명시되어 잘못된 조합을 컴파일 타임에 방지.
+ *
+ * @example
+ * // 프리셋 선택
+ * { type: 'preset', presetId: 'default-spring-cream' }
+ *
+ * // 사용자 직접 색상 입력
+ * { type: 'custom', colors: { primary: '#6366F1', ... } }
+ *
+ * // 커스텀 시맨틱 프리셋 (베이스 + 오버라이드)
+ * { type: 'custom-semantic', presetId: 'custom-semantic-abc123' }
+ */
+export type PaletteSelection =
+  | { type: 'preset'; presetId: string }
+  | { type: 'custom'; colors: ExternalPalette }
+  | { type: 'custom-semantic'; presetId: string };
 
 // PaletteName은 constants/theme-presets.ts에서 정의됨
 // PaletteDefinition.name은 내부 유연성을 위해 string 유지
@@ -15,7 +40,8 @@ export type BgStrategy = 'light' | 'colored' | 'dark';
 export type ThemeCategory =
   | 'default'
   | 'custom'
-  | 'natural';
+  | 'natural'
+  | 'pop';
 
 /** 테마 메타데이터 */
 export interface ThemeMetadata {

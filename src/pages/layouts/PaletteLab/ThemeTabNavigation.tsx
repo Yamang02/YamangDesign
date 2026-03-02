@@ -1,8 +1,9 @@
 /**
  * P04: 테마 카테고리 탭 네비게이션
- * Custom, Default, Natural 탭
+ * Custom 선두 + registry 카테고리 동적 생성
  */
 import type { ThemeCategory } from '../../../palettes/types';
+import { themeRegistry } from '../../../palettes/presets/registry';
 import styles from './ThemeTabNavigation.module.css';
 
 export interface ThemeTabNavigationProps {
@@ -14,8 +15,7 @@ export interface ThemeTabNavigationProps {
 
 const TABS: { id: ThemeCategory; label: string }[] = [
   { id: 'custom', label: 'Custom' },
-  { id: 'default', label: 'Default' },
-  { id: 'natural', label: 'Natural' },
+  ...themeRegistry.map((g) => ({ id: g.category, label: g.displayName })),
 ];
 
 export function ThemeTabNavigation({

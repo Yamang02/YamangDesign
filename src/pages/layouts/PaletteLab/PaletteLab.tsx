@@ -1,6 +1,7 @@
 /**
  * E05: Palette Lab - 배색 비교 뷰 + DetailPanel
  * P05: Default/Natural 카테고리를 별도 섹션으로 표시 (탭/검색/Custom은 모달에서)
+ * PaletteSelection 기반 마이그레이션
  */
 import { useState, useMemo } from 'react';
 import {
@@ -23,7 +24,10 @@ import {
   SYSTEM_SCALE_STEPS,
 } from '../../../constants';
 import { createPalette } from '../../../palettes';
-import { getThemesByCategory } from '../../../palettes/presets/registry';
+import {
+  themeRegistry,
+  getThemesByCategory,
+} from '../../../palettes/presets/registry';
 import { useTheme } from '../../../themes';
 import { palettePresets } from '../../../themes/presets';
 import { presetToPaletteDefinition } from '../../../constants/semantic-presets';
@@ -35,6 +39,12 @@ import { systemColorPresets } from '../../../tokens/primitives/system-colors';
 import type { SystemPresetName } from '../../../@types/theme';
 import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
 import type { PaletteDefinition, SemanticMapping } from '../../../palettes/types';
+import {
+  downloadYamangJSON,
+  createSemanticMappingPayload,
+  YAMANG_FILENAMES,
+} from '../../../utils/yamang-export';
+import { createCustomSemanticSelection } from '../../../utils/palette-selection';
 import { ColorUsageDiagram } from './ColorUsageDiagram';
 import { EmptyCategory } from './EmptyCategory';
 import { PaletteCategoryTabs, type BrandColorTabId } from './PaletteCategoryTabs';
@@ -467,7 +477,9 @@ export function PaletteLab() {
   const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
   const [mappingModalTarget, setMappingModalTarget] = useState<MappingModalTarget>(null);
   const [mappingOverrides, setMappingOverrides] = useState<Partial<SemanticMapping> | null>(null);
-  const [activeBrandTab, setActiveBrandTab] = useState<BrandColorTabId>('default');
+  const [activeBrandTab, setActiveBrandTab] = useState<BrandColorTabId>(
+    themeRegistry[0]?.category ?? 'default'
+  );
 
   const {
     paletteDefinition: currentPaletteDefinition,
@@ -475,14 +487,13 @@ export function PaletteLab() {
     addCustomSemanticPreset,
     updateCustomSemanticPreset,
     deleteCustomSemanticPreset,
-    applyCustomSemanticPreset,
+    setPaletteSelection,
   } = useTheme();
-  const defaultThemes = useMemo(
-    () => getThemesByCategory('default'),
-    []
-  );
-  const naturalThemes = useMemo(
-    () => getThemesByCategory('natural'),
+  const themesByCategory = useMemo(
+    () =>
+      Object.fromEntries(
+        themeRegistry.map((g) => [g.category, getThemesByCategory(g.category)])
+      ),
     []
   );
   /** 컬러팔레트 Overview 전용 - ThemeProvider의 현재 테마 반영 */
@@ -565,45 +576,30 @@ export function PaletteLab() {
               onTabChange={setActiveBrandTab}
             />
             <div className={styles.categoryContent}>
-            {activeBrandTab === 'default' && (
-              <div className={styles.comparisonGrid}>
-                {defaultThemes.length === 0 ? (
-                  <EmptyCategory message="등록된 Default 테마가 없습니다" />
-                ) : (
-                  defaultThemes.map((def) => (
-                    <ThemeCard
-                      key={def.metadata?.id ?? def.name}
-                      def={def}
-                      onClick={() => handlePaletteSelect(def)}
-                      onMappingClick={handleMappingIconClick(def)}
-                      selected={
-                        detailSelection?.type === 'palette' &&
-                        detailSelection.definition.metadata?.id === def.metadata?.id
-                      }
+            {themeRegistry.map((group) =>
+              activeBrandTab === group.category ? (
+                <div key={group.category} className={styles.comparisonGrid}>
+                  {(themesByCategory[group.category] ?? []).length === 0 ? (
+                    <EmptyCategory
+                      message={`등록된 ${group.displayName} 테마가 없습니다`}
                     />
-                  ))
-                )}
-              </div>
-            )}
-            {activeBrandTab === 'natural' && (
-              <div className={styles.comparisonGrid}>
-                {naturalThemes.length === 0 ? (
-                  <EmptyCategory />
-                ) : (
-                  naturalThemes.map((def) => (
-                    <ThemeCard
-                      key={def.metadata?.id ?? def.name}
-                      def={def}
-                      onClick={() => handlePaletteSelect(def)}
-                      onMappingClick={handleMappingIconClick(def)}
-                      selected={
-                        detailSelection?.type === 'palette' &&
-                        detailSelection.definition.metadata?.id === def.metadata?.id
-                      }
-                    />
-                  ))
-                )}
-              </div>
+                  ) : (
+                    (themesByCategory[group.category] ?? []).map((def) => (
+                      <ThemeCard
+                        key={def.metadata?.id ?? def.name}
+                        def={def}
+                        onClick={() => handlePaletteSelect(def)}
+                        onMappingClick={handleMappingIconClick(def)}
+                        selected={
+                          detailSelection?.type === 'palette' &&
+                          detailSelection.definition.metadata?.id ===
+                            def.metadata?.id
+                        }
+                      />
+                    ))
+                  )}
+                </div>
+              ) : null
             )}
             {activeBrandTab === 'custom' && (
               <div className={styles.comparisonGrid}>
@@ -690,7 +686,7 @@ export function PaletteLab() {
                     semanticOverrides: mappingOverrides,
                     displayName: `${baseName} (커스텀)`,
                   });
-                  applyCustomSemanticPreset(preset);
+                  setPaletteSelection(createCustomSemanticSelection(preset.id));
                   setMappingModalTarget(null);
                   setMappingOverrides(null);
                   setActiveBrandTab('custom');
@@ -704,16 +700,23 @@ export function PaletteLab() {
                 }
           }
           onExport={() => {
-            const data = mappingOverrides ?? {};
-            const blob = new Blob([JSON.stringify({ semanticOverrides: data, exportedAt: new Date().toISOString() }, null, 2)], {
-              type: 'application/json',
-            });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `semantic-mapping-${mappingModalTarget.type === 'built-in' ? themeId(mappingModalTarget.definition) : mappingModalTarget.preset.id}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
+            const definition =
+              mappingModalTarget.type === 'built-in'
+                ? mappingModalTarget.definition
+                : presetToPaletteDefinition(mappingModalTarget.preset) ?? palettePresets.default;
+            const id =
+              mappingModalTarget.type === 'built-in'
+                ? themeId(mappingModalTarget.definition)
+                : mappingModalTarget.preset.id;
+            const payload = createSemanticMappingPayload(
+              definition,
+              mappingOverrides ?? {},
+              id
+            );
+            downloadYamangJSON(
+              payload,
+              `${YAMANG_FILENAMES.SEMANTIC_MAPPING_PREFIX}-${id}.json`
+            );
           }}
           onImport={(parsed) => {
             setMappingOverrides(parsed);

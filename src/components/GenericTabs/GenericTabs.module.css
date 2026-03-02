@@ -25,11 +25,11 @@
 }
 
 .tab:focus-visible {
-  outline: 2px solid var(--ds-color-primary-500);
+  outline: 2px solid var(--ds-color-border-focus);
   outline-offset: 2px;
 }
 
 .tab[data-active='true'] {
-  color: var(--ds-color-primary-500);
-  border-bottom-color: var(--ds-color-primary-500);
+  color: var(--ds-color-action-primary-default);
+  border-bottom-color: var(--ds-color-action-primary-default);
 }

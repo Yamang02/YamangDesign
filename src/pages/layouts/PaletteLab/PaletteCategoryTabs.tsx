@@ -1,17 +1,17 @@
 /**
- * 브랜드 컬러 서브탭 - Default | Natural | Custom
- * GenericTabs 컴포넌트를 래핑하여 사용
+ * 브랜드 컬러 서브탭
+ * Custom 선두 + registry 카테고리 동적 생성
  */
 import type { ThemeCategory } from '../../../palettes/types';
+import { themeRegistry } from '../../../palettes/presets/registry';
 import { GenericTabs } from '../../../components/GenericTabs';
 
 /** BrandColorTabId는 ThemeCategory의 alias */
 export type BrandColorTabId = ThemeCategory;
 
-const TABS = [
-  { id: 'default' as const, label: 'Default' },
-  { id: 'natural' as const, label: 'Natural' },
-  { id: 'custom' as const, label: 'Custom' },
+const TABS: { id: BrandColorTabId; label: string }[] = [
+  { id: 'custom', label: 'Custom' },
+  ...themeRegistry.map((g) => ({ id: g.category as BrandColorTabId, label: g.displayName })),
 ];
 
 export interface PaletteCategoryTabsProps {

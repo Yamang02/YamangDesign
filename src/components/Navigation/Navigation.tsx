@@ -1,3 +1,7 @@
+/**
+ * Navigation 컴포넌트
+ * PaletteSelection 기반 마이그레이션
+ */
 import { useState } from 'react';
 import type { NavigationProps } from './Navigation.types';
 import { clsx } from '../../utils/clsx';
@@ -8,6 +12,7 @@ import { ColorPicker } from '../ColorPicker';
 import { Icon } from '../Icon';
 import { Select } from '../Select';
 import { usePalettePresets } from '../../hooks/usePalettePresets';
+import { createCustomSelection } from '../../utils/palette-selection';
 import type { ExternalPalette } from '../../@types/tokens';
 import type { ThemeName } from '../../@types/theme';
 
@@ -28,7 +33,7 @@ export function Navigation({
   rightContent,
   asSlot = false,
 }: NavigationProps) {
-  const { themeName, setThemeName, palette, setPalette } = useTheme();
+  const { themeName, setThemeName, palette, setPaletteSelection } = useTheme();
   const [isColorEditorOpen, setIsColorEditorOpen] = useState(false);
   const [editingColors, setEditingColors] = useState<ExternalPalette>(palette);
   const { presets, savePreset, deletePreset } = usePalettePresets();
@@ -42,7 +47,7 @@ export function Navigation({
   };
 
   const applyColors = () => {
-    setPalette(editingColors);
+    setPaletteSelection(createCustomSelection(editingColors));
     setIsColorEditorOpen(false);
   };
 

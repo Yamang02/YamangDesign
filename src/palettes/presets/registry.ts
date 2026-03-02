@@ -5,6 +5,7 @@
 import type { PaletteDefinition, ThemeCategory } from '../types';
 import * as defaultThemes from './default/index';
 import * as naturalThemes from './natural/index';
+import * as popThemes from './pop/index';
 
 export interface ThemeGroup {
   category: ThemeCategory;
@@ -28,6 +29,14 @@ export const themeRegistry: ThemeGroup[] = [
     displayName: 'Natural',
     description: '자연에서 영감을 받은 유기적이고 편안한 테마',
     themes: Object.values(naturalThemes).filter(
+      (v): v is PaletteDefinition => v !== undefined && typeof v === 'object'
+    ),
+  },
+  {
+    category: 'pop',
+    displayName: 'Pop',
+    description: '팝 문화에서 영감을 받은 테마',
+    themes: Object.values(popThemes).filter(
       (v): v is PaletteDefinition => v !== undefined && typeof v === 'object'
     ),
   },
