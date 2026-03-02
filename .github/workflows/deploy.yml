@@ -18,7 +18,11 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npm run build
+      - name: Build
+        run: npm run build
+        env:
+          # 사용자/조직 사이트(*.github.io) → 루트, 그 외 프로젝트 사이트 → /repo-name/
+          VITE_BASE_PATH: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}/', github.event.repository.name) }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
