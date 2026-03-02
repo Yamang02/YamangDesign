@@ -19,7 +19,9 @@ jobs:
           node-version: 20
       - run: npm install
       - name: Build
-        run: npm run build
+        run: |
+          echo "VITE_BASE_PATH: $VITE_BASE_PATH"
+          npm run build
         env:
           # 사용자/조직 사이트(*.github.io) → 루트, 그 외 프로젝트 사이트 → /repo-name/
           VITE_BASE_PATH: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}/', github.event.repository.name) }}
