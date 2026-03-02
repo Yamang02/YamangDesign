@@ -7,7 +7,9 @@
       "Bash(npm run build:*)",
       "Bash(node ai/generate.js:*)",
       "Bash(dir:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(npm ls:*)",
+      "Bash(timeout 10 npm run dev:*)"
     ]
   }
 }
