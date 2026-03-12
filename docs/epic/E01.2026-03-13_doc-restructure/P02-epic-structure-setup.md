@@ -12,8 +12,8 @@ E01 에픽 자체가 새 체계의 첫 사례로 동작하는지 검증한다.
 
 ## 체크리스트
 
-- [ ] `docs/epic/E01.2026-03-13_doc-restructure/Readme.md` 존재 확인
-- [ ] `P01`, `P02`, `P03` Phase 파일 존재 확인
-- [ ] `docs/plans/` 디렉토리에 이 구현 계획 문서 존재 확인
-- [ ] `~/.claude/skills/yamang-epic/SKILL.md` 존재 확인
-- [ ] Commit: `chore(docs): verify epic structure setup`
+- [x] `docs/epic/E01.2026-03-13_doc-restructure/Readme.md` 존재 확인
+- [x] `P01`, `P02`, `P03` Phase 파일 존재 확인
+- [x] `docs/plans/` 디렉토리에 이 구현 계획 문서 존재 확인
+- [x] `~/.claude/skills/yamang-epic/SKILL.md` 존재 확인
+- [x] Commit: `chore(docs): verify epic structure setup`
