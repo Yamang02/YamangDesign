@@ -12,10 +12,10 @@
 
 ## 체크리스트
 
-- [ ] `EPIC-PALETTE-SELECTION.md` 내용 확인
-- [ ] `docs/archive/palette-selection/` 디렉토리 생성
-- [ ] `EPIC-PALETTE-SELECTION.md` → `docs/archive/palette-selection/Readme.md` 이동
-- [ ] `FEATURES.md` 내용 확인 → 처리 방향 결정 (design/ 유지 or 새 에픽)
-- [ ] `TUTORIAL.md` → `docs/design/TUTORIAL.md` 이동
-- [ ] 이동된 파일들의 내부 링크 확인 및 수정
-- [ ] Commit: `chore(docs): migrate root docs to epic structure`
+- [x] `EPIC-PALETTE-SELECTION.md` 내용 확인
+- [x] `docs/archive/palette-selection/` 디렉토리 생성
+- [x] `EPIC-PALETTE-SELECTION.md` → `docs/archive/palette-selection/Readme.md` 이동
+- [x] `FEATURES.md` 내용 확인 → 처리 방향 결정 (design/ 유지 or 새 에픽)
+- [x] `TUTORIAL.md` → `docs/design/TUTORIAL.md` 이동
+- [x] 이동된 파일들의 내부 링크 확인 및 수정
+- [x] Commit: `chore(docs): migrate root docs to epic structure`
