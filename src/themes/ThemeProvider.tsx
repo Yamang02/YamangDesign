@@ -38,10 +38,10 @@ import {
   duration,
   easing,
   stateLayer,
-} from '../tokens/primitives';
+} from '../tokens/global';
 import { generateTextStyleVars } from '../tokens/typography';
 import { generateSystemColorVars } from '../utils/system-colors';
-import { systemColorPresets } from '../tokens/primitives/system-colors';
+import { systemColorPresets } from '../tokens/global/system-colors';
 import { ThemeContext } from './ThemeContext';
 
 export type { ThemeContextValue } from './ThemeContext';

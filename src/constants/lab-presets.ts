@@ -3,8 +3,8 @@
  * 각 Lab에서 프리셋을 나란히 비교하기 위한 inline style 오버라이드
  */
 import { palettePresets, stylePresets } from '../themes/presets';
-import { systemColorPresets } from '../tokens/primitives/system-colors';
-import { neutralPresets, type NeutralPresetName } from '../tokens/primitives/neutral-presets';
+import { systemColorPresets } from '../tokens/global/system-colors';
+import { neutralPresets, type NeutralPresetName } from '../tokens/global/neutral-presets';
 import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
 import { combineTheme } from '../themes/combine';

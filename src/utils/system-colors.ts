@@ -1,10 +1,5 @@
-/**
- * E08: 시스템 컬러 CSS 변수 생성
- */
-import type { SystemColorPreset } from '../tokens/primitives/system-colors';
-
 export function generateSystemColorVars(
-  preset: SystemColorPreset
+  preset: { colors: Record<string, Record<number, string>> }
 ): Record<string, string> {
   const vars: Record<string, string> = {};
 
