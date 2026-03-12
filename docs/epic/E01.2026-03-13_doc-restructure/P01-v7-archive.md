@@ -14,9 +14,9 @@
 
 ## 체크리스트
 
-- [ ] `docs/archive/v7-token-redesign/` 디렉토리 생성
-- [ ] `docs/v7-token-redesign/` 전체 이동
-- [ ] `docs/design/17-token-3tier-reference.md`의 v7 링크 확인 및 수정
-- [ ] `docs/TUTORIAL.md` 등 루트 문서의 v7 링크 확인 및 수정
-- [ ] `git mv` 또는 이동 후 git 추적 확인
-- [ ] Commit: `chore(docs): archive v7-token-redesign epic`
+- [x] `docs/archive/v7-token-redesign/` 디렉토리 생성
+- [x] `docs/v7-token-redesign/` 전체 이동
+- [x] `docs/design/17-token-3tier-reference.md`의 v7 링크 확인 및 수정
+- [x] `docs/TUTORIAL.md` 등 루트 문서의 v7 링크 확인 및 수정
+- [x] `git mv` 또는 이동 후 git 추적 확인
+- [x] Commit: `chore(docs): archive v7-token-redesign epic`
