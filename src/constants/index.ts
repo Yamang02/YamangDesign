@@ -51,3 +51,5 @@ export type {
   SystemScaleStep,
   ScaleStepGuide,
 } from './palette-scales';
+
+export { componentTokenMap } from './component-tokens';
