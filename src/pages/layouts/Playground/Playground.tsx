@@ -18,13 +18,9 @@ import {
   fontFamilyLabels,
   semanticPreviews,
 } from '../../../constants';
-import { fontFamily } from '../../../tokens/primitives/typography';
-import type {
-  PaletteName,
-  StyleName,
-  SystemPresetName,
-} from '../../../@types/theme';
-import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
+import { fontFamily } from '../../../tokens/global/typography';
+import type { PaletteName, StyleName, SystemPresetName } from '../../../@types/theme';
+import type { NeutralPresetName } from '../../../tokens/global/neutral-presets';
 import styles from './Playground.module.css';
 
 function capitalize(str: string): string {

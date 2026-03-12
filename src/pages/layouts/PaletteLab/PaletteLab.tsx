@@ -34,10 +34,10 @@ import { presetToPaletteDefinition } from '../../../constants/semantic-presets';
 import type { CustomSemanticPreset } from '../../../constants/semantic-presets';
 import { defaultSemanticMappings } from '../../../palettes/strategies/default-mappings';
 import { getMergedMapping } from '../../../palettes/mapping/resolve';
-import { neutralPresets } from '../../../tokens/primitives/neutral-presets';
-import { systemColorPresets } from '../../../tokens/primitives/system-colors';
+import { neutralPresets } from '../../../tokens/global/neutral-presets';
+import { systemColorPresets } from '../../../tokens/global/system-colors';
 import type { SystemPresetName } from '../../../@types/theme';
-import type { NeutralPresetName } from '../../../tokens/primitives/neutral-presets';
+import type { NeutralPresetName } from '../../../tokens/global/neutral-presets';
 import type { PaletteDefinition, SemanticMapping } from '../../../palettes/types';
 import {
   downloadYamangJSON,

@@ -13,7 +13,7 @@ import {
   sectionTitles,
 } from '../../../constants';
 import { textStyles, semanticText } from '../../../tokens/typography';
-import { fontSize, fontFamily } from '../../../tokens/primitives/typography';
+import { fontSize, fontFamily } from '../../../tokens/global/typography';
 import type { TextStyleName, SemanticTextRole } from '../../../tokens/typography';
 import { FontOverviewDiagram } from './FontOverviewDiagram';
 
