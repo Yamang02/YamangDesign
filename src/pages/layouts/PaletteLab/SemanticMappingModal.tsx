@@ -74,7 +74,13 @@ export function SemanticMappingModal({
     if (!overrides) return false;
     const has = (obj: Record<string, unknown> | undefined) =>
       obj && Object.keys(obj).length > 0;
-    return has(overrides.bg) || has(overrides.text) || has(overrides.border);
+    return (
+      has(overrides.bg) ||
+      has(overrides.text) ||
+      has(overrides.border) ||
+      has(overrides.action as Record<string, unknown> | undefined) ||
+      has(overrides.feedback as Record<string, unknown> | undefined)
+    );
   }, [overrides]);
 
   const handleMappingChange = (path: SemanticTokenPath, value: string | ScaleReference) => {

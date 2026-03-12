@@ -84,6 +84,45 @@ export function resolveSemanticMapping(
       accent: resolve(mapping.border.accent),
       focus: resolve(mapping.border.focus),
     },
+    action: {
+      primary: {
+        default: resolve(mapping.action.primary.default),
+        hover: resolve(mapping.action.primary.hover),
+        active: resolve(mapping.action.primary.active),
+      },
+      secondary: {
+        default: resolve(mapping.action.secondary.default),
+        hover: resolve(mapping.action.secondary.hover),
+        active: resolve(mapping.action.secondary.active),
+      },
+      accent: {
+        default: resolve(mapping.action.accent.default),
+        hover: resolve(mapping.action.accent.hover),
+        active: resolve(mapping.action.accent.active),
+      },
+    },
+    feedback: {
+      error: {
+        bg: resolve(mapping.feedback.error.bg),
+        text: resolve(mapping.feedback.error.text),
+        border: resolve(mapping.feedback.error.border),
+      },
+      warning: {
+        bg: resolve(mapping.feedback.warning.bg),
+        text: resolve(mapping.feedback.warning.text),
+        border: resolve(mapping.feedback.warning.border),
+      },
+      success: {
+        bg: resolve(mapping.feedback.success.bg),
+        text: resolve(mapping.feedback.success.text),
+        border: resolve(mapping.feedback.success.border),
+      },
+      info: {
+        bg: resolve(mapping.feedback.info.bg),
+        text: resolve(mapping.feedback.info.text),
+        border: resolve(mapping.feedback.info.border),
+      },
+    },
   };
 }
 
@@ -101,6 +140,8 @@ export function getMergedMapping(
     bg: { ...base.bg, ...custom.bg },
     text: { ...base.text, ...custom.text },
     border: { ...base.border, ...custom.border },
+    action: { ...base.action, ...custom.action },
+    feedback: { ...base.feedback, ...custom.feedback },
   };
 }
 

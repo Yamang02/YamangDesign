@@ -82,6 +82,49 @@ export interface SemanticMapping {
     accent: string | ScaleReference;
     focus: string | ScaleReference;
   };
+
+  // E02: 액션 색상 (버튼 등 상태별)
+  action: {
+    primary: {
+      default: string | ScaleReference;
+      hover: string | ScaleReference;
+      active: string | ScaleReference;
+    };
+    secondary: {
+      default: string | ScaleReference;
+      hover: string | ScaleReference;
+      active: string | ScaleReference;
+    };
+    accent: {
+      default: string | ScaleReference;
+      hover: string | ScaleReference;
+      active: string | ScaleReference;
+    };
+  };
+
+  // E02: 피드백 색상 (system-colors 대체)
+  feedback: {
+    error: {
+      bg: string | ScaleReference;
+      text: string | ScaleReference;
+      border: string | ScaleReference;
+    };
+    warning: {
+      bg: string | ScaleReference;
+      text: string | ScaleReference;
+      border: string | ScaleReference;
+    };
+    success: {
+      bg: string | ScaleReference;
+      text: string | ScaleReference;
+      border: string | ScaleReference;
+    };
+    info: {
+      bg: string | ScaleReference;
+      text: string | ScaleReference;
+      border: string | ScaleReference;
+    };
+  };
 }
 
 /** 시맨틱 색상 (배경 전략에서 생성) */
@@ -104,6 +147,29 @@ export interface SemanticColors {
     subtle: string;
     accent: string;
     focus: string;
+  };
+  action: {
+    primary: {
+      default: string;
+      hover: string;
+      active: string;
+    };
+    secondary: {
+      default: string;
+      hover: string;
+      active: string;
+    };
+    accent: {
+      default: string;
+      hover: string;
+      active: string;
+    };
+  };
+  feedback: {
+    error: { bg: string; text: string; border: string };
+    warning: { bg: string; text: string; border: string };
+    success: { bg: string; text: string; border: string };
+    info: { bg: string; text: string; border: string };
   };
 }
 

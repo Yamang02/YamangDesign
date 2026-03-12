@@ -25,6 +25,45 @@ const lightMapping: SemanticMapping = {
     accent: { scale: 'primary', step: 200 },
     focus: { scale: 'primary', step: 500 },
   },
+  action: {
+    primary: {
+      default: { scale: 'primary', step: 500 },
+      hover: { scale: 'primary', step: 600 },
+      active: { scale: 'primary', step: 700 },
+    },
+    secondary: {
+      default: { scale: 'secondary', step: 500 },
+      hover: { scale: 'secondary', step: 600 },
+      active: { scale: 'secondary', step: 700 },
+    },
+    accent: {
+      default: { scale: 'accent', step: 500 },
+      hover: { scale: 'accent', step: 600 },
+      active: { scale: 'accent', step: 700 },
+    },
+  },
+  feedback: {
+    error: {
+      bg: '#FEF2F2',
+      text: '#B91C1C',
+      border: '#EF4444',
+    },
+    warning: {
+      bg: '#FFFBEB',
+      text: '#B45309',
+      border: '#F59E0B',
+    },
+    success: {
+      bg: '#F0FDF4',
+      text: '#15803D',
+      border: '#22C55E',
+    },
+    info: {
+      bg: '#EFF6FF',
+      text: '#1D4ED8',
+      border: '#3B82F6',
+    },
+  },
 };
 
 /** colored: 컬러 배경 (Neumorphism) */
@@ -48,6 +87,45 @@ const coloredMapping: SemanticMapping = {
     accent: { scale: 'primary', step: 200 },
     focus: { scale: 'primary', step: 500 },
   },
+  action: {
+    primary: {
+      default: { scale: 'primary', step: 500 },
+      hover: { scale: 'primary', step: 600 },
+      active: { scale: 'primary', step: 700 },
+    },
+    secondary: {
+      default: { scale: 'secondary', step: 500 },
+      hover: { scale: 'secondary', step: 600 },
+      active: { scale: 'secondary', step: 700 },
+    },
+    accent: {
+      default: { scale: 'accent', step: 500 },
+      hover: { scale: 'accent', step: 600 },
+      active: { scale: 'accent', step: 700 },
+    },
+  },
+  feedback: {
+    error: {
+      bg: '#FEF2F2',
+      text: '#B91C1C',
+      border: '#EF4444',
+    },
+    warning: {
+      bg: '#FFFBEB',
+      text: '#B45309',
+      border: '#F59E0B',
+    },
+    success: {
+      bg: '#F0FDF4',
+      text: '#15803D',
+      border: '#22C55E',
+    },
+    info: {
+      bg: '#EFF6FF',
+      text: '#1D4ED8',
+      border: '#3B82F6',
+    },
+  },
 };
 
 /** dark: 어두운 배경 (다크모드) */
@@ -70,6 +148,45 @@ const darkMapping: SemanticMapping = {
     subtle: { scale: 'neutral', step: 700 },
     accent: { scale: 'primary', step: 400 },
     focus: { scale: 'primary', step: 400 },
+  },
+  action: {
+    primary: {
+      default: { scale: 'primary', step: 400 },
+      hover: { scale: 'primary', step: 500 },
+      active: { scale: 'primary', step: 600 },
+    },
+    secondary: {
+      default: { scale: 'secondary', step: 400 },
+      hover: { scale: 'secondary', step: 500 },
+      active: { scale: 'secondary', step: 600 },
+    },
+    accent: {
+      default: { scale: 'accent', step: 400 },
+      hover: { scale: 'accent', step: 500 },
+      active: { scale: 'accent', step: 600 },
+    },
+  },
+  feedback: {
+    error: {
+      bg: '#450A0A',
+      text: '#FCA5A5',
+      border: '#F87171',
+    },
+    warning: {
+      bg: '#451A03',
+      text: '#FDE68A',
+      border: '#FBBF24',
+    },
+    success: {
+      bg: '#022C22',
+      text: '#6EE7B7',
+      border: '#34D399',
+    },
+    info: {
+      bg: '#111827',
+      text: '#BFDBFE',
+      border: '#60A5FA',
+    },
   },
 };
 

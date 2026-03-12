@@ -40,8 +40,6 @@ import {
   stateLayer,
 } from '../tokens/global';
 import { generateTextStyleVars } from '../tokens/typography';
-import { generateSystemColorVars } from '../utils/system-colors';
-import { systemColorPresets } from '../tokens/global/system-colors';
 import { ThemeContext } from './ThemeContext';
 
 export type { ThemeContextValue } from './ThemeContext';
@@ -229,17 +227,12 @@ export function ThemeProvider({
 
     const typographyVars = generateTextStyleVars();
 
-    const systemVars = generateSystemColorVars(
-      systemColorPresets[systemPreset]
-    );
-
     injectCSSVariables({
       ...primitiveCSSVars,
       ...paletteScaleVars,
       ...themeCSSVars,
       ...stateLayerVars,
       ...typographyVars,
-      ...systemVars,
     });
 
     document.documentElement.setAttribute('data-palette', theme.palette);

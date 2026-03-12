@@ -51,6 +51,12 @@ export interface ThemeColors {
     secondary: ActionColors;
     accent: ActionColors;
   };
+  feedback: {
+    error: { bg: string; text: string; border: string };
+    warning: { bg: string; text: string; border: string };
+    success: { bg: string; text: string; border: string };
+    info: { bg: string; text: string; border: string };
+  };
 }
 
 /**
