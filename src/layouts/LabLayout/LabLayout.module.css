@@ -15,15 +15,15 @@
    ThemeProvider가 주입한 *-global 별칭을 참조.
    이 블록 내부는 --ds-* 유지 필수. ───────────────── */
 [data-shell] [data-context="preview"] {
-  --ds-color-bg-base: var(--ds-color-bg-base-global, #ffffff);
-  --ds-color-bg-surface: var(--ds-color-bg-surface-global, #f8f9fa);
-  --ds-color-bg-muted: var(--ds-color-bg-muted-global, #f1f2f3);
+  --ds-color-bg-base: var(--ds-color-bg-base-global, #FFFFFF);
+  --ds-color-bg-surface: var(--ds-color-bg-surface-global, #F8F9FA);
+  --ds-color-bg-muted: var(--ds-color-bg-muted-global, #F1F2F3);
   --ds-color-text-primary: var(--ds-color-text-primary-global, #111827);
-  --ds-color-text-secondary: var(--ds-color-text-secondary-global, #6b7280);
-  --ds-color-text-muted: var(--ds-color-text-muted-global, #9ca3af);
-  --ds-color-border-subtle: var(--ds-color-border-subtle-global, #e5e7eb);
-  --ds-color-border-default: var(--ds-color-border-default-global, #d1d5db);
-  --ds-color-border-focus: var(--ds-color-border-focus-global, #6366f1);
+  --ds-color-text-secondary: var(--ds-color-text-secondary-global, #6B7280);
+  --ds-color-text-muted: var(--ds-color-text-muted-global, #9CA3AF);
+  --ds-color-border-subtle: var(--ds-color-border-subtle-global, #E5E7EB);
+  --ds-color-border-default: var(--ds-color-border-default-global, #D1D5DB);
+  --ds-color-border-focus: var(--ds-color-border-focus-global, #6366F1);
   --ds-shadow-sm: var(--ds-shadow-sm-global);
   --ds-shadow-md: var(--ds-shadow-md-global);
   --ds-surface-backdrop: var(--ds-surface-backdrop-global, none);
@@ -191,11 +191,25 @@ section[id] {
   margin-bottom: 0;
 }
 
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-spacing-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--ds-spacing-4);
+}
+
 .sectionTitle {
   font-size: var(--ds-text-xl);
   font-weight: var(--ds-font-weight-semibold);
   color: var(--shell-text-primary);
-  margin: 0 0 var(--ds-spacing-4) 0;
+  margin: 0;
+}
+
+.sectionDescInline {
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  margin: 0;
 }
 
 .sectionContent {

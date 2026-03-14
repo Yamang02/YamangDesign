@@ -13,6 +13,26 @@
   gap: var(--ds-spacing-6);
 }
 
+/* E08 P02: 탭 전환 */
+.tabRow {
+  display: flex;
+  gap: var(--ds-spacing-2);
+  margin-bottom: var(--ds-spacing-4);
+}
+.tabBtn {
+  padding: var(--ds-spacing-2) var(--ds-spacing-4);
+  font-size: var(--ds-text-sm);
+  border: 1px solid var(--shell-border-subtle);
+  border-radius: var(--ds-radius-md);
+  background: var(--shell-bg-base);
+  color: var(--shell-text-primary);
+  cursor: pointer;
+}
+.tabBtn[data-active="true"] {
+  background: var(--shell-bg-hover);
+  border-color: var(--shell-border-focus);
+}
+
 /* Page Preview: 서비스 페이지 목업 */
 .pagePreview {
   padding: var(--ds-spacing-6);
@@ -80,57 +100,77 @@
   border-top: 1px solid var(--ds-color-border-subtle);
 }
 
-/* Component Set */
-.componentSet {
+/* E08 P02: Dashboard 목업 */
+.dashboardSection {
   padding: var(--ds-spacing-6);
-  background: var(--shell-bg-surface);
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-lg);
 }
-
-.componentSetInner {
-  /* themeVars 인라인으로 적용되는 영역 */
-  padding: var(--ds-spacing-6);
-  border-radius: var(--ds-radius-md);
-}
-
-.sectionTitle {
-  font-size: var(--ds-text-sm);
+.pageHeading {
+  font-size: var(--ds-text-xl);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-secondary);
-  margin: 0 0 var(--ds-spacing-4) 0;
-  padding-bottom: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--shell-border-subtle);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-6) 0;
 }
-
-.atomsGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-6);
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ds-spacing-4);
   margin-bottom: var(--ds-spacing-8);
 }
-
-.atomBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-2);
-  align-items: flex-start;
+.statCard {
+  min-width: 0;
+}
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-md);
+}
+.previewTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-text-sm);
+}
+.previewTable th,
+.previewTable td {
+  padding: var(--ds-spacing-3) var(--ds-spacing-4);
+  text-align: left;
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+  color: var(--ds-color-text-primary);
+}
+.previewTable th {
+  font-weight: var(--ds-font-weight-semibold);
+  background: var(--shell-bg-subtle);
 }
 
-.atomLabel {
-  font-size: var(--ds-text-caption-size);
-  color: var(--ds-color-text-secondary);
+/* E08 P02: Article 목업 */
+.articleSection {
+  padding: var(--ds-spacing-8) var(--ds-spacing-6);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+.articleTitle {
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-2) 0;
+}
+.articleMeta {
+  margin: 0 0 var(--ds-spacing-6) 0;
+}
+.articleBody {
+  font-size: var(--ds-text-base);
+  line-height: 1.6;
+  color: var(--ds-color-text-primary);
+}
+.articleBody h2 {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-semibold);
+  margin: var(--ds-spacing-6) 0 var(--ds-spacing-2) 0;
+}
+.articleBody p {
+  margin: 0 0 var(--ds-spacing-4) 0;
+}
+.articleBody ul {
+  margin: 0 0 var(--ds-spacing-4) 0;
+  padding-left: var(--ds-spacing-6);
 }
 
-.moleculesRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-4);
-  margin-bottom: var(--ds-spacing-6);
-}
-
-.organismsRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-4);
-}

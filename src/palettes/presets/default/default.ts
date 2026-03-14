@@ -12,7 +12,7 @@ export const defaultPalette: PaletteDefinition = {
     secondary: '#4F8060',
     accent: '#2F6040',
     sub: '#A8E6C7',
-    neutral: '#6b7280',
+    neutral: '#6B7280',
   },
   bgStrategy: 'light',
   contrast: 'normal',

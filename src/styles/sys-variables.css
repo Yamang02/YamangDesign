@@ -3,19 +3,19 @@
  * 테마 무관, 컨텍스트 무관. error/warning/success/info 고정값.
  */
 :root {
-  --sys-color-error: #dc2626;
-  --sys-color-error-subtle: #fef2f2;
-  --sys-color-error-emphasis: #991b1b;
+  --sys-color-error: #DC2626;
+  --sys-color-error-subtle: #FEF2F2;
+  --sys-color-error-emphasis: #991B1B;
 
-  --sys-color-warning: #d97706;
-  --sys-color-warning-subtle: #fffbeb;
-  --sys-color-warning-emphasis: #b45309;
+  --sys-color-warning: #D97706;
+  --sys-color-warning-subtle: #FFFBEB;
+  --sys-color-warning-emphasis: #B45309;
 
-  --sys-color-success: #16a34a;
-  --sys-color-success-subtle: #f0fdf4;
-  --sys-color-success-emphasis: #15803d;
+  --sys-color-success: #16A34A;
+  --sys-color-success-subtle: #F0FDF4;
+  --sys-color-success-emphasis: #15803D;
 
-  --sys-color-info: #2563eb;
-  --sys-color-info-subtle: #eff6ff;
-  --sys-color-info-emphasis: #1d4ed8;
+  --sys-color-info: #2563EB;
+  --sys-color-info-subtle: #EFF6FF;
+  --sys-color-info-emphasis: #1D4ED8;
 }

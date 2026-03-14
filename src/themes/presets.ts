@@ -27,6 +27,11 @@ export const stylePresets: Record<StyleName, StyleDefinition> = {
   glassmorphism: glassmorphismStyle,
 };
 
+/** E08 P01: 스타일 옵션을 preset registry에서 동적 파생 */
+export function getStylePresetNames(): StyleName[] {
+  return Object.keys(stylePresets) as StyleName[];
+}
+
 /** ExternalPalette → PaletteDefinition (custom, toThemePreset 래퍼) */
 export function toCustomPaletteDefinition(colors: ExternalPalette): PaletteDefinition {
   return toThemePreset(colors, 'custom');

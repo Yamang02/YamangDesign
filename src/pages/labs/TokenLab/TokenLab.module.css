@@ -1,0 +1,302 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
+/* E08 P05: 공통 토큰 테이블 (Build Design tokens 패턴 정렬) */
+.tokenTableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-md);
+  margin-bottom: var(--ds-spacing-4);
+}
+
+.tokenTableWrap:last-child {
+  margin-bottom: 0;
+}
+
+.tokenTable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: var(--ds-text-sm);
+}
+
+.tokenTable th,
+.tokenTable td {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  text-align: left;
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+  vertical-align: middle;
+}
+
+.tokenTable th {
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-secondary);
+  background: var(--ds-color-bg-muted);
+}
+
+/* 테이블 카드마다 동일한 열 너비 */
+.tokenTable th:nth-child(1),
+.tokenTable .tokenNameCell {
+  width: 100px;
+  min-width: 100px;
+}
+
+.tokenTable th:nth-child(3),
+.tokenTable .tokenSwatchCell,
+.tokenTable .tokenSwatchTh {
+  width: 48px;
+  min-width: 48px;
+}
+
+.tokenTable .tokenValueCell {
+  /* 2번째 열: 나머지 공간 (고정되지 않음) */
+  word-break: break-all;
+}
+
+/* 섹션 하단 한 행 차지: 폰트·shadow·focus 등 긴 값 카테고리 */
+.tokenCategoryFullRow {
+  width: 100%;
+  margin-top: var(--ds-spacing-6);
+}
+
+.tokenCategoryFullRow:first-of-type {
+  margin-top: var(--ds-spacing-4);
+}
+
+.tokenTable td {
+  color: var(--ds-color-text-primary);
+}
+
+.tokenTable tr:last-child td {
+  border-bottom: none;
+}
+
+.tokenTable .tokenNameCell {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--ds-text-xs);
+  min-width: 0;
+}
+
+.tokenTable .tokenNameInner {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tokenTable .tokenSwatchCell {
+  width: 48px;
+}
+
+.tokenTable .tokenSwatchTh {
+  width: 48px;
+  min-width: 48px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tokenTable .tokenValueCell[data-structured] {
+  white-space: pre-line;
+  font-size: var(--ds-text-xs);
+  line-height: 1.5;
+  vertical-align: top;
+}
+
+.tokenTable .tokenSwatch {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--ds-color-border-subtle);
+  vertical-align: middle;
+}
+
+/* E08 P08: Token Detail Panel */
+.tokenDetail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.tokenDetailMeta {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  margin: 0;
+}
+
+.tokenDetailHeading {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-1);
+}
+
+.tokenDetailValue {
+  font-size: var(--ds-text-sm);
+  font-family: ui-monospace, monospace;
+  color: var(--ds-color-text-primary);
+  word-break: break-all;
+}
+
+.tokenDetailChain {
+  font-size: var(--ds-text-xs);
+  font-family: ui-monospace, monospace;
+  color: var(--ds-color-text-secondary);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.componentTabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--ds-radius-full);
+  background-color: var(--ds-color-bg-muted);
+}
+
+.componentTab {
+  border: none;
+  background: none;
+  padding: var(--ds-spacing-1) var(--ds-spacing-3);
+  border-radius: var(--ds-radius-full);
+  font-size: var(--ds-text-xs);
+  cursor: pointer;
+  color: var(--ds-color-text-secondary);
+}
+
+.componentTab[data-active='true'] {
+  background-color: var(--ds-color-bg-base);
+  color: var(--ds-color-text-primary);
+}
+
+.componentLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--ds-spacing-6);
+  align-items: flex-start;
+}
+
+.previewCard {
+  padding: var(--ds-spacing-4);
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+.previewTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-text-secondary);
+  margin: 0;
+}
+
+.previewBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+/* Section description & categories */
+.sectionDesc {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  margin: 0 0 var(--ds-spacing-4);
+}
+
+/* E08: 테이블들을 2~3열 그리드로 배치 */
+.tokenCategoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--ds-spacing-6);
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .tokenCategoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .tokenCategoryGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tokenCategory {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.tokenCategoryGrid .tokenCategory {
+  margin-bottom: 0;
+}
+
+.tokenCategoryGrid .tokenCategory:last-child {
+  margin-bottom: 0;
+}
+
+.categoryTitle {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-1);
+}
+
+/* 값의 공통 부분을 제목 쪽에 표시 (반복 값 정리) */
+.categoryValueNote {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  margin: 0 0 var(--ds-spacing-2);
+}
+
+/* Scalar token card (E05 P04) */
+.scalarCard {
+  padding: var(--ds-spacing-3);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.scalarCard .tokenName {
+  font-size: var(--ds-text-xs);
+}
+
+.scalarCard .tokenValue {
+  font-size: var(--ds-text-xs);
+  word-break: break-all;
+}
+
+/* DS Tokens wrapper (TOC scroll target) */
+.dsTokensWrapper {
+  margin-bottom: var(--ds-spacing-8);
+}
+
+.dsTokensWrapper .sectionTitle {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-4);
+}
+
+.dsTokensWrapper .sectionContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-8);
+}
+
+.sysUsage .categoryTitle {
+  margin-bottom: var(--ds-spacing-2);
+}
+
+.sysUsageRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-3);
+  align-items: flex-start;
+}

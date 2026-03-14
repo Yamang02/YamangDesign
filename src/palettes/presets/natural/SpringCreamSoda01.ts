@@ -8,7 +8,7 @@ export const springCreamSoda01Palette: PaletteDefinition = {
     secondary: '#72333E',
     accent: '#C2D95C',
     sub: '#F7C9DD',
-    neutral: '#7f4a6f',
+    neutral: '#7F4A6F',
   },
   bgStrategy: 'light',
   contrast: 'normal',

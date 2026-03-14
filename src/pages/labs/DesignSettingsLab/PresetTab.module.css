@@ -1,0 +1,437 @@
+/* P07: 프리셋 탭 전용 — 2-column 레이아웃, 가용 너비/높이 100% */
+.content {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: var(--ds-spacing-6);
+  min-height: 0;
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  flex: 1;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+
+/* ─── 좌: 현재 설정 ───────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-spacing-2);
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-caption-size);
+  font-weight: var(--ds-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--shell-text-secondary);
+  margin: 0;
+}
+
+.paletteList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.flatCard {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background: var(--shell-bg-subtle);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-md);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.flatCard:hover {
+  border-color: var(--shell-border-default);
+  background: var(--shell-bg-base);
+}
+
+.paletteRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.paletteLabel {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--shell-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.paletteInputRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  min-width: 0;
+}
+
+.colorSwatch {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--shell-border-default);
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.colorSwatch input[type="color"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.hexInput {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  padding: 0 var(--ds-spacing-2);
+  font-size: var(--ds-text-sm);
+  font-family: ui-monospace, monospace;
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-default);
+  border-radius: var(--ds-radius-sm);
+  outline: none;
+}
+
+.hexInput:focus {
+  border-color: var(--shell-action-primary);
+}
+
+.paletteDeleteSlot {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paletteClearBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--shell-text-tertiary);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.paletteClearBtn:hover {
+  background: var(--sys-color-error-subtle);
+  color: var(--sys-color-error);
+}
+
+.settingsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-3);
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background: var(--shell-bg-subtle);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-md);
+}
+
+.settingLabel {
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  color: var(--shell-text-primary);
+  white-space: nowrap;
+  min-width: 70px;
+}
+
+.settingSelect {
+  flex: 1;
+  min-width: 140px;
+}
+
+.settingSelect > div {
+  width: 100%;
+}
+
+/* ─── 우: 프리셋 브라우저 ───────────────────────────── */
+.presetBrowser {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+  min-height: 0;
+}
+
+.presetTabsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.presetPanel {
+  margin-top: var(--ds-spacing-2);
+  min-height: 0;
+}
+
+.presetList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--ds-spacing-3);
+}
+
+.presetItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+  padding: var(--ds-spacing-3);
+  background: var(--shell-bg-subtle);
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-md);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  width: 100%;
+}
+
+.presetItem:hover {
+  border-color: var(--shell-border-default);
+  background: var(--shell-bg-base);
+}
+
+.presetBadge {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  align-self: flex-start;
+}
+
+.presetBadges {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+  flex-wrap: wrap;
+}
+
+.presetBadge.yamang {
+  background: var(--shell-action-primary);
+  color: var(--shell-text-on-action);
+}
+
+.styleBadge {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
+  color: var(--shell-text-secondary);
+}
+
+.semanticDot {
+  color: var(--shell-text-tertiary);
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.appliedBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--shell-action-primary);
+}
+
+.presetBadge.custom {
+  background: var(--shell-badge-custom, var(--shell-text-muted));
+  color: var(--shell-text-on-action);
+}
+
+.presetBadge.natural {
+  background: var(--shell-badge-natural, var(--shell-text-muted));
+  color: var(--shell-text-on-action);
+}
+
+.presetBadge.category {
+  background: var(--shell-text-muted);
+  color: var(--shell-text-on-action);
+}
+
+.presetName {
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  color: var(--shell-text-primary);
+  line-height: 1.3;
+}
+
+.presetColors {
+  display: flex;
+  gap: 3px;
+}
+
+.presetDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--shell-border-subtle);
+}
+
+.presetDeleteSlot {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.deleteBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--shell-text-tertiary);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.deleteBtn:hover {
+  background: var(--sys-color-error-subtle);
+  color: var(--sys-color-error);
+}
+
+/* P08: 좌측 상단 저장 행 — 컬러 팔레트 섹션과 시각적 조화 */
+.saveRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  min-width: 0;
+}
+
+.saveRow .saveInlineInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+  padding: var(--ds-spacing-1) var(--ds-spacing-2);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-default);
+  border-radius: var(--ds-radius-sm);
+  cursor: pointer;
+}
+
+.saveBtn:hover {
+  color: var(--shell-action-primary);
+  border-color: var(--shell-action-primary);
+}
+
+/* P08: 서브탭 (Custom / 전체 / Default / ...) */
+.presetSubTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-1);
+}
+
+.presetSubTab {
+  padding: var(--ds-spacing-1) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-sm);
+  cursor: pointer;
+}
+
+.presetSubTab:hover {
+  color: var(--shell-text-primary);
+}
+
+.presetSubTabActive {
+  color: var(--shell-text-primary);
+  font-weight: var(--ds-font-weight-medium);
+  border-color: var(--shell-border-default);
+  background: var(--shell-bg-subtle);
+}
+
+/* P08: 활성 프리셋 표시 (배경/border, 체크 아이콘 대신) */
+.presetItemApplied {
+  border-color: var(--shell-action-primary);
+  background: var(--shell-bg-base);
+  box-shadow: 0 0 0 2px var(--shell-action-primary);
+}
+
+.saveInlineInput {
+  min-width: 140px;
+  height: 28px;
+  padding: 0 var(--ds-spacing-2);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-default);
+  border-radius: var(--ds-radius-sm);
+  outline: none;
+}
+
+.saveInlineInput:focus {
+  border-color: var(--shell-action-primary);
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--shell-text-tertiary);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+  transition: color 0.15s, background 0.15s;
+}
+
+.iconBtn:hover {
+  color: var(--shell-action-primary);
+  background: var(--shell-bg-hover);
+}

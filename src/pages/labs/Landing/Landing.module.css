@@ -1,0 +1,171 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
+/* Section common */
+.section {
+  padding: var(--ds-spacing-12) var(--ds-spacing-6);
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+  margin-bottom: var(--ds-spacing-2);
+  text-align: center;
+}
+
+.sectionSubtitle {
+  font-size: var(--ds-text-lg);
+  color: var(--ds-color-text-secondary);
+  margin-bottom: var(--ds-spacing-8);
+  text-align: center;
+}
+
+/* Hero */
+.hero {
+  padding: var(--ds-spacing-16) var(--ds-spacing-6);
+  text-align: center;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: var(--ds-text-4xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+  margin-bottom: var(--ds-spacing-4);
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: var(--ds-text-xl);
+  color: var(--ds-color-text-secondary);
+  margin-bottom: var(--ds-spacing-8);
+  line-height: 1.6;
+}
+
+.heroButtons {
+  display: flex;
+  gap: var(--ds-spacing-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Features */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--ds-spacing-6);
+}
+
+.featureCard {
+  text-align: center;
+  padding: var(--ds-spacing-6);
+}
+
+.featureIcon {
+  margin: 0 auto var(--ds-spacing-4);
+}
+
+.featureTitle {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin-bottom: var(--ds-spacing-2);
+}
+
+.featureDescription {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Pricing */
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--ds-spacing-6);
+  align-items: stretch;
+}
+
+.pricingCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.pricingHighlight {
+  position: relative;
+  transform: scale(1.05);
+}
+
+/* 강조 카드는 밝은 배경 (elevated) 사용 - 배색 이론 준수 */
+.pricingHighlight [data-variant='elevated'] {
+  background-color: var(--ds-color-bg-elevated);
+}
+
+.badgeWrapper {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.pricingPriceWrapper {
+  margin-bottom: var(--ds-spacing-4);
+}
+
+.pricingPrice {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+}
+
+.pricingPeriod {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+}
+
+.pricingFeatures {
+  list-style: none;
+  padding: 0;
+  margin: var(--ds-spacing-4) 0;
+  flex: 1;
+}
+
+.pricingFeatureItem {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  padding: var(--ds-spacing-2) 0;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+}
+
+/* Testimonials */
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--ds-spacing-6);
+}
+
+.testimonialQuote {
+  font-size: var(--ds-text-md);
+  color: var(--ds-color-text-primary);
+  font-style: italic;
+  margin-bottom: var(--ds-spacing-4);
+  line-height: 1.6;
+}
+
+/* Contact */
+.contactWrapper {
+  max-width: 31.25rem;
+  margin: 0 auto;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+}
+

@@ -21,9 +21,15 @@ const categoryLabels: Record<string, string> = {
 export interface HeaderNavProps {
   activePage: string;
   onSelect: (pageId: string) => void;
+  /** P05: 설정 버튼 클릭 시 호출 (설정 페이지로 이동) */
+  onOpenSettings?: () => void;
 }
 
-export function HeaderNav({ activePage, onSelect }: HeaderNavProps) {
+export function HeaderNav({
+  activePage,
+  onSelect,
+  onOpenSettings,
+}: HeaderNavProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
@@ -75,7 +81,7 @@ export function HeaderNav({ activePage, onSelect }: HeaderNavProps) {
       })}
 
       <span className={styles.divider} aria-hidden />
-      <HeaderSettingsButton />
+      <HeaderSettingsButton onOpenSettings={onOpenSettings} />
     </nav>
   );
 }

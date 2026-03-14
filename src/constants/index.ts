@@ -42,15 +42,12 @@ export {
   SYSTEM_COLOR_KEYS,
   SYSTEM_SCALE_STEPS,
   SCALE_STEP_GUIDES,
-  getStepGuide,
 } from './palette-scales';
 
 export type {
   PaletteScale,
   ScaleStep,
   SystemColorKey,
-  SystemScaleStep,
-  ScaleStepGuide,
 } from './palette-scales';
 
 export { componentTokenMap } from './component-tokens';

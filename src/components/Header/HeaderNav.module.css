@@ -17,6 +17,7 @@
 }
 
 /* 단일 아이템 (아이콘 또는 아이콘+메뉴명) */
+/* 비활성: 연한 회색, active: 진한 회색, hover: 통일된 배경+진한 텍스트 */
 .navItem {
   display: flex;
   align-items: center;
@@ -28,11 +29,11 @@
   border-radius: var(--ds-radius-md);
   background: transparent;
   border: none;
-  color: var(--shell-text-secondary);
+  color: var(--shell-text-tertiary);
   cursor: pointer;
   font-size: var(--ds-text-body-md-size);
   line-height: var(--ds-text-body-md-leading);
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .navItemWithLabel {
@@ -50,7 +51,7 @@
 }
 
 .navItem.active {
-  color: var(--shell-action-active);
+  color: var(--shell-text-primary);
 }
 
 .navItemIcon {
@@ -77,11 +78,11 @@
   border-radius: var(--ds-radius-md);
   background: transparent;
   border: none;
-  color: var(--shell-text-secondary);
+  color: var(--shell-text-tertiary);
   cursor: pointer;
   font-size: var(--ds-text-body-md-size);
   line-height: var(--ds-text-body-md-leading);
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dropdownTrigger:hover {
@@ -91,7 +92,7 @@
 
 .dropdownTrigger.open,
 .dropdownTrigger.active {
-  color: var(--shell-action-active);
+  color: var(--shell-text-primary);
 }
 
 .dropdownLabel {
@@ -145,7 +146,7 @@
 
 .dropdownItemActive {
   background: var(--shell-bg-primary-subtle);
-  color: var(--shell-action-active);
+  color: var(--shell-text-primary);
 }
 
 /* 설정 버튼 및 패널 */

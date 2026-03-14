@@ -4,8 +4,8 @@
   "description": "디자인 시스템 라이브러리",
   "start_url": "/YamangDesign/",
   "display": "browser",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "/YamangDesign/favicons/android-chrome-192x192.png",

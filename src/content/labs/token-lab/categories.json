@@ -1,0 +1,169 @@
+{
+  "shellCategories": [
+    {
+      "title": "배경 (bg)",
+      "tokens": [
+        "--shell-bg-base",
+        "--shell-bg-subtle",
+        "--shell-bg-surface",
+        "--shell-bg-muted",
+        "--shell-bg-elevated",
+        "--shell-bg-hover",
+        "--shell-bg-primary-subtle"
+      ]
+    },
+    {
+      "title": "텍스트 (text)",
+      "tokens": [
+        "--shell-text-primary",
+        "--shell-text-secondary",
+        "--shell-text-tertiary",
+        "--shell-text-muted",
+        "--shell-text-on-action"
+      ]
+    },
+    {
+      "title": "경계선 (border)",
+      "tokens": [
+        "--shell-border-default",
+        "--shell-border-subtle",
+        "--shell-border-strong",
+        "--shell-border-hover",
+        "--shell-border-focus"
+      ]
+    },
+    {
+      "title": "액션 (action)",
+      "tokens": ["--shell-action-primary", "--shell-action-hover", "--shell-action-active"]
+    },
+    {
+      "title": "포커스",
+      "tokens": ["--shell-focus-ring", "--shell-focus-glow"],
+      "fullRow": true
+    },
+    {
+      "title": "그림자 (shadow)",
+      "tokens": ["--shell-shadow-sm", "--shell-shadow-md", "--shell-shadow-lg"],
+      "fullRow": true
+    },
+    {
+      "title": "오버레이",
+      "tokens": ["--shell-overlay", "--shell-tooltip-bg", "--shell-tooltip-text"]
+    },
+    {
+      "title": "배지 (badge)",
+      "tokens": ["--shell-badge-custom", "--shell-badge-semantic", "--shell-badge-natural"]
+    }
+  ],
+  "globalColorTokens": [
+    "--ds-color-primary-500",
+    "--ds-color-secondary-500",
+    "--ds-color-accent-500",
+    "--ds-color-neutral-500",
+    "--ds-color-sub-500"
+  ],
+  "globalSpacingTokens": [
+    "--ds-spacing-1",
+    "--ds-spacing-2",
+    "--ds-spacing-3",
+    "--ds-spacing-4",
+    "--ds-spacing-5",
+    "--ds-spacing-6"
+  ],
+  "globalTypographyTokens": [
+    "--ds-text-xs",
+    "--ds-text-sm",
+    "--ds-text-md",
+    "--ds-text-lg",
+    "--ds-font-sans",
+    "--ds-font-mono"
+  ],
+  "globalMotionTokens": [
+    "--ds-duration-fast",
+    "--ds-duration-normal",
+    "--ds-duration-slow",
+    "--ds-ease-easeOut",
+    "--ds-ease-productive"
+  ],
+  "aliasGroups": [
+    {
+      "title": "배경 (bg)",
+      "tokens": [
+        "--ds-color-bg-base",
+        "--ds-color-bg-surface",
+        "--ds-color-bg-surfaceBrand",
+        "--ds-color-bg-elevated",
+        "--ds-color-bg-muted"
+      ]
+    },
+    {
+      "title": "텍스트 (text)",
+      "tokens": [
+        "--ds-color-text-primary",
+        "--ds-color-text-secondary",
+        "--ds-color-text-muted",
+        "--ds-color-text-inverse",
+        "--ds-color-text-on-action"
+      ]
+    },
+    {
+      "title": "경계선 (border)",
+      "tokens": [
+        "--ds-color-border-default",
+        "--ds-color-border-subtle",
+        "--ds-color-border-accent",
+        "--ds-color-border-focus"
+      ]
+    },
+    {
+      "title": "액션 Primary",
+      "tokens": [
+        "--ds-color-action-primary-default",
+        "--ds-color-action-primary-hover",
+        "--ds-color-action-primary-active"
+      ]
+    },
+    {
+      "title": "액션 Secondary",
+      "tokens": [
+        "--ds-color-action-secondary-default",
+        "--ds-color-action-secondary-hover",
+        "--ds-color-action-secondary-active"
+      ]
+    },
+    {
+      "title": "액션 Accent",
+      "tokens": [
+        "--ds-color-action-accent-default",
+        "--ds-color-action-accent-hover",
+        "--ds-color-action-accent-active"
+      ]
+    }
+  ],
+  "sysGroups": [
+    {
+      "title": "Error",
+      "tokens": ["--sys-color-error", "--sys-color-error-subtle", "--sys-color-error-emphasis"]
+    },
+    {
+      "title": "Warning",
+      "tokens": [
+        "--sys-color-warning",
+        "--sys-color-warning-subtle",
+        "--sys-color-warning-emphasis"
+      ]
+    },
+    {
+      "title": "Success",
+      "tokens": [
+        "--sys-color-success",
+        "--sys-color-success-subtle",
+        "--sys-color-success-emphasis"
+      ]
+    },
+    {
+      "title": "Info",
+      "tokens": ["--sys-color-info", "--sys-color-info-subtle", "--sys-color-info-emphasis"]
+    }
+  ]
+}

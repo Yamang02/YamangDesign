@@ -20,7 +20,12 @@
       "Bash(git mv docs/FEATURES.md docs/design/FEATURES.md)",
       "Bash(git add docs/archive/palette-selection/Readme.md docs/design/TUTORIAL.md docs/design/FEATURES.md docs/epic/E01.2026-03-13_doc-restructure/P03-root-docs-migration.md docs/epic/E01.2026-03-13_doc-restructure/Readme.md)",
       "Bash(grep -l \"\\\\-\\\\-ds\\\\-\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/**/*.module.css)",
-      "Bash(wc -l /c/Users/ljj02/Desktop/dev/YamangDesign/src/styles/presets/*.ts)"
+      "Bash(wc -l /c/Users/ljj02/Desktop/dev/YamangDesign/src/styles/presets/*.ts)",
+      "Bash(mkdir -p docs/epic/E07.2026-03-14_code-cleanup-restructure)",
+      "Bash(mkdir -p docs/epic/E08.2026-03-14_ux-refinement)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"
     ]
   }
 }

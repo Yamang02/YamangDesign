@@ -1,6 +1,6 @@
 /**
  * E06 P06: Context — Service
- * DS 테마가 적용된 서비스 UI 미리보기 (Controls + Page Preview + Component Set).
+ * E08 P02: 실제 서비스 페이지 목업에 집중 (Landing / Dashboard / Article). Component Set 제거.
  */
 import { LabLayout } from '../../layouts';
 import { ServiceContext } from './Service/ServiceContext';
@@ -9,7 +9,6 @@ import type { TocItem } from '../../layouts';
 const tocItems: TocItem[] = [
   { id: 'controls', label: 'Controls' },
   { id: 'page-preview', label: 'Page Preview' },
-  { id: 'component-set', label: 'Component Set' },
 ];
 
 export function Service() {

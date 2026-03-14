@@ -15,8 +15,8 @@ const manifest = {
   description: '디자인 시스템 라이브러리',
   start_url: base,
   display: 'browser',
-  background_color: '#ffffff',
-  theme_color: '#ffffff',
+  background_color: '#FFFFFF',
+  theme_color: '#FFFFFF',
   icons: [
     { src: `${base}favicons/android-chrome-192x192.png`, sizes: '192x192', type: 'image/png' },
     { src: `${base}favicons/android-chrome-512x512.png`, sizes: '512x512', type: 'image/png' },

@@ -1,0 +1,109 @@
+{
+  "components": [
+    {
+      "id": "button",
+      "label": "Button",
+      "category": "action",
+      "previewVariants": ["primary", "outline", "ghost"],
+      "tokens": [
+        { "prop": "font", "default": "--ds-font-sans", "description": "폰트" },
+        { "prop": "fontSize", "default": "--ds-text-label-size", "description": "폰트 크기" },
+        { "prop": "radius", "default": "--ds-radius-md", "description": "둥근 모서리" },
+        { "prop": "transition", "default": "--ds-transition-interactive-full", "description": "트랜지션" },
+        { "prop": "heightSm", "default": "--ds-size-sm", "description": "높이 sm" },
+        { "prop": "heightMd", "default": "--ds-size-md", "description": "높이 md" },
+        { "prop": "heightLg", "default": "--ds-size-lg", "description": "높이 lg" },
+        { "prop": "primaryBg", "default": "--ds-color-action-primary-default", "description": "primary 기본" },
+        { "prop": "primaryHover", "default": "--ds-color-action-primary-hover", "description": "primary hover" },
+        { "prop": "primaryActive", "default": "--ds-color-action-primary-active", "description": "primary active" },
+        { "prop": "textOnAction", "default": "--ds-color-text-on-action", "description": "버튼 텍스트" },
+        { "prop": "shadowSm", "default": "--ds-shadow-sm", "description": "그림자 기본" },
+        { "prop": "shadowMd", "default": "--ds-shadow-md", "description": "그림자 hover" },
+        { "prop": "ghostHoverBg", "default": "--ds-color-bg-muted", "description": "ghost hover" },
+        { "prop": "focusRing", "default": "--ds-color-border-focus", "description": "포커스 링" },
+        { "prop": "borderWidth", "default": "--ds-border-width", "description": "outline 테두리" }
+      ]
+    },
+    {
+      "id": "input",
+      "label": "Input",
+      "category": "form",
+      "previewVariants": ["outline"],
+      "tokens": [
+        { "prop": "font", "default": "--ds-font-sans", "description": "폰트" },
+        { "prop": "radius", "default": "--ds-radius-md", "description": "둥근 모서리" },
+        { "prop": "heightSm", "default": "--ds-size-sm", "description": "높이 sm" },
+        { "prop": "heightMd", "default": "--ds-size-md", "description": "높이 md" },
+        { "prop": "heightLg", "default": "--ds-size-lg", "description": "높이 lg" },
+        { "prop": "bgBase", "default": "--ds-color-bg-base", "description": "outline/flushed 배경" },
+        { "prop": "bgMuted", "default": "--ds-color-bg-muted", "description": "filled 배경" },
+        { "prop": "textPrimary", "default": "--ds-color-text-primary", "description": "텍스트" },
+        { "prop": "borderDefault", "default": "--ds-color-border-default", "description": "테두리" },
+        { "prop": "borderFocus", "default": "--ds-color-border-focus", "description": "포커스" },
+        { "prop": "labelSize", "default": "--ds-text-label-size", "description": "라벨 폰트" }
+      ]
+    },
+    {
+      "id": "select",
+      "label": "Select",
+      "category": "form",
+      "previewVariants": ["outline"],
+      "tokens": [
+        { "prop": "font", "default": "--ds-font-sans", "description": "폰트" },
+        { "prop": "radius", "default": "--ds-radius-md", "description": "둥근 모서리" },
+        { "prop": "heightSm", "default": "--ds-size-sm", "description": "높이 sm" },
+        { "prop": "heightMd", "default": "--ds-size-md", "description": "높이 md" },
+        { "prop": "heightLg", "default": "--ds-size-lg", "description": "높이 lg" },
+        { "prop": "bgSurface", "default": "--ds-color-bg-surface", "description": "outline 배경" },
+        { "prop": "bgMuted", "default": "--ds-color-bg-muted", "description": "filled 배경" },
+        { "prop": "bgElevated", "default": "--ds-color-bg-elevated", "description": "드롭다운 배경" },
+        { "prop": "textPrimary", "default": "--ds-color-text-primary", "description": "텍스트" },
+        { "prop": "borderDefault", "default": "--ds-color-border-default", "description": "테두리" },
+        { "prop": "primaryDefault", "default": "--ds-color-action-primary-default", "description": "선택 옵션" },
+        { "prop": "borderFocus", "default": "--ds-color-border-focus", "description": "포커스" },
+        { "prop": "shadowLg", "default": "--ds-shadow-lg", "description": "드롭다운 그림자" }
+      ]
+    },
+    {
+      "id": "card",
+      "label": "Card",
+      "category": "layout",
+      "previewVariants": ["elevated"],
+      "tokens": [
+        { "prop": "radius", "default": "--ds-radius-lg", "description": "둥근 모서리" },
+        { "prop": "transition", "default": "--ds-transition-shadow", "description": "트랜지션" },
+        { "prop": "bgSurfaceBrand", "default": "--ds-color-bg-surfaceBrand", "description": "elevated 배경" },
+        { "prop": "bgBase", "default": "--ds-color-bg-base", "description": "outlined 배경" },
+        { "prop": "bgSurface", "default": "--ds-color-bg-surface", "description": "flat 배경" },
+        { "prop": "bgMuted", "default": "--ds-color-bg-muted", "description": "flat hover" },
+        { "prop": "borderSubtle", "default": "--ds-color-border-subtle", "description": "elevated 테두리" },
+        { "prop": "borderDefault", "default": "--ds-color-border-default", "description": "outlined 테두리" },
+        { "prop": "shadowMd", "default": "--ds-shadow-md", "description": "elevated 그림자" },
+        { "prop": "shadowLg", "default": "--ds-shadow-lg", "description": "elevated hover" },
+        { "prop": "headingSize", "default": "--ds-text-heading-2-size", "description": "Header 폰트" },
+        { "prop": "bodySize", "default": "--ds-text-body-md-size", "description": "Body 폰트" },
+        { "prop": "textPrimary", "default": "--ds-color-text-primary", "description": "Header 텍스트" },
+        { "prop": "textSecondary", "default": "--ds-color-text-secondary", "description": "Body 텍스트" },
+        { "prop": "borderFocus", "default": "--ds-color-border-focus", "description": "포커스" }
+      ]
+    },
+    {
+      "id": "badge",
+      "label": "Badge",
+      "category": "action",
+      "previewVariants": ["primary", "outline", "subtle"],
+      "tokens": [
+        { "prop": "font", "default": "--ds-font-sans", "description": "폰트" },
+        { "prop": "fontWeight", "default": "--ds-font-weight-semibold", "description": "폰트 굵기" },
+        { "prop": "radius", "default": "--ds-radius-full", "description": "둥근 모서리" },
+        { "prop": "primaryBg", "default": "--ds-color-action-primary-default", "description": "primary 배경" },
+        { "prop": "textOnAction", "default": "--ds-color-text-on-action", "description": "primary 텍스트" },
+        { "prop": "secondaryBg", "default": "--ds-color-action-secondary-default", "description": "secondary 배경" },
+        { "prop": "accentBg", "default": "--ds-color-action-accent-default", "description": "accent 배경" },
+        { "prop": "subtleBg", "default": "--ds-color-bg-muted", "description": "subtle 배경" },
+        { "prop": "textPrimary", "default": "--ds-color-text-primary", "description": "subtle/outline 텍스트" },
+        { "prop": "borderWidth", "default": "--ds-border-width", "description": "테두리" }
+      ]
+    }
+  ]
+}

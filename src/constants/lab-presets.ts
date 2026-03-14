@@ -22,7 +22,7 @@ type CSSVariables = Record<string, string>;
  */
 export function getStyleVariables(
   styleName: StyleName,
-  bgColor: string = '#f5f5f5'
+  bgColor: string = '#F5F5F5'
 ): CSSVariables {
   const styleDef = stylePresets[styleName];
   if (!styleDef) return {};

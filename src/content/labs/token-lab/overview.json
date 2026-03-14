@@ -1,0 +1,40 @@
+{
+  "layers": [
+    {
+      "id": "shell",
+      "title": "Shell",
+      "note": "고정 라이트, 테마 무관",
+      "categories": [
+        { "label": "bg", "desc": "배경 계층" },
+        { "label": "text", "desc": "텍스트 계층" },
+        { "label": "border", "desc": "경계선" },
+        { "label": "action", "desc": "인터랙션 색상" },
+        { "label": "shadow", "desc": "깊이 표현" },
+        { "label": "overlay", "desc": "오버레이·툴팁" },
+        { "label": "badge", "desc": "배지 색상" }
+      ]
+    },
+    {
+      "id": "ds",
+      "title": "Design System",
+      "note": "테마 반응형 (ThemeProvider)",
+      "categories": [
+        { "label": "color", "desc": "팔레트 × 스타일" },
+        { "label": "spacing", "desc": "간격 스케일" },
+        { "label": "typography", "desc": "서체 정의" },
+        { "label": "motion", "desc": "전환 속도·이징" }
+      ]
+    },
+    {
+      "id": "sys",
+      "title": "System",
+      "note": "상태 색상, 테마 무관",
+      "categories": [
+        { "label": "error", "desc": "에러 상태" },
+        { "label": "warning", "desc": "경고 상태" },
+        { "label": "success", "desc": "성공 상태" },
+        { "label": "info", "desc": "안내 상태" }
+      ]
+    }
+  ]
+}

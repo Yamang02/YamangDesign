@@ -23,7 +23,7 @@
 :root {
   --ds-focus-ring-width: 2px;
   --ds-focus-ring-offset: 2px;
-  --ds-focus-ring-color: var(--ds-color-border-focus, #6366f1);
+  --ds-focus-ring-color: var(--ds-color-border-focus, #6366F1);
 }
 
 :focus-visible {

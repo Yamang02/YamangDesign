@@ -11,6 +11,8 @@ export interface LabSectionProps {
   card?: boolean;
   /** 섹션 ID (E03 TOC 연동용) */
   id?: string;
+  /** 제목과 같은 행에 표시할 설명 (Token Lab 등) */
+  description?: React.ReactNode;
 }
 
 export function LabSection({
@@ -18,10 +20,16 @@ export function LabSection({
   children,
   card = true,
   id,
+  description,
 }: LabSectionProps) {
   const content = (
     <section id={id} className={styles.labSection}>
-      <h2 className={styles.sectionTitle}>{title}</h2>
+      <div className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>{title}</h2>
+        {description != null && (
+          <p className={styles.sectionDescInline}>{description}</p>
+        )}
+      </div>
       <div className={styles.sectionContent}>{children}</div>
     </section>
   );

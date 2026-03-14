@@ -7,32 +7,32 @@
   --nav-height: 64px;
 
   /* 배경 - 라이트 (E03 단일 크롬) */
-  --shell-bg-base: #ffffff;
-  --shell-bg-subtle: #f8f9fa;
-  --shell-bg-surface: #f1f3f5;
-  --shell-bg-muted: #f1f3f5;
-  --shell-bg-elevated: #ffffff;
+  --shell-bg-base: #FFFFFF;
+  --shell-bg-subtle: #F8F9FA;
+  --shell-bg-surface: #F1F3F5;
+  --shell-bg-muted: #F1F3F5;
+  --shell-bg-elevated: #FFFFFF;
   --shell-bg-hover: rgba(55, 65, 81, 0.07);
-  --shell-text-hover: #1f2937;
+  --shell-text-hover: #1F2937;
 
   /* 텍스트 */
-  --shell-text-primary: #1a1a1a;
-  --shell-text-secondary: #6b7280;
-  --shell-text-tertiary: #9ca3af;
-  --shell-text-muted: #6b7280;
-  --shell-text-on-action: #ffffff;
+  --shell-text-primary: #1A1A1A;
+  --shell-text-secondary: #6B7280;
+  --shell-text-tertiary: #9CA3AF;
+  --shell-text-muted: #6B7280;
+  --shell-text-on-action: #FFFFFF;
 
   /* 경계선 */
-  --shell-border-default: #e5e7eb;
-  --shell-border-subtle: #f3f4f6;
-  --shell-border-strong: #d1d5db;
-  --shell-border-hover: #9ca3af;
+  --shell-border-default: #E5E7EB;
+  --shell-border-subtle: #F3F4F6;
+  --shell-border-strong: #D1D5DB;
+  --shell-border-hover: #9CA3AF;
   --shell-border-focus: #374151;
 
   /* 액션 - E05: 중립 회색 (팔레트 독립) */
   --shell-action-primary: #374151;
-  --shell-action-hover: #1f2937;
-  --shell-action-active: #d1d5db;
+  --shell-action-hover: #1F2937;
+  --shell-action-active: #D1D5DB;
 
   /* 포커스 */
   --shell-focus-ring: #374151;
@@ -45,12 +45,12 @@
   /* 오버레이·툴팁 (딤/툴팁 가독성 유지) */
   --shell-overlay: rgba(0, 0, 0, 0.5);
   --shell-tooltip-bg: rgba(0, 0, 0, 0.85);
-  --shell-tooltip-text: #ffffff;
+  --shell-tooltip-text: #FFFFFF;
 
   /* 프리셋 배지 고정 색 (Yamang/custom/semantic/natural/category) */
-  --shell-badge-custom: #10b981;
-  --shell-badge-semantic: #f59e0b;
-  --shell-badge-natural: #8b5cf6;
+  --shell-badge-custom: #10B981;
+  --shell-badge-semantic: #F59E0B;
+  --shell-badge-natural: #8B5CF6;
 
   /* E05: 중립 회색 (호버/포커스 링 등) */
   --shell-bg-primary-subtle: rgba(55, 65, 81, 0.08);

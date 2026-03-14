@@ -12,6 +12,9 @@ import type { ExternalPalette } from '../@types/tokens';
 import type { PaletteSelection } from '../palettes/types';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';
 import { createPalette } from '../palettes';
+import { getMergedMapping } from '../palettes/mapping/resolve';
+import { defaultSemanticMappings } from '../palettes/strategies/default-mappings';
+import type { StoredSettings } from '../components/GlobalSettings/types';
 import { combineTheme } from './combine';
 import { stylePresets } from './presets';
 import type { CustomSemanticPreset } from '../constants/semantic-presets';
@@ -55,6 +58,8 @@ export interface ThemeProviderProps {
   /** 초기 팔레트 선택 상태 */
   initialSelection?: PaletteSelection;
   systemPreset?: SystemPresetName;
+  /** P05: 적용된 전역 설정 (시맨틱 매핑 등). 변경 시 테마에 반영 */
+  appliedSettings?: StoredSettings | null;
 }
 
 export function ThemeProvider({
@@ -65,6 +70,7 @@ export function ThemeProvider({
   initialPalette,
   initialSelection,
   systemPreset: initialSystemPreset = 'default',
+  appliedSettings = null,
 }: ThemeProviderProps) {
   const [styleName, setStyleName] = useState<StyleName>(initialStyleName);
   const [systemPreset, setSystemPresetState] =
@@ -92,6 +98,21 @@ export function ThemeProvider({
     selection,
     customSemanticPresets
   );
+
+  // P05: 전역 시맨틱 오버라이드 병합 (설정 페이지 적용분)
+  const definitionForTheme = useMemo(() => {
+    const base = defaultSemanticMappings[paletteDefinition.bgStrategy];
+    const withDef = getMergedMapping(base, paletteDefinition.semanticMapping);
+    const merged = getMergedMapping(withDef, appliedSettings?.semanticMapping ?? undefined);
+    return { ...paletteDefinition, semanticMapping: merged };
+  }, [paletteDefinition, appliedSettings?.semanticMapping]);
+
+  // P08: design-settings 적용 시 selection을 palette 스냅샷으로 동기화
+  useEffect(() => {
+    if (appliedSettings?.palette) {
+      setSelectionState(createCustomSelection(appliedSettings.palette));
+    }
+  }, [appliedSettings]);
 
   // ============================================================================
   // 새 API: setPaletteSelection
@@ -158,8 +179,8 @@ export function ThemeProvider({
 
   const theme = useMemo(() => {
     const styleDef = stylePresets[styleName] ?? stylePresets.minimal;
-    return combineTheme(paletteDefinition, styleDef);
-  }, [paletteDefinition, styleName]);
+    return combineTheme(definitionForTheme, styleDef);
+  }, [definitionForTheme, styleName]);
 
   // 커스텀 프리셋 CRUD 래퍼 (삭제 시 현재 팔레트 초기화 포함)
   const addCustomSemanticPreset = useCallback(
@@ -181,7 +202,7 @@ export function ThemeProvider({
   );
 
   useEffect(() => {
-    const expandedPalette = createPalette(paletteDefinition);
+    const expandedPalette = createPalette(definitionForTheme);
     const paletteScaleVars: Record<string, string> = {};
     PALETTE_SCALES.forEach((key) => {
       const scale = expandedPalette.scales[key];
@@ -247,7 +268,7 @@ export function ThemeProvider({
     document.documentElement.setAttribute('data-style', theme.style);
     document.documentElement.setAttribute('data-theme', styleName);
     document.documentElement.setAttribute('data-system-preset', systemPreset);
-  }, [theme, styleName, systemPreset, paletteDefinition]);
+  }, [theme, styleName, systemPreset, definitionForTheme]);
 
   const setSystemPreset = (name: SystemPresetName) => {
     setSystemPresetState(name);
@@ -277,6 +298,7 @@ export function ThemeProvider({
     deleteCustomSemanticPreset,
     applyCustomSemanticPreset,
     paletteDefinition,
+    semanticMapping: appliedSettings?.semanticMapping ?? null,
   };
 
   return (

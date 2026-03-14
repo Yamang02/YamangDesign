@@ -13,7 +13,12 @@
  * - semanticMapping: { basePalette: { id, displayName, colors, bgStrategy }, overrides }
  */
 import type { BgStrategy, PaletteDefinition, SemanticMapping } from '../palettes/types';
-import type { StoredSettings } from '../components/GlobalSettings/types';
+import {
+  migrateV1ToV2,
+  isStoredSettingsV1,
+  type StoredSettings,
+} from '../components/GlobalSettings/types';
+import type { ComponentMappingOverrides } from './component-mapping-storage';
 
 export const YAMANG_EXPORT_VERSION = '1.0';
 
@@ -48,6 +53,8 @@ export interface YamangDesignExport {
   exportType?: YamangExportType;
   globalSettings?: StoredSettings;
   semanticMapping?: SemanticMappingExportSection;
+  /** P06: 컴포넌트별 토큰 오버라이드 */
+  componentMapping?: ComponentMappingOverrides;
 }
 
 function createExportRoot(): Pick<YamangDesignExport, 'version' | 'exportedAt'> {
@@ -70,9 +77,12 @@ export function downloadYamangJSON(payload: YamangDesignExport, filename: string
   URL.revokeObjectURL(url);
 }
 
-/** 전역 설정 export용 payload 생성 */
-export function createGlobalSettingsPayload(settings: StoredSettings): YamangDesignExport {
-  return {
+/** 전역 설정 export용 payload 생성 (componentMapping 선택 포함) */
+export function createGlobalSettingsPayload(
+  settings: StoredSettings,
+  extras?: { componentMapping?: ComponentMappingOverrides | null }
+): YamangDesignExport {
+  const payload: YamangDesignExport = {
     ...createExportRoot(),
     exportType: 'global-settings',
     globalSettings: {
@@ -80,6 +90,10 @@ export function createGlobalSettingsPayload(settings: StoredSettings): YamangDes
       updatedAt: new Date().toISOString(),
     },
   };
+  if (extras?.componentMapping && Object.keys(extras.componentMapping).length > 0) {
+    payload.componentMapping = extras.componentMapping;
+  }
+  return payload;
 }
 
 /** 시맨틱 매핑 export용 payload 생성 (기반 팔레트 포함) */
@@ -138,13 +152,23 @@ export function parseYamangJSON(raw: string): YamangDesignExport | null {
   }
 }
 
-/** 전역 설정 import: payload에서 globalSettings 추출 */
+/** P06: payload에서 컴포넌트 매핑 오버라이드 추출 */
+export function extractComponentMapping(
+  payload: YamangDesignExport
+): ComponentMappingOverrides | null {
+  const m = payload.componentMapping;
+  if (!m || typeof m !== 'object') return null;
+  return m as ComponentMappingOverrides;
+}
+
+/** 전역 설정 import: payload에서 globalSettings 추출 (v1이면 v2로 마이그레이션) */
 export function extractGlobalSettings(
   payload: YamangDesignExport
 ): StoredSettings | null {
   const g = payload.globalSettings;
   if (!g || typeof g !== 'object') return null;
   if (!g.palette || !g.styleName || !g.systemPreset) return null;
+  if (isStoredSettingsV1(g)) return migrateV1ToV2(g);
   return g as StoredSettings;
 }
 

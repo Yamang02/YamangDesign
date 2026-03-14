@@ -5,57 +5,62 @@
   gap: var(--ds-spacing-8);
 }
 
-/* Overview diagram */
-.diagram {
+/* E08 P04: 컴포넌트 인벤토리 카드 */
+.inventoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--ds-spacing-4);
+}
+
+.inventoryCard {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: stretch;
+  text-align: left;
+  padding: var(--ds-spacing-4);
   border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-lg);
-  overflow: hidden;
   background: var(--shell-bg-surface);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.diagramRow {
+.inventoryCard:hover {
+  border-color: var(--shell-border-focus);
+  box-shadow: var(--shell-shadow-sm);
+}
+
+.inventoryCardTitle {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-primary);
+  margin-bottom: var(--ds-spacing-1);
+}
+
+.inventoryCardPath {
+  font-size: var(--ds-text-caption-size);
+  font-family: var(--ds-font-mono);
+  color: var(--shell-text-tertiary);
+  margin-bottom: var(--ds-spacing-3);
+}
+
+.inventoryCardDivider {
+  height: 1px;
+  background: var(--shell-border-subtle);
+  margin: 0 0 var(--ds-spacing-3) 0;
+}
+
+.inventoryCardTokens {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  gap: var(--ds-spacing-1);
 }
 
-.diagramLabel {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+.inventoryCardTokens .tokenTag {
   font-size: var(--ds-text-caption-size);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-secondary);
-  background: var(--shell-bg-subtle);
-  border-bottom: 1px solid var(--shell-border-default);
-}
-
-.diagramBlock {
-  padding: var(--ds-spacing-3) var(--ds-spacing-4);
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--shell-border-subtle);
-}
-
-.diagramBlock:last-child {
-  border-bottom: none;
-}
-
-.diagramBlockHeader {
-  background: var(--shell-bg-base);
-  border-bottom: 1px solid var(--shell-border-default);
-}
-
-.diagramBlockNav {
-  background: var(--shell-bg-base);
-}
-
-.diagramBlockFooter {
-  background: var(--shell-bg-subtle);
 }
 
 .tokenTag {
@@ -65,6 +70,7 @@
   background: var(--shell-bg-primary-subtle);
   padding: 2px 6px;
   border-radius: var(--ds-radius-sm);
+  display: inline-block;
 }
 
 /* Token Map table */

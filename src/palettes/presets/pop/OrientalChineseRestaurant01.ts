@@ -28,7 +28,7 @@
  *        description: '설명',
  *        themes: Object.values(mycategoryThemes).filter(...),
  *      },
- *   6. src/pages/layouts/PaletteLab/ThemeTabNavigation.tsx 의 TABS 배열에 추가
+ *   6. src/pages/labs/PaletteLab/ThemeTabNavigation.tsx 의 TABS 배열에 추가
  *      { id: 'mycategory', label: 'My Category' },
  *
  * ## 2. 시맨틱 매핑 오버라이드 방법

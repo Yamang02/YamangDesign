@@ -1,0 +1,353 @@
+/* P07: 디자인 설정 페이지 — LabLayout과 동일하게 가용 너비 100% 사용 */
+.page {
+  width: 100%;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  padding: var(--ds-spacing-6);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ds-spacing-4);
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-3);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+}
+
+/* P08: 헤더 행 우측 액션 — 아이콘 버튼 + 적용(아이콘+텍스트) */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+}
+
+.headerIconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--shell-text-secondary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--ds-radius-md);
+  cursor: pointer;
+}
+
+.headerIconBtn:hover {
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-subtle);
+}
+
+.tabBar {
+  display: flex;
+  gap: var(--ds-spacing-1);
+  border-bottom: 1px solid var(--shell-border-subtle);
+  margin-bottom: var(--ds-spacing-4);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: var(--ds-spacing-2) var(--ds-spacing-4);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--shell-text-primary);
+}
+
+.tabActive {
+  color: var(--shell-text-primary);
+  font-weight: var(--ds-font-weight-medium);
+  border-bottom-color: var(--shell-action-primary);
+}
+
+/* 탭 패널 공통: 가용 너비/높이 꽉 채움 */
+.content {
+  flex: 1;
+  min-height: 360px;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ds-spacing-3);
+  margin-top: var(--ds-spacing-6);
+  padding-top: var(--ds-spacing-4);
+  border-top: 1px solid var(--shell-border-subtle);
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+}
+
+.footerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  background: none;
+  border: 1px solid var(--shell-border-default);
+  border-radius: var(--ds-radius-md);
+  cursor: pointer;
+}
+
+.footerBtn:hover {
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-subtle);
+}
+
+.applyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  padding: var(--ds-spacing-2) var(--ds-spacing-4);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--shell-text-on-action);
+  background: var(--shell-action-primary);
+  border: none;
+  border-radius: var(--ds-radius-md);
+  cursor: pointer;
+  margin-left: var(--ds-spacing-2);
+}
+
+.applyBtn:hover:not(:disabled) {
+  background: var(--shell-action-hover);
+}
+
+.applyBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.placeholder {
+  padding: var(--ds-spacing-8);
+  text-align: center;
+  color: var(--ds-color-text-secondary);
+  font-size: var(--ds-text-sm);
+}
+
+/* P07: 컴포넌트 매핑 탭 3패널 — 가용 너비 100% */
+.componentMappingRoot {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 360px;
+  gap: var(--ds-spacing-4);
+  min-height: 400px;
+  width: 100%;
+  min-width: 0;
+  align-items: start;
+  flex: 1;
+}
+
+.componentMappingList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+  padding: var(--ds-spacing-2);
+  background: var(--ds-color-bg-muted);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+}
+
+.componentMappingListSection {
+  margin-top: var(--ds-spacing-2);
+}
+
+.componentMappingListSection:first-child {
+  margin-top: 0;
+}
+
+.componentMappingListSectionTitle {
+  font-size: var(--ds-text-caption-size);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 var(--ds-spacing-1) 0;
+  padding: 0 var(--ds-spacing-2);
+}
+
+.componentMappingListItem {
+  display: block;
+  width: 100%;
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-primary);
+  background: transparent;
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.componentMappingListItem:hover {
+  background: var(--ds-color-bg-base);
+}
+
+.componentMappingListItemActive {
+  background: var(--ds-color-action-primary-default);
+  color: var(--ds-color-text-on-action);
+}
+
+.componentMappingListItemActive:hover {
+  background: var(--ds-color-action-primary-hover);
+}
+
+.componentMappingTableWrap {
+  padding: var(--ds-spacing-3);
+  background: var(--ds-color-bg-base);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  overflow: auto;
+}
+
+.componentMappingTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-text-sm);
+}
+
+.componentMappingTable th,
+.componentMappingTable td {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  text-align: left;
+  border-bottom: 1px solid var(--ds-color-border-subtle);
+  vertical-align: top;
+}
+
+.componentMappingTable th {
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-secondary);
+}
+
+.componentMappingTable td {
+  color: var(--ds-color-text-primary);
+}
+
+.componentMappingTable code {
+  font-size: 0.9em;
+  background: var(--ds-color-bg-muted);
+  padding: 2px 6px;
+  border-radius: var(--ds-radius-sm);
+}
+
+.componentMappingTable input {
+  width: 100%;
+  min-width: 120px;
+  padding: var(--ds-spacing-1) var(--ds-spacing-2);
+  font-size: var(--ds-text-sm);
+  font-family: inherit;
+  border: 1px solid var(--ds-color-border-default);
+  border-radius: var(--ds-radius-sm);
+  background: var(--ds-color-bg-base);
+  color: var(--ds-color-text-primary);
+}
+
+.componentMappingTable input:focus {
+  outline: none;
+  border-color: var(--ds-color-border-focus);
+  box-shadow: 0 0 0 2px var(--ds-color-border-focus);
+}
+
+.tokenSwatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--ds-color-border-subtle);
+  margin-right: var(--ds-spacing-1);
+  vertical-align: middle;
+}
+
+.clearRowBtn {
+  padding: var(--ds-spacing-1);
+  background: none;
+  border: none;
+  color: var(--ds-color-text-muted);
+  cursor: pointer;
+  border-radius: var(--ds-radius-sm);
+}
+
+.clearRowBtn:hover {
+  color: var(--ds-color-text-primary);
+  background: var(--ds-color-bg-muted);
+}
+
+.clearComponentRow {
+  margin-top: var(--ds-spacing-3);
+  padding-top: var(--ds-spacing-2);
+  border-top: 1px solid var(--ds-color-border-subtle);
+}
+
+.clearComponentBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  background: none;
+  border: 1px solid var(--shell-border-default);
+  border-radius: var(--ds-radius-md);
+  cursor: pointer;
+}
+
+.clearComponentBtn:hover {
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-subtle);
+}
+
+.componentMappingPreview {
+  padding: var(--ds-spacing-4);
+  background: var(--ds-color-bg-muted);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-spacing-4);
+}
+
+.componentMappingPreviewLabel {
+  font-size: var(--ds-text-caption-size);
+  color: var(--ds-color-text-muted);
+  margin: 0;
+}
+
+.componentMappingEmpty {
+  padding: var(--ds-spacing-8);
+  text-align: center;
+  color: var(--ds-color-text-muted);
+  font-size: var(--ds-text-sm);
+}

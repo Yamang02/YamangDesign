@@ -70,7 +70,7 @@ export const myPresetPalette: PaletteDefinition = {
     secondary: '#72333E', // 선택
     accent: '#C2D95C', // 선택
     sub: '#F7C9DD', // 선택, 컬러풀 보조색
-    neutral: '#7f4a6f', // 선택, 무채색 (텍스트/테두리/배경용)
+    neutral: '#7F4A6F', // 선택, 무채색 (텍스트/테두리/배경용)
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
   contrast: 'normal', // 'normal' | 'high'

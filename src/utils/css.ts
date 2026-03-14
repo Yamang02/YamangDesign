@@ -12,8 +12,8 @@ function toKebabCase(str: string): string {
 /**
  * 중첩 객체를 평탄화하여 CSS 변수명 생성
  *
- * 입력: { color: { bg: { surfaceBrand: '#fff' } } }
- * 출력: { '--ds-color-bg-surface-brand': '#fff' }
+ * 입력: { color: { bg: { surfaceBrand: '#FFF' } } }
+ * 출력: { '--ds-color-bg-surface-brand': '#FFF' }
  *
  * camelCase 키는 자동으로 kebab-case로 변환됨
  */

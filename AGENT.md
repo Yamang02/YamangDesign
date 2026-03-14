@@ -39,12 +39,36 @@ const { inputValue, fieldName } = formData;
 
 > 사용 전에 MDN, TypeScript Handbook, React API 문서에서 해당 이름이 예약·내장어인지 확인한다.
 
+### Naming — 파라미터·변수는 의미 있는 이름 사용
+
+함수 파라미터·지역 변수에 **의미 없는 단일 문자(a, b, x, y)** 또는 **역할이 드러나지 않는 이름**을 쓰지 않는다.
+
+**금지 패턴**
+
+| 맥락 | 피해야 할 이름 | 이유 |
+|------|----------------|------|
+| 함수 파라미터 | `a`, `b`, `x`, `y`, `v`, `o` | 비교·연산 대상이 무엇인지 불명확 |
+| 콜백 인자 | `a`, `b` (비교 함수 등) | 어떤 값인지 코드만으로 파악 불가 |
+
+**권장**: 비교/대칭인 경우 `current`/`preset`, `left`/`right`, `source`/`target`, `expected`/`actual` 등 **역할이 드러나는 이름** 사용.
+
+```typescript
+// Bad
+function isPaletteEqual(a: ExternalPalette, b: ExternalPalette) { ... }
+
+// Good
+function isPaletteEqual(current: ExternalPalette, preset: ExternalPalette) { ... }
+```
+
+> 반복문 인덱스(`i`, `j`), 수학/알고리즘에서 관례적인 단일 문자(`n`, `e`)는 예외로 둘 수 있다.
+
 ---
 
 ### Styling
 - **CSS 변수만 사용**: `var(--ds-xxx)` 또는 `var(--ui-xxx)` 형식
 - **직접 값(hex, rgb, named color) 금지** — 컴포넌트·페이지 CSS/TSX에서는 토큰만 사용
 - **예외**: 토큰/프리셋 **정의** 파일(`*presets*.ts`, `*mappings*.ts`, palette preset, `uiTokens` 등) 내부의 원시값
+- **Hex 표기**: hex 색상값은 **대문자**로 통일 (`#FFFFFF`, `#6366F1`). 소문자 사용 금지.
 
 ```typescript
 // Good

@@ -1,0 +1,179 @@
+# E02: 섹션 카드 레이아웃
+
+## 목표
+
+각 섹션을 카드로 감싸서 시각적 분리를 강화하고, 섹션 간 구분을 명확하게 함
+
+## 현재 상태
+
+```
+┌─────────────────────────────────────┐
+│  Lab Header                         │
+├─────────────────────────────────────┤
+│  Section Title                      │
+│  ───────────────────────────────    │ ← hr 태그로만 구분
+│  content content content            │
+│                                     │
+│  Section Title                      │
+│  ───────────────────────────────    │
+│  content content content            │
+└─────────────────────────────────────┘
+```
+
+## 목표 상태
+
+```
+┌─────────────────────────────────────┐
+│  Lab Header                         │
+├─────────────────────────────────────┤
+│  ┌───────────────────────────────┐  │
+│  │ Section Title                 │  │
+│  │                               │  │
+│  │ content content content       │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │ Section Title                 │  │
+│  │                               │  │
+│  │ content content content       │  │
+│  └───────────────────────────────┘  │
+└─────────────────────────────────────┘
+```
+
+## 설계
+
+### 컴포넌트 구조
+
+기존 `LabSection`을 확장하여 카드 스타일 옵션 추가:
+
+```tsx
+// src/layouts/LabLayout/LabSection.tsx
+
+export interface LabSectionProps {
+  title: string;
+  children: React.ReactNode;
+  /** 카드 스타일 적용 여부 (기본: true) */
+  card?: boolean;
+  /** 섹션 ID (TOC 연동용) */
+  id?: string;
+}
+
+export function LabSection({
+  title,
+  children,
+  card = true,
+  id
+}: LabSectionProps) {
+  const content = (
+    <section id={id} className={styles.labSection}>
+      <h2 className={styles.sectionTitle}>{title}</h2>
+      <div className={styles.sectionContent}>{children}</div>
+    </section>
+  );
+
+  if (!card) return content;
+
+  return (
+    <div className={styles.sectionCard}>
+      {content}
+    </div>
+  );
+}
+```
+
+### CSS 스타일
+
+```css
+/* src/layouts/LabLayout/LabLayout.module.css */
+
+/* 기존 스타일 유지 */
+.labSection {
+  padding: var(--ds-spacing-4) 0;
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-4) 0;
+}
+
+.sectionContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-4);
+}
+
+/* 신규: 섹션 카드 래퍼 */
+.sectionCard {
+  background-color: var(--ds-color-bg-surface);
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-spacing-6);
+  margin-bottom: var(--ds-spacing-6);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.sectionCard .labSection {
+  padding: 0;
+}
+
+.sectionCard:last-child {
+  margin-bottom: 0;
+}
+```
+
+## 마이그레이션
+
+### Before
+
+```tsx
+<LabSection title="Text Styles" withDivider={false}>
+  {/* content */}
+</LabSection>
+
+<LabSection title="Semantic Mapping">
+  {/* content */}
+</LabSection>
+```
+
+### After
+
+```tsx
+<LabSection title="Text Styles" id="text-styles">
+  {/* content */}
+</LabSection>
+
+<LabSection title="Semantic Mapping" id="semantic-mapping">
+  {/* content */}
+</LabSection>
+```
+
+- `withDivider` prop 제거 (더 이상 필요 없음)
+- `id` prop 추가 (E03 TOC 연동 준비)
+- `card` prop은 기본 true이므로 명시 불필요
+
+## 영향 범위
+
+| 파일 | 변경 내용 |
+|------|-----------|
+| `src/layouts/LabLayout/LabSection.tsx` | card prop 추가, withDivider 제거, 카드 래퍼 적용 |
+| `src/layouts/LabLayout/LabLayout.module.css` | sectionCard 스타일 추가, sectionDivider 제거, labSection:first-of-type 제거 |
+| `src/pages/layouts/FontLab/FontLab.tsx` | `withDivider={false}` 제거 |
+| `src/pages/layouts/PaletteLab/PaletteLab.tsx` | 변경 없음 (이미 id 있음) |
+| `src/pages/layouts/StyleLab/StyleLab.tsx` | 변경 없음 (이미 id 있음) |
+| `src/pages/layouts/Playground/Playground.tsx` | 변경 없음 (이미 id 있음) |
+
+**참고**: E03 TOC 연동을 위해 `id`는 `section` 요소에 유지됨 (sectionCard 래퍼 내부).
+
+## 주의사항
+
+- **sectionDivider 제거**: `withDivider` 제거 시 `.sectionDivider` CSS 규칙도 제거 (더 이상 사용 안 함)
+- **labSection:first-of-type**: 카드 구조에서 `.sectionCard .labSection { padding: 0 }` 적용으로 불필요해짐 → 제거
+
+## 체크리스트
+
+- [x] LabSection 컴포넌트 수정
+- [x] CSS 스타일 추가 (sectionCard) 및 제거 (sectionDivider, labSection:first-of-type)
+- [x] FontLab에서 `withDivider={false}` 제거
+- [ ] 시각적 검증

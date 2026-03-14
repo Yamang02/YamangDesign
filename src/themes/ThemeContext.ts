@@ -11,7 +11,7 @@ import type {
 } from '../@types/theme';
 import type { ExternalPalette } from '../@types/tokens';
 import type { CustomSemanticPreset } from '../constants/semantic-presets';
-import type { PaletteDefinition, PaletteSelection } from '../palettes/types';
+import type { PaletteDefinition, PaletteSelection, SemanticMapping } from '../palettes/types';
 
 export interface ThemeContextValue {
   theme: Theme;
@@ -58,6 +58,9 @@ export interface ThemeContextValue {
 
   /** 현재 적용된 팔레트 정의 (Overview 등에서 사용) */
   paletteDefinition: PaletteDefinition;
+
+  /** P05: 전역 시맨틱 매핑 오버라이드 (설정 페이지 적용분) */
+  semanticMapping: Partial<SemanticMapping> | null;
 }
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);

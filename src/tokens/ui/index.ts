@@ -7,13 +7,13 @@ import type { UITokens } from './types';
 export const uiTokens: UITokens = {
   colors: {
     bg: {
-      base: '#1a1a1a',
-      surface: '#2d2d2d',
-      elevated: '#3d3d3d',
+      base: '#1A1A1A',
+      surface: '#2D2D2D',
+      elevated: '#3D3D3D',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#a0a0a0',
+      primary: '#FFFFFF',
+      secondary: '#A0A0A0',
       muted: '#666666',
     },
     border: {
@@ -21,11 +21,11 @@ export const uiTokens: UITokens = {
       subtle: '#333333',
     },
     action: {
-      primary: '#6366f1',
-      hover: '#818cf8',
+      primary: '#6366F1',
+      hover: '#818CF8',
     },
     focus: {
-      ring: '#6366f1',
+      ring: '#6366F1',
     },
   },
 } as const;

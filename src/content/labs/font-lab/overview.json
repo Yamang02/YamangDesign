@@ -1,0 +1,49 @@
+{
+  "typographyProperties": [
+    {
+      "key": "size",
+      "label": "Font Size",
+      "description": "텍스트 크기",
+      "scale": ["xs", "sm", "md", "lg", "xl", "2xl", "3xl"],
+      "cssVar": "--ds-text-{name}-size"
+    },
+    {
+      "key": "weight",
+      "label": "Font Weight",
+      "description": "텍스트 굵기",
+      "scale": ["normal", "medium", "semibold", "bold"],
+      "cssVar": "--ds-font-weight-{name}"
+    },
+    {
+      "key": "leading",
+      "label": "Line Height",
+      "description": "줄 간격",
+      "scale": ["tight", "normal", "relaxed"],
+      "cssVar": "--ds-text-{name}-leading"
+    },
+    {
+      "key": "tracking",
+      "label": "Letter Spacing",
+      "description": "자간",
+      "scale": ["tight", "normal", "wide"],
+      "cssVar": "--ds-text-{name}-tracking"
+    }
+  ],
+  "semanticRoles": [
+    { "role": "page-title", "styleName": "heading-lg", "description": "페이지 제목", "example": "Welcome" },
+    { "role": "section-title", "styleName": "heading-md", "description": "섹션 제목", "example": "Features" },
+    { "role": "card-title", "styleName": "heading-sm", "description": "카드 제목", "example": "Card Title" },
+    { "role": "body", "styleName": "body-md", "description": "본문", "example": "Lorem ipsum..." },
+    { "role": "button", "styleName": "body-sm", "description": "버튼", "example": "Click me" },
+    { "role": "caption", "styleName": "body-xs", "description": "캡션", "example": "Updated 2h ago" }
+  ],
+  "sizeScale": [
+    { "name": "3xl", "px": "30px", "use": "Hero" },
+    { "name": "2xl", "px": "24px", "use": "Page Title" },
+    { "name": "xl", "px": "20px", "use": "Section" },
+    { "name": "lg", "px": "18px", "use": "Subsection" },
+    { "name": "md", "px": "16px", "use": "Body" },
+    { "name": "sm", "px": "14px", "use": "UI" },
+    { "name": "xs", "px": "12px", "use": "Caption" }
+  ]
+}

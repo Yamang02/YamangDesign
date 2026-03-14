@@ -1,0 +1,67 @@
+/* @layer shell — [data-shell] 컨텍스트 */
+.diagram {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ds-spacing-4);
+  width: 100%;
+}
+
+.layerCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+  padding: var(--ds-spacing-4);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
+  border-radius: var(--ds-radius-md);
+}
+
+.layerTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-primary);
+  margin: 0;
+  padding-bottom: var(--ds-spacing-2);
+  border-bottom: 1px solid var(--shell-border-subtle);
+}
+
+.layerNote {
+  font-size: var(--ds-text-xs);
+  color: var(--shell-text-muted);
+  margin: 0;
+}
+
+.categoryList {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.categoryRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-spacing-2);
+  margin: 0;
+}
+
+.categoryLabel {
+  font-size: var(--ds-text-xs);
+  font-family: ui-monospace, monospace;
+  color: var(--shell-text-secondary);
+  min-width: 6.5em; /* typography 기준으로 설명 라벨 시작점 통일 */
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.categoryDesc {
+  font-size: var(--ds-text-xs);
+  color: var(--shell-text-muted);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .diagram {
+    grid-template-columns: 1fr;
+  }
+}
