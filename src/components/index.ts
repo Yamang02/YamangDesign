@@ -15,6 +15,7 @@ export { Input } from './Input';
 export { Navigation } from './Navigation';
 export { Profile } from './Profile';
 export { Select } from './Select';
+export { TokenSection } from './TokenSection';
 export { Tooltip } from './Tooltip';
 
 export type { AvatarProps } from './Avatar';
@@ -33,4 +34,5 @@ export type { InputProps } from './Input';
 export type { NavigationProps } from './Navigation';
 export type { ProfileProps } from './Profile';
 export type { SelectProps, SelectOption } from './Select';
+export type { TokenSectionProps } from './TokenSection';
 export type { TooltipProps } from './Tooltip';

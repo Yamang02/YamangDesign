@@ -22,7 +22,8 @@
       "Bash(grep -l \"\\\\-\\\\-ds\\\\-\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/**/*.module.css)",
       "Bash(wc -l /c/Users/ljj02/Desktop/dev/YamangDesign/src/styles/presets/*.ts)",
       "Bash(mkdir -p docs/epic/E07.2026-03-14_code-cleanup-restructure)",
-      "Bash(mkdir -p docs/epic/E08.2026-03-14_ux-refinement)"
+      "Bash(mkdir -p docs/epic/E08.2026-03-14_ux-refinement)",
+      "Bash(npx vite build)"
     ],
     "additionalDirectories": [
       "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"

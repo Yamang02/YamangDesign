@@ -16,6 +16,8 @@ export interface ComponentCardProps {
   usedIn?: string[];
   /** E06 P05: 이 Molecule/Organism을 구성하는 Atoms/Molecules 이름 목록 (카드 하단) */
   composedOf?: string[];
+  /** composedOf 레이블 (기본값: "Atoms:") */
+  composedOfLabel?: string;
 }
 
 export function ComponentCard({
@@ -25,6 +27,7 @@ export function ComponentCard({
   onClick,
   usedIn,
   composedOf,
+  composedOfLabel = 'Atoms:',
 }: ComponentCardProps) {
   const hasUsedIn = usedIn && usedIn.length > 0;
   const hasComposedOf = composedOf && composedOf.length > 0;
@@ -59,7 +62,7 @@ export function ComponentCard({
       )}
       {hasComposedOf && (
         <div className={styles.composedOf} aria-label="구성">
-          <span className={styles.composedOfLabel}>Atoms:</span>
+          <span className={styles.composedOfLabel}>{composedOfLabel}</span>
           {composedOf!.map((name) => (
             <span key={name} className={styles.composedOfBadge}>{name}</span>
           ))}

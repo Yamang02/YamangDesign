@@ -1,1 +1,0 @@
-export { StyleLab } from './StyleLab';

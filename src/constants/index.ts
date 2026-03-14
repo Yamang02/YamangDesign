@@ -31,7 +31,6 @@ export {
   inputShowcase,
   selectShowcase,
   iconShowcase,
-  formExample,
 } from './showcase-content';
 
 export type { ShowcaseSectionId } from './showcase-content';

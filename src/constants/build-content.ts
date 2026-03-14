@@ -134,7 +134,6 @@ export const ORGANISMS: OrganismDef[] = [
     ],
     variantCount: 1,
     tokens: [
-      { token: '--shell-bg-base', label: '헤더 배경' },
       { token: '--ds-spacing-4', label: '내부 간격' },
     ],
   },
@@ -149,7 +148,6 @@ export const ORGANISMS: OrganismDef[] = [
     ],
     variantCount: 1,
     tokens: [
-      { token: '--shell-bg-surface', label: '사이드바 배경' },
       { token: '--ds-spacing-2', label: '아이템 간격' },
     ],
   },

@@ -152,8 +152,7 @@ export type ShowcaseSectionId =
   | 'button'
   | 'card'
   | 'select'
-  | 'input'
-  | 'form-example';
+  | 'input';
 
 /** 컴포넌트 섹션별 사용 토큰 목록 - DetailPanel에서 실제 값 표시용 */
 export const showcaseSectionTokens: Record<
@@ -284,14 +283,6 @@ export const showcaseSectionTokens: Record<
     { token: '--ds-text-body-lg-size', label: '폰트 크기 lg' },
     { token: '--ds-text-caption-size', label: '에러 메시지' },
   ],
-  'form-example': [
-    { token: '--ds-radius-lg', label: 'Card 둥근 모서리' },
-    { token: '--ds-spacing-4', label: '인풋 간격' },
-    { token: '--ds-spacing-6', label: 'Card 패딩' },
-    { token: '--ds-color-bg-surfaceBrand', label: 'Card 배경' },
-    { token: '--ds-color-text-primary', label: '라벨' },
-    { token: '--ds-color-action-primary-default', label: '버튼' },
-  ],
 };
 
 /** E06 P05: Atom별 사용 Molecule 목록 — Atoms 페이지 ComponentCard usedIn 연동 */
@@ -303,20 +294,5 @@ export const ATOM_USED_IN: Record<ShowcaseSectionId, string[]> = {
   card: ['ActionCard'],
   icon: ['SearchBar', 'StatusBanner'],
   select: [],
-  'form-example': ['FormCard'],
 };
 
-/** 폼 예시 (연락처 패턴) */
-export const formExample = {
-  title: 'Form Example',
-  subtitle: 'Input + Button in Card (Contact pattern)',
-  fields: {
-    name: 'Name',
-    namePlaceholder: 'Your name',
-    email: 'Email',
-    emailPlaceholder: 'you@example.com',
-    message: 'Message',
-    messagePlaceholder: 'How can we help?',
-  },
-  submitLabel: 'Send Message',
-} as const;
