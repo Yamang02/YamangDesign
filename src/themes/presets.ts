@@ -8,6 +8,7 @@ import {
   minimalStyle,
   neumorphismStyle,
   brutalismStyle,
+  glassmorphismStyle,
 } from '../styles';
 import type { ExternalPalette } from '../@types/tokens';
 import type { StyleName } from '../@types/theme';
@@ -23,6 +24,7 @@ export const stylePresets: Record<StyleName, StyleDefinition> = {
   minimal: minimalStyle,
   neumorphism: neumorphismStyle,
   brutalism: brutalismStyle,
+  glassmorphism: glassmorphismStyle,
 };
 
 /** ExternalPalette → PaletteDefinition (custom, toThemePreset 래퍼) */

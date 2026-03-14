@@ -1,10 +1,11 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 .footer {
   padding: var(--ds-spacing-5) var(--ds-spacing-8);
-  border-top: 1px solid var(--ui-border-default);
+  border-top: 1px solid var(--shell-border-default);
   background: linear-gradient(
     180deg,
-    var(--ui-bg-subtle) 0%,
-    var(--ui-bg-base) 100%
+    var(--shell-bg-subtle) 0%,
+    var(--shell-bg-base) 100%
   );
 }
 
@@ -29,13 +30,13 @@
   font-family: var(--ds-font-display);
   font-size: 1rem;
   font-weight: 400;
-  color: var(--ui-text-primary);
+  color: var(--shell-text-primary);
   letter-spacing: 0.05em;
 }
 
 .copyright {
   font-size: 0.8125rem;
-  color: var(--ui-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0;
 }
 
@@ -52,18 +53,18 @@
   width: 32px;
   height: 32px;
   border-radius: var(--ds-radius-md);
-  color: var(--ui-text-secondary);
+  color: var(--shell-text-secondary);
   background: transparent;
-  border: 1px solid var(--ui-border-default);
+  border: 1px solid var(--shell-border-default);
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
 }
 
 .iconLink:hover {
-  background: var(--ui-bg-hover);
-  border-color: var(--ui-border-hover);
-  color: var(--ui-text-hover);
+  background: var(--shell-bg-hover);
+  border-color: var(--shell-border-hover);
+  color: var(--shell-text-hover);
 }
 
 .infoRow {
@@ -85,7 +86,7 @@
 .infoItem dt {
   font-size: 0.625rem;
   font-weight: 500;
-  color: var(--ui-text-tertiary);
+  color: var(--shell-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0;
@@ -93,7 +94,7 @@
 
 .infoItem dd {
   font-size: 0.75rem;
-  color: var(--ui-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0;
 }
 

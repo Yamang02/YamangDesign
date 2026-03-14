@@ -1,0 +1,101 @@
+/**
+ * E04: 앱 셸 토큰 (--shell-*)
+ * 단일 라이트 크롬: :root 기본값 라이트. [data-shell]에서 DS 토큰 매핑.
+ */
+:root {
+  /* E01/E04: 헤더 높이 (DetailPanel, TOC sticky 등에서 사용) */
+  --nav-height: 64px;
+
+  /* 배경 - 라이트 (E03 단일 크롬) */
+  --shell-bg-base: #ffffff;
+  --shell-bg-subtle: #f8f9fa;
+  --shell-bg-surface: #f1f3f5;
+  --shell-bg-muted: #f1f3f5;
+  --shell-bg-elevated: #ffffff;
+  --shell-bg-hover: rgba(55, 65, 81, 0.07);
+  --shell-text-hover: #1f2937;
+
+  /* 텍스트 */
+  --shell-text-primary: #1a1a1a;
+  --shell-text-secondary: #6b7280;
+  --shell-text-tertiary: #9ca3af;
+  --shell-text-muted: #6b7280;
+  --shell-text-on-action: #ffffff;
+
+  /* 경계선 */
+  --shell-border-default: #e5e7eb;
+  --shell-border-subtle: #f3f4f6;
+  --shell-border-strong: #d1d5db;
+  --shell-border-hover: #9ca3af;
+  --shell-border-focus: #374151;
+
+  /* 액션 - E05: 중립 회색 (팔레트 독립) */
+  --shell-action-primary: #374151;
+  --shell-action-hover: #1f2937;
+  --shell-action-active: #d1d5db;
+
+  /* 포커스 */
+  --shell-focus-ring: #374151;
+
+  /* 섀도우 (라이트 기준) */
+  --shell-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shell-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shell-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+
+  /* 오버레이·툴팁 (딤/툴팁 가독성 유지) */
+  --shell-overlay: rgba(0, 0, 0, 0.5);
+  --shell-tooltip-bg: rgba(0, 0, 0, 0.85);
+  --shell-tooltip-text: #ffffff;
+
+  /* 프리셋 배지 고정 색 (Yamang/custom/semantic/natural/category) */
+  --shell-badge-custom: #10b981;
+  --shell-badge-semantic: #f59e0b;
+  --shell-badge-natural: #8b5cf6;
+
+  /* E05: 중립 회색 (호버/포커스 링 등) */
+  --shell-bg-primary-subtle: rgba(55, 65, 81, 0.08);
+  --shell-focus-glow: 0 0 0 2px rgba(55, 65, 81, 0.15);
+}
+
+/**
+ * 앱 셸 컨텍스트: [data-shell] 내부의 DS 컴포넌트가 --shell-* 토큰 사용
+ * Button, Select 등이 테마 전환 영향 없이 고정 스타일 유지
+ */
+[data-shell] {
+  --ds-color-bg-base: var(--shell-bg-base);
+  --ds-color-bg-surface: var(--shell-bg-surface);
+  --ds-color-bg-surfaceBrand: var(--shell-bg-elevated);
+  --ds-color-bg-elevated: var(--shell-bg-elevated);
+  --ds-color-bg-muted: var(--shell-bg-surface);
+
+  --ds-color-text-primary: var(--shell-text-primary);
+  --ds-color-text-secondary: var(--shell-text-secondary);
+  --ds-color-text-muted: var(--shell-text-muted);
+  --ds-color-text-on-action: var(--shell-text-on-action);
+
+  --ds-color-border-default: var(--shell-border-default);
+  --ds-color-border-subtle: var(--shell-border-subtle);
+  --ds-color-border-accent: var(--shell-border-hover);
+  --ds-color-border-focus: var(--shell-focus-ring);
+
+  --ds-color-action-primary-default: var(--shell-action-primary);
+  --ds-color-action-primary-hover: var(--shell-action-hover);
+  --ds-color-action-primary-active: var(--shell-action-hover);
+
+  --ds-focus-ring-color: var(--shell-focus-ring);
+
+  /* 섀도우도 고정 (Neumorphism 전환 시 영향 방지) */
+  --ds-shadow-sm: var(--shell-shadow-sm);
+  --ds-shadow-md: var(--shell-shadow-md);
+  --ds-shadow-lg: var(--shell-shadow-lg);
+
+  /* E04: Lab/크롬에서 테마 스타일(뉴모피즘 등) 차단 */
+  --ds-surface-backdrop: none;
+  --ds-surface-bg-alpha: 1;
+  --ds-surface-texture: none;
+  --ds-surface-blend: normal;
+  --ds-filter: none;
+  --ds-perspective: none;
+  --ds-transform-style: flat;
+
+}

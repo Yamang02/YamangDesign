@@ -25,6 +25,8 @@ export interface LabLayoutProps {
   showToc?: boolean;
   /** TOC 항목 목록 (2개 이상일 때만 표시, flat 또는 tree) */
   tocItems?: TocItem[] | TocItemTree[];
+  /** 기본값: 'scroll'. 'tab'이면 TOC 대신 상단 탭 바 렌더 */
+  navigationMode?: 'scroll' | 'tab';
 }
 
 export function LabLayout({
@@ -33,12 +35,15 @@ export function LabLayout({
   children,
   showToc = true,
   tocItems = [],
+  navigationMode = 'scroll',
 }: LabLayoutProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const idsToObserve = flattenTocIds(tocItems);
+  const useToc = showToc && idsToObserve.length >= 2 && navigationMode === 'scroll';
+  const useTabBar = showToc && idsToObserve.length >= 2 && navigationMode === 'tab';
 
   useEffect(() => {
-    if (!showToc || idsToObserve.length < 2) return;
+    if (!useToc) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -58,21 +63,45 @@ export function LabLayout({
     });
 
     return () => observer.disconnect();
-  }, [showToc, idsToObserve.join(',')]);
+  }, [useToc, idsToObserve.join(',')]);
 
-  const handleTocClick = (id: string) => {
+  const handleNavClick = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActiveSection(id);
   };
 
+  const flatItems = tocItems.flatMap((item) => {
+    if ('children' in item && Array.isArray(item.children) && item.children.length > 0) {
+      return [item, ...item.children];
+    }
+    return [item];
+  });
+
   return (
-    <div className={styles.labLayoutWrapper} data-context="lab">
-      {showToc && idsToObserve.length >= 2 && (
+    <div className={styles.labLayoutWrapper} data-shell>
+      {useToc && (
         <LabToc
           items={tocItems}
           activeId={activeSection}
-          onItemClick={handleTocClick}
+          onItemClick={handleNavClick}
         />
+      )}
+      {useTabBar && (
+        <div className={styles.tabBar} role="tablist">
+          {flatItems.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={activeSection === item.id}
+              className={activeSection === item.id ? styles.tabActive : styles.tab}
+              onClick={() => handleNavClick(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
       )}
       <div className={styles.labLayout}>
         <header className={styles.labHeader}>

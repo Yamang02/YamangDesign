@@ -1,3 +1,4 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 /* Style Overview Diagram */
 .diagram {
   display: flex;
@@ -14,10 +15,10 @@
 .sectionTitle {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
   margin: 0;
   padding-bottom: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--lab-border-subtle);
+  border-bottom: 1px solid var(--shell-border-subtle);
 }
 
 /* Property Grid */
@@ -32,8 +33,8 @@
   flex-direction: column;
   gap: var(--ds-spacing-3);
   padding: var(--ds-spacing-4);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
 }
 
@@ -46,12 +47,12 @@
 .propertyLabel {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .propertyDesc {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .valueList {
@@ -63,15 +64,15 @@
 .valueTag {
   font-size: 10px;
   padding: 2px 6px;
-  background-color: var(--lab-bg-muted);
+  background-color: var(--shell-bg-muted);
   border-radius: var(--ds-radius-sm);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .cssVar {
   font-size: 10px;
   font-family: ui-monospace, monospace;
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 /* Shadow Scale */
@@ -98,20 +99,20 @@
 .shadowSample {
   width: 60px;
   height: 60px;
-  background-color: var(--lab-bg-base);
+  background-color: var(--shell-bg-base);
   border-radius: var(--ds-radius-md);
 }
 
 .shadowLabel {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
   font-weight: var(--ds-font-weight-medium);
 }
 
 .shadowKey {
   font-size: 10px;
   font-family: ui-monospace, monospace;
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 /* Style Comparison */
@@ -144,8 +145,8 @@
   flex-direction: column;
   gap: var(--ds-spacing-3);
   padding: var(--ds-spacing-4);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
   min-width: 0;
 }
@@ -159,12 +160,12 @@
 .variantName {
   font-size: var(--ds-text-md);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .variantDesc {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .previewBox {
@@ -178,7 +179,7 @@
 
 .previewLabel {
   font-size: var(--ds-text-sm);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .characteristicsList {
@@ -191,5 +192,5 @@
 
 .characteristicItem {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }

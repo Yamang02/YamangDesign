@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* Wrapper */
 .wrapper {
   display: flex;
@@ -75,18 +76,18 @@
 }
 
 .input[data-variant='outline'][data-error='true'] {
-  border-color: var(--ds-color-system-error);
+  border-color: var(--sys-color-error);
 }
 
 .input[data-variant='outline'][data-error='true']:focus-visible {
-  box-shadow: 0 0 0 2px var(--ds-color-system-error);
+  box-shadow: 0 0 0 2px var(--sys-color-error);
 }
 
 /* Variant: filled */
 .input[data-variant='filled'] {
   border: var(--ds-border-width, 1px) var(--ds-border-style, solid) transparent;
   /* ThemeProvider 미주입 시에도 filled 느낌이 나도록 fallback */
-  background-color: var(--ds-color-bg-muted, #f0f0f0);
+  background-color: var(--ds-color-bg-muted);
   box-shadow: none;
 }
 
@@ -101,11 +102,11 @@
 }
 
 .input[data-variant='filled'][data-error='true'] {
-  border-color: var(--ds-color-system-error);
+  border-color: var(--sys-color-error);
 }
 
 .input[data-variant='filled'][data-error='true']:focus-visible {
-  box-shadow: 0 0 0 2px var(--ds-color-system-error);
+  box-shadow: 0 0 0 2px var(--sys-color-error);
 }
 
 /* Variant: flushed */
@@ -129,11 +130,11 @@
 }
 
 .input[data-variant='flushed'][data-error='true'] {
-  border-bottom-color: var(--ds-color-system-error);
+  border-bottom-color: var(--sys-color-error);
 }
 
 .input[data-variant='flushed'][data-error='true']:focus-visible {
-  box-shadow: 0 1px 0 0 var(--ds-color-system-error);
+  box-shadow: 0 1px 0 0 var(--sys-color-error);
 }
 
 /* Disabled */
@@ -154,6 +155,6 @@
   font-size: var(--ds-text-caption-size);
   line-height: var(--ds-text-caption-leading);
   font-weight: var(--ds-text-caption-weight);
-  color: var(--ds-color-system-error);
+  color: var(--sys-color-error);
   margin-top: var(--ds-spacing-1);
 }

@@ -1,11 +1,12 @@
 /**
- * E05: Style Lab - GUI 스타일 비교 뷰 + DetailPanel
+ * E05/E06 P02: Style Lab - Property Matrix, 비교 뷰, DetailPanel
  */
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button, Card, DetailPanel } from '../../../components';
 import { LabLayout, LabSection, LabOverview, ComparisonCard, type TocItem } from '../../../layouts';
 import {
   getStyleVariables,
+  getPaletteVariablesFromDefinition,
   comparisonPresets,
   sampleText,
   buttonLabels,
@@ -13,25 +14,37 @@ import {
 } from '../../../constants';
 import { createStyle } from '../../../styles';
 import { stylePresets } from '../../../themes/presets';
+import { palettePresets } from '../../../themes/presets';
 import type { StyleName } from '../../../@types/theme';
+import type { StyleDefinition } from '../../../styles';
 import { StyleOverviewDiagram } from './StyleOverviewDiagram';
 import styles from './StyleLab.module.css';
 
 const shadowKeys = ['sm', 'md', 'lg'] as const;
+const bgColor = '#f5f5f5';
 
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
+  { id: 'property-matrix', label: 'Property Matrix' },
   { id: 'shadow-comparison', label: sectionTitles.shadowComparison },
   { id: 'component-comparison', label: sectionTitles.componentComparison },
 ];
+
+/** E06 P02: 기준 팔레트 변수 (Comparison 섹션 고정 배경용) */
+function useFixedPaletteVars(): Record<string, string> {
+  return useMemo(() => {
+    const firstPaletteId = comparisonPresets.palettes[0];
+    const def = firstPaletteId ? palettePresets[firstPaletteId] : undefined;
+    return def ? getPaletteVariablesFromDefinition(def) : {};
+  }, []);
+}
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const STYLE_METADATA: Record<
-  StyleName,
-  { description: string; characteristics: string[] }
+const STYLE_METADATA: Partial<
+  Record<StyleName, { description: string; characteristics: string[] }>
 > = {
   minimal: {
     description: '클린하고 모던한 스타일',
@@ -45,7 +58,107 @@ const STYLE_METADATA: Record<
     description: '거칠고 강렬한 비주얼',
     characteristics: ['하드 드롭 섀도우', '굵은 테두리 (3px)', '강한 대비'],
   },
+  glassmorphism: {
+    description: '유리 효과 스타일',
+    characteristics: ['배경 블러', '반투명 표면', '얇은 밝은 테두리'],
+  },
 };
+
+/** E06 P02: Property Matrix — 스타일별 슬롯 값 표 */
+function PropertyMatrix({
+  presets,
+  activeStyle,
+  onStyleSelect,
+}: {
+  presets: StyleName[];
+  activeStyle: StyleName | null;
+  onStyleSelect: (name: StyleName) => void;
+}) {
+  const propertyRows = useMemo(() => {
+    const rows: { id: string; label: string; getValue: (def: StyleDefinition) => string }[] = [
+      {
+        id: 'elevation-sm',
+        label: 'elevation (sm)',
+        getValue: (def) => {
+          const scale = def.elevation.create({ bgColor });
+          const v = scale[1];
+          return v.length > 24 ? `${v.slice(0, 24)}…` : v || '—';
+        },
+      },
+      {
+        id: 'elevation-inset',
+        label: 'elevation (inset)',
+        getValue: (def) => {
+          const scale = def.elevation.create({ bgColor });
+          const v = scale.inset;
+          return v.length > 24 ? `${v.slice(0, 24)}…` : v || '—';
+        },
+      },
+      { id: 'stroke-width', label: 'stroke width', getValue: (def) => def.stroke.width },
+      { id: 'stroke-strategy', label: 'stroke strategy', getValue: (def) => def.stroke.colorStrategy },
+      {
+        id: 'material-blur',
+        label: 'material blur',
+        getValue: (def) => {
+          const v = def.material?.backdropFilter;
+          return v ? (v.length > 22 ? `${v.slice(0, 22)}…` : v) : '—';
+        },
+      },
+      {
+        id: 'material-alpha',
+        label: 'material alpha',
+        getValue: (def) => (def.material?.backgroundAlpha != null ? String(def.material.backgroundAlpha) : '—'),
+      },
+      { id: 'filter', label: 'filter', getValue: (def) => def.filter?.element ?? '—' },
+      { id: 'spatial', label: 'spatial', getValue: (def) => def.spatial?.perspective ?? '—' },
+    ];
+    return rows;
+  }, []);
+
+  return (
+    <div className={styles.propertyMatrixWrap}>
+      <table className={styles.propertyMatrix}>
+        <thead>
+          <tr>
+            <th className={styles.propertyMatrixDim}>속성</th>
+            {presets.map((name) => (
+              <th key={name} className={styles.propertyMatrixPreset}>
+                <button
+                  type="button"
+                  className={styles.propertyMatrixPresetBtn}
+                  onClick={() => onStyleSelect(name)}
+                >
+                  {capitalize(name)}
+                </button>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {propertyRows.map((row) => (
+            <tr key={row.id}>
+              <td className={styles.propertyMatrixDim}>{row.label}</td>
+              {presets.map((name) => {
+                const d = stylePresets[name];
+                const value = d ? row.getValue(d) : '—';
+                const isActiveCol = activeStyle === name;
+                return (
+                  <td
+                    key={name}
+                    className={styles.propertyMatrixCell}
+                    data-active={isActiveCol ? true : undefined}
+                  >
+                    {value}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 function StyleDetail({ name }: { name: StyleName }) {
   const styleDef = stylePresets[name];
@@ -69,17 +182,6 @@ function StyleDetail({ name }: { name: StyleName }) {
           </ul>
         </>
       )}
-      <h4 className={styles.detailSectionTitle}>Surface</h4>
-      <div className={styles.borderInfo}>
-        <span>default: {styleDef.surface.default}</span>
-        <span>interactive: {styleDef.surface.interactive}</span>
-        <span>active: {styleDef.surface.active}</span>
-      </div>
-      <h4 className={styles.detailSectionTitle}>States</h4>
-      <div className={styles.borderInfo}>
-        <span>hover: {styleDef.states.hover}</span>
-        <span>active: {styleDef.states.active}</span>
-      </div>
       <h4 className={styles.detailSectionTitle}>Shadow</h4>
       <div className={styles.shadowList}>
         {(['none', 'sm', 'md', 'lg', 'xl', 'inset'] as const).map((key) => {
@@ -96,13 +198,11 @@ function StyleDetail({ name }: { name: StyleName }) {
           );
         })}
       </div>
-      <h4 className={styles.detailSectionTitle}>Border</h4>
+      <h4 className={styles.detailSectionTitle}>Stroke</h4>
       <div className={styles.borderInfo}>
         <span>width: {resolved.border.width}</span>
         <span>style: {resolved.border.style}</span>
-        {styleDef.border.useColor !== undefined && (
-          <span>useColor: {String(styleDef.border.useColor)}</span>
-        )}
+        <span>colorStrategy: {styleDef.stroke.colorStrategy}</span>
       </div>
     </div>
   );
@@ -110,46 +210,61 @@ function StyleDetail({ name }: { name: StyleName }) {
 
 export function StyleLab() {
   const [selectedStyle, setSelectedStyle] = useState<StyleName | null>(null);
-  const bgColor = '#f5f5f5';
+  const fixedPaletteVars = useFixedPaletteVars();
 
   return (
     <>
-      <LabLayout title="Style Lab" tocItems={tocItems}>
+      <LabLayout
+        title="Style Lab"
+        tocItems={tocItems}
+      >
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
             <StyleOverviewDiagram />
           </LabOverview>
         </LabSection>
 
+        <LabSection title="Property Matrix" id="property-matrix">
+          <PropertyMatrix
+            presets={comparisonPresets.styles}
+            activeStyle={selectedStyle}
+            onStyleSelect={setSelectedStyle}
+          />
+        </LabSection>
+
         <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
-          <div className={styles.comparisonGrid}>
-            {comparisonPresets.styles.map((styleName) => (
-              <ComparisonCard
-                key={styleName}
-                title={capitalize(styleName)}
-                styleVars={getStyleVariables(styleName, bgColor)}
-                onClick={() => setSelectedStyle(styleName)}
-                selected={selectedStyle === styleName}
-              >
-                <div
-                  className={styles.cardInner}
-                  style={{ backgroundColor: bgColor }}
+          <div style={fixedPaletteVars} className={styles.comparisonWrapper}>
+            <div className={styles.comparisonGrid}>
+              {comparisonPresets.styles.map((styleName) => (
+                <ComparisonCard
+                  key={styleName}
+                  title={capitalize(styleName)}
+                  styleVars={getStyleVariables(styleName, bgColor)}
+                  onClick={() => setSelectedStyle(styleName)}
+                  selected={selectedStyle === styleName}
                 >
-                  {shadowKeys.map((size) => (
-                    <div
-                      key={size}
-                      className={styles.shadowDemo}
-                      style={{
-                        boxShadow: `var(--ds-shadow-${size})`,
-                        backgroundColor: 'var(--ds-color-bg-base)',
-                      }}
-                    >
-                      shadow-{size}
+                  <div
+                    className={styles.cardInner}
+                    style={{ backgroundColor: 'var(--ds-color-bg-base)' }}
+                  >
+                    <div data-context="preview">
+                      {shadowKeys.map((size) => (
+                        <div
+                          key={size}
+                          className={styles.shadowDemo}
+                          style={{
+                            boxShadow: `var(--ds-shadow-${size})`,
+                            backgroundColor: 'var(--ds-color-bg-base)',
+                          }}
+                        >
+                          shadow-{size}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </ComparisonCard>
-            ))}
+                  </div>
+                </ComparisonCard>
+              ))}
+            </div>
           </div>
         </LabSection>
 
@@ -157,44 +272,46 @@ export function StyleLab() {
           title={sectionTitles.componentComparison}
           id="component-comparison"
         >
-          <div className={styles.comparisonGrid}>
-            {comparisonPresets.styles.map((styleName) => (
-              <ComparisonCard
-                key={styleName}
-                title={capitalize(styleName)}
-                styleVars={getStyleVariables(styleName, bgColor)}
-                onClick={() => setSelectedStyle(styleName)}
-                selected={selectedStyle === styleName}
-              >
-                <div
-                  className={styles.cardInner}
-                  style={{
-                    backgroundColor: bgColor,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--ds-spacing-4)',
-                  }}
+          <div style={fixedPaletteVars} className={styles.comparisonWrapper}>
+            <div className={styles.comparisonGrid}>
+              {comparisonPresets.styles.map((styleName) => (
+                <ComparisonCard
+                  key={styleName}
+                  title={capitalize(styleName)}
+                  styleVars={getStyleVariables(styleName, bgColor)}
+                  onClick={() => setSelectedStyle(styleName)}
+                  selected={selectedStyle === styleName}
                 >
                   <div
-                    style={{ display: 'flex', gap: 'var(--ds-spacing-3)' }}
+                    className={styles.cardInner}
+                    style={{
+                      backgroundColor: 'var(--ds-color-bg-base)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 'var(--ds-spacing-4)',
+                    }}
                   >
-                    <Button variant="primary">{buttonLabels.primary}</Button>
-                    <Button variant="secondary">{buttonLabels.secondary}</Button>
-                  </div>
-                  <Card padding="md">
-                    <p
-                      style={{
-                        margin: 0,
-                        fontSize: 'var(--ds-text-sm)',
-                        color: 'var(--ds-color-text-primary)',
-                      }}
+                    <div
+                      style={{ display: 'flex', gap: 'var(--ds-spacing-3)' }}
                     >
-                      {sampleText.pangram.en}
-                    </p>
-                  </Card>
-                </div>
-              </ComparisonCard>
-            ))}
+                      <Button variant="primary">{buttonLabels.primary}</Button>
+                      <Button variant="secondary">{buttonLabels.secondary}</Button>
+                    </div>
+                    <Card padding="md">
+                      <p
+                        style={{
+                          margin: 0,
+                          fontSize: 'var(--ds-text-sm)',
+                          color: 'var(--shell-text-primary)',
+                        }}
+                      >
+                        {sampleText.pangram.en}
+                      </p>
+                    </Card>
+                  </div>
+                </ComparisonCard>
+              ))}
+            </div>
           </div>
         </LabSection>
       </LabLayout>

@@ -1,0 +1,106 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
+/* E02 P04/P05: 전시장 그리드용 컴포넌트 카드 — outlined, 투명 배경, 프리뷰 중앙·비인터랙션 */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 180px;
+  padding: var(--ds-spacing-5);
+  background-color: transparent;
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: none;
+  transition: border-color 150ms ease, background-color 150ms ease;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: var(--ds-color-border-focus);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--ds-color-border-focus);
+  outline-offset: 2px;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ds-spacing-2);
+  margin-bottom: var(--ds-spacing-4);
+  padding-bottom: var(--ds-spacing-3);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+}
+
+.title {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0;
+}
+
+.variantCount {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  white-space: nowrap;
+}
+
+.preview {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-spacing-3);
+  min-height: 80px;
+  pointer-events: none;
+}
+
+/* E06 P04: Used in Molecules (P05에서 채움) */
+.usedIn {
+  margin-top: var(--ds-spacing-3);
+  padding-top: var(--ds-spacing-3);
+  border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+}
+.usedInLabel {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  flex-shrink: 0;
+}
+.usedInBadge {
+  font-size: var(--ds-text-xs);
+  padding: 2px var(--ds-spacing-2);
+  background-color: var(--ds-color-bg-subtle);
+  color: var(--ds-color-text-secondary);
+  border-radius: var(--ds-radius-sm);
+}
+
+/* E06 P05: Molecule/Organism 카드 — 구성 Atoms 목록 */
+.composedOf {
+  margin-top: var(--ds-spacing-3);
+  padding-top: var(--ds-spacing-3);
+  border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+}
+.composedOfLabel {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  flex-shrink: 0;
+}
+.composedOfBadge {
+  font-size: var(--ds-text-xs);
+  padding: 2px var(--ds-spacing-2);
+  background-color: var(--ds-color-bg-subtle);
+  color: var(--ds-color-text-secondary);
+  border-radius: var(--ds-radius-sm);
+}

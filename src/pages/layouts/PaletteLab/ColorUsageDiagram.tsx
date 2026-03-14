@@ -244,7 +244,7 @@ function SemanticMappingTabs({
                               item.source!.split('-').pop() ?? '500',
                               10
                             );
-                            return step <= 400 ? 'var(--lab-text-primary)' : '#fff';
+                            return step <= 400 ? 'var(--shell-text-primary)' : 'var(--shell-text-on-action, #fff)';
                           })(),
                         }}
                         title={`light-bg 기준: ${item.source}`}

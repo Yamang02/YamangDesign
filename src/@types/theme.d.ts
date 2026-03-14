@@ -8,7 +8,7 @@ export type ThemeName = 'minimal' | 'neumorphism' | 'brutalism';
  * PaletteName은 theme-presets에서 유도 (registry → themePresets 단일 소스)
  */
 export type { PaletteName } from '../constants/theme-presets';
-export type StyleName = 'minimal' | 'neumorphism' | 'brutalism';
+export type StyleName = 'minimal' | 'neumorphism' | 'brutalism' | 'glassmorphism';
 
 /** E08: 시스템 컬러 프리셋 (Error, Warning, Success, Info) */
 export type SystemPresetName = 'default' | 'muted';
@@ -73,6 +73,7 @@ export interface ThemeShadows {
 
 /**
  * 전체 테마 객체 (E03: palette, style, border 추가)
+ * E02 P01: vars — material/filter/spatial/createVars 슬롯에서 생성된 CSS 변수
  */
 export interface Theme {
   palette: PaletteName;
@@ -83,4 +84,6 @@ export interface Theme {
     width: string;
     style: string;
   };
+  /** P01: 스타일 슬롯에서 생성된 CSS 변수 (--ds-surface-backdrop 등) */
+  vars?: Record<string, string>;
 }

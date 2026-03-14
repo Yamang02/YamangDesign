@@ -1,16 +1,4 @@
-.tokenLab {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-8);
-}
-
-.sectionTitle {
-  font-size: var(--ds-text-lg);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-4) 0;
-}
-
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -35,15 +23,15 @@
 }
 
 .tokenName {
-  font-size: var(--ds-text-xs);
+  font-size: var(--ds-text-sm);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
-  color: var(--ds-color-text-secondary);
+  color: var(--ds-color-text-primary);
 }
 
 .tokenValue {
   font-size: var(--ds-text-xs);
-  color: var(--ds-color-text-secondary);
+  color: var(--ds-color-text-primary);
 }
 
 .swatch {
@@ -126,6 +114,23 @@
 .tokenRole {
   font-size: var(--ds-text-sm);
   color: var(--ds-color-text-secondary);
+  flex-shrink: 0;
+}
+
+.tokenListValue {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+  min-width: 0;
+}
+
+.tokenListSwatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--ds-color-border-default);
+  flex-shrink: 0;
 }
 
 .tokenNameInline {
@@ -133,6 +138,13 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
   color: var(--ds-color-text-primary);
+  background: var(--ds-color-bg-muted);
+  border-radius: var(--ds-radius-sm);
+  padding: 2px var(--ds-spacing-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
 }
 
 .previewCard {
@@ -156,4 +168,203 @@
   display: flex;
   flex-direction: column;
   gap: var(--ds-spacing-3);
+}
+
+/* E06 P03: Architecture diagram */
+.layerDiagram {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-4);
+  padding: var(--ds-spacing-6);
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-surface);
+}
+
+.diagramBlock {
+  padding: var(--ds-spacing-4);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-default);
+  background-color: var(--ds-color-bg-base);
+}
+
+.diagramTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-2);
+}
+
+.diagramList {
+  list-style: none;
+  margin: 0 0 var(--ds-spacing-2);
+  padding: 0;
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-secondary);
+}
+
+.diagramList li {
+  margin-bottom: var(--ds-spacing-1);
+}
+
+.diagramList code {
+  font-family: ui-monospace, monospace;
+  background: var(--ds-color-bg-muted);
+  padding: 2px var(--ds-spacing-1);
+  border-radius: var(--ds-radius-sm);
+}
+
+.diagramNote {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  margin: 0 0 var(--ds-spacing-2);
+}
+
+.diagramLink {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-action-primary-default);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.diagramLink:hover {
+  color: var(--ds-color-action-primary-hover);
+}
+
+.diagramArrow {
+  text-align: center;
+  font-size: var(--ds-text-lg);
+  color: var(--ds-color-text-muted);
+}
+
+/* Section description & categories */
+.sectionDesc {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  margin: 0 0 var(--ds-spacing-4);
+}
+
+.tokenCategory {
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.tokenCategory:last-child {
+  margin-bottom: 0;
+}
+
+.categoryTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-3);
+}
+
+/* Scalar token card (E05 P04) */
+.scalarCard {
+  padding: var(--ds-spacing-3);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.scalarCard .tokenName {
+  font-size: var(--ds-text-xs);
+}
+
+.scalarCard .tokenValue {
+  font-size: var(--ds-text-xs);
+  word-break: break-all;
+}
+
+/* DS Tokens wrapper (TOC scroll target) */
+.dsTokensWrapper {
+  margin-bottom: var(--ds-spacing-8);
+}
+
+.dsTokensWrapper .sectionTitle {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-4);
+}
+
+.dsTokensWrapper .sectionContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-8);
+}
+
+/* Sys Tokens */
+.sysGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--ds-spacing-4);
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.sysGroup {
+  padding: var(--ds-spacing-4);
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-bg-surface);
+}
+
+.sysGroupTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-3);
+}
+
+.sysGroupMain {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  margin-bottom: var(--ds-spacing-2);
+}
+
+.sysSwatchLarge {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  flex-shrink: 0;
+}
+
+.sysGroupSub {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.sysSubRow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  font-size: var(--ds-text-xs);
+}
+
+.sysSwatchSmall {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--ds-color-border-default);
+  flex-shrink: 0;
+}
+
+.sysUsage .categoryTitle {
+  margin-bottom: var(--ds-spacing-2);
+}
+
+.sysUsageRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-3);
+  align-items: flex-start;
 }

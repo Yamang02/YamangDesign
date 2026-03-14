@@ -1,0 +1,136 @@
+/* E06 P06: Service Context — DS 테마가 적용된 서비스 UI 미리보기. */
+/* Shell 레이어: 이 페이지 자체는 [data-shell] 내부이므로 --shell-* 사용 가능. */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-8);
+}
+
+/* Controls (Playground과 동일) */
+.selectRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-6);
+}
+
+/* Page Preview: 서비스 페이지 목업 */
+.pagePreview {
+  padding: var(--ds-spacing-6);
+  background: var(--shell-bg-surface);
+  border: 1px solid var(--shell-border-subtle);
+  border-radius: var(--ds-radius-lg);
+}
+
+.pagePreviewInner {
+  max-width: 56rem;
+  margin: 0 auto;
+  min-height: 480px;
+}
+
+/* Page Preview 내부는 data-context="preview" + themeVars 적용됨 */
+.hero {
+  padding: var(--ds-spacing-12) var(--ds-spacing-6);
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 var(--ds-spacing-3) 0;
+}
+
+.heroSubtitle {
+  font-size: var(--ds-text-lg);
+  color: var(--ds-color-text-secondary);
+  margin: 0 0 var(--ds-spacing-6) 0;
+}
+
+.heroButtons {
+  display: flex;
+  gap: var(--ds-spacing-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ds-spacing-6);
+  padding: var(--ds-spacing-8) var(--ds-spacing-6);
+}
+
+@media (max-width: 768px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formSection {
+  padding: var(--ds-spacing-8) var(--ds-spacing-6);
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.previewFooter {
+  padding: var(--ds-spacing-4) var(--ds-spacing-6);
+  text-align: center;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  border-top: 1px solid var(--ds-color-border-subtle);
+}
+
+/* Component Set */
+.componentSet {
+  padding: var(--ds-spacing-6);
+  background: var(--shell-bg-surface);
+  border: 1px solid var(--shell-border-subtle);
+  border-radius: var(--ds-radius-lg);
+}
+
+.componentSetInner {
+  /* themeVars 인라인으로 적용되는 영역 */
+  padding: var(--ds-spacing-6);
+  border-radius: var(--ds-radius-md);
+}
+
+.sectionTitle {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-secondary);
+  margin: 0 0 var(--ds-spacing-4) 0;
+  padding-bottom: var(--ds-spacing-2);
+  border-bottom: 1px solid var(--shell-border-subtle);
+}
+
+.atomsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-6);
+  margin-bottom: var(--ds-spacing-8);
+}
+
+.atomBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+  align-items: flex-start;
+}
+
+.atomLabel {
+  font-size: var(--ds-text-caption-size);
+  color: var(--ds-color-text-secondary);
+}
+
+.moleculesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-4);
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.organismsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-4);
+}

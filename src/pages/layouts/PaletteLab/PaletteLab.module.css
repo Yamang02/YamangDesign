@@ -1,9 +1,10 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* E05: PaletteLab 비교 그리드 + DetailPanel 상세 */
 /* P05: 시맨틱 매핑 섹션 (DetailPanel 내) */
 .semanticSection {
   margin-top: var(--ds-spacing-6);
   padding-top: var(--ds-spacing-4);
-  border-top: 1px solid var(--ds-color-border-subtle);
+  border-top: 1px solid var(--shell-border-subtle);
 }
 
 .brandColorsBody {
@@ -43,7 +44,7 @@
 .colorKeyLabel {
   font-size: var(--ds-text-xs);
   font-weight: var(--ds-font-weight-medium);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0;
   min-width: 64px;
   text-transform: capitalize;
@@ -70,16 +71,16 @@
 
 .paletteSubname {
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0 0 var(--ds-spacing-2) 0;
   padding-bottom: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--ds-color-border-subtle);
+  border-bottom: 1px solid var(--shell-border-subtle);
 }
 
 .detailSectionTitle {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
+  color: var(--shell-text-primary);
   margin: 0 0 var(--ds-spacing-2) 0;
 }
 
@@ -97,7 +98,7 @@
 
 .colorLabel {
   font-size: var(--ds-text-xs);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   min-width: 60px;
 }
 
@@ -105,13 +106,13 @@
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px solid var(--ds-color-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
 }
 
 .colorHex {
   font-size: var(--ds-text-xs);
   font-family: ui-monospace, monospace;
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .scaleGrid {
@@ -128,7 +129,7 @@
 
 .scaleLabel {
   font-size: var(--ds-text-xs);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .scaleRow {
@@ -140,7 +141,7 @@
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px solid var(--ds-color-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
 }
 
 .scaleLabels {
@@ -151,7 +152,7 @@
 .scaleStep {
   width: 20px;
   font-size: 10px;
-  color: var(--ds-color-text-muted);
+  color: var(--shell-text-muted);
 }
 
 /* Custom 카드 액션 그룹 */
@@ -169,12 +170,12 @@
   padding: var(--ds-spacing-2);
   background: none;
   border: none;
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   cursor: pointer;
   border-radius: var(--ds-radius-sm);
 }
 
 .mappingIconBtn:hover {
-  color: var(--ds-color-text-primary);
-  background: var(--ds-color-bg-muted);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-muted);
 }

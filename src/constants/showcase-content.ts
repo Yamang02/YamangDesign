@@ -277,7 +277,7 @@ export const showcaseSectionTokens: Record<
     { token: '--ds-color-text-primary', label: '텍스트' },
     { token: '--ds-color-border-default', label: '테두리' },
     { token: '--ds-color-border-focus', label: '포커스' },
-    { token: '--ds-color-system-error', label: '에러 상태' },
+    { token: '--sys-color-error', label: '에러 상태' },
     { token: '--ds-text-label-size', label: '라벨 폰트' },
     { token: '--ds-text-body-sm-size', label: '폰트 크기 sm' },
     { token: '--ds-text-body-md-size', label: '폰트 크기 md' },
@@ -292,6 +292,18 @@ export const showcaseSectionTokens: Record<
     { token: '--ds-color-text-primary', label: '라벨' },
     { token: '--ds-color-action-primary-default', label: '버튼' },
   ],
+};
+
+/** E06 P05: Atom별 사용 Molecule 목록 — Atoms 페이지 ComponentCard usedIn 연동 */
+export const ATOM_USED_IN: Record<ShowcaseSectionId, string[]> = {
+  input: ['FormField', 'SearchBar'],
+  button: ['SearchBar', 'ActionCard'],
+  badge: ['ProfileCard', 'TagGroup'],
+  avatar: ['ProfileCard'],
+  card: ['ActionCard'],
+  icon: ['SearchBar', 'StatusBanner'],
+  select: [],
+  'form-example': ['FormCard'],
 };
 
 /** 폼 예시 (연락처 패턴) */

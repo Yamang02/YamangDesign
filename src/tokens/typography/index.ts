@@ -7,7 +7,7 @@ import {
   fontWeight,
   letterSpacing,
   fontFamily,
-} from '../primitives/typography';
+} from '../global/typography';
 import { textStyles } from './text-styles';
 
 export { textStyles } from './text-styles';

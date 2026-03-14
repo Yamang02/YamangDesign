@@ -10,15 +10,47 @@ npm run lint     # eslint 검사
 
 ## Coding Rules
 
+### Naming — 기술스택 예약어 회피
+
+변수·함수·Props 이름으로 기술스택의 예약어나 내장 식별자를 사용하지 않는다.
+
+**금지 패턴 (예시)**
+
+| 맥락 | 피해야 할 이름 | 이유 |
+|------|--------------|------|
+| TypeScript | `type`, `namespace`, `declare`, `abstract` | TS 키워드 |
+| React Props | `key`, `ref`, `children`, `defaultValue`, `className` | React 내장 Props |
+| React Hooks | `state`, `effect`, `context`, `reducer` | Hook 개념어 / 충돌 위험 |
+| DOM / HTML | `class`, `for`, `name`, `value`, `id`, `style` | HTML 어트리뷰트 |
+| JavaScript | `default`, `export`, `import`, `module`, `target` | JS 예약어 |
+| CSS Modules | `global`, `local`, `composes` | CSS Modules 지시어 |
+
+```typescript
+// Bad — 예약어/내장어와 충돌
+const type = 'primary';
+function style(props) { ... }
+const { value, name } = formData;
+
+// Good — 의미가 명확한 도메인 이름 사용
+const variant = 'primary';
+function applyTokenStyle(props) { ... }
+const { inputValue, fieldName } = formData;
+```
+
+> 사용 전에 MDN, TypeScript Handbook, React API 문서에서 해당 이름이 예약·내장어인지 확인한다.
+
+---
+
 ### Styling
-- **CSS 변수만 사용**: `var(--ds-xxx)` 형식
-- 하드코딩 금지: `#6366F1`, `rgba(...)` 등 직접 값 사용 불가
+- **CSS 변수만 사용**: `var(--ds-xxx)` 또는 `var(--ui-xxx)` 형식
+- **직접 값(hex, rgb, named color) 금지** — 컴포넌트·페이지 CSS/TSX에서는 토큰만 사용
+- **예외**: 토큰/프리셋 **정의** 파일(`*presets*.ts`, `*mappings*.ts`, palette preset, `uiTokens` 등) 내부의 원시값
 
 ```typescript
 // Good
 backgroundColor: 'var(--ds-color-action-primary-default)'
 
-// Bad
+// Bad (컴포넌트·스타일에서)
 backgroundColor: '#6366F1'
 ```
 
@@ -31,7 +63,7 @@ ComponentName/
 ├── ComponentName.tsx         # 구현
 └── index.ts                  # export
 ```
-Transition은 하드코딩하지 않고 `var(--ds-transition-*)` recipe 사용.  
+Transition은 하드코딩하지 않고 `var(--ds-transition-*)` recipe 사용.
 → [Motion & Transition 가이드](docs/design/15-motion-and-transitions.md)
 
 ### Theme Tokens
@@ -42,6 +74,13 @@ Transition은 하드코딩하지 않고 `var(--ds-transition-*)` recipe 사용.
 - Typography: `--ds-text-{size}`, `--ds-font-{property}`
 - Motion: `--ds-duration-{speed}`, `--ds-ease-{type}`, `--ds-transition-{name}`, `--ds-state-{state}-opacity`
 - Focus: `--ds-focus-ring-width`, `--ds-focus-ring-offset`, `--ds-focus-ring-color`
+
+### Design Tokens & Naming
+
+- **접두사**: `--ds-`(테마/팔레트 영향), `--ui-`(사이트 shell 고정)
+- **이름 규칙**: [Token Naming Reference](docs/design/18-token-naming-reference.md) 준수 — `--ds-{category}-{sub?-}{name}` (kebab-case)
+- **신규 토큰**: Global(원시) → Alias(의미) 구조 유지, 기존 category 패턴 따르기
+- **Typography**: Text Style 기반 `--ds-text-{style}-size/leading/weight` 사용 권장
 
 ### 토큰 vs 하드코딩 판단 기준
 
@@ -91,6 +130,8 @@ Transition은 하드코딩하지 않고 `var(--ds-transition-*)` recipe 사용.
 
 ## Reference
 - [docs/design/ARCHITECTURE.md](docs/design/ARCHITECTURE.md) - 토큰 흐름, 테마 구조
+- [docs/design/18-token-naming-reference.md](docs/design/18-token-naming-reference.md) - 토큰 CSS 변수 네이밍
+- [docs/design/17-token-3tier-reference.md](docs/design/17-token-3tier-reference.md) - 3-tier 구조
 - [docs/epic/theme-hierarchy/ADDING-PRESETS.md](docs/epic/theme-hierarchy/ADDING-PRESETS.md) - 새 프리셋 추가 방법
 
 ## AI Policy

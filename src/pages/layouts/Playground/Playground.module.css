@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* E05: Playground 드롭다운 + Component Preview */
 .selectRow {
   display: flex;
@@ -21,15 +22,26 @@
   }
 }
 
-.previewColumn {
+.panel {
   min-width: 0;
 }
 
-.previewColumnTitle {
+.panelHeader {
+  margin-bottom: var(--ds-spacing-3);
+}
+
+.panelHeaderTitle {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
   color: var(--ds-color-text-secondary);
-  margin: 0 0 var(--ds-spacing-3) 0;
+  margin: 0 0 var(--ds-spacing-1) 0;
+}
+
+.panelHeaderDescription {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  margin: 0;
+  line-height: 1.4;
 }
 
 .previewContainer {
@@ -37,6 +49,10 @@
   background-color: var(--ds-color-bg-base);
   border-radius: var(--ds-radius-lg);
   border: 1px solid var(--ds-color-border-subtle);
+}
+
+.previewContainerSystem {
+  background-color: var(--ds-color-bg-muted);
 }
 
 .previewSection {
@@ -102,4 +118,18 @@
 .statusChip {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-medium);
+}
+
+.neutralSwatch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-2);
+}
+
+.neutralSwatchItem {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-subtle);
+  flex-shrink: 0;
 }

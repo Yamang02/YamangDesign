@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Avatar, Badge, Button, Card, DetailPanel, Icon, Input, Profile, Select } from '../../../components';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  ComponentCard,
+  ComponentDetailModal,
+  Icon,
+  Input,
+  Select,
+} from '../../../components';
 import { LabLayout, type TocItem } from '../../../layouts';
 import {
   showcaseSections,
@@ -30,69 +40,6 @@ const tocItems: TocItem[] = [
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/** 중앙 정렬된 콘텐츠 영역 - LabLayout 내부에서 섹션들이 동일 시작점으로 왼쪽 정렬 */
-const contentAreaStyle = {
-  maxWidth: '1200px',
-  margin: '0 auto',
-  width: '100%',
-} as const;
-
-const sectionStyle = {
-  padding: 'var(--ds-spacing-8) 0',
-  width: '100%',
-  boxSizing: 'border-box' as const,
-};
-
-const gridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  gap: 'var(--ds-spacing-6)',
-  justifyItems: 'start' as const,
-};
-
-const rowStyle = {
-  display: 'flex',
-  flexWrap: 'wrap' as const,
-  gap: 'var(--ds-spacing-3)',
-  marginBottom: 'var(--ds-spacing-4)',
-  justifyContent: 'flex-start' as const,
-};
-
-const labelStyle = {
-  fontSize: 'var(--ds-text-sm)',
-  color: 'var(--ds-color-text-secondary)',
-  marginBottom: 'var(--ds-spacing-2)',
-};
-
-const itemWrapperStyle = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  alignItems: 'flex-start',
-  gap: 'var(--ds-spacing-1)',
-};
-
-/** 카드 섹션: 그리드 셀 전체 너비 사용하여 레이아웃 안정화 */
-const cardItemWrapperStyle = {
-  ...itemWrapperStyle,
-  alignItems: 'stretch' as const,
-  minWidth: 0,
-};
-
-const itemLabelStyle = {
-  fontSize: 'var(--ds-text-xs)',
-  color: 'var(--ds-color-text-muted)',
-};
-
-const dividerStyle = {
-  borderTop: '1px solid var(--ds-color-border-default)',
-  margin: 0,
-  width: '100%',
-} as const;
-
-function SectionDivider() {
-  return <div style={dividerStyle} />;
 }
 
 type TokenCategory = 'color' | 'spacing' | 'typography' | 'size' | 'shadow' | 'other';
@@ -202,108 +149,296 @@ function ComponentDetail({ sectionId }: { sectionId: ShowcaseSectionId }) {
   );
 }
 
-interface SectionHeaderProps {
-  title: string;
-  onInfoClick: () => void;
+/** E02 P05: 복잡도 순 그리드 (단일 컴포넌트 → 복합). Form Example은 아래 Examples 섹션으로 분리 */
+const SHOWCASE_GRID_IDS: ShowcaseSectionId[] = [
+  'badge',
+  'icon',
+  'avatar',
+  'button',
+  'input',
+  'select',
+  'card',
+];
+
+/** Examples 섹션에만 노출 (패턴/예제) */
+const EXAMPLES_IDS: ShowcaseSectionId[] = ['form-example'];
+
+const VARIANT_COUNTS: Record<ShowcaseSectionId, number> = {
+  badge: 5,
+  icon: 3,
+  avatar: 4,
+  button: 6,
+  card: 3,
+  select: 3,
+  input: 3,
+  'form-example': 1,
+};
+
+/** 모달 내 쇼케이스 — 폰트 위계·공간 활용·Variants 그리드 배치 */
+function ComponentShowcase({ id }: { id: ShowcaseSectionId }) {
+  const hasTokens = (showcaseSectionTokens[id]?.length ?? 0) > 0;
+  return (
+    <>
+      <section className={styles.showcaseModalSection}>
+        <h2 className={styles.showcaseModalSectionTitle}>Variants</h2>
+        <div className={styles.showcaseModalSectionContent}>
+          <SectionContent id={id} />
+        </div>
+      </section>
+      {hasTokens && (
+        <section className={styles.showcaseModalSection}>
+          <h2 className={styles.showcaseModalSectionTitle}>Design tokens</h2>
+          <div className={styles.showcaseModalSectionContent}>
+            <ComponentDetail sectionId={id} />
+          </div>
+        </section>
+      )}
+    </>
+  );
 }
 
-function SectionHeader({ title, onInfoClick }: SectionHeaderProps) {
+/** 그리드 한 셀: 라벨(shell) + 컴포넌트(ds, data-context="preview") */
+function VariantCell({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className={styles.sectionHeader}>
-      <h2 className={styles.sectionTitle}>
-        {title}
-      </h2>
-      <button
-        type="button"
-        className={styles.infoButton}
-        onClick={onInfoClick}
-        aria-label={`${title} 상세 정보 보기`}
-      >
-        <Icon name="info" size="sm" />
-      </button>
+    <div className={styles.showcaseVariantItem}>
+      <span className={styles.showcaseVariantItemLabel}>{label}</span>
+      <div data-context="preview" className={styles.showcaseVariantPreview}>
+        {children}
+      </div>
     </div>
   );
 }
 
-function SelectSection({ id, onInfoClick }: { id: string; onInfoClick: () => void }) {
-  const [value1, setValue1] = useState('apple');
-  const [value2, setValue2] = useState('');
-  const [value3, setValue3] = useState('banana');
+/** 섹션별 본문 (모달 Variants). 그리드 배치 + 폰트 위계(그룹 라벨 > 셀 라벨) */
+function SectionContent({ id }: { id: ShowcaseSectionId }) {
+  switch (id) {
+    case 'badge':
+      return (
+        <>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
+            <div className={styles.showcaseVariantGrid}>
+              {(['primary', 'secondary', 'accent', 'outline', 'subtle'] as const).map((v) => (
+                <VariantCell key={v} label={capitalize(v)}>
+                  <Badge variant={v}>{showcaseContent.badge}</Badge>
+                </VariantCell>
+              ))}
+            </div>
+          </div>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
+            <div className={styles.showcaseVariantGrid}>
+              <VariantCell label="Small"><Badge size="sm">{showcaseContent.badge}</Badge></VariantCell>
+              <VariantCell label="Medium"><Badge size="md">{showcaseContent.badge}</Badge></VariantCell>
+            </div>
+          </div>
+        </>
+      );
+    case 'icon':
+      return (
+        <>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.materialIcons}</p>
+            <div className={styles.showcaseVariantGrid}>
+              {iconShowcase.material.slice(0, 5).map((name) => (
+                <VariantCell key={name} label={capitalize(name)}>
+                  <Icon name={name} title={capitalize(name)} />
+                </VariantCell>
+              ))}
+            </div>
+          </div>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
+            <div className={styles.showcaseVariantGrid}>
+              {(['sm', 'md', 'lg'] as const).map((s) => (
+                <VariantCell key={s} label={s === 'sm' ? 'Small' : s === 'md' ? 'Medium' : 'Large'}>
+                  <Icon name="star" size={s} title={showcaseContent.icon} />
+                </VariantCell>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    case 'avatar':
+      return (
+        <>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
+            <div className={styles.showcaseVariantGrid}>
+              {(['sm', 'md', 'lg'] as const).map((s) => (
+                <VariantCell key={s} label={s === 'sm' ? 'Small' : s === 'md' ? 'Medium' : 'Large'}>
+                  <Avatar initials={showcaseContent.avatar} size={s} />
+                </VariantCell>
+              ))}
+            </div>
+          </div>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
+            <div className={styles.showcaseVariantGrid}>
+              {(['primary', 'secondary', 'accent'] as const).map((v) => (
+                <VariantCell key={v} label={capitalize(v)}>
+                  <Avatar initials={showcaseContent.avatar} variant={v} />
+                </VariantCell>
+              ))}
+            </div>
+          </div>
+        </>
+      );
+    case 'button':
+      return (
+        <>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
+            <div className={styles.showcaseVariantGrid}>
+              <VariantCell label={buttonShowcase.variants.primary}>
+                <Button variant="primary">{showcaseContent.button}</Button>
+              </VariantCell>
+              <VariantCell label={buttonShowcase.variants.outline}>
+                <Button variant="outline">{showcaseContent.button}</Button>
+              </VariantCell>
+              <VariantCell label={buttonShowcase.variants.ghost}>
+                <Button variant="ghost">{showcaseContent.button}</Button>
+              </VariantCell>
+            </div>
+          </div>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
+            <div className={styles.showcaseVariantGrid}>
+              <VariantCell label={buttonShowcase.sizes.sm}>
+                <Button size="sm">{showcaseContent.button}</Button>
+              </VariantCell>
+              <VariantCell label={buttonShowcase.sizes.md}>
+                <Button size="md">{showcaseContent.button}</Button>
+              </VariantCell>
+              <VariantCell label={buttonShowcase.sizes.lg}>
+                <Button size="lg">{showcaseContent.button}</Button>
+              </VariantCell>
+            </div>
+          </div>
+        </>
+      );
+    case 'card':
+      return (
+        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
+          <div className={styles.showcaseVariantItem} style={{ alignItems: 'stretch' }}>
+            <span className={styles.showcaseVariantItemLabel}>{cardShowcase.variantLabels.elevated}</span>
+            <Card variant="elevated" hoverable>
+              <Card.Header>{showcaseContent.card.title}</Card.Header>
+              <Card.Body>{showcaseContent.card.body}</Card.Body>
+              <Card.Footer>
+                <Button variant="primary" size="sm">{showcaseContent.button}</Button>
+              </Card.Footer>
+            </Card>
+          </div>
+          <div className={styles.showcaseVariantItem} style={{ alignItems: 'stretch' }}>
+            <span className={styles.showcaseVariantItemLabel}>{cardShowcase.variantLabels.outlined}</span>
+            <Card variant="outlined" hoverable>
+              <Card.Header>{showcaseContent.card.title}</Card.Header>
+              <Card.Body>{showcaseContent.card.body}</Card.Body>
+            </Card>
+          </div>
+          <div className={styles.showcaseVariantItem} style={{ alignItems: 'stretch' }}>
+            <span className={styles.showcaseVariantItemLabel}>{cardShowcase.variantLabels.flat}</span>
+            <Card variant="flat" padding="lg">
+              <Card.Body>{showcaseContent.card.body}</Card.Body>
+            </Card>
+          </div>
+        </div>
+      );
+    case 'select':
+      return <SelectSectionBody />;
+    case 'input':
+      return (
+        <>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
+            <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+              <VariantCell label={inputShowcase.variants.outline}>
+                <Input variant="outline" placeholder={showcaseContent.input} />
+              </VariantCell>
+              <VariantCell label={inputShowcase.variants.filled}>
+                <Input variant="filled" placeholder={showcaseContent.input} />
+              </VariantCell>
+              <VariantCell label={inputShowcase.variants.flushed}>
+                <Input variant="flushed" placeholder={showcaseContent.input} />
+              </VariantCell>
+            </div>
+          </div>
+          <div className={styles.showcaseModalGroup}>
+            <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
+            <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+              <VariantCell label={inputShowcase.sizes.sm}>
+                <Input size="sm" placeholder={showcaseContent.input} />
+              </VariantCell>
+              <VariantCell label={inputShowcase.sizes.md}>
+                <Input size="md" placeholder={showcaseContent.input} />
+              </VariantCell>
+              <VariantCell label={inputShowcase.sizes.lg}>
+                <Input size="lg" placeholder={showcaseContent.input} />
+              </VariantCell>
+            </div>
+          </div>
+        </>
+      );
+    case 'form-example':
+      return (
+        <div data-context="preview" style={{ maxWidth: 400 }}>
+          <Card variant="elevated" padding="lg">
+            <Card.Body>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)' }}>
+                <Input label={formExample.fields.name} placeholder={formExample.fields.namePlaceholder} fullWidth />
+                <Input label={formExample.fields.email} type="email" placeholder={formExample.fields.emailPlaceholder} fullWidth />
+                <Button variant="primary" fullWidth>{formExample.submitLabel}</Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
+      );
+    default:
+      return null;
+  }
+}
 
+/** Select 섹션 본문 (state 유지 필요해 별도 컴포넌트). 그리드 + 그룹 라벨 */
+function SelectSectionBody() {
+  const [value, setValue] = useState('apple');
   const options = [...selectShowcase.fruitOptions];
   return (
-    <section id={id} style={sectionStyle}>
-      <SectionHeader title={showcaseSections.select} onInfoClick={onInfoClick} />
-
-      <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-        <p style={labelStyle}>{showcaseLabels.variants}</p>
-        <div style={rowStyle}>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.variants.outline}</span>
-            <Select
-              options={options}
-              value={value1}
-              onChange={setValue1}
-              variant="outline"
-              placeholder={showcaseContent.select}
-            />
-          </div>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.variants.filled}</span>
-            <Select
-              options={options}
-              value={value2}
-              onChange={setValue2}
-              variant="filled"
-              placeholder={showcaseContent.select}
-            />
-          </div>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.variants.ghost}</span>
-            <Select
-              options={options}
-              value={value3}
-              onChange={setValue3}
-              variant="ghost"
-              placeholder={showcaseContent.select}
-            />
-          </div>
+    <>
+      <div className={styles.showcaseModalGroup}>
+        <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
+        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
+          <VariantCell label={selectShowcase.variants.outline}>
+            <Select options={options} value={value} onChange={setValue} variant="outline" placeholder={showcaseContent.select} />
+          </VariantCell>
+          <VariantCell label={selectShowcase.variants.filled}>
+            <Select options={options} value="" onChange={() => {}} variant="filled" placeholder={showcaseContent.select} />
+          </VariantCell>
+          <VariantCell label={selectShowcase.variants.ghost}>
+            <Select options={options} value="" onChange={() => {}} variant="ghost" placeholder={showcaseContent.select} />
+          </VariantCell>
         </div>
       </div>
-
-      <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-        <p style={labelStyle}>{showcaseLabels.sizes}</p>
-        <div style={rowStyle}>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.sizes.sm}</span>
+      <div className={styles.showcaseModalGroup}>
+        <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
+        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
+          <VariantCell label={selectShowcase.sizes.sm}>
             <Select options={options} value="apple" onChange={() => {}} size="sm" placeholder={showcaseContent.select} />
-          </div>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.sizes.md}</span>
+          </VariantCell>
+          <VariantCell label={selectShowcase.sizes.md}>
             <Select options={options} value="banana" onChange={() => {}} size="md" placeholder={showcaseContent.select} />
-          </div>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.sizes.lg}</span>
+          </VariantCell>
+          <VariantCell label={selectShowcase.sizes.lg}>
             <Select options={options} value="cherry" onChange={() => {}} size="lg" placeholder={showcaseContent.select} />
-          </div>
+          </VariantCell>
         </div>
       </div>
-
-      <div>
-        <p style={labelStyle}>{showcaseLabels.states}</p>
-        <div style={rowStyle}>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.states.disabled}</span>
-            <Select options={options} value="apple" onChange={() => {}} disabled placeholder={showcaseContent.select} />
-          </div>
-          <div style={itemWrapperStyle}>
-            <span style={itemLabelStyle}>{selectShowcase.states.placeholder}</span>
-            <Select options={options} value="" onChange={() => {}} placeholder={showcaseContent.select} />
-          </div>
-        </div>
-      </div>
-    </section>
+    </>
   );
+}
+
+function getSectionTitle(id: ShowcaseSectionId): string {
+  return id === 'form-example' ? formExample.title : showcaseSections[id];
 }
 
 export function Components() {
@@ -311,341 +446,117 @@ export function Components() {
 
   return (
     <>
-    <LabLayout title="Components"  tocItems={tocItems}>
-      <div style={contentAreaStyle}>
-      {/* Badge Section */}
-      <section id="badge" style={sectionStyle}>
-        <SectionHeader title={showcaseSections.badge} onInfoClick={() => setDetailSection('badge')} />
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.variants}</p>
-          <div style={rowStyle}>
-            <Badge variant="primary">{showcaseContent.badge}</Badge>
-            <Badge variant="secondary">{showcaseContent.badge}</Badge>
-            <Badge variant="accent">{showcaseContent.badge}</Badge>
-            <Badge variant="outline">{showcaseContent.badge}</Badge>
-            <Badge variant="subtle">{showcaseContent.badge}</Badge>
-          </div>
+      <LabLayout title="Components" showToc={false} tocItems={tocItems}>
+        <div className={styles.showcaseGrid}>
+          {SHOWCASE_GRID_IDS.map((id) => (
+            <ComponentCard
+              key={id}
+              id={id}
+              title={getSectionTitle(id)}
+              variantCount={VARIANT_COUNTS[id]}
+              preview={getCardPreview(id)}
+              onClick={() => setDetailSection(id)}
+            />
+          ))}
         </div>
 
-        <div>
-          <p style={labelStyle}>{showcaseLabels.sizes}</p>
-          <div style={rowStyle}>
-            <Badge size="sm">{showcaseContent.badge}</Badge>
-            <Badge size="md">{showcaseContent.badge}</Badge>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Icon Section */}
-      <section id="icon" style={sectionStyle}>
-        <SectionHeader title={showcaseSections.icon} onInfoClick={() => setDetailSection('icon')} />
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.materialIcons}</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            {iconShowcase.material.map((name) => (
-              <Icon key={name} name={name} title={capitalize(name)} />
+        <section className={styles.showcaseExamples} aria-labelledby="examples-heading">
+          <h2 id="examples-heading" className={styles.showcaseExamplesTitle}>
+            Examples
+          </h2>
+          <div className={styles.showcaseGrid}>
+            {EXAMPLES_IDS.map((id) => (
+              <ComponentCard
+                key={id}
+                id={id}
+                title={formExample.title}
+                variantCount={VARIANT_COUNTS[id]}
+                preview={getCardPreview(id)}
+                onClick={() => setDetailSection(id)}
+              />
             ))}
           </div>
-        </div>
+        </section>
+      </LabLayout>
 
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.nucleoIcons}</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            {iconShowcase.nucleo.map((name) => (
-              <Icon key={name} name={name} library="nucleo" title={capitalize(name)} />
-            ))}
-          </div>
-        </div>
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.sizes}</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            <Icon name="star" size="sm" title={showcaseContent.icon} />
-            <Icon name="star" size="md" title={showcaseContent.icon} />
-            <Icon name="star" size="lg" title={showcaseContent.icon} />
-            <Icon name="star" size={32} title={showcaseContent.icon} />
-            <Icon name="star" size={48} title={showcaseContent.icon} />
-          </div>
-        </div>
-
-        <div>
-          <p style={labelStyle}>{showcaseLabels.colors}</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            <Icon name="favorite" color="var(--ds-color-action-primary-default)" />
-            <Icon name="favorite" color="var(--ds-color-action-secondary-default)" />
-            <Icon name="favorite" color="var(--ds-color-action-accent-default)" />
-            <Icon name="favorite" color="var(--ds-color-text-muted)" />
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Avatar Section */}
-      <section id="avatar" style={sectionStyle}>
-        <SectionHeader title={showcaseSections.avatar} onInfoClick={() => setDetailSection('avatar')} />
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.sizes}</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            <Avatar initials={showcaseContent.avatar} size="sm" />
-            <Avatar initials={showcaseContent.avatar} size="md" />
-            <Avatar initials={showcaseContent.avatar} size="lg" />
-          </div>
-        </div>
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.variants}</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            <Avatar initials={showcaseContent.avatar} variant="primary" />
-            <Avatar initials={showcaseContent.avatar} variant="secondary" />
-            <Avatar initials={showcaseContent.avatar} variant="accent" />
-          </div>
-        </div>
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>With Icon</p>
-          <div style={{ ...rowStyle, alignItems: 'center' }}>
-            <Avatar size="lg" variant="primary">
-              <Icon name="speed" size="lg" color="var(--ds-color-text-on-action)" />
-            </Avatar>
-            <Avatar size="lg" variant="secondary">
-              <Icon name="palette" size="lg" color="var(--ds-color-text-on-action)" />
-            </Avatar>
-            <Avatar size="lg" variant="accent">
-              <Icon name="code" size="lg" color="var(--ds-color-text-on-action)" />
-            </Avatar>
-            <Avatar size="md" variant="primary">
-              <Icon name="star" size="md" color="var(--ds-color-text-on-action)" />
-            </Avatar>
-          </div>
-        </div>
-
-        <div>
-          <p style={labelStyle}>Profile (Avatar + name + role)</p>
-          <div style={rowStyle}>
-            <Profile initials="SK" name="Sarah Kim" role="Lead Developer, TechCorp" />
-            <Profile initials="JC" name="James Chen" role="Product Designer" avatarVariant="accent" />
-            <Profile initials="EP" name="Emily Park" avatarSize="sm" />
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Button Section */}
-      <section id="button" style={sectionStyle}>
-        <SectionHeader title={showcaseSections.button} onInfoClick={() => setDetailSection('button')} />
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.variants}</p>
-          <div style={rowStyle}>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.variants.primary}</span>
-              <Button variant="primary">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.variants.secondary}</span>
-              <Button variant="secondary">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.variants.accent}</span>
-              <Button variant="accent">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.variants.outline}</span>
-              <Button variant="outline">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.variants.ghost}</span>
-              <Button variant="ghost">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.variants.subtle}</span>
-              <Button variant="subtle">{showcaseContent.button}</Button>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: 'var(--ds-spacing-6)' }}>
-          <p style={labelStyle}>{showcaseLabels.sizes}</p>
-          <div style={rowStyle}>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.sizes.sm}</span>
-              <Button size="sm">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.sizes.md}</span>
-              <Button size="md">{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.sizes.lg}</span>
-              <Button size="lg">{showcaseContent.button}</Button>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <p style={labelStyle}>{showcaseLabels.states}</p>
-          <div style={rowStyle}>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.states.disabled}</span>
-              <Button disabled>{showcaseContent.button}</Button>
-            </div>
-            <div style={itemWrapperStyle}>
-              <span style={itemLabelStyle}>{buttonShowcase.states.fullWidth}</span>
-              <Button fullWidth>{showcaseContent.button}</Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Card Section */}
-      <section id="card" style={sectionStyle}>
-        <SectionHeader title={showcaseSections.card} onInfoClick={() => setDetailSection('card')} />
-
-        <div style={gridStyle}>
-          <div style={cardItemWrapperStyle}>
-            <span style={itemLabelStyle}>{cardShowcase.variantLabels.elevated}</span>
-            <Card variant="elevated" hoverable>
-              <Card.Header>{showcaseContent.card.title}</Card.Header>
-              <Card.Body>{showcaseContent.card.body}</Card.Body>
-              <Card.Footer>
-                <Button variant="ghost" size="sm">{showcaseContent.button}</Button>
-                <Button variant="primary" size="sm">{showcaseContent.button}</Button>
-              </Card.Footer>
-            </Card>
-          </div>
-
-          <div style={cardItemWrapperStyle}>
-            <span style={itemLabelStyle}>{cardShowcase.variantLabels.outlined}</span>
-            <Card variant="outlined" hoverable>
-              <Card.Header>{showcaseContent.card.title}</Card.Header>
-              <Card.Body>{showcaseContent.card.body}</Card.Body>
-              <Card.Footer>
-                <Button variant="outline" size="sm">{showcaseContent.button}</Button>
-              </Card.Footer>
-            </Card>
-          </div>
-
-          <div style={cardItemWrapperStyle}>
-            <span style={itemLabelStyle}>{cardShowcase.variantLabels.flat}</span>
-            <Card variant="flat" padding="lg">
-              <Card.Body>{showcaseContent.card.body}</Card.Body>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Select Section */}
-      <SelectSection id="select" onInfoClick={() => setDetailSection('select')} />
-
-      <SectionDivider />
-
-      {/* Input Section */}
-      <section id="input" style={sectionStyle}>
-        <SectionHeader title={showcaseSections.input} onInfoClick={() => setDetailSection('input')} />
-
-        <div style={gridStyle}>
-          <div>
-            <p style={labelStyle}>{showcaseLabels.variants}</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)' }}>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.variants.outline}</span>
-                <Input variant="outline" placeholder={showcaseContent.input} />
-              </div>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.variants.filled}</span>
-                <Input variant="filled" placeholder={showcaseContent.input} />
-              </div>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.variants.flushed}</span>
-                <Input variant="flushed" placeholder={showcaseContent.input} />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <p style={labelStyle}>{showcaseLabels.sizes}</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)' }}>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.sizes.sm}</span>
-                <Input size="sm" placeholder={showcaseContent.input} />
-              </div>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.sizes.md}</span>
-                <Input size="md" placeholder={showcaseContent.input} />
-              </div>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.sizes.lg}</span>
-                <Input size="lg" placeholder={showcaseContent.input} />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <p style={labelStyle}>{showcaseLabels.states}</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)' }}>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.states.required}</span>
-                <Input placeholder={showcaseContent.input} required />
-              </div>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.states.error}</span>
-                <Input
-                  isError
-                  errorMessage={inputShowcase.errorMessage}
-                  placeholder={showcaseContent.input}
-                />
-              </div>
-              <div style={itemWrapperStyle}>
-                <span style={itemLabelStyle}>{inputShowcase.states.disabled}</span>
-                <Input disabled placeholder={showcaseContent.input} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      {/* Form Example (랜딩 Contact 패턴 이식) */}
-      <section id="form-example" style={sectionStyle}>
-        <SectionHeader title={formExample.title} onInfoClick={() => setDetailSection('form-example')} />
-        <p style={{ ...labelStyle, marginBottom: 'var(--ds-spacing-4)' }}>{formExample.subtitle}</p>
-        <div style={{ maxWidth: 400 }}>
-          <Card variant="elevated" padding="lg">
-            <Card.Body>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)' }}>
-                <Input label={formExample.fields.name} placeholder={formExample.fields.namePlaceholder} fullWidth />
-                <Input label={formExample.fields.email} type="email" placeholder={formExample.fields.emailPlaceholder} fullWidth />
-                <Input label={formExample.fields.message} placeholder={formExample.fields.messagePlaceholder} fullWidth />
-                <Button variant="primary" fullWidth>
-                  {formExample.submitLabel}
-                </Button>
-              </div>
-            </Card.Body>
-          </Card>
-        </div>
-      </section>
-      </div>
-    </LabLayout>
-
-    <DetailPanel
-      open={!!detailSection}
-      onClose={() => setDetailSection(null)}
-      title={detailSection === 'form-example' ? formExample.title : detailSection ? showcaseSections[detailSection] ?? '' : ''}
-    >
-      {detailSection && <ComponentDetail sectionId={detailSection} />}
-    </DetailPanel>
+      <ComponentDetailModal
+        open={!!detailSection}
+        onClose={() => setDetailSection(null)}
+        title={detailSection ? getSectionTitle(detailSection) : ''}
+      >
+        {detailSection && <ComponentShowcase id={detailSection} />}
+      </ComponentDetailModal>
     </>
   );
+}
+
+/** 그리드 카드용 미리보기 (대표 2~3개 variant) */
+function getCardPreview(id: ShowcaseSectionId): React.ReactNode {
+  switch (id) {
+    case 'badge':
+      return (
+        <>
+          <Badge variant="primary">{showcaseContent.badge}</Badge>
+          <Badge variant="outline">{showcaseContent.badge}</Badge>
+          <Badge variant="subtle">{showcaseContent.badge}</Badge>
+        </>
+      );
+    case 'icon':
+      return (
+        <>
+          <Icon name="palette" title="Palette" />
+          <Icon name="settings" title="Settings" />
+          <Icon name="star" title="Star" />
+        </>
+      );
+    case 'avatar':
+      return (
+        <>
+          <Avatar initials={showcaseContent.avatar} size="sm" />
+          <Avatar initials={showcaseContent.avatar} variant="primary" />
+          <Avatar initials={showcaseContent.avatar} variant="accent" />
+        </>
+      );
+    case 'button':
+      return (
+        <>
+          <Button variant="primary">{showcaseContent.button}</Button>
+          <Button variant="outline">{showcaseContent.button}</Button>
+          <Button variant="ghost">{showcaseContent.button}</Button>
+        </>
+      );
+    case 'card':
+      return (
+        <Card variant="elevated" padding="md">
+          <Card.Body>{showcaseContent.card.body}</Card.Body>
+        </Card>
+      );
+    case 'select':
+      return (
+        <Select
+          options={[...selectShowcase.fruitOptions]}
+          value="apple"
+          onChange={() => {}}
+          variant="outline"
+          placeholder={showcaseContent.select}
+        />
+      );
+    case 'input':
+      return (
+        <>
+          <Input placeholder={showcaseContent.input} />
+        </>
+      );
+    case 'form-example':
+      return (
+        <Card variant="flat" padding="sm">
+          <Card.Body>
+            <Input placeholder={formExample.fields.namePlaceholder} fullWidth />
+            <Button variant="primary" size="sm">{formExample.submitLabel}</Button>
+          </Card.Body>
+        </Card>
+      );
+    default:
+      return null;
+  }
 }

@@ -1,3 +1,4 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 .wrapper {
   position: relative;
   display: inline-flex;
@@ -13,8 +14,8 @@
   font-size: 13px;
   line-height: 1.4;
   font-weight: 500;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.85);
+  color: var(--shell-tooltip-text);
+  background-color: var(--shell-tooltip-bg);
   border-radius: 6px;
   pointer-events: none;
   white-space: normal;

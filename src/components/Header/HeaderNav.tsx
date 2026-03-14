@@ -12,10 +12,10 @@ import type { IconLibrary } from '../Icon';
 import styles from './HeaderNav.module.css';
 
 const categoryLabels: Record<string, string> = {
-  pages: 'layout',
-  components: 'component',
-  labs: 'lab',
-  playground: 'playground',
+  labs: 'Labs',
+  build: 'Build',
+  context: 'Context',
+  playground: 'Playground',
 };
 
 export interface HeaderNavProps {
@@ -27,7 +27,7 @@ export function HeaderNav({ activePage, onSelect }: HeaderNavProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <nav className={styles.nav} aria-label="주 메뉴" data-ui>
+    <nav className={styles.nav} aria-label="주 메뉴" data-shell>
       {navCategories.map((category) => {
         const label = categoryLabels[category.id] ?? category.tooltip;
         const icon = (

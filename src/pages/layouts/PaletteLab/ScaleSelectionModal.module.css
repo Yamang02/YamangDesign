@@ -1,11 +1,13 @@
-/* P04: ScaleSelectionModal */
+/* @layer mixed — 크롬(--shell-*)과 콘텐츠(--ds-*) 혼재. 섹션 주석 참조. */
+
+/* ─── Chrome (shell) ─────────────────────────────── */
 .overlay {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--shell-overlay);
   z-index: 1000;
 }
 
@@ -14,10 +16,10 @@
   max-width: 420px;
   max-height: 90vh;
   overflow: auto;
-  background: var(--lab-bg-base);
+  background: var(--shell-bg-base);
   border-radius: var(--ds-radius-lg);
-  box-shadow: var(--ds-shadow-lg);
-  border: 1px solid var(--lab-border-subtle);
+  box-shadow: var(--shell-shadow-lg);
+  border: 1px solid var(--shell-border-subtle);
 }
 
 /* P04: scale-header - UI 깨짐 방지 */
@@ -39,24 +41,24 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--ds-spacing-4);
-  border-bottom: 1px solid var(--lab-border-subtle);
+  border-bottom: 1px solid var(--shell-border-subtle);
 }
 
 .title {
   margin: 0;
   font-size: var(--ds-text-md);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .iconRecommended {
   display: inline-flex;
-  color: var(--ds-color-system-success-500, #22c55e);
+  color: var(--sys-color-success);
 }
 
 .iconWarning {
   display: inline-flex;
-  color: var(--ds-color-system-warning-500, #eab308);
+  color: var(--sys-color-warning);
 }
 
 .closeBtn {
@@ -64,13 +66,14 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .closeBtn:hover {
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
+/* ─── Content (ds — 테마 반응형) ─────────────────── */
 .content {
   padding: var(--ds-spacing-4);
 }
@@ -87,7 +90,7 @@
   display: block;
   font-size: var(--ds-text-xs);
   font-weight: var(--ds-font-weight-medium);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
   margin-bottom: var(--ds-spacing-2);
 }
 
@@ -103,32 +106,32 @@
   align-items: center;
   gap: 4px;
   padding: var(--ds-spacing-2);
-  background: var(--lab-bg-surface);
-  border: 2px solid var(--lab-border-subtle);
+  background: var(--shell-bg-surface);
+  border: 2px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
   cursor: pointer;
   transition: border-color 150ms ease;
 }
 
 .scaleBtn:hover {
-  border-color: var(--lab-border-default);
+  border-color: var(--shell-border-default);
 }
 
 .scaleBtn[data-active='true'] {
-  border-color: var(--ds-color-primary-500);
-  box-shadow: 0 0 0 1px var(--ds-color-primary-500);
+  border-color: var(--shell-action-primary);
+  box-shadow: 0 0 0 1px var(--shell-action-primary);
 }
 
 .scaleSwatch {
   width: 24px;
   height: 24px;
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--lab-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
 }
 
 .scaleLabel {
   font-size: 10px;
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
   text-transform: capitalize;
 }
 
@@ -144,31 +147,31 @@
   align-items: center;
   gap: 2px;
   padding: var(--ds-spacing-2);
-  background: var(--lab-bg-surface);
-  border: 2px solid var(--lab-border-subtle);
+  background: var(--shell-bg-surface);
+  border: 2px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
   cursor: pointer;
   transition: border-color 150ms ease;
 }
 
 .stepBtn:hover {
-  border-color: var(--lab-border-default);
+  border-color: var(--shell-border-default);
 }
 
 .stepBtn[data-active='true'] {
-  border-color: var(--ds-color-primary-500);
+  border-color: var(--shell-action-primary);
 }
 
 .stepSwatch {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px solid var(--lab-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
 }
 
 .stepLabel {
   font-size: 10px;
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .directLabel {
@@ -176,7 +179,7 @@
   align-items: center;
   gap: var(--ds-spacing-2);
   font-size: var(--ds-text-sm);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
   cursor: pointer;
 }
 
@@ -189,7 +192,7 @@
 
 .hexPrefix {
   font-size: var(--ds-text-sm);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .hexInput {
@@ -197,9 +200,9 @@
   padding: var(--ds-spacing-2) var(--ds-spacing-3);
   font-size: var(--ds-text-sm);
   font-family: ui-monospace, monospace;
-  color: var(--lab-text-primary);
-  background: var(--lab-bg-surface);
-  border: 1px solid var(--lab-border-subtle);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-surface);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
 }
 
@@ -207,13 +210,14 @@
   width: 28px;
   height: 28px;
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--lab-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
   flex-shrink: 0;
 }
 
+/* ─── Chrome (footer) ────────────────────────────── */
 .footer {
   padding: var(--ds-spacing-4);
-  border-top: 1px solid var(--lab-border-subtle);
+  border-top: 1px solid var(--shell-border-subtle);
 }
 
 .applyBtn {
@@ -222,14 +226,14 @@
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-medium);
   color: white;
-  background: var(--ds-color-primary-500);
+  background: var(--shell-action-primary);
   border: none;
   border-radius: var(--ds-radius-md);
   cursor: pointer;
 }
 
 .applyBtn:hover:not(:disabled) {
-  background: var(--ds-color-primary-600);
+  background: var(--shell-action-hover);
 }
 
 .applyBtn:disabled {

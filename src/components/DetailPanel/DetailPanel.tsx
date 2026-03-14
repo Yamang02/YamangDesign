@@ -16,7 +16,7 @@ export function DetailPanel({ open, onClose, title, children }: DetailPanelProps
   return (
     <aside
       className={clsx(styles.detailPanel, open && styles.open)}
-      data-ui
+      data-shell
       aria-hidden={!open}
     >
       <header className={styles.header}>
@@ -30,7 +30,9 @@ export function DetailPanel({ open, onClose, title, children }: DetailPanelProps
           <Icon name="close" size="sm" />
         </button>
       </header>
-      <div className={styles.panelContent}>{children}</div>
+      <div className={styles.panelContent} data-shell>
+        {children}
+      </div>
     </aside>
   );
 }

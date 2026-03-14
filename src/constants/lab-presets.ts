@@ -8,6 +8,7 @@ import { neutralPresets, type NeutralPresetName } from '../tokens/global/neutral
 import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
 import { combineTheme } from '../themes/combine';
+import { createStyle } from '../styles';
 import { flattenToCSSVars } from '../utils/css';
 import type { PaletteDefinition } from '../palettes';
 import type { StyleName, PaletteName, SystemPresetName } from '../@types/theme';
@@ -23,19 +24,20 @@ export function getStyleVariables(
   styleName: StyleName,
   bgColor: string = '#f5f5f5'
 ): CSSVariables {
-  const style = stylePresets[styleName];
-  if (!style) return {};
+  const styleDef = stylePresets[styleName];
+  if (!styleDef) return {};
 
-  const shadows = style.createShadows(bgColor);
+  const resolved = createStyle(styleDef, bgColor);
 
   return {
-    '--ds-shadow-none': shadows.none,
-    '--ds-shadow-sm': shadows.sm,
-    '--ds-shadow-md': shadows.md,
-    '--ds-shadow-lg': shadows.lg,
-    '--ds-shadow-xl': shadows.xl,
-    '--ds-shadow-inset': shadows.inset,
-    '--ds-border-width': style.border.width,
+    '--ds-shadow-none': resolved.shadows.none,
+    '--ds-shadow-sm': resolved.shadows.sm,
+    '--ds-shadow-md': resolved.shadows.md,
+    '--ds-shadow-lg': resolved.shadows.lg,
+    '--ds-shadow-xl': resolved.shadows.xl,
+    '--ds-shadow-inset': resolved.shadows.inset,
+    '--ds-border-width': resolved.border.width,
+    ...resolved.vars,
   };
 }
 

@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* GenericTabs - 범용 탭 컴포넌트 스타일 */
 .tabList {
   display: flex;

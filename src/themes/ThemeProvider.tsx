@@ -199,6 +199,12 @@ export function ThemeProvider({
         border: theme.border,
       }),
     };
+    const styleVars = theme.vars ?? {};
+    const globalAliasVars = Object.fromEntries(
+      [...Object.entries(themeCSSVars), ...Object.entries(styleVars)].map(
+        ([k, v]) => [`${k}-global`, v]
+      )
+    );
 
     const zIndexAsStrings = Object.fromEntries(
       Object.entries(zIndex).map(([k, v]) => [k, String(v)])
@@ -231,6 +237,8 @@ export function ThemeProvider({
       ...primitiveCSSVars,
       ...paletteScaleVars,
       ...themeCSSVars,
+      ...globalAliasVars,
+      ...styleVars,
       ...stateLayerVars,
       ...typographyVars,
     });

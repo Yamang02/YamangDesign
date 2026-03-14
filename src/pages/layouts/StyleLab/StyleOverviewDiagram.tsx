@@ -47,8 +47,8 @@ const styleVariants: StyleVariant[] = [
     characteristics: ['아래 방향 드롭 섀도우', '얇은 테두리 (1px)', '플랫한 배경'],
     preview: {
       shadow: '0 1px 3px rgba(0,0,0,0.1)',
-      border: '1px solid var(--lab-border-subtle)',
-      background: 'var(--lab-bg-surface)',
+      border: '1px solid var(--shell-border-subtle)',
+      background: 'var(--shell-bg-surface)',
     },
   },
   {
@@ -58,7 +58,7 @@ const styleVariants: StyleVariant[] = [
     preview: {
       shadow: '4px 4px 8px rgba(0,0,0,0.1), -4px -4px 8px rgba(255,255,255,0.8)',
       border: 'none',
-      background: 'var(--lab-bg-muted)',
+      background: 'var(--shell-bg-muted)',
     },
   },
   {
@@ -67,8 +67,8 @@ const styleVariants: StyleVariant[] = [
     characteristics: ['하드 드롭 섀도우', '굵은 테두리 (3px)', '강한 대비'],
     preview: {
       shadow: '6px 6px 0 rgba(0,0,0,0.2)',
-      border: '3px solid var(--lab-text-primary)',
-      background: 'var(--lab-bg-surface)',
+      border: '3px solid var(--shell-text-primary)',
+      background: 'var(--shell-bg-surface)',
     },
   },
 ];

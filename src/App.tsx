@@ -2,16 +2,34 @@ import { useState, useMemo } from 'react';
 import { ThemeProvider } from './themes';
 import { Footer, Header, HeaderNav } from './components';
 import { GLOBAL_SETTINGS_STORAGE_KEY } from './components/GlobalSettings';
-import { Landing, Components, PaletteLab, StyleLab, Playground, FontLab } from './pages';
+import {
+  Landing,
+  PaletteLab,
+  StyleLab,
+  Playground,
+  FontLab,
+  TokenLab,
+  Atoms,
+  Molecules,
+  Organisms,
+  Service,
+  Shell,
+} from './pages';
 
+/** E06 P01: Labs / Build / Context / Playground + legacy pages */
 export type PageName =
   | 'landing'
   | 'dashboard'
   | 'card-grid'
-  | 'components'
   | 'palette'
   | 'style'
   | 'font'
+  | 'tokens'
+  | 'atoms'
+  | 'molecules'
+  | 'organisms'
+  | 'service'
+  | 'shell'
   | 'playground';
 
 function App() {
@@ -41,10 +59,20 @@ function App() {
         return <StyleLab />;
       case 'font':
         return <FontLab />;
+      case 'tokens':
+        return <TokenLab />;
       case 'playground':
         return <Playground />;
-      case 'components':
-        return <Components />;
+      case 'atoms':
+        return <Atoms />;
+      case 'molecules':
+        return <Molecules />;
+      case 'organisms':
+        return <Organisms />;
+      case 'service':
+        return <Service />;
+      case 'shell':
+        return <Shell />;
       case 'dashboard':
       case 'card-grid':
         return <PlaceholderPage title={page === 'dashboard' ? 'Dashboard' : 'Card Grid'} />;

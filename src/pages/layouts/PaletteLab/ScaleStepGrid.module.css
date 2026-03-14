@@ -1,3 +1,4 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 /* P05: ScaleStepGrid - 전체 스케일×스텝 고정 그리드 */
 .grid {
   display: flex;
@@ -13,7 +14,7 @@
 .hint {
   margin: 0;
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
   flex-shrink: 0;
 }
 
@@ -34,7 +35,7 @@
 .scaleLabel {
   font-size: 10px;
   font-weight: var(--ds-font-weight-medium);
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
   text-transform: capitalize;
   text-align: center;
   padding-bottom: 2px;
@@ -52,7 +53,7 @@
   min-width: 20px;
   min-height: 20px;
   padding: 0;
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border: 1px solid var(--shell-border-subtle);
   border-radius: 4px;
   cursor: pointer;
   position: relative;
@@ -60,7 +61,7 @@
 }
 
 .cell:not(:disabled):hover {
-  box-shadow: 0 0 0 2px var(--ds-color-primary-500);
+  box-shadow: 0 0 0 2px var(--shell-action-primary);
   transform: scale(1.05);
 }
 
@@ -78,16 +79,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--shell-overlay);
   border-radius: 2px 0 4px 0;
-  color: white;
+  color: var(--shell-text-on-action);
 }
 
 .cell[data-recommended] .cellIcon {
-  background: var(--ds-color-system-success-500, #22c55e);
+  background: var(--sys-color-success);
 }
 
 .cell[data-warning] .cellIcon {
-  background: var(--ds-color-system-warning-500, #eab308);
-  color: #1a1a1a;
+  background: var(--sys-color-warning);
+  color: var(--shell-text-primary);
 }

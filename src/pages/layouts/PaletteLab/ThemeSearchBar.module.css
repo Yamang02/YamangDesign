@@ -1,3 +1,4 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 /* P04: ThemeSearchBar */
 .wrapper {
   position: relative;
@@ -8,7 +9,7 @@
 .searchIcon {
   position: absolute;
   left: var(--ds-spacing-3);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
   pointer-events: none;
 }
 
@@ -19,9 +20,9 @@
   padding-left: calc(var(--ds-spacing-3) + 16px + var(--ds-spacing-2));
   padding-right: calc(var(--ds-spacing-3) + 24px);
   font-size: var(--ds-text-sm);
-  color: var(--lab-text-primary);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  color: var(--shell-text-primary);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
 }
 
@@ -33,17 +34,17 @@
 }
 
 .input::placeholder {
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--ds-color-primary-500);
-  box-shadow: 0 0 0 2px rgba(95, 144, 112, 0.2);
+  border-color: var(--shell-focus-ring);
+  box-shadow: var(--shell-focus-glow);
 }
 
 .input:focus-visible {
-  outline: 2px solid var(--ds-color-primary-500);
+  outline: 2px solid var(--shell-focus-ring);
   outline-offset: 2px;
 }
 
@@ -57,9 +58,9 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .clearBtn:hover {
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }

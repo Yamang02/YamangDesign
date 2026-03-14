@@ -1,0 +1,91 @@
+/* @layer mixed — 크롬(--shell-*)과 콘텐츠(--ds-*) 혼재. 섹션 주석 참조. */
+
+/* ─── Chrome (shell) ─────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--shell-overlay);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--ds-z-modal, 1100);
+  padding: var(--ds-spacing-4);
+  box-sizing: border-box;
+  animation: overlayFade 0.2s ease-out;
+}
+
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  width: min(92vw, 1200px);
+  max-height: 85vh;
+  min-height: 200px;
+  background: var(--shell-bg-base);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-default);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--shell-shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalSlide 0.25s ease-out;
+}
+
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ds-spacing-4);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+  background: var(--shell-bg-surface);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--ds-text-2xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--shell-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-spacing-2);
+  background: none;
+  border: none;
+  border-radius: var(--ds-radius-md);
+  color: var(--shell-text-secondary);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.closeButton:hover {
+  background: var(--shell-bg-muted);
+  color: var(--shell-text-primary);
+}
+
+/* ─── Content: 기본 shell, 실제 컴포넌트만 [data-context="preview"]로 ds 적용 ─── */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--ds-spacing-5) var(--ds-spacing-6);
+  min-height: 0;
+}

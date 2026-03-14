@@ -25,6 +25,7 @@ export {
   showcaseLabels,
   showcaseContent,
   showcaseSectionTokens,
+  ATOM_USED_IN,
   buttonShowcase,
   cardShowcase,
   inputShowcase,
@@ -53,3 +54,6 @@ export type {
 } from './palette-scales';
 
 export { componentTokenMap } from './component-tokens';
+
+export { MOLECULES, ORGANISMS } from './build-content';
+export type { MoleculeId, OrganismId, MoleculeDef, OrganismDef } from './build-content';

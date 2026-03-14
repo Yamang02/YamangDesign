@@ -1,3 +1,4 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 /* P05: ScaleSelectorPanel - 인라인 스케일 선택 */
 .panel {
   display: flex;
@@ -5,7 +6,7 @@
   width: 100%;
   height: 100%;
   min-height: 0;
-  background: var(--lab-bg-surface, var(--ds-color-bg-surface));
+  background: var(--shell-bg-surface);
   flex-shrink: 0;
 }
 
@@ -14,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--ds-spacing-3);
-  border-bottom: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border-bottom: 1px solid var(--shell-border-subtle);
 }
 
 .scaleHeader {
@@ -28,17 +29,17 @@
   margin: 0;
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary, var(--ds-color-text-primary));
+  color: var(--shell-text-primary);
 }
 
 .iconRecommended {
   display: inline-flex;
-  color: var(--ds-color-system-success-500, #22c55e);
+  color: var(--sys-color-success);
 }
 
 .iconWarning {
   display: inline-flex;
-  color: var(--ds-color-system-warning-500, #eab308);
+  color: var(--sys-color-warning);
 }
 
 .iconPlaceholder {
@@ -53,11 +54,11 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
 }
 
 .closeBtn:hover {
-  color: var(--lab-text-primary, var(--ds-color-text-primary));
+  color: var(--shell-text-primary);
 }
 
 .content {
@@ -78,7 +79,7 @@
 .label {
   font-size: var(--ds-text-xs);
   font-weight: var(--ds-font-weight-medium);
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
 }
 
 .scaleList {
@@ -93,7 +94,7 @@
   gap: 8px;
   padding: var(--ds-spacing-2);
   background: none;
-  border: 2px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border: 2px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
   cursor: pointer;
   text-align: left;
@@ -101,25 +102,25 @@
 }
 
 .scaleRow:hover {
-  border-color: var(--lab-border-default, var(--ds-color-border-default));
+  border-color: var(--shell-border-default);
 }
 
 .scaleRow[data-active='true'] {
-  border-color: var(--ds-color-primary-500);
-  box-shadow: 0 0 0 1px var(--ds-color-primary-500);
+  border-color: var(--shell-action-primary);
+  box-shadow: 0 0 0 1px var(--shell-action-primary);
 }
 
 .scaleSwatch {
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border: 1px solid var(--shell-border-subtle);
   flex-shrink: 0;
 }
 
 .scaleName {
   font-size: var(--ds-text-sm);
-  color: var(--lab-text-primary, var(--ds-color-text-primary));
+  color: var(--shell-text-primary);
   text-transform: capitalize;
 }
 
@@ -135,32 +136,32 @@
   align-items: center;
   gap: 2px;
   padding: var(--ds-spacing-2);
-  background: var(--lab-bg-base, var(--ds-color-bg-base));
-  border: 2px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  background: var(--shell-bg-base);
+  border: 2px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
   cursor: pointer;
   transition: border-color 150ms ease;
 }
 
 .stepBtn:hover {
-  border-color: var(--lab-border-default, var(--ds-color-border-default));
+  border-color: var(--shell-border-default);
 }
 
 .stepBtn[data-active='true'] {
-  border-color: var(--ds-color-primary-500);
-  box-shadow: 0 0 0 1px var(--ds-color-primary-500);
+  border-color: var(--shell-action-primary);
+  box-shadow: 0 0 0 1px var(--shell-action-primary);
 }
 
 .stepSwatch {
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border: 1px solid var(--shell-border-subtle);
 }
 
 .stepLabel {
   font-size: 10px;
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
 }
 
 .directLabel {
@@ -168,7 +169,7 @@
   align-items: center;
   gap: var(--ds-spacing-2);
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
   cursor: pointer;
 }
 
@@ -181,7 +182,7 @@
 
 .hexPrefix {
   font-size: var(--ds-text-sm);
-  color: var(--lab-text-muted, var(--ds-color-text-muted));
+  color: var(--shell-text-muted);
 }
 
 .hexInput {
@@ -190,9 +191,9 @@
   padding: var(--ds-spacing-2);
   font-size: var(--ds-text-sm);
   font-family: ui-monospace, monospace;
-  color: var(--lab-text-primary, var(--ds-color-text-primary));
-  background: var(--lab-bg-base, var(--ds-color-bg-base));
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
 }
 
@@ -200,13 +201,13 @@
   width: 24px;
   height: 24px;
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border: 1px solid var(--shell-border-subtle);
   flex-shrink: 0;
 }
 
 .footer {
   padding: var(--ds-spacing-3);
-  border-top: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border-top: 1px solid var(--shell-border-subtle);
 }
 
 .applyBtn {
@@ -215,14 +216,14 @@
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-medium);
   color: white;
-  background: var(--ds-color-primary-500);
+  background: var(--shell-action-primary);
   border: none;
   border-radius: var(--ds-radius-md);
   cursor: pointer;
 }
 
 .applyBtn:hover:not(:disabled) {
-  background: var(--ds-color-primary-600);
+  background: var(--shell-action-hover);
 }
 
 .applyBtn:disabled {

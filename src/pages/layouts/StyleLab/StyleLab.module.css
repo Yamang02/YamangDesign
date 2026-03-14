@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* E05: StyleLab 비교 그리드 + DetailPanel 상세 */
 .comparisonGrid {
   display: grid;
@@ -27,7 +28,7 @@
   border-radius: var(--ds-radius-md);
   margin-bottom: var(--ds-spacing-3);
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .shadowDemo:last-child {
@@ -44,7 +45,7 @@
 .detailSectionTitle {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
+  color: var(--shell-text-primary);
   margin: 0 0 var(--ds-spacing-2) 0;
 }
 
@@ -62,13 +63,13 @@
 
 .shadowKey {
   font-size: var(--ds-text-xs);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .shadowValue {
   font-size: 11px;
   font-family: ui-monospace, monospace;
-  color: var(--ds-color-text-muted);
+  color: var(--shell-text-muted);
   word-break: break-all;
 }
 
@@ -77,13 +78,13 @@
   flex-wrap: wrap;
   gap: var(--ds-spacing-4);
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .detailDescription {
   margin: 0 0 var(--ds-spacing-2) 0;
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   line-height: 1.5;
 }
 
@@ -97,5 +98,70 @@
 
 .characteristicItem {
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
+}
+
+/* E06 P02: Property Matrix */
+.propertyMatrixWrap {
+  overflow-x: auto;
+  margin: 0 calc(-1 * var(--ds-spacing-4));
+}
+
+.propertyMatrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-text-sm);
+}
+
+.propertyMatrix th,
+.propertyMatrix td {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  text-align: left;
+  border-bottom: 1px solid var(--shell-border-subtle);
+}
+
+.propertyMatrixDim {
+  color: var(--shell-text-secondary);
+  font-weight: var(--ds-font-weight-medium);
+  white-space: nowrap;
+}
+
+.propertyMatrixPreset {
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-primary);
+}
+
+.propertyMatrixPresetBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.propertyMatrixPresetBtn:hover {
+  color: var(--shell-action-primary);
+}
+
+.propertyMatrixCell {
+  font-family: ui-monospace, monospace;
+  font-size: var(--ds-text-xs);
+  color: var(--shell-text-secondary);
+  word-break: break-all;
+  max-width: 140px;
+}
+
+.propertyMatrixCell[data-active] {
+  background: var(--shell-bg-primary-subtle);
+  color: var(--shell-text-primary);
+}
+
+.comparisonWrapper {
+  padding: var(--ds-spacing-2);
+  border-radius: var(--ds-radius-lg);
+  /* E06 P02: glassmorphism 블러가 보이도록 배경 그라데이션 */
+  background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 50%, #ddd6fe 100%);
 }

@@ -1,9 +1,10 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 /* E03: 전역 설정 모달 - Light Theme */
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--shell-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,9 +22,9 @@
   max-width: 400px;
   max-height: 85vh;
   min-width: 0;
-  background: var(--ui-bg-base);
+  background: var(--shell-bg-base);
   border-radius: 12px;
-  box-shadow: var(--ui-shadow-lg);
+  box-shadow: var(--shell-shadow-lg);
   display: flex;
   flex-direction: column;
   animation: slideUp 0.25s ease-out;
@@ -47,15 +48,15 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  border-bottom: 1px solid var(--ui-border-default);
-  background: var(--ui-bg-subtle);
+  border-bottom: 1px solid var(--shell-border-default);
+  background: var(--shell-bg-subtle);
 }
 
 .title {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: var(--ui-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .closeBtn {
@@ -67,15 +68,15 @@
   padding: 0;
   background: none;
   border: none;
-  color: var(--ui-text-secondary);
+  color: var(--shell-text-secondary);
   cursor: pointer;
   border-radius: 6px;
   transition: background-color 0.15s, color 0.15s;
 }
 
 .closeBtn:hover {
-  color: var(--ui-text-primary);
-  background: var(--ui-bg-hover);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-hover);
 }
 
 /* Content */
@@ -109,7 +110,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--ui-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0;
 }
 
@@ -125,9 +126,9 @@
   height: 24px;
   padding: 0 8px;
   font-size: 11px;
-  color: var(--ui-text-primary);
-  background: var(--ui-bg-base);
-  border: 1px solid var(--ui-action-primary);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-action-primary);
   border-radius: 4px;
   outline: none;
 }
@@ -141,7 +142,7 @@
   padding: 0;
   background: none;
   border: none;
-  color: var(--ui-text-tertiary);
+  color: var(--shell-text-tertiary);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s;
@@ -149,17 +150,17 @@
 }
 
 .iconBtn:hover {
-  color: var(--ui-action-primary);
-  background: var(--ui-bg-hover);
+  color: var(--shell-action-primary);
+  background: var(--shell-bg-hover);
 }
 
 .iconBtn.primary {
-  color: var(--ui-action-primary);
+  color: var(--shell-action-primary);
 }
 
 .iconBtn.danger:hover {
-  color: #dc2626;
-  background: #fef2f2;
+  color: var(--sys-color-error);
+  background: var(--sys-color-error-subtle);
 }
 
 /* Footer */
@@ -168,8 +169,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  border-top: 1px solid var(--ui-border-default);
-  background: var(--ui-bg-subtle);
+  border-top: 1px solid var(--shell-border-default);
+  background: var(--shell-bg-subtle);
 }
 
 .footerLeft,
@@ -187,7 +188,7 @@
   padding: 0;
   background: none;
   border: 1px solid transparent;
-  color: var(--ui-text-secondary);
+  color: var(--shell-text-secondary);
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.15s;
@@ -195,20 +196,20 @@
 }
 
 .footerBtn:hover {
-  color: var(--ui-text-primary);
-  background: var(--ui-bg-hover);
-  border-color: var(--ui-border-default);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-hover);
+  border-color: var(--shell-border-default);
 }
 
 .footerBtn.primary {
-  background: var(--ui-action-primary);
-  color: #fff;
-  border-color: var(--ui-action-primary);
+  background: var(--shell-action-primary);
+  color: var(--shell-text-on-action);
+  border-color: var(--shell-action-primary);
 }
 
 .footerBtn.primary:hover {
-  background: var(--ui-action-hover);
-  border-color: var(--ui-action-hover);
+  background: var(--shell-action-hover);
+  border-color: var(--shell-action-hover);
 }
 
 .footerBtn.primary:disabled {
@@ -225,15 +226,15 @@
   display: flex;
   flex-direction: column;
   padding: 10px 12px;
-  background: var(--ui-bg-subtle);
+  background: var(--shell-bg-subtle);
   border: 1px solid transparent;
   border-radius: 8px;
   transition: all 0.15s;
 }
 
 .flatCard:hover {
-  border-color: var(--ui-border-default);
-  background: var(--ui-bg-base);
+  border-color: var(--shell-border-default);
+  background: var(--shell-bg-base);
 }
 
 .flatCardClickable {
@@ -256,7 +257,7 @@
 .paletteLabel {
   font-size: 10px;
   font-weight: 500;
-  color: var(--ui-text-tertiary);
+  color: var(--shell-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin-bottom: 4px;
@@ -273,7 +274,7 @@
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  border: 1px solid var(--ui-border-default);
+  border: 1px solid var(--shell-border-default);
   flex-shrink: 0;
   cursor: pointer;
   position: relative;
@@ -297,16 +298,16 @@
   padding: 0 8px;
   font-size: 12px;
   font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
-  color: var(--ui-text-primary);
-  background: var(--ui-bg-base);
-  border: 1px solid var(--ui-border-default);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-default);
   border-radius: 4px;
   outline: none;
   transition: border-color 0.15s;
 }
 
 .hexInput:focus {
-  border-color: var(--ui-action-primary);
+  border-color: var(--shell-action-primary);
 }
 
 /* 고정 슬롯: 레이아웃 유지를 위해 삭제 버튼 자리 확보 */
@@ -328,7 +329,7 @@
   justify-content: center;
   background: none;
   border: none;
-  color: var(--ui-text-tertiary);
+  color: var(--shell-text-tertiary);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s;
@@ -336,8 +337,8 @@
 }
 
 .paletteClearBtn:hover {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--sys-color-error-subtle);
+  color: var(--sys-color-error);
 }
 
 /* ===== Section 2: Presets ===== */
@@ -362,7 +363,7 @@
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
-  background: var(--ui-bg-subtle);
+  background: var(--shell-bg-subtle);
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
@@ -372,8 +373,8 @@
 }
 
 .presetItem:hover {
-  border-color: var(--ui-border-default);
-  background: var(--ui-bg-base);
+  border-color: var(--shell-border-default);
+  background: var(--shell-bg-base);
 }
 
 .presetBadge {
@@ -387,28 +388,28 @@
 }
 
 .presetBadge.yamang {
-  background: var(--ui-action-primary);
-  color: #ffffff;
+  background: var(--shell-action-primary);
+  color: var(--shell-text-on-action);
 }
 
 .presetBadge.custom {
-  background: #10b981;
-  color: #ffffff;
+  background: var(--shell-badge-custom);
+  color: var(--shell-text-on-action);
 }
 
 .presetBadge.semantic {
-  background: #f59e0b;
-  color: #ffffff;
+  background: var(--shell-badge-semantic);
+  color: var(--shell-text-on-action);
 }
 
 .presetBadge.natural {
-  background: #8b5cf6;
-  color: #ffffff;
+  background: var(--shell-badge-natural);
+  color: var(--shell-text-on-action);
 }
 
 .presetBadge.category {
-  background: var(--ui-text-muted, #6b7280);
-  color: #ffffff;
+  background: var(--shell-text-muted);
+  color: var(--shell-text-on-action);
 }
 
 .presetName {
@@ -416,7 +417,7 @@
   min-width: 0;
   font-size: 13px;
   font-weight: 500;
-  color: var(--ui-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .presetColors {
@@ -428,7 +429,7 @@
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--shell-border-subtle);
 }
 
 /* 프리셋 삭제 슬롯: Yamang은 비활성화, Custom만 삭제 가능 */
@@ -450,7 +451,7 @@
   justify-content: center;
   background: none;
   border: none;
-  color: var(--ui-text-tertiary);
+  color: var(--shell-text-tertiary);
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.15s;
@@ -458,8 +459,8 @@
 }
 
 .deleteBtn:hover {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--sys-color-error-subtle);
+  color: var(--sys-color-error);
 }
 
 /* ===== Section 3: Style & System ===== */
@@ -474,7 +475,7 @@
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
-  background: var(--ui-bg-subtle);
+  background: var(--shell-bg-subtle);
   border: 1px solid transparent;
   border-radius: 8px;
 }
@@ -482,7 +483,7 @@
 .settingLabel {
   font-size: 12px;
   font-weight: 500;
-  color: var(--ui-text-primary);
+  color: var(--shell-text-primary);
   white-space: nowrap;
   min-width: 70px;
 }

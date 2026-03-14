@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* Base */
 .card {
   border-radius: var(--ds-radius-lg);

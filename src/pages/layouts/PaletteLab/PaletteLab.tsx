@@ -316,13 +316,13 @@ function SystemColorCard({
           <div className={styles.swatchRow}>
             {SYSTEM_SCALE_STEPS.map((step) => {
               const varSuffix =
-                step === 50 ? '-bg' : step === 700 ? '-emphasis' : '';
+                step === 50 ? '-subtle' : step === 700 ? '-emphasis' : '';
               return (
                 <div
                   key={step}
                   className={styles.swatch}
                   style={{
-                    backgroundColor: `var(--ds-color-system-${colorKey}${varSuffix})`,
+                    backgroundColor: `var(--sys-color-${colorKey}${varSuffix})`,
                   }}
                   title={`${colorKey} ${step}`}
                 />

@@ -200,8 +200,8 @@ export interface PaletteDefinition {
   /** 테마 메타데이터 (선택적, 카테고리/검색용) */
   metadata?: ThemeMetadata;
 
-  /** 시맨틱 매핑 (선택적, 없으면 bgStrategy 기본값 사용) */
-  semanticMapping?: SemanticMapping;
+  /** 시맨틱 매핑 (선택적, 없으면 bgStrategy 기본값 사용. 부분만 제공 시 병합됨) */
+  semanticMapping?: Partial<SemanticMapping>;
 }
 
 /** 확장된 Palette (스케일 + 시맨틱 포함, createPalette 반환값) */

@@ -55,7 +55,9 @@ export function ComparisonCard({
           </div>
         )}
       </div>
-      <div className={styles.comparisonContent}>{children}</div>
+      <div className={styles.comparisonContent}>
+        <div data-context="preview">{children}</div>
+      </div>
     </div>
   );
 }

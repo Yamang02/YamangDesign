@@ -1,8 +1,10 @@
-/**
- * E05: Typography 레이어 타입
- */
-import type { fontFamily, fontSize, fontWeight, lineHeight, letterSpacing } from '../primitives/typography';
-
+import type {
+  fontFamily,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  letterSpacing,
+} from '../global/typography';
 export type TextStyleName =
   | 'display-lg'
   | 'display-md'

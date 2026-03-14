@@ -1,6 +1,7 @@
 /**
  * E08: Font Lab - E05 Typography 시각화
  * E01: lab-content 중앙화 적용
+ * E05 P03: DetailPanel — JSON 출력 대신 구조화된 토큰 테이블 + 라이브 프리뷰
  */
 import { useState } from 'react';
 import { LabLayout, LabSection, LabOverview, LabCard, ComparisonCard, type TocItem } from '../../../layouts';
@@ -16,6 +17,7 @@ import { textStyles, semanticText } from '../../../tokens/typography';
 import { fontSize, fontFamily } from '../../../tokens/global/typography';
 import type { TextStyleName, SemanticTextRole } from '../../../tokens/typography';
 import { FontOverviewDiagram } from './FontOverviewDiagram';
+import styles from './FontLab.module.css';
 
 const semanticRoles: SemanticTextRole[] = [
   'page-title',
@@ -39,6 +41,43 @@ const tocItems: TocItem[] = [
   { id: 'font-families', label: sectionTitles.fontFamilies },
 ];
 const fontSizeKeys = Object.keys(fontSize) as (keyof typeof fontSize)[];
+
+/** E05 P03: 토큰 속성 테이블 + 라이브 프리뷰 */
+function TextStyleDetail({ name }: { name: TextStyleName }) {
+  const style = textStyles[name];
+  const fields: { label: string; value: string; token?: string }[] = [
+    { label: 'Font size', value: style.fontSize, token: `--ds-text-${name}-size` },
+    { label: 'Font weight', value: String(style.fontWeight), token: `--ds-text-${name}-weight` },
+    { label: 'Line height', value: String(style.lineHeight), token: `--ds-text-${name}-leading` },
+    ...(style.letterSpacing ? [{ label: 'Letter spacing', value: style.letterSpacing, token: `--ds-text-${name}-tracking` }] : []),
+    ...(style.fontFamily ? [{ label: 'Font family', value: style.fontFamily, token: `--ds-text-${name}-font` }] : []),
+  ];
+  return (
+    <div>
+      {fields.map(({ label, value, token }) => (
+        <div key={label} className={styles.detailRow}>
+          <span className={styles.detailLabel}>{label}</span>
+          <div className={styles.detailValue}>
+            {token != null && <code className={styles.detailToken}>{token}</code>}
+            <span>{value}</span>
+          </div>
+        </div>
+      ))}
+      <p
+        className={styles.detailPreview}
+        style={{
+          fontSize: `var(--ds-text-${name}-size)`,
+          fontWeight: `var(--ds-text-${name}-weight)`,
+          lineHeight: `var(--ds-text-${name}-leading)`,
+          ...(style.letterSpacing && { letterSpacing: `var(--ds-text-${name}-tracking)` }),
+          ...(style.fontFamily && { fontFamily: `var(--ds-text-${name}-font, var(--ds-font-mono))` }),
+        }}
+      >
+        {sampleText.pangram.en}
+      </p>
+    </div>
+  );
+}
 
 export function FontLab() {
   const [selectedStyle, setSelectedStyle] = useState<TextStyleName | null>(null);
@@ -83,7 +122,7 @@ export function FontLab() {
                     <p
                       style={{
                         ...vars,
-                        color: 'var(--ds-color-text-primary)',
+                        color: 'var(--shell-text-primary)',
                         margin: 0,
                         marginBottom: 'var(--ds-spacing-1)',
                       }}
@@ -93,7 +132,7 @@ export function FontLab() {
                     <p
                       style={{
                         fontSize: 'var(--ds-text-xs)',
-                        color: 'var(--ds-color-text-secondary)',
+                        color: 'var(--shell-text-secondary)',
                         margin: 0,
                       }}
                     >
@@ -133,7 +172,7 @@ export function FontLab() {
                     <p
                       style={{
                         fontSize: 'var(--ds-text-xs)',
-                        color: 'var(--ds-color-text-secondary)',
+                        color: 'var(--shell-text-secondary)',
                         margin: '0 0 var(--ds-spacing-2) 0',
                       }}
                     >
@@ -142,7 +181,7 @@ export function FontLab() {
                     <p
                       style={{
                         ...vars,
-                        color: 'var(--ds-color-text-primary)',
+                        color: 'var(--shell-text-primary)',
                         margin: 0,
                       }}
                     >
@@ -178,7 +217,7 @@ export function FontLab() {
                 <span
                   style={{
                     fontSize: fontSize[key],
-                    color: 'var(--ds-color-text-primary)',
+                    color: 'var(--shell-text-primary)',
                     fontFamily: 'var(--ds-font-sans)',
                   }}
                 >
@@ -187,7 +226,7 @@ export function FontLab() {
                 <span
                   style={{
                     fontSize: 'var(--ds-text-xs)',
-                    color: 'var(--ds-color-text-secondary)',
+                    color: 'var(--shell-text-secondary)',
                   }}
                 >
                   {key} · {fontSize[key]}
@@ -210,7 +249,7 @@ export function FontLab() {
                 style={{
                   fontFamily: fontFamily.sans,
                   fontSize: 'var(--ds-text-lg)',
-                  color: 'var(--ds-color-text-primary)',
+                  color: 'var(--shell-text-primary)',
                   margin: 0,
                   lineHeight: 1.5,
                 }}
@@ -221,7 +260,7 @@ export function FontLab() {
                 style={{
                   fontFamily: fontFamily.sans,
                   fontSize: 'var(--ds-text-md)',
-                  color: 'var(--ds-color-text-secondary)',
+                  color: 'var(--shell-text-secondary)',
                   margin: 'var(--ds-spacing-2) 0 0 0',
                 }}
               >
@@ -231,7 +270,7 @@ export function FontLab() {
                 style={{
                   fontFamily: fontFamily.sans,
                   fontSize: 'var(--ds-text-sm)',
-                  color: 'var(--ds-color-text-secondary)',
+                  color: 'var(--shell-text-secondary)',
                   margin: 'var(--ds-spacing-1) 0 0 0',
                   letterSpacing: '0.05em',
                 }}
@@ -244,7 +283,7 @@ export function FontLab() {
                 style={{
                   fontFamily: fontFamily.mono,
                   fontSize: 'var(--ds-text-lg)',
-                  color: 'var(--ds-color-text-primary)',
+                  color: 'var(--shell-text-primary)',
                   margin: 0,
                   lineHeight: 1.5,
                 }}
@@ -255,7 +294,7 @@ export function FontLab() {
                 style={{
                   fontFamily: fontFamily.mono,
                   fontSize: 'var(--ds-text-md)',
-                  color: 'var(--ds-color-text-secondary)',
+                  color: 'var(--shell-text-secondary)',
                   margin: 'var(--ds-spacing-2) 0 0 0',
                 }}
               >
@@ -265,7 +304,7 @@ export function FontLab() {
                 style={{
                   fontFamily: fontFamily.mono,
                   fontSize: 'var(--ds-text-sm)',
-                  color: 'var(--ds-color-text-secondary)',
+                  color: 'var(--shell-text-secondary)',
                   margin: 'var(--ds-spacing-1) 0 0 0',
                   letterSpacing: '0.05em',
                 }}
@@ -282,29 +321,7 @@ export function FontLab() {
         onClose={() => setSelectedStyle(null)}
         title={selectedStyle ?? ''}
       >
-        {selectedStyle && (
-          <div>
-            <p
-              style={{
-                fontSize: 'var(--ds-text-sm)',
-                color: 'var(--ui-text-secondary)',
-                marginBottom: 'var(--ds-spacing-4)',
-              }}
-            >
-              {JSON.stringify(textStyles[selectedStyle], null, 2)}
-            </p>
-            <p
-              style={{
-                fontSize: 'var(--ds-text-body-md-size)',
-                lineHeight: 'var(--ds-text-body-md-leading)',
-                fontWeight: 'var(--ds-text-body-md-weight)',
-                color: 'var(--ui-text-primary)',
-              }}
-            >
-              {sampleText.pangram.en}. {sampleText.numbers}
-            </p>
-          </div>
-        )}
+        {selectedStyle && <TextStyleDetail name={selectedStyle} />}
       </DetailPanel>
     </>
   );

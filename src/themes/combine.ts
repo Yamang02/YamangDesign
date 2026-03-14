@@ -37,5 +37,6 @@ export function combineTheme(
 
     shadows: style.shadows,
     border: style.border,
+    vars: style.vars,
   };
 }

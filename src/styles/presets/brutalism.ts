@@ -8,32 +8,23 @@ import type { StyleDefinition } from '../types';
 export const brutalismStyle: StyleDefinition = {
   name: 'brutalism',
 
-  createShadows: (bgColor: string) => {
-    const dark = darken(bgColor, 25);
-    return {
-      none: 'none',
-      sm: `4px 4px 0 ${dark}`,
-      md: `6px 6px 0 ${dark}`,
-      lg: `8px 8px 0 ${dark}`,
-      xl: `12px 12px 0 ${dark}`,
-      inset: `inset 2px 2px 0 ${dark}`,
-    };
+  elevation: {
+    create: ({ bgColor }) => {
+      const dark = darken(bgColor, 25);
+      return {
+        0: 'none',
+        1: `4px 4px 0 ${dark}`,
+        2: `6px 6px 0 ${dark}`,
+        3: `8px 8px 0 ${dark}`,
+        4: `12px 12px 0 ${dark}`,
+        inset: `inset 2px 2px 0 ${dark}`,
+      };
+    },
   },
 
-  border: {
+  stroke: {
     width: '3px',
     style: 'solid',
-    useColor: true,
-  },
-
-  surface: {
-    default: 'flat',
-    interactive: 'flat',
-    active: 'flat',
-  },
-
-  states: {
-    hover: 'border',
-    active: 'shadow',
+    colorStrategy: 'palette',
   },
 };

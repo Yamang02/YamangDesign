@@ -139,7 +139,7 @@ export function Navigation({
 
   if (asSlot) {
     return (
-      <div className={clsx(styles.slot, className)} data-ui>
+      <div className={clsx(styles.slot, className)} data-shell>
         {navContent}
       </div>
     );
@@ -148,7 +148,7 @@ export function Navigation({
   return (
     <nav
       className={clsx(styles.nav, sticky && styles.sticky, className)}
-      data-ui
+      data-shell
     >
       <div className={styles.left}>
         <span

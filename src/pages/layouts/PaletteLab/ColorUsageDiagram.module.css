@@ -1,3 +1,4 @@
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
 /* Color Usage Diagram - 브랜드 컬러 용도 시각화 */
 .diagram {
   display: flex;
@@ -32,15 +33,15 @@
 .sectionTitle {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
   margin: 0;
   padding-bottom: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--lab-border-subtle);
+  border-bottom: 1px solid var(--shell-border-subtle);
 }
 
 .sectionHint {
   font-weight: var(--ds-font-weight-normal);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 /* Color Roles */
@@ -55,14 +56,14 @@
   flex-direction: column;
   gap: var(--ds-spacing-3);
   padding: var(--ds-spacing-4);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
   transition: border-color 150ms ease;
 }
 
 .roleCard:hover {
-  border-color: var(--lab-border-default);
+  border-color: var(--shell-border-default);
 }
 
 .roleHeader {
@@ -75,7 +76,7 @@
   width: 40px;
   height: 40px;
   border-radius: var(--ds-radius-md);
-  border: 1px solid var(--lab-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
   flex-shrink: 0;
 }
 
@@ -88,12 +89,12 @@
 .roleLabel {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .roleDesc {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .usageList {
@@ -105,9 +106,9 @@
 .usageTag {
   font-size: 10px;
   padding: 2px 6px;
-  background-color: var(--lab-bg-muted);
+  background-color: var(--shell-bg-muted);
   border-radius: var(--ds-radius-sm);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 /* Semantic Mapping - 서브탭 */
@@ -115,8 +116,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
   overflow: hidden;
 }
@@ -125,15 +126,15 @@
   display: flex;
   gap: 0;
   padding: var(--ds-spacing-2) var(--ds-spacing-4) 0;
-  border-bottom: 1px solid var(--lab-border-subtle);
-  background-color: var(--lab-bg-surface);
+  border-bottom: 1px solid var(--shell-border-subtle);
+  background-color: var(--shell-bg-surface);
 }
 
 .tab {
   padding: var(--ds-spacing-2) var(--ds-spacing-4);
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-medium);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
@@ -143,12 +144,12 @@
 }
 
 .tab:hover {
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .tab[data-active='true'] {
-  color: var(--lab-action-primary);
-  border-bottom-color: var(--lab-action-primary);
+  color: var(--shell-action-primary);
+  border-bottom-color: var(--shell-action-primary);
 }
 
 .tabPanel {
@@ -173,7 +174,7 @@
   height: 32px;
   min-width: 32px;
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--lab-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
   flex-shrink: 0;
 }
 
@@ -182,11 +183,11 @@
 }
 
 .tokenSwatch[role='button']:hover {
-  box-shadow: 0 0 0 2px var(--ds-color-primary-500);
+  box-shadow: 0 0 0 2px var(--shell-action-primary);
 }
 
 .tokenSwatch[role='button']:focus-visible {
-  outline: 2px solid var(--ds-color-primary-500);
+  outline: 2px solid var(--shell-action-primary);
   outline-offset: 2px;
 }
 
@@ -194,9 +195,9 @@
   font-size: var(--ds-text-xs);
   font-family: ui-monospace, monospace;
   padding: 2px 6px;
-  background-color: var(--lab-bg-muted);
+  background-color: var(--shell-bg-muted);
   border-radius: 3px;
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
 }
 
 .sourceBadge {
@@ -209,22 +210,22 @@
 
 .tokenNote {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
   margin-left: auto;
 }
 
 /* Component Diagram - 모달용 간단 토큰 예시 */
 .componentDiagram {
   padding: var(--ds-spacing-3);
-  background-color: var(--lab-bg-surface, var(--ds-color-bg-surface));
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  background-color: var(--shell-bg-surface);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
 }
 
 .diagramTitle {
   font-size: 10px;
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-secondary, var(--ds-color-text-secondary));
+  color: var(--shell-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 var(--ds-spacing-2) 0;
@@ -254,7 +255,7 @@
   width: 24px;
   height: 18px;
   border-radius: 4px;
-  border: 1px solid var(--lab-border-subtle, var(--ds-color-border-subtle));
+  border: 1px solid var(--shell-border-subtle);
 }
 
 .tokenExampleText {
@@ -280,7 +281,7 @@
 
 .tokenExampleLabel {
   font-size: 10px;
-  color: var(--ui-text-primary, #1a1a1a);
+  color: var(--shell-text-primary);
   font-family: ui-monospace, monospace;
   flex: 1;
   overflow: hidden;

@@ -36,19 +36,7 @@
   --ds-color-action-accent-hover: initial;
   --ds-color-action-accent-active: initial;
 
-  /* System colors (E08: ThemeProvider 주입) */
-  --ds-color-system-error-bg: initial;
-  --ds-color-system-error: initial;
-  --ds-color-system-error-emphasis: initial;
-  --ds-color-system-warning-bg: initial;
-  --ds-color-system-warning: initial;
-  --ds-color-system-warning-emphasis: initial;
-  --ds-color-system-success-bg: initial;
-  --ds-color-system-success: initial;
-  --ds-color-system-success-emphasis: initial;
-  --ds-color-system-info-bg: initial;
-  --ds-color-system-info: initial;
-  --ds-color-system-info-emphasis: initial;
+  /* System colors: E04 P02 → --sys-* (sys-variables.css) */
 
   /* Spacing (ThemeProvider 주입) */
   --ds-spacing-0: initial;

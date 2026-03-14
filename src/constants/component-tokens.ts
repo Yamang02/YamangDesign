@@ -18,8 +18,8 @@ export const componentTokenMap = {
     'border focus': '--ds-color-border-focus',
     text: '--ds-color-text-primary',
     placeholder: '--ds-color-text-muted',
-    'error border': '--ds-color-system-error',
-    'error text': '--ds-color-system-error',
+    'error border': '--sys-color-error',
+    'error text': '--sys-color-error',
   },
   Card: {
     bg: '--ds-color-bg-surface',

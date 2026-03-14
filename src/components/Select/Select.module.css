@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* Wrapper */
 .wrapper {
   display: inline-flex;

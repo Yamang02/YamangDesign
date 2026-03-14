@@ -1,27 +1,15 @@
-/* Lab Overview - 조정 가능 요소 요약 카드
- * 색상 값: default/브랜드 기준 중립 회색
- */
+/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
+/* Lab Overview - 조정 가능 요소 요약 카드 (E04: --shell-* 토큰 사용) */
 .overview {
   width: 100%;
   box-sizing: border-box;
 
-  /* Overview 전용 고정값 (테마 미상속) */
-  --lab-bg-surface: #ffffff;
-  --lab-bg-muted: #f1f2f3;
-  --lab-bg-base: #ffffff;
-  --lab-text-primary: #393e46;
-  --lab-text-secondary: #666f7f;
-  --lab-text-muted: #9ca3af;
-  --lab-border-default: #d4d7dd;
-  --lab-border-subtle: #f1f2f3;
-  --lab-action-primary: #4b5563;
-
   background: linear-gradient(
     135deg,
-    var(--lab-bg-surface) 0%,
-    var(--lab-bg-muted) 100%
+    var(--shell-bg-surface) 0%,
+    var(--shell-bg-subtle) 100%
   );
-  border: 1px solid var(--lab-border-subtle);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-spacing-6);
   margin-bottom: var(--ds-spacing-6);
@@ -29,7 +17,7 @@
 
 .description {
   font-size: var(--ds-text-md);
-  color: var(--lab-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0 0 var(--ds-spacing-4) 0;
   line-height: 1.6;
 }
@@ -45,8 +33,8 @@
   flex-direction: column;
   gap: var(--ds-spacing-1);
   padding: var(--ds-spacing-3) var(--ds-spacing-4);
-  background-color: var(--lab-bg-base);
-  border: 1px solid var(--lab-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: 1px solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
   min-width: 140px;
 }
@@ -54,12 +42,12 @@
 .itemLabel {
   font-size: var(--ds-text-sm);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--lab-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .itemDesc {
   font-size: var(--ds-text-xs);
-  color: var(--lab-text-muted);
+  color: var(--shell-text-muted);
 }
 
 .customContent {

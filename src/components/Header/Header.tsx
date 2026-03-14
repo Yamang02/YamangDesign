@@ -12,7 +12,7 @@ export interface HeaderProps {
 
 export function Header({ children, onLogoClick }: HeaderProps) {
   return (
-    <header className={styles.header} data-ui>
+    <header className={styles.header} data-shell>
       <div className={styles.container}>
         <button
           type="button"

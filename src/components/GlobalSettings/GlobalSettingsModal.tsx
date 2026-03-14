@@ -301,7 +301,7 @@ export function GlobalSettingsModal({ open, onClose }: GlobalSettingsModalProps)
         ref={modalRef}
         className={styles.modal}
         onClick={(e) => e.stopPropagation()}
-        data-ui-light
+        data-shell
       >
         <header className={styles.header}>
           <h2 id="global-settings-title" className={styles.title}>

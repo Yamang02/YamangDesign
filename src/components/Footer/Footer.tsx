@@ -10,7 +10,7 @@ export function Footer({ className }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={`${styles.footer} ${className ?? ''}`} data-ui>
+    <footer className={`${styles.footer} ${className ?? ''}`} data-shell>
       <div className={styles.container}>
         <div className={styles.topRow}>
           <span className={styles.brand}>야망솔루션</span>

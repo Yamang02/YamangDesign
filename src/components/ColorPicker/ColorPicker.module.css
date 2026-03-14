@@ -1,3 +1,4 @@
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 .container {
   display: flex;
   flex-direction: column;
@@ -81,7 +82,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ds-color-border-subtle);
   flex-shrink: 0;
 }
 
@@ -125,7 +126,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ds-color-border-subtle);
 }
 
 .presetName {
@@ -154,8 +155,8 @@
 }
 
 .presetDeleteButton:hover {
-  color: #ef4444;
-  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--sys-color-error);
+  background-color: var(--sys-color-error-subtle);
 }
 
 .savePresetRow {

@@ -1,3 +1,4 @@
+/* @layer mixed — 크롬(--shell-*) + [data-context="preview"] 복원 블록. */
 /* E03: app-max-width로 Header와 정렬 (TOC + 본문 통합) */
 .labLayoutWrapper {
   display: flex;
@@ -5,9 +6,33 @@
   max-width: var(--app-max-width);
   margin: 0 auto;
   width: 100%;
-  /* Lab 전역 배경 토큰 (Card 등에서 사용, Overview는 자체 정의로 오버라이드) */
-  --lab-bg-surface: #ffffff;
-  --lab-bg-muted: #f1f2f3;
+}
+
+/* E03 P04: Lab UI는 [data-shell]에서 토큰 적용 (shell-variables.css). 여기서는 preview 복원만. */
+
+/* ─── Preview 복원 ([data-context="preview"]) ───────
+   [data-shell] 안에서 테마 토큰을 복원.
+   ThemeProvider가 주입한 *-global 별칭을 참조.
+   이 블록 내부는 --ds-* 유지 필수. ───────────────── */
+[data-shell] [data-context="preview"] {
+  --ds-color-bg-base: var(--ds-color-bg-base-global, #ffffff);
+  --ds-color-bg-surface: var(--ds-color-bg-surface-global, #f8f9fa);
+  --ds-color-bg-muted: var(--ds-color-bg-muted-global, #f1f2f3);
+  --ds-color-text-primary: var(--ds-color-text-primary-global, #111827);
+  --ds-color-text-secondary: var(--ds-color-text-secondary-global, #6b7280);
+  --ds-color-text-muted: var(--ds-color-text-muted-global, #9ca3af);
+  --ds-color-border-subtle: var(--ds-color-border-subtle-global, #e5e7eb);
+  --ds-color-border-default: var(--ds-color-border-default-global, #d1d5db);
+  --ds-color-border-focus: var(--ds-color-border-focus-global, #6366f1);
+  --ds-shadow-sm: var(--ds-shadow-sm-global);
+  --ds-shadow-md: var(--ds-shadow-md-global);
+  --ds-surface-backdrop: var(--ds-surface-backdrop-global, none);
+  --ds-surface-bg-alpha: var(--ds-surface-bg-alpha-global, 1);
+  --ds-surface-texture: var(--ds-surface-texture-global, none);
+  --ds-surface-blend: var(--ds-surface-blend-global, normal);
+  --ds-filter: var(--ds-filter-global, none);
+  --ds-perspective: var(--ds-perspective-global, none);
+  --ds-transform-style: var(--ds-transform-style-global, flat);
 }
 
 .labLayout {
@@ -41,27 +66,27 @@
   width: 100%;
   padding: var(--ds-spacing-2) var(--ds-spacing-3);
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   background: none;
   border: none;
-  border-left: 2px solid var(--ds-color-border-subtle);
+  border-left: 2px solid var(--shell-border-subtle);
   text-align: left;
   cursor: pointer;
   transition: color 150ms ease, border-color 150ms ease;
 }
 
 .tocItem:hover {
-  color: var(--ds-color-text-primary);
+  color: var(--shell-text-primary);
 }
 
 .tocItem:focus-visible {
-  outline: 2px solid var(--ds-color-border-focus);
+  outline: 2px solid var(--shell-border-focus);
   outline-offset: 2px;
 }
 
 .tocItemActive {
-  color: var(--ds-color-text-primary);
-  border-left-color: var(--ds-color-border-focus);
+  color: var(--shell-text-primary);
+  border-left-color: var(--shell-border-focus);
   font-weight: var(--ds-font-weight-medium);
 }
 
@@ -72,6 +97,40 @@
 /* E03: TOC 클릭 시 스크롤 위치 보정 */
 section[id] {
   scroll-margin-top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
+}
+
+/* E02 P04: 탭 모드 (navigationMode="tab") */
+.tabBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-1);
+  padding: var(--ds-spacing-2) var(--ds-spacing-6);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+  background: var(--shell-bg-muted);
+}
+
+.tab,
+.tabActive {
+  padding: var(--ds-spacing-2) var(--ds-spacing-4);
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--shell-text-secondary);
+  background: none;
+  border: none;
+  border-radius: var(--ds-radius-md);
+  cursor: pointer;
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.tab:hover {
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-surface);
+}
+
+.tabActive {
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-surface);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-default);
 }
 
 /* E03: 반응형 */
@@ -93,13 +152,13 @@ section[id] {
 .title {
   font-size: var(--ds-text-3xl);
   font-weight: var(--ds-font-weight-bold);
-  color: var(--ds-color-text-primary);
+  color: var(--shell-text-primary);
   margin: 0 0 var(--ds-spacing-2) 0;
 }
 
 .subtitle {
   font-size: var(--ds-text-md);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   margin: 0;
 }
 
@@ -116,12 +175,12 @@ section[id] {
 
 /* E02: 섹션 카드 래퍼 */
 .sectionCard {
-  background-color: var(--ds-color-bg-base);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-spacing-6);
   margin-bottom: var(--ds-spacing-6);
-  box-shadow: var(--ds-shadow-sm);
+  box-shadow: var(--shell-shadow-sm);
 }
 
 .sectionCard .labSection {
@@ -135,7 +194,7 @@ section[id] {
 .sectionTitle {
   font-size: var(--ds-text-xl);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
+  color: var(--shell-text-primary);
   margin: 0 0 var(--ds-spacing-4) 0;
 }
 
@@ -148,10 +207,10 @@ section[id] {
 /* LabCard */
 .labCard {
   padding: var(--ds-spacing-4);
-  background-color: var(--ds-color-bg-base);
+  background-color: var(--shell-bg-base);
   border-radius: var(--ds-radius-md);
-  box-shadow: var(--ds-shadow-sm);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+  box-shadow: var(--shell-shadow-sm);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
   min-width: 120px;
   min-height: 80px;
   display: flex;
@@ -166,13 +225,13 @@ section[id] {
 }
 
 .labCard[role='button']:hover {
-  box-shadow: var(--ds-shadow-md);
-  border-color: var(--ds-color-border-default);
+  box-shadow: var(--shell-shadow-md);
+  border-color: var(--shell-border-default);
 }
 
 .labCard.selected {
-  border-color: var(--ds-color-border-focus);
-  box-shadow: var(--ds-shadow-md);
+  border-color: var(--shell-border-focus);
+  box-shadow: var(--shell-shadow-md);
 }
 
 /* E05: ComparisonCard */
@@ -180,8 +239,8 @@ section[id] {
   flex: 1;
   min-width: 240px;
   padding: var(--ds-spacing-5);
-  background-color: var(--ds-color-bg-base);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+  background-color: var(--shell-bg-base);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
   border-radius: var(--ds-radius-lg);
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
@@ -191,12 +250,12 @@ section[id] {
 }
 
 .comparisonCard[role='button']:hover {
-  border-color: var(--ds-color-border-default);
+  border-color: var(--shell-border-default);
 }
 
 .comparisonCardSelected {
-  border-color: var(--ds-color-border-focus);
-  box-shadow: var(--ds-shadow-md);
+  border-color: var(--shell-border-focus);
+  box-shadow: var(--shell-shadow-md);
 }
 
 .comparisonHeader {
@@ -206,7 +265,7 @@ section[id] {
   gap: var(--ds-spacing-2);
   margin-bottom: var(--ds-spacing-4);
   padding-bottom: var(--ds-spacing-3);
-  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
 }
 
 .comparisonHeaderMain {
@@ -220,7 +279,7 @@ section[id] {
 .comparisonTitle {
   font-size: var(--ds-text-lg);
   font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
+  color: var(--shell-text-primary);
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -229,7 +288,7 @@ section[id] {
 
 .comparisonSubtitle {
   font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
+  color: var(--shell-text-secondary);
   margin: var(--ds-spacing-1) 0 0 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -249,13 +308,4 @@ section[id] {
   gap: var(--ds-spacing-6);
 }
 
-/* Lab 컨텍스트: Card 컴포넌트 고정 배경 (일관된 스타일 유지) */
-[data-context="lab"] .card[data-variant="elevated"],
-[data-context="lab"] .card[data-variant="flat"],
-[data-context="lab"] .card[data-variant="outlined"] {
-  background-color: var(--lab-bg-surface, #ffffff);
-}
-
-[data-context="lab"] .card[data-variant="flat"][data-hoverable="true"]:hover {
-  background-color: var(--lab-bg-muted, #f1f2f3);
-}
+/* Lab 컨텍스트: Card는 [data-shell] 고정 토큰 사용 (shell-variables.css) */
