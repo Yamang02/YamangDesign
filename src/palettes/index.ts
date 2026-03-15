@@ -3,17 +3,17 @@
  * E01: Palette × Style 분리
  * P03: strategyFn 제거, resolve 경로로 통일
  */
-import type { ExternalPalette } from '../@types/tokens';
+import type { ColorInput } from '../@types/tokens';
 import { resolvePalette, generateColorScales } from '../utils/palette';
 import { defaultSemanticMappings } from './strategies/default-mappings';
 import { getMergedMapping, resolveSemanticMapping } from './mapping/resolve';
-import type { PaletteDefinition, ExpandedPalette } from './types';
+import type { PaletteDefinition, ComputedPalette } from './types';
 
 /**
- * Palette 정의로부터 ExpandedPalette 생성
+ * Palette 정의로부터 ComputedPalette 생성
  */
-export function createPalette(definition: PaletteDefinition): ExpandedPalette {
-  const resolved = resolvePalette(definition.colors as ExternalPalette);
+export function createPalette(definition: PaletteDefinition): ComputedPalette {
+  const resolved = resolvePalette(definition.colors as ColorInput);
   const scales = generateColorScales(resolved);
 
   const baseMapping = defaultSemanticMappings[definition.bgStrategy];
@@ -24,13 +24,13 @@ export function createPalette(definition: PaletteDefinition): ExpandedPalette {
   const semantic = resolveSemanticMapping(mergedMapping, scales);
 
   return {
-    name: definition.name,
+    id: definition.id,
     bgStrategy: definition.bgStrategy,
     scales,
     semantic,
   };
 }
 
-export type { PaletteDefinition, ExpandedPalette, BgStrategy } from './types';
+export type { PaletteDefinition, ComputedPalette, BgStrategy } from './types';
 // PaletteName은 @types/theme 또는 constants/theme-presets에서 import
 export { defaultPalette } from './presets';

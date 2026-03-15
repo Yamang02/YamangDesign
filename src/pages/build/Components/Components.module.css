@@ -69,7 +69,7 @@
 
 .infoButton:hover {
   color: var(--ds-color-action-primary-default);
-  background: var(--ds-color-action-primary-subtle);
+  background: var(--ds-color-bg-muted);
 }
 
 /* P05: 모달 전용 — 섹션/라벨은 shell, 실제 컴포넌트만 data-context="preview"에서 ds */

@@ -64,7 +64,7 @@
 [data-shell] {
   --ds-color-bg-base: var(--shell-bg-base);
   --ds-color-bg-surface: var(--shell-bg-surface);
-  --ds-color-bg-surfaceBrand: var(--shell-bg-elevated);
+  --ds-color-bg-surface-brand: var(--shell-bg-elevated);
   --ds-color-bg-elevated: var(--shell-bg-elevated);
   --ds-color-bg-muted: var(--shell-bg-surface);
 

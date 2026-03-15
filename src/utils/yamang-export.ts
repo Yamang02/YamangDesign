@@ -103,7 +103,7 @@ export function createSemanticMappingPayload(
   id: string
 ): YamangDesignExport {
   const displayName =
-    definition.metadata?.displayName ?? definition.name;
+    definition.displayName ?? definition.id;
   return {
     ...createExportRoot(),
     exportType: 'semantic-mapping',

@@ -13,8 +13,8 @@ import { Icon } from '../Icon';
 import { Select } from '../Select';
 import { usePalettePresets } from '../../hooks/usePalettePresets';
 import { createCustomSelection } from '../../utils/palette-selection';
-import type { ExternalPalette } from '../../@types/tokens';
-import type { ThemeName } from '../../@types/theme';
+import type { ColorInput } from '../../@types/tokens';
+import type { StyleName } from '../../@types/theme';
 
 const themeOptions = [
   { value: 'minimal', label: 'Minimal' },
@@ -33,16 +33,16 @@ export function Navigation({
   rightContent,
   asSlot = false,
 }: NavigationProps) {
-  const { themeName, setThemeName, palette, setPaletteSelection } = useTheme();
+  const { styleName, setStyleName, palette, setPaletteSelection } = useTheme();
   const [isColorEditorOpen, setIsColorEditorOpen] = useState(false);
-  const [editingColors, setEditingColors] = useState<ExternalPalette>(palette);
+  const [editingColors, setEditingColors] = useState<ColorInput>(palette);
   const { presets, savePreset, deletePreset } = usePalettePresets();
 
   const handleThemeChange = (value: string) => {
-    setThemeName(value as ThemeName);
+    setStyleName(value as StyleName);
   };
 
-  const handleColorChange = (newPalette: ExternalPalette) => {
+  const handleColorChange = (newPalette: ColorInput) => {
     setEditingColors(newPalette);
   };
 
@@ -59,7 +59,7 @@ export function Navigation({
     savePreset(name, editingColors);
   };
 
-  const handleLoadPreset = (preset: { palette: ExternalPalette }) => {
+  const handleLoadPreset = (preset: { palette: ColorInput }) => {
     setEditingColors(preset.palette);
   };
 
@@ -127,7 +127,7 @@ export function Navigation({
         {showThemeToggle && (
           <Select
             options={themeOptions}
-            value={themeName}
+            value={styleName}
             onChange={handleThemeChange}
             size="sm"
             variant="ghost"

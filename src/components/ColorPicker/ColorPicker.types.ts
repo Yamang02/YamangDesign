@@ -1,4 +1,4 @@
-import type { ExternalPalette } from '../../@types/tokens';
+import type { ColorInput } from '../../@types/tokens';
 import type { PalettePreset } from '../../@types/palette';
 
 export interface HexInputProps {
@@ -18,12 +18,12 @@ export interface PresetManagerProps {
 }
 
 export interface ColorPickerProps {
-  palette: ExternalPalette;
-  onChange: (palette: ExternalPalette) => void;
+  palette: ColorInput;
+  onChange: (palette: ColorInput) => void;
   presets: PalettePreset[];
   onSavePreset: (name: string) => void;
   onLoadPreset: (preset: PalettePreset) => void;
   onDeletePreset: (id: string) => void;
   /** E06: 테마 프리셋 불러오기 (선택적) */
-  onLoadThemePreset?: (colors: ExternalPalette) => void;
+  onLoadThemePreset?: (colors: ColorInput) => void;
 }

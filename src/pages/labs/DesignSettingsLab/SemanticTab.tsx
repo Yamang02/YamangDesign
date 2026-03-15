@@ -88,7 +88,7 @@ export function SemanticTab({
   };
 
   const displayTitle =
-    (definition.metadata?.displayName ?? definition.name ?? 'Palette').toString();
+    (definition.displayName ?? definition.id ?? 'Palette').toString();
   const displayTitleCap =
     displayTitle.charAt(0).toUpperCase() + displayTitle.slice(1);
 

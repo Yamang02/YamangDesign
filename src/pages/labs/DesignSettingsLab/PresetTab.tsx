@@ -10,7 +10,7 @@ import {
   getAllThemes,
 } from '../../../palettes/presets/registry';
 import type { ThemeCategory } from '../../../palettes/types';
-import type { ExternalPalette } from '../../../@types/tokens';
+import type { ColorInput } from '../../../@types/tokens';
 import type { StyleName, SystemPresetName } from '../../../@types/theme';
 import { ThemeSearchBar } from '../PaletteLab/ThemeSearchBar';
 import { EmptyCategory } from '../PaletteLab/EmptyCategory';
@@ -24,7 +24,7 @@ function capitalize(str: string): string {
 }
 
 const COLOR_FIELDS: {
-  key: keyof ExternalPalette;
+  key: keyof ColorInput;
   label: string;
   required: boolean;
 }[] = [
@@ -43,7 +43,7 @@ const SYSTEM_OPTIONS: { value: SystemPresetName; label: string }[] = [
   { value: 'muted', label: 'Muted' },
 ];
 
-function getPresetColorsFromPalette(p: ExternalPalette) {
+function getPresetColorsFromPalette(p: ColorInput) {
   return [
     p.primary || '#CCC',
     p.secondary || '#CCC',
@@ -67,12 +67,12 @@ function hasSemanticOverrides(settings: StoredPreset['settings']): boolean {
 
 /** P08: 두 팔레트의 5색이 동일한지 (빌트인 적용 여부 등) */
 function isPaletteEqual(
-  current: ExternalPalette | undefined,
-  preset: ExternalPalette | undefined
+  current: ColorInput | undefined,
+  preset: ColorInput | undefined
 ): boolean {
   if (!current && !preset) return true;
   if (!current || !preset) return false;
-  const keys: (keyof ExternalPalette)[] = ['primary', 'secondary', 'accent', 'sub', 'neutral'];
+  const keys: (keyof ColorInput)[] = ['primary', 'secondary', 'accent', 'sub', 'neutral'];
   return keys.every((k) => (current[k] ?? '') === (preset[k] ?? ''));
 }
 
@@ -197,7 +197,7 @@ export function PresetTab({ settings }: PresetTabProps) {
     return Object.fromEntries(
       Object.entries(themesByCategory).map(([cat, themes]) => [
         cat,
-        themes.filter((t) => all.some((a) => a.metadata?.id === t.metadata?.id)),
+        themes.filter((t) => all.some((a) => a.id === t.id)),
       ])
     );
   }, [themesByCategory, presetSearch]);
@@ -214,11 +214,11 @@ export function PresetTab({ settings }: PresetTabProps) {
     return userPresets.filter((p) => p.name.toLowerCase().includes(q));
   }, [userPresets, presetSearch]);
 
-  const handleColorChange = (key: keyof ExternalPalette, value: string) => {
+  const handleColorChange = (key: keyof ColorInput, value: string) => {
     setPalette({ ...palette, [key]: value || undefined });
   };
 
-  const handleClearColor = (key: keyof ExternalPalette) => {
+  const handleClearColor = (key: keyof ColorInput) => {
     const newPalette = { ...palette };
     delete newPalette[key];
     setPalette(newPalette);
@@ -388,28 +388,28 @@ export function PresetTab({ settings }: PresetTabProps) {
               ) : (
                 <div className={styles.presetList}>
                   {filteredAllThemes.map((def) => {
-                    const presetId = def.metadata?.id;
+                    const presetId = def.id;
                     const isApplied = isPaletteEqual(draftForCompare.palette, def.colors);
                     return (
                       <button
-                        key={presetId ?? def.name}
+                        key={presetId}
                         type="button"
                         className={`${styles.presetItem} ${isApplied ? styles.presetItemApplied : ''}`}
                         onClick={() => {
                           if (presetId) selectPreset(presetId);
-                          else setPalette(def.colors as ExternalPalette);
+                          else setPalette(def.colors as ColorInput);
                         }}
                       >
                         <div className={styles.presetBadges}>
                           <span className={styles.presetBadge + ' ' + styles.category}>
-                            {(themeRegistry.find((g) => g.themes.some((t) => t.metadata?.id === presetId))?.displayName) ?? 'Preset'}
+                            {(themeRegistry.find((g) => g.themes.some((t) => t.id === presetId))?.displayName) ?? 'Preset'}
                           </span>
                         </div>
                         <span className={styles.presetName}>
-                          {def.metadata?.displayName ?? def.name}
+                          {def.displayName ?? def.id}
                         </span>
                         <div className={styles.presetColors}>
-                          {getPresetColorsFromPalette(def.colors as ExternalPalette).map((color, i) => (
+                          {getPresetColorsFromPalette(def.colors as ColorInput).map((color, i) => (
                             <span key={i} className={styles.presetDot} style={{ backgroundColor: color }} />
                           ))}
                         </div>
@@ -486,18 +486,18 @@ export function PresetTab({ settings }: PresetTabProps) {
                   ) : (
                     <div className={styles.presetList}>
                       {filtered.map((def) => {
-                        const presetId = def.metadata?.id;
+                        const presetId = def.id;
                         const isApplied = isPaletteEqual(draftForCompare.palette, def.colors);
                         return (
                           <button
-                            key={presetId ?? def.name}
+                            key={presetId}
                             type="button"
                             className={`${styles.presetItem} ${isApplied ? styles.presetItemApplied : ''}`}
                             onClick={() => {
                               if (presetId) {
                                 selectPreset(presetId);
                               } else {
-                                setPalette(def.colors as ExternalPalette);
+                                setPalette(def.colors as ColorInput);
                               }
                             }}
                           >
@@ -511,11 +511,11 @@ export function PresetTab({ settings }: PresetTabProps) {
                               </span>
                             </div>
                             <span className={styles.presetName}>
-                              {def.metadata?.displayName ?? def.name}
+                              {def.displayName ?? def.id}
                             </span>
                             <div className={styles.presetColors}>
                               {getPresetColorsFromPalette(
-                                def.colors as ExternalPalette
+                                def.colors as ColorInput
                               ).map((color, i) => (
                                 <span
                                   key={i}

@@ -10,7 +10,7 @@ import {
   brutalismStyle,
   glassmorphismStyle,
 } from '../styles';
-import type { ExternalPalette } from '../@types/tokens';
+import type { ColorInput } from '../@types/tokens';
 import type { StyleName } from '../@types/theme';
 import {
   themePresets,
@@ -32,7 +32,7 @@ export function getStylePresetNames(): StyleName[] {
   return Object.keys(stylePresets) as StyleName[];
 }
 
-/** ExternalPalette → PaletteDefinition (custom, toThemePreset 래퍼) */
-export function toCustomPaletteDefinition(colors: ExternalPalette): PaletteDefinition {
+/** ColorInput → PaletteDefinition (custom, toThemePreset 래퍼) */
+export function toCustomPaletteDefinition(colors: ColorInput): PaletteDefinition {
   return toThemePreset(colors, 'custom');
 }

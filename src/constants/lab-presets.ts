@@ -7,9 +7,9 @@ import { systemColorPresets } from '../tokens/global/system-colors';
 import { neutralPresets, type NeutralPresetName } from '../tokens/global/neutral-presets';
 import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
-import { combineTheme } from '../themes/combine';
 import { createStyle } from '../styles';
 import { flattenToCSSVars } from '../utils/css';
+import { buildTokenSet, flattenTokenSet } from '../themes/token-set';
 import type { PaletteDefinition } from '../palettes';
 import type { StyleName, PaletteName, SystemPresetName } from '../@types/theme';
 
@@ -79,12 +79,7 @@ export function getThemeVariables(
   const styleDef = stylePresets[styleName];
   if (!paletteDef || !styleDef) return {};
 
-  const theme = combineTheme(paletteDef, styleDef);
-  return flattenToCSSVars({
-    color: theme.colors,
-    shadow: theme.shadows,
-    border: theme.border,
-  });
+  return flattenTokenSet(buildTokenSet(paletteDef, styleDef));
 }
 
 /**

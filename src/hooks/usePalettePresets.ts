@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { PalettePreset, PalettePresetsStorage } from '../@types/palette';
-import type { ExternalPalette } from '../@types/tokens';
+import type { ColorInput } from '../@types/tokens';
 import { colorStartPoints } from '../constants/palette-definitions';
 
 const STORAGE_KEY = 'yamang-palette-presets';
@@ -45,9 +45,9 @@ function saveToStorage(presets: PalettePreset[]): void {
 
 export interface UsePalettePresetsReturn {
   presets: PalettePreset[];
-  savePreset: (name: string, palette: ExternalPalette) => PalettePreset;
+  savePreset: (name: string, palette: ColorInput) => PalettePreset;
   deletePreset: (id: string) => void;
-  updatePreset: (id: string, name: string, palette: ExternalPalette) => void;
+  updatePreset: (id: string, name: string, palette: ColorInput) => void;
   getPreset: (id: string) => PalettePreset | undefined;
   exportPresets: () => string;
   importPresets: (json: string) => boolean;
@@ -62,7 +62,7 @@ export function usePalettePresets(): UsePalettePresetsReturn {
     saveToStorage(userPresets);
   }, [userPresets]);
 
-  const savePreset = useCallback((name: string, palette: ExternalPalette): PalettePreset => {
+  const savePreset = useCallback((name: string, palette: ColorInput): PalettePreset => {
     const newPreset: PalettePreset = {
       id: generateId(),
       name: name.trim() || 'Untitled',
@@ -78,7 +78,7 @@ export function usePalettePresets(): UsePalettePresetsReturn {
     setUserPresets((prev) => prev.filter((p) => p.id !== id));
   }, []);
 
-  const updatePreset = useCallback((id: string, name: string, palette: ExternalPalette): void => {
+  const updatePreset = useCallback((id: string, name: string, palette: ColorInput): void => {
     setUserPresets((prev) =>
       prev.map((p) =>
         p.id === id

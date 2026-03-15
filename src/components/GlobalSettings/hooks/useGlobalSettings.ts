@@ -4,16 +4,16 @@
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTheme } from '../../../themes';
-import type { ExternalPalette } from '../../../@types/tokens';
+import type { ColorInput } from '../../../@types/tokens';
 import type { StyleName, SystemPresetName } from '../../../@types/theme';
-import type { PaletteSelection } from '../../../palettes/types';
+import type { PaletteSelection } from '../../../state/types';
 import {
   createPresetSelection,
   createCustomSelection,
   isPaletteSelectionEqual,
-} from '../../../utils/palette-selection';
+} from '../../../state/palette-selection';
 import { resolveSelection } from '../../../hooks/usePaletteResolution';
-import type { CustomSemanticPreset } from '../../../constants/semantic-presets';
+import type { CustomThemePreset } from '../../../constants/semantic-presets';
 import type { SemanticMapping } from '../../../palettes/types';
 import {
   GLOBAL_SETTINGS_STORAGE_KEY,
@@ -39,7 +39,7 @@ import {
   saveComponentMappingOverrides,
 } from '../../../utils/component-mapping-storage';
 
-const DEFAULT_PALETTE: ExternalPalette = {
+const DEFAULT_PALETTE: ColorInput = {
   primary: '#6366F1',
   secondary: '#8B5CF6',
   accent: '#F59E0B',
@@ -103,13 +103,13 @@ function validateImportedSettings(data: unknown): data is Partial<StoredSettings
   );
 }
 
-const EMPTY_SEMANTIC_PRESETS: CustomSemanticPreset[] = [];
+const EMPTY_SEMANTIC_PRESETS: CustomThemePreset[] = [];
 
 /** P08: selection을 해석해 항상 실제 팔레트 색상 반환 (preset이면 preset colors) */
 function resolvePaletteFromSelection(
   selection: PaletteSelection,
-  customSemanticPresets: CustomSemanticPreset[]
-): ExternalPalette {
+  customSemanticPresets: CustomThemePreset[]
+): ColorInput {
   const resolved = resolveSelection(selection, customSemanticPresets);
   return resolved.colors;
 }
@@ -240,7 +240,7 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
       return;
     }
     if (data.palette) {
-      setLocalSelection(createCustomSelection(data.palette as ExternalPalette));
+      setLocalSelection(createCustomSelection(data.palette as ColorInput));
     }
     if (data.styleName) setLocalStyleName(data.styleName as StyleName);
     if (data.systemPreset) setLocalSystemPreset(data.systemPreset as SystemPresetName);
@@ -306,14 +306,14 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
   }, []);
 
   // ============================================================================
-  // 하위 호환: palette(ExternalPalette) — P08: preset 선택 시에도 해석된 colors 사용
+  // 하위 호환: palette(ColorInput) — P08: preset 선택 시에도 해석된 colors 사용
   // ============================================================================
   const localPalette = useMemo(
     () => resolvePaletteFromSelection(localSelection, semanticPresets),
     [localSelection, semanticPresets]
   );
 
-  const setLocalPalette = useCallback((colors: ExternalPalette) => {
+  const setLocalPalette = useCallback((colors: ColorInput) => {
     setLocalSelection(createCustomSelection(colors));
   }, []);
 

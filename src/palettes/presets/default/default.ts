@@ -5,7 +5,10 @@
 import type { PaletteDefinition } from '../../types';
 
 export const defaultPalette: PaletteDefinition = {
-  name: 'default',
+  id: 'default',
+  displayName: 'Default',
+  category: 'default',
+  description: 'YamangDesign 브랜드 기반 기본 배색',
   subname: 'YamangDesign 기본 배색',
   colors: {
     primary: '#5F9070',
@@ -16,10 +19,4 @@ export const defaultPalette: PaletteDefinition = {
   },
   bgStrategy: 'light',
   contrast: 'normal',
-  metadata: {
-    id: 'default',
-    displayName: 'Default',
-    category: 'default',
-    description: 'YamangDesign 브랜드 기반 기본 배색',
-  },
 };

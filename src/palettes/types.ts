@@ -3,32 +3,11 @@
  * E01: 배색을 독립 레이어로 관리
  */
 
-import type { ExternalPalette, GeneratedScales } from '../@types/tokens';
+import type { GeneratedScales } from '../@types/tokens';
 
-// ============================================================================
-// PaletteSelection: 팔레트 선택 의도를 명시하는 단일 타입
-// ============================================================================
-
-/**
- * 팔레트 선택 상태 (discriminated union)
- *
- * 기존 paletteName + customColors 조합을 단일 타입으로 통합.
- * 선택 의도가 타입에 명시되어 잘못된 조합을 컴파일 타임에 방지.
- *
- * @example
- * // 프리셋 선택
- * { type: 'preset', presetId: 'default-spring-cream' }
- *
- * // 사용자 직접 색상 입력
- * { type: 'custom', colors: { primary: '#6366F1', ... } }
- *
- * // 커스텀 시맨틱 프리셋 (베이스 + 오버라이드)
- * { type: 'custom-semantic', presetId: 'custom-semantic-abc123' }
- */
-export type PaletteSelection =
-  | { type: 'preset'; presetId: string }
-  | { type: 'custom'; colors: ExternalPalette }
-  | { type: 'custom-semantic'; presetId: string };
+// PaletteSelection은 E11 P03에서 state/ 레이어로 이동됨
+// 하위 호환을 위해 re-export 유지
+export type { PaletteSelection } from '../state/types';
 
 // PaletteName은 constants/theme-presets.ts에서 정의됨
 // PaletteDefinition.name은 내부 유연성을 위해 string 유지
@@ -43,18 +22,6 @@ export type ThemeCategory =
   | 'natural'
   | 'pop';
 
-/** 테마 메타데이터 */
-export interface ThemeMetadata {
-  /** 테마 ID (고유 키) */
-  id: string;
-  /** 표시 이름 */
-  displayName: string;
-  /** 카테고리 */
-  category: ThemeCategory;
-  /** 설명 */
-  description?: string;
-}
-
 /** 스케일 참조 (예: primary-500, neutral-900) */
 export interface ScaleReference {
   scale: 'primary' | 'secondary' | 'accent' | 'neutral' | 'sub';
@@ -65,6 +32,7 @@ export interface ScaleReference {
 export interface SemanticMapping {
   bg: {
     base: string | ScaleReference;
+    subtle: string | ScaleReference;
     surface: string | ScaleReference;
     surfaceBrand: string | ScaleReference;
     elevated: string | ScaleReference;
@@ -131,6 +99,7 @@ export interface SemanticMapping {
 export interface SemanticColors {
   bg: {
     base: string;
+    subtle: string;
     surface: string;
     surfaceBrand: string;
     elevated: string;
@@ -175,7 +144,17 @@ export interface SemanticColors {
 
 /** Palette 정의 (프리셋 또는 사용자 정의) */
 export interface PaletteDefinition {
-  name: string;
+  /** 고유 ID. registry와 themePresets의 키로 사용 */
+  id: string;
+
+  /** 사람이 읽는 표시 이름 */
+  displayName?: string;
+
+  /** 팔레트 카테고리 */
+  category?: ThemeCategory;
+
+  /** 설명 */
+  description?: string;
 
   /** 프리셋 서브네임 (설명) */
   subname?: string;
@@ -197,16 +176,13 @@ export interface PaletteDefinition {
   /** 대비 설정 */
   contrast?: 'normal' | 'high';
 
-  /** 테마 메타데이터 (선택적, 카테고리/검색용) */
-  metadata?: ThemeMetadata;
-
   /** 시맨틱 매핑 (선택적, 없으면 bgStrategy 기본값 사용. 부분만 제공 시 병합됨) */
   semanticMapping?: Partial<SemanticMapping>;
 }
 
-/** 확장된 Palette (스케일 + 시맨틱 포함, createPalette 반환값) */
-export interface ExpandedPalette {
-  name: string;
+/** 계산된 Palette (스케일 + 시맨틱 포함, createPalette 반환값) */
+export interface ComputedPalette {
+  id: string;
   bgStrategy: BgStrategy;
 
   /** 색상 스케일 */

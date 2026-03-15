@@ -6,8 +6,9 @@
 :root {
   /* Colors (테마에서 주입) */
   --ds-color-bg-base: initial;
+  --ds-color-bg-subtle: initial;
   --ds-color-bg-surface: initial;
-  --ds-color-bg-surfaceBrand: initial;
+  --ds-color-bg-surface-brand: initial;
   --ds-color-bg-elevated: initial;
   --ds-color-bg-muted: initial;
 

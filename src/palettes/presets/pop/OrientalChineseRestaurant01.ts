@@ -63,7 +63,10 @@
 import type { PaletteDefinition } from '../../types';
 
 export const orientalChineseRestaurant01Palette: PaletteDefinition = {
-  name: 'orientalChineseRestaurant01', // camelCase, 고유 식별자
+  id: 'orientalChineseRestaurant01', // camelCase, 고유 식별자. theme-presets 키로 사용됨
+  displayName: '오리엔탈 중화반점',
+  category: 'pop', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
+  description: '요비요헤이_팔레트 오리엔탈 중화반점',
   subname: '오리엔탈 중화반점', // 사용자에게 보여줄 이름
   colors: {
     primary: '#E72D29', // 필수
@@ -74,13 +77,6 @@ export const orientalChineseRestaurant01Palette: PaletteDefinition = {
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
   contrast: 'normal', // 'normal' | 'high'
-
-  metadata: {
-    id: 'orientalChineseRestaurant01', // theme-presets 키로 사용됨. 고유해야 함
-    displayName: '오리엔탈 중화반점',
-    category: 'pop', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
-    description: '요비요헤이_팔레트 오리엔탈 중화반점',
-  },
 
   semanticMapping: {
     bg: {

@@ -3,7 +3,7 @@
  * P05: v2 — semanticMapping, palettePresetId 추가
  * P08: styleName 보정, palettePresetId는 저장하지 않음(호환용으로 타입만 유지)
  */
-import type { ExternalPalette } from '../../@types/tokens';
+import type { ColorInput } from '../../@types/tokens';
 import type { StyleName, SystemPresetName } from '../../@types/theme';
 import type { SemanticMapping } from '../../palettes/types';
 
@@ -19,7 +19,7 @@ export const GLOBAL_PRESETS_STORAGE_KEY = 'yamang-design-presets';
 /** v1 스키마 (마이그레이션용) */
 export interface StoredSettingsV1 {
   version: '1.0';
-  palette: ExternalPalette;
+  palette: ColorInput;
   styleName: StyleName;
   systemPreset: SystemPresetName;
   updatedAt?: string;
@@ -27,7 +27,7 @@ export interface StoredSettingsV1 {
 
 export interface StoredSettings {
   version: '2.0';
-  palette: ExternalPalette;
+  palette: ColorInput;
   palettePresetId?: string;
   semanticMapping: Partial<SemanticMapping> | null;
   styleName: StyleName;

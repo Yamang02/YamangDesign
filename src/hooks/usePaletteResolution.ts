@@ -3,29 +3,30 @@
  * PaletteSelection 기반 단일 해석 로직
  */
 import { useMemo } from 'react';
-import type { ExternalPalette } from '../@types/tokens';
-import type { PaletteDefinition, PaletteSelection } from '../palettes/types';
-import type { CustomSemanticPreset } from '../constants/semantic-presets';
+import type { ColorInput } from '../@types/tokens';
+import type { PaletteDefinition } from '../palettes/types';
+import type { PaletteSelection } from '../state/types';
+import type { CustomThemePreset } from '../constants/semantic-presets';
 import { presetToPaletteDefinition } from '../constants/semantic-presets';
 import { palettePresets, toCustomPaletteDefinition } from '../themes/presets';
 
 export interface PaletteResolution {
   /** 해석된 PaletteDefinition */
   definition: PaletteDefinition;
-  /** 해석된 색상 (ExternalPalette) */
-  colors: ExternalPalette;
+  /** 해석된 색상 (ColorInput) */
+  colors: ColorInput;
 }
 
 /**
  * PaletteSelection을 PaletteDefinition으로 해석 (순수 함수)
  *
  * @param selection - 팔레트 선택 상태
- * @param customSemanticPresets - 커스텀 시맨틱 프리셋 목록
+ * @param customSemanticPresets - 커스텀 테마 프리셋 목록
  * @returns PaletteResolution (definition + colors)
  */
 export function resolveSelection(
   selection: PaletteSelection,
-  customSemanticPresets: CustomSemanticPreset[]
+  customSemanticPresets: CustomThemePreset[]
 ): PaletteResolution {
   switch (selection.type) {
     case 'preset': {
@@ -34,7 +35,7 @@ export function resolveSelection(
         palettePresets.default;
       return {
         definition: preset,
-        colors: preset.colors as ExternalPalette,
+        colors: preset.colors as ColorInput,
       };
     }
 
@@ -56,14 +57,14 @@ export function resolveSelection(
         if (def && base) {
           return {
             definition: def,
-            colors: base.colors as ExternalPalette,
+            colors: base.colors as ColorInput,
           };
         }
       }
       // fallback
       return {
         definition: palettePresets.default,
-        colors: palettePresets.default.colors as ExternalPalette,
+        colors: palettePresets.default.colors as ColorInput,
       };
     }
   }
@@ -73,12 +74,12 @@ export function resolveSelection(
  * PaletteSelection을 정의와 색상으로 해석하는 훅
  *
  * @param selection - 팔레트 선택 상태
- * @param customSemanticPresets - 커스텀 시맨틱 프리셋 목록
+ * @param customSemanticPresets - 커스텀 테마 프리셋 목록
  * @returns definition과 colors를 포함한 해석 결과
  */
 export function usePaletteSelection(
   selection: PaletteSelection,
-  customSemanticPresets: CustomSemanticPreset[]
+  customSemanticPresets: CustomThemePreset[]
 ): PaletteResolution {
   return useMemo(
     () => resolveSelection(selection, customSemanticPresets),

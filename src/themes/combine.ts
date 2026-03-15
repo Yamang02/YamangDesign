@@ -18,7 +18,7 @@ export function combineTheme(
   const style = createStyle(styleDefinition, palette.semantic.bg.base);
 
   return {
-    palette: palette.name,
+    palette: palette.id,
     style: style.name,
 
     colors: {
