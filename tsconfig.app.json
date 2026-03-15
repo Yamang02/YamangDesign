@@ -23,7 +23,13 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@domain/*": ["./src/domain/*"],
+      "@app/*": ["./src/app/*"],
+      "@shared/*": ["./src/shared/*"]
+    }
   },
-  "include": ["src", "src/palettes/presets/pop/.ts"]
+  "include": ["src"]
 }

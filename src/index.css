@@ -1,9 +1,9 @@
-@import './styles/fonts.css';
-@import './styles/variables.css';
-@import './styles/shell-variables.css';
-@import './styles/sys-variables.css';
-@import './styles/transitions.css';
-@import './styles/reset.css';
+@import './shared/styles/fonts.css';
+@import './shared/styles/variables.css';
+@import './shared/styles/shell-variables.css';
+@import './shared/styles/sys-variables.css';
+@import './shared/styles/transitions.css';
+@import './shared/styles/reset.css';
 
 #root {
   min-height: 100vh;

@@ -1,16 +1,16 @@
 import { useState, useMemo, useCallback, createContext, useContext } from 'react';
-import { ThemeProvider } from './themes';
-import { Footer, Header, HeaderNav } from './components';
+import { ThemeProvider } from '@domain/themes';
+import { Footer, Header, HeaderNav } from '@app/components';
 import {
   GLOBAL_SETTINGS_STORAGE_KEY,
   migrateV1ToV2,
   isStoredSettingsV1,
   normalizeStoredSettings,
   type StoredSettings,
-} from './components/GlobalSettings';
-import { loadPaletteSelection, createCustomSelection } from './utils/palette-selection';
-import { findThemeById } from './palettes/presets/registry';
-import { saveComponentMappingOverrides } from './utils/component-mapping-storage';
+} from '@app/components/GlobalSettings';
+import { loadPaletteSelection, createCustomSelection } from '@app/state/palette-selection';
+import { findThemeById } from '@domain/palettes/presets/registry';
+import { saveComponentMappingOverrides } from '@app/infra/storage';
 import {
   Landing,
   PaletteLab,
@@ -24,8 +24,8 @@ import {
   Organisms,
   Service,
   Shell,
-} from './pages';
-import type { DesignSettingsTabId } from './pages/labs/DesignSettingsLab';
+} from '@app/pages';
+import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
 
 /** E06 P01 + P05: Labs / Build / Context / Playground / Design Settings */
 export type PageName =
@@ -64,9 +64,9 @@ function parseDesignSystemBlob(raw: string): StoredSettings | null {
 function migratePaletteSelectionToDesignSettings(): StoredSettings | null {
   const selection = loadPaletteSelection();
   let palette: StoredSettings['palette'] = { ...defaultPalette };
-  if (selection.type === 'custom') {
+  if (selection?.type === 'custom') {
     palette = selection.colors;
-  } else if (selection.type === 'preset') {
+  } else if (selection?.type === 'preset') {
     const def = findThemeById(selection.presetId);
     if (def?.colors) palette = def.colors as StoredSettings['palette'];
   }

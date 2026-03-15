@@ -60,7 +60,7 @@
  * =============================================================================
  */
 
-import type { PaletteDefinition } from '../palettes/types';
+import type { PaletteDefinition } from '@domain/palettes/types';
 
 export const myPresetPalette: PaletteDefinition = {
   id: 'myPreset', // camelCase, 고유 식별자. theme-presets 키로 사용됨. 고유해야 함
