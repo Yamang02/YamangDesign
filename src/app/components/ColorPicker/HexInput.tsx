@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { HexInputProps } from './ColorPicker.types';
+import type { HexInputProps } from './HexInput.types';
 import styles from './HexInput.module.css';
 import { normalizeHex } from '@shared/utils/color';
 

@@ -1,1 +1,2 @@
-export { GenericTabs, type GenericTabsProps, type TabItem } from './GenericTabs';
+export { GenericTabs } from './GenericTabs';
+export type { GenericTabsProps, TabItem } from './GenericTabs.types';

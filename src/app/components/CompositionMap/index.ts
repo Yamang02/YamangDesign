@@ -1,2 +1,2 @@
 export { CompositionMap } from './CompositionMap';
-export type { CompositionMapProps } from './CompositionMap';
+export type { CompositionMapProps } from './CompositionMap.types';

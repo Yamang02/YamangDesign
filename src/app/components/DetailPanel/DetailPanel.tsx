@@ -3,14 +3,8 @@
  */
 import { clsx } from '@shared/utils/clsx';
 import { Icon } from '../Icon';
+import type { DetailPanelProps } from './DetailPanel.types';
 import styles from './DetailPanel.module.css';
-
-export interface DetailPanelProps {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-}
 
 export function DetailPanel({ open, onClose, title, children }: DetailPanelProps) {
   return (

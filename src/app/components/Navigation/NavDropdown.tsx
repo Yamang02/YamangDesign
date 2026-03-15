@@ -5,16 +5,8 @@ import { useEffect, useRef } from 'react';
 import { clsx } from '@shared/utils/clsx';
 import { Icon } from '../Icon';
 import { Tooltip } from '../Tooltip';
-import type { NavCategory } from '../../config/nav-categories';
+import type { NavDropdownProps } from './NavDropdown.types';
 import styles from './NavDropdown.module.css';
-
-export interface NavDropdownProps {
-  category: NavCategory;
-  isOpen: boolean;
-  onToggle: () => void;
-  onSelect: (itemId: string) => void;
-  activeItem?: string;
-}
 
 export function NavDropdown({
   category,

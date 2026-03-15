@@ -9,6 +9,7 @@ import { HeaderNavDropdown } from './HeaderNavDropdown';
 import { HeaderSettingsButton } from './HeaderSettingsButton';
 import { navCategories } from '../../config/nav-categories';
 import type { IconLibrary } from '../Icon';
+import type { HeaderNavProps } from './HeaderNav.types';
 import styles from './HeaderNav.module.css';
 
 const categoryLabels: Record<string, string> = {
@@ -17,13 +18,6 @@ const categoryLabels: Record<string, string> = {
   context: 'Context',
   playground: 'Playground',
 };
-
-export interface HeaderNavProps {
-  activePage: string;
-  onSelect: (pageId: string) => void;
-  /** P05: 설정 버튼 클릭 시 호출 (설정 페이지로 이동) */
-  onOpenSettings?: () => void;
-}
 
 export function HeaderNav({
   activePage,

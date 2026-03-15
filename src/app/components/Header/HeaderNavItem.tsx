@@ -1,16 +1,9 @@
 /**
  * E02: 아이콘 기반 네비게이션 - 단일 링크 아이템 (아이콘 + 메뉴명)
  */
-import type { ReactNode } from 'react';
 import { clsx } from '@shared/utils/clsx';
+import type { HeaderNavItemProps } from './HeaderNavItem.types';
 import styles from './HeaderNav.module.css';
-
-export interface HeaderNavItemProps {
-  icon: ReactNode;
-  label: string;
-  active?: boolean;
-  onClick: () => void;
-}
 
 export function HeaderNavItem({ icon, label, active, onClick }: HeaderNavItemProps) {
   return (

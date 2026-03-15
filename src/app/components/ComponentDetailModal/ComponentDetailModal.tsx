@@ -6,16 +6,8 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '../Icon';
+import type { ComponentDetailModalProps } from './ComponentDetailModal.types';
 import styles from './ComponentDetailModal.module.css';
-
-export interface ComponentDetailModalProps {
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-  /** E08 P03: Build 페이지 테마 탐구용 — 컴포넌트 영역에 적용할 CSS 변수 객체 */
-  previewStyle?: React.CSSProperties;
-}
 
 export function ComponentDetailModal({
   open,

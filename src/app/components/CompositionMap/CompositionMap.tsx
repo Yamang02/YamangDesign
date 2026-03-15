@@ -1,12 +1,8 @@
 /**
  * E06 P05: 조합 구조 트리 — Molecule/Organism 모달에서 "구성 Atoms/Molecules" 시각화
  */
+import type { CompositionMapProps } from './CompositionMap.types';
 import styles from './CompositionMap.module.css';
-
-export interface CompositionMapProps {
-  /** 트리 라인 배열 (예: ["FormCard", "└── Card", "    └── FormField × 2"]) */
-  lines: string[];
-}
 
 export function CompositionMap({ lines }: CompositionMapProps) {
   if (!lines.length) return null;

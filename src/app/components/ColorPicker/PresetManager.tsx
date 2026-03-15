@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { PresetManagerProps } from './ColorPicker.types';
+import type { PresetManagerProps } from './PresetManager.types';
 import styles from './ColorPicker.module.css';
 import { Icon } from '../Icon';
 import { resolvePalette, generateColorScales } from '@domain/palettes/palette';

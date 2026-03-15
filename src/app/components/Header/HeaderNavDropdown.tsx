@@ -1,27 +1,11 @@
 /**
  * E02: 아이콘 기반 네비게이션 - 드롭다운 메뉴 아이템 (아이콘 + 메뉴명)
  */
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { clsx } from '@shared/utils/clsx';
 import { Icon } from '../Icon';
+import type { HeaderNavDropdownProps } from './HeaderNavDropdown.types';
 import styles from './HeaderNav.module.css';
-
-export interface HeaderNavDropdownItem {
-  id: string;
-  label: string;
-  icon?: string;
-}
-
-export interface HeaderNavDropdownProps {
-  icon: ReactNode;
-  label: string;
-  items: HeaderNavDropdownItem[];
-  active?: boolean;
-  activeItemId?: string;
-  isOpen: boolean;
-  onToggle: () => void;
-  onSelect: (itemId: string) => void;
-}
 
 export function HeaderNavDropdown({
   icon,

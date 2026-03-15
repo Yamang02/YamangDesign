@@ -1,9 +1,6 @@
 import { Icon } from '../Icon';
+import type { FooterProps } from './Footer.types';
 import styles from './Footer.module.css';
-
-interface FooterProps {
-  className?: string;
-}
 
 export function Footer({ className }: FooterProps) {
   const githubUrl = 'https://github.com/Yamang02';

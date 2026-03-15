@@ -3,11 +3,8 @@
  * Atoms, Molecules, Organisms 공통 사용. 카테고리 자동 분류, 빈 카테고리 스킵.
  */
 import { useMemo } from 'react';
+import type { TokenSectionProps } from './TokenSection.types';
 import styles from '../../pages/build/Components/Components.module.css';
-
-export interface TokenSectionProps {
-  tokens: Array<{ token: string; label?: string }>;
-}
 
 type TokenCategory = 'color' | 'spacing' | 'typography' | 'size' | 'shadow' | 'other';
 

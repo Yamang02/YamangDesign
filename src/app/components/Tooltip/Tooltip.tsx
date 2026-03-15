@@ -2,20 +2,11 @@
  * E06: Tooltip - Site Style 가이드용
  * portal: true 시 document.body에 렌더링 (모달/스크롤 컨테이너 내부에서 스크롤바에 가려지지 않음)
  */
-import { useState, useRef, useEffect, useLayoutEffect, useCallback, type ReactNode } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { siteStyle } from '../../config/site-style';
+import type { TooltipProps } from './Tooltip.types';
 import styles from './Tooltip.module.css';
-
-export interface TooltipProps {
-  content: ReactNode;
-  position?: 'top' | 'right' | 'bottom' | 'left';
-  delay?: number;
-  maxWidth?: string;
-  /** true 시 포털로 body에 렌더링 (모달 내부 등 overflow 컨테이너에서 사용) */
-  portal?: boolean;
-  children: React.ReactElement;
-}
 
 export function Tooltip({
   content,

@@ -3,12 +3,8 @@
  */
 import { clsx } from '@shared/utils/clsx';
 import { Icon } from '../Icon';
+import type { HeaderSettingsButtonProps } from './HeaderSettingsButton.types';
 import styles from './HeaderNav.module.css';
-
-export interface HeaderSettingsButtonProps {
-  /** 설정 페이지로 이동 (design-settings) */
-  onOpenSettings?: () => void;
-}
 
 export function HeaderSettingsButton({
   onOpenSettings,
