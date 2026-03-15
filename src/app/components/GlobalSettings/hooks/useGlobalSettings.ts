@@ -199,7 +199,7 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
       componentMapping
     );
     options?.onApply?.(draft);
-  }, [localSelection, localStyleName, localSystemPreset, localSemanticMapping, selection, styleName, systemPreset, setPaletteSelection, setStyleName, setSystemPreset, getDraft, options]);
+  }, [localSelection, localStyleName, localSystemPreset, selection, styleName, systemPreset, setPaletteSelection, setStyleName, setSystemPreset, getDraft, options]);
 
   // 초기화
   const reset = useCallback(() => {

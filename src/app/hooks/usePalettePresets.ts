@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { PalettePreset, PalettePresetsStorage } from '@shared/@types/palette';
 import type { ColorInput } from '@shared/@types/tokens';
 import { colorStartPoints } from '@domain/constants/palette-definitions';
@@ -56,7 +56,7 @@ export interface UsePalettePresetsReturn {
 export function usePalettePresets(): UsePalettePresetsReturn {
   const [userPresets, setUserPresets] = useState<PalettePreset[]>(() => loadFromStorage());
 
-  const presets = [...defaultPresets, ...userPresets];
+  const presets = useMemo(() => [...defaultPresets, ...userPresets], [userPresets]);
 
   useEffect(() => {
     saveToStorage(userPresets);

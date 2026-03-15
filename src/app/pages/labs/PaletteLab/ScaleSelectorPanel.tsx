@@ -2,7 +2,7 @@
  * P05: 스케일 선택 인라인 패널
  * 시맨틱 매핑 모달 왼쪽에 표시. 추천(✓)/경고(⚠️) 아이콘 표시
  */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Icon } from '../../../components';
 import { Tooltip } from '../../../components';
 import {
@@ -80,12 +80,18 @@ export function ScaleSelectorPanel({
   onSelect,
   onClose,
 }: ScaleSelectorPanelProps) {
-  const [selectedScale, setSelectedScale] = useState<ScaleReference['scale']>('neutral');
-  const [selectedStep, setSelectedStep] = useState<ScaleReference['step']>(500);
-  const [directHex, setDirectHex] = useState('');
-  const [useDirectColor, setUseDirectColor] = useState(false);
+  const [prevCurrentValue, setPrevCurrentValue] = useState(currentValue);
+  const [selectedScale, setSelectedScale] = useState<ScaleReference['scale']>(
+    isScaleReference(currentValue) ? currentValue.scale : 'neutral'
+  );
+  const [selectedStep, setSelectedStep] = useState<ScaleReference['step']>(
+    isScaleReference(currentValue) ? currentValue.step : 500
+  );
+  const [directHex, setDirectHex] = useState(isScaleReference(currentValue) ? '' : (currentValue || ''));
+  const [useDirectColor, setUseDirectColor] = useState(!isScaleReference(currentValue));
 
-  useEffect(() => {
+  if (prevCurrentValue !== currentValue) {
+    setPrevCurrentValue(currentValue);
     if (isScaleReference(currentValue)) {
       setSelectedScale(currentValue.scale);
       setSelectedStep(currentValue.step);
@@ -95,7 +101,7 @@ export function ScaleSelectorPanel({
       setUseDirectColor(true);
       setDirectHex(currentValue || '');
     }
-  }, [currentValue]);
+  }
 
   const recommendation = !useDirectColor
     ? getScaleRecommendation(semanticToken, selectedScale, selectedStep, bgStrategy)

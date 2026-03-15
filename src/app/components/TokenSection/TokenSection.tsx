@@ -2,7 +2,7 @@
  * E10: 공유 토큰 섹션 — Build 모달 내 Design/Key tokens 표시
  * Atoms, Molecules, Organisms 공통 사용. 카테고리 자동 분류, 빈 카테고리 스킵.
  */
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import styles from '../../pages/build/Components/Components.module.css';
 
 export interface TokenSectionProps {
@@ -36,15 +36,13 @@ function stripPrefix(token: string): string {
 }
 
 export function TokenSection({ tokens }: TokenSectionProps) {
-  const [values, setValues] = useState<Record<string, string>>({});
-
-  useEffect(() => {
+  const values = useMemo(() => {
     const computed = getComputedStyle(document.documentElement);
-    const next: Record<string, string> = {};
+    const result: Record<string, string> = {};
     tokens.forEach(({ token }) => {
-      next[token] = computed.getPropertyValue(token).trim() || '(미정의)';
+      result[token] = computed.getPropertyValue(token).trim() || '(미정의)';
     });
-    setValues(next);
+    return result;
   }, [tokens]);
 
   if (!tokens.length) return null;

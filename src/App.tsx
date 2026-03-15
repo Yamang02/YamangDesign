@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, createContext, useContext } from 'react';
+import { useState, useCallback } from 'react';
 import { ThemeProvider } from '@domain/themes';
 import { Footer, Header, HeaderNav } from '@app/components';
 import {
@@ -26,6 +26,7 @@ import {
   Shell,
 } from '@app/pages';
 import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
+import { DesignSettingsNavContext } from '@app/context/DesignSettingsNavContext';
 
 /** E06 P01 + P05: Labs / Build / Context / Playground / Design Settings */
 export type PageName =
@@ -88,7 +89,7 @@ function migratePaletteSelectionToDesignSettings(): StoredSettings | null {
 
 function loadAppliedSettings(): StoredSettings | null {
   try {
-    let raw = localStorage.getItem(GLOBAL_SETTINGS_STORAGE_KEY);
+    const raw = localStorage.getItem(GLOBAL_SETTINGS_STORAGE_KEY);
     if (!raw) {
       const migrated = migratePaletteSelectionToDesignSettings();
       if (migrated) return migrated;
@@ -107,16 +108,6 @@ const defaultPalette = {
   neutral: '#E5E7EB',
 } as const;
 
-/** P05: 설정 페이지 진입 (헤더·PaletteLab 시맨틱 매핑 편집) */
-export const DesignSettingsNavContext = createContext<{
-  openDesignSettings: (initialTab?: DesignSettingsTabId) => void;
-} | null>(null);
-
-export function useDesignSettingsNav() {
-  const ctx = useContext(DesignSettingsNavContext);
-  return ctx;
-}
-
 function App() {
   const [page, setPage] = useState<PageName>('landing');
   const [designSettingsInitialTab, setDesignSettingsInitialTab] =
@@ -125,7 +116,7 @@ function App() {
     loadAppliedSettings
   );
 
-  const initialSettings = useMemo(() => appliedSettings ?? loadAppliedSettings(), []);
+  const [initialSettings] = useState(loadAppliedSettings);
 
   const openDesignSettings = useCallback((initialTab?: DesignSettingsTabId) => {
     setDesignSettingsInitialTab(initialTab ?? 'preset');

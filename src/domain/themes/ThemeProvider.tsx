@@ -108,11 +108,13 @@ export function ThemeProvider({
   }, [paletteDefinition, appliedSettings?.semanticMapping]);
 
   // P08: design-settings 적용 시 selection을 palette 스냅샷으로 동기화
-  useEffect(() => {
+  const [prevAppliedSettings, setPrevAppliedSettings] = useState(appliedSettings);
+  if (prevAppliedSettings !== appliedSettings) {
+    setPrevAppliedSettings(appliedSettings);
     if (appliedSettings?.palette) {
       setSelectionState(createCustomSelection(appliedSettings.palette));
     }
-  }, [appliedSettings]);
+  }
 
   // ============================================================================
   // 새 API: setPaletteSelection

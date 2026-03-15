@@ -30,7 +30,7 @@ import { systemColorPresets } from '@domain/tokens/global/system-colors';
 import type { SystemPresetName } from '@shared/@types/theme';
 import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 import type { PaletteDefinition } from '@domain/palettes/types';
-import { useDesignSettingsNav } from '../../../../App';
+import { useDesignSettingsNav } from '@app/context/DesignSettingsNavContext';
 import { ColorUsageDiagram } from './ColorUsageDiagram';
 import { EmptyCategory } from './EmptyCategory';
 import { PaletteCategoryTabs, type BrandColorTabId } from './PaletteCategoryTabs';

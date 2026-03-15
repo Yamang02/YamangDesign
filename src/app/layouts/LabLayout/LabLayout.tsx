@@ -2,7 +2,7 @@
  * E08: Lab 공통 레이아웃
  * E03: 사이드바 TOC 통합
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { LabToc } from './LabToc';
 import styles from './LabLayout.module.css';
 import type { TocItem, TocItemTree } from './types';
@@ -38,7 +38,7 @@ export function LabLayout({
   navigationMode = 'scroll',
 }: LabLayoutProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const idsToObserve = flattenTocIds(tocItems);
+  const idsToObserve = useMemo(() => flattenTocIds(tocItems), [tocItems]);
   const useToc = showToc && idsToObserve.length >= 2 && navigationMode === 'scroll';
   const useTabBar = showToc && idsToObserve.length >= 2 && navigationMode === 'tab';
 
@@ -63,7 +63,7 @@ export function LabLayout({
     });
 
     return () => observer.disconnect();
-  }, [useToc, idsToObserve.join(',')]);
+  }, [useToc, idsToObserve]);
 
   const handleNavClick = (id: string) => {
     const el = document.getElementById(id);

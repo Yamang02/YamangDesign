@@ -2,7 +2,7 @@
  * P07: 컴포넌트 매핑 탭 — 행별 ✕, 컴포넌트 전체 초기화, 컬러 스와치, previewVariants 기반 Preview
  */
 import type { ReactNode } from 'react';
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Icon, Button, Input, Select, Card, Badge } from '../../../components';
 import { showcaseContent, selectShowcase } from '@app/content/showcase-content';
 import {
@@ -112,7 +112,6 @@ export function ComponentMappingTab() {
     loadComponentMappingOverrides() ?? {}
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [resolvedCache, setResolvedCache] = useState<Record<string, string>>({});
 
   const selectedComponent = useMemo(
     () => data.components.find((c) => c.id === selectedId) ?? null,
@@ -167,15 +166,6 @@ export function ComponentMappingTab() {
     [overrides, persistOverrides]
   );
 
-  useEffect(() => {
-    if (!selectedComponent) return;
-    const tokens = selectedComponent.tokens.map((t) => t.default);
-    const next: Record<string, string> = {};
-    tokens.forEach((token) => {
-      next[token] = getResolvedValue(token);
-    });
-    setResolvedCache(next);
-  }, [selectedComponent, overrides]);
 
   type CssVarStyle = React.CSSProperties & Record<`--${string}`, string>;
   const previewStyle = useMemo((): CssVarStyle => {
@@ -232,7 +222,7 @@ export function ComponentMappingTab() {
               {selectedComponent.tokens.map((t) => {
                 const token = t.default;
                 const overrideVal = overrides[selectedComponent.id]?.[token];
-                const currentVal = overrideVal ?? resolvedCache[token] ?? getResolvedValue(token);
+                const currentVal = overrideVal ?? getResolvedValue(token);
                 const showSwatch = looksLikeColor(currentVal);
                 return (
                   <tr key={t.prop}>
