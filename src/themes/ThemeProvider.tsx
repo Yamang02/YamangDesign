@@ -14,7 +14,6 @@ import {
   loadPaletteSelection,
   createPresetSelection,
   createCustomSelection,
-  createCustomSemanticSelection,
 } from '../state/palette-selection';
 import { siteStyle } from '../config/site-style';
 import { flattenToCSSVars, injectCSSVariables } from '../utils/css';

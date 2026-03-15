@@ -8,6 +8,25 @@ npm run build    # tsc + vite build
 npm run lint     # eslint 검사
 ```
 
+## File Placement — 3계층 구조
+
+새 파일 생성 시 아래 기준으로 계층을 결정한다.
+
+| 조건 | 위치 |
+|---|---|
+| React import / useState / useEffect 등 React hook이 있다 | `src/app/` |
+| `localStorage` / `fetch` / 파일 I/O가 있다 | `src/app/infra/` |
+| palette / theme / token 개념을 다루되 React 없다 | `src/domain/` |
+| 도메인 지식 없는 순수 함수다 | `src/shared/utils/` |
+| 전역 CSS 파일이다 | `src/shared/styles/` |
+| 페이지별 정적 텍스트/JSON 콘텐츠다 | `src/app/content/` |
+| 앱 동작 설정 (라우트, 기본값) 이다 | `src/app/config/` |
+
+의존성 방향: `app/ → domain/ → shared/`
+`domain/`은 `app/`을 import하지 않는다. `shared/`는 `domain/`과 `app/`을 모른다.
+
+---
+
 ## Coding Rules
 
 ### Naming — 기술스택 예약어 회피

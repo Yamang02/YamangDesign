@@ -8,7 +8,6 @@ import { neutralPresets, type NeutralPresetName } from '../tokens/global/neutral
 import { generateSystemColorVars } from '../utils/system-colors';
 import { createPalette } from '../palettes';
 import { createStyle } from '../styles';
-import { flattenToCSSVars } from '../utils/css';
 import { buildTokenSet, flattenTokenSet } from '../themes/token-set';
 import type { PaletteDefinition } from '../palettes';
 import type { StyleName, PaletteName, SystemPresetName } from '../@types/theme';

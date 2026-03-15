@@ -81,6 +81,7 @@ export const orientalChineseRestaurant01Palette: PaletteDefinition = {
   semanticMapping: {
     bg: {
       base: { scale: 'secondary', step: 400 },
+      subtle: { scale: 'secondary', step: 200 },
       surface: { scale: 'secondary', step: 500 },
       surfaceBrand: { scale: 'secondary', step: 600 },
       elevated: { scale: 'secondary', step: 100 },

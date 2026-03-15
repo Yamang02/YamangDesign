@@ -2,12 +2,8 @@
 
 ## Overview
 
-에이전틱 코딩과 확장성에 최적화된 폴더 구조를 정의한다.
-
-핵심 원칙:
-- 파일명 = 역할 (단일 책임)
-- 타입/스타일/로직 분리
-- 명시적 export (배럴 패턴)
+`src/`는 **domain / app / shared** 3계층으로 구성된다.
+계층 경계가 디렉토리 구조에 직접 드러나므로, 새 파일 위치 결정과 도메인 로직 탐색이 즉시 가능하다.
 
 ---
 
@@ -15,164 +11,138 @@
 
 ```
 src/
-├── @types/                    # 전역 타입 정의
-│   ├── tokens.d.ts
-│   ├── theme.d.ts
-│   └── components.d.ts
+├── domain/                    # 비즈니스 개념의 순수 표현 (React/브라우저 없음)
+│   ├── palettes/              # 팔레트 도메인 (palette.ts 유틸 포함)
+│   │   ├── mapping/
+│   │   ├── presets/
+│   │   ├── strategies/
+│   │   ├── templates/
+│   │   └── types.ts
+│   ├── themes/                # 테마 도메인 (ThemeContext, ThemeProvider 포함)
+│   │   ├── minimal/
+│   │   ├── neumorphism/
+│   │   ├── ThemeContext.ts
+│   │   ├── ThemeProvider.tsx  # React 의존성 있음 — 예외적 위치
+│   │   ├── token-set.ts
+│   │   └── useTheme.ts
+│   ├── tokens/                # 디자인 토큰 (system-colors.ts 유틸 포함)
+│   │   ├── global/
+│   │   ├── primitives/
+│   │   ├── semantic/
+│   │   ├── typography/
+│   │   └── ui/
+│   ├── styles/                # 스타일 도메인 (.ts 파일만 — preset 로직, CSS var 생성)
+│   │   └── presets/
+│   └── constants/             # 도메인 상수 (palette-definitions, theme-presets 등)
 │
-├── tokens/
-│   ├── primitives/            # 원시 토큰 (외부 입력 포함)
-│   │   ├── colors.ts          # 외부 palette 입력점
-│   │   ├── spacing.ts
-│   │   ├── typography.ts
-│   │   ├── borders.ts
-│   │   └── index.ts
-│   │
-│   ├── semantic/              # 의미 기반 토큰
-│   │   ├── colors.ts
-│   │   ├── shadows.ts
-│   │   └── index.ts
-│   │
-│   └── index.ts               # 토큰 통합 export
+├── app/                       # React 애플리케이션 레이어
+│   ├── components/            # 재사용 UI 컴포넌트
+│   ├── pages/                 # 페이지 뷰
+│   ├── layouts/               # 레이아웃 컴포넌트
+│   ├── hooks/                 # React 훅 (도메인↔UI 브리지 포함)
+│   ├── state/                 # 앱 상태
+│   ├── content/               # 정적 콘텐츠 (JSON, 페이지 텍스트)
+│   ├── config/                # 앱 설정
+│   └── infra/                 # 외부 경계 (localStorage, 파일 export)
+│       ├── storage.ts
+│       └── export.ts
 │
-├── themes/
-│   ├── minimal/
-│   │   ├── tokens.ts          # Minimal 테마 토큰
-│   │   └── index.ts
-│   │
-│   ├── neumorphism/
-│   │   ├── tokens.ts          # Neumorphism 테마 토큰
-│   │   └── index.ts
-│   │
-│   ├── ThemeProvider.tsx      # 테마 컨텍스트 + CSS 변수 주입
-│   ├── useTheme.ts            # 테마 훅
-│   └── index.ts
+├── shared/                    # 계층 지식 없는 범용 유틸/자원
+│   ├── utils/                 # 순수 함수 (clsx, css helpers, color 연산)
+│   ├── styles/                # 전역 CSS 파일 (reset, variables, transitions 등)
+│   ├── @types/                # TypeScript ambient declarations
+│   └── assets/                # 정적 자산
 │
-├── components/
-│   ├── Button/
-│   │   ├── Button.tsx         # 컴포넌트 구현
-│   │   ├── Button.styles.ts   # 스타일 정의
-│   │   ├── Button.types.ts    # Props 타입
-│   │   └── index.ts
-│   │
-│   ├── Card/
-│   │   ├── Card.tsx
-│   │   ├── Card.styles.ts
-│   │   ├── Card.types.ts
-│   │   └── index.ts
-│   │
-│   ├── Input/
-│   │   ├── Input.tsx
-│   │   ├── Input.styles.ts
-│   │   ├── Input.types.ts
-│   │   └── index.ts
-│   │
-│   ├── Navigation/
-│   │   ├── Navigation.tsx
-│   │   ├── Navigation.styles.ts
-│   │   ├── Navigation.types.ts
-│   │   └── index.ts
-│   │
-│   └── index.ts               # 컴포넌트 배럴 export
-│
-├── utils/
-│   ├── color.ts               # 색상 유틸 (lighten, darken, etc.)
-│   ├── css.ts                 # CSS 변수 주입 유틸
-│   └── index.ts
-│
-├── constants/
-│   └── index.ts               # 매직 넘버/문자열 상수
-│
-├── pages/
-│   └── Exhibition/
-│       ├── Exhibition.tsx     # 전시 페이지
-│       ├── Exhibition.styles.ts
-│       └── index.ts
-│
-├── App.tsx                    # 앱 진입점
-├── main.tsx                   # React 렌더링
-└── index.css                  # 글로벌 리셋 스타일
+└── App.tsx                    # 앱 진입점
 ```
 
 ---
 
-## 디렉토리별 역할
+## 계층 정의
 
-### `@types/`
+### `domain/`
 
-전역 타입 정의. 여러 모듈에서 공유하는 인터페이스.
+비즈니스 개념을 표현하는 순수 TypeScript 코드.
+원칙적으로 React/브라우저 의존성을 갖지 않는다.
 
-```typescript
-// @types/tokens.d.ts
-export interface ExternalPalette {
-  primary: string;
-  secondary?: string;
-  accent?: string;
-  sub?: string;
-}
-```
+> **예외**: `themes/ThemeProvider.tsx`는 React Context 특성상 domain에 위치한다.
+> Context가 도메인 개념(Theme 상태)의 단일 소스이기 때문.
 
-### `tokens/primitives/`
+| 디렉토리 | 역할 |
+|---|---|
+| `palettes/` | 팔레트 정의, 스케일 생성, 시맨틱 매핑, 팔레트 프리셋 |
+| `themes/` | ThemeContext, ThemeProvider, TokenSet 빌더 |
+| `tokens/` | 글로벌 토큰, 시맨틱 토큰, 타이포그래피 토큰 |
+| `styles/` | 스타일 프리셋 로직 (.ts), CSS 변수 생성 함수 |
+| `constants/` | 팔레트·스타일·시맨틱 정의 상수 |
 
-원시 토큰. 순수한 값만 정의. 외부 입력 색상이 여기로 들어옴.
+### `app/`
 
-```typescript
-// tokens/primitives/colors.ts
-export const defaultPalette: ExternalPalette = {
-  primary: '#6366F1',
-};
-```
+React 기반 애플리케이션 동작 코드.
+도메인 개념을 UI와 연결하는 모든 코드가 여기 위치한다.
 
-### `tokens/semantic/`
+| 디렉토리 | 역할 |
+|---|---|
+| `components/` | 재사용 가능한 UI 컴포넌트 |
+| `pages/` | 라우트 단위 페이지 컴포넌트 |
+| `layouts/` | 레이아웃 컴포넌트 |
+| `hooks/` | 도메인 훅(`usePalettePresets` 등) 포함 React 훅 |
+| `state/` | PaletteSelection 등 앱 상태 관리 |
+| `content/` | 페이지별 정적 콘텐츠 (JSON, 텍스트 상수) |
+| `config/` | 네비게이션, 사이트 스타일 설정 |
+| `infra/` | localStorage CRUD, 파일 export 등 외부 시스템 경계 |
 
-의미 기반 토큰. primitives를 참조하여 용도별 매핑.
+### `shared/`
 
-```typescript
-// tokens/semantic/colors.ts
-export function createSemanticColors(palette: ResolvedPalette) {
-  return {
-    bg: { primary: palette.sub, ... },
-    text: { primary: palette.primary, ... },
-  };
-}
-```
+도메인 지식도 앱 지식도 없는 범용 코드.
+`domain/`과 `app/` 모두 이 계층에 의존할 수 있다.
 
-### `themes/`
+| 디렉토리 | 역할 |
+|---|---|
+| `utils/` | `clsx`, CSS 헬퍼, 색상 연산 등 순수 함수 |
+| `styles/` | 전역 CSS 파일 (reset, variables, fonts 등) |
+| `@types/` | TypeScript ambient declarations |
+| `assets/` | 이미지, 폰트 등 정적 자산 |
 
-테마별 토큰 구성과 ThemeProvider.
+---
 
-```typescript
-// themes/minimal/tokens.ts
-export function createMinimalTheme(palette: ResolvedPalette): Theme {
-  return { name: 'minimal', ... };
-}
-```
-
-### `components/`
-
-UI 컴포넌트. 각 컴포넌트는 독립 폴더로 구성.
+## 의존성 방향
 
 ```
-Button/
-├── Button.tsx       # 로직
-├── Button.styles.ts # CSS 변수 기반 스타일
-├── Button.types.ts  # Props 인터페이스
-└── index.ts         # export { Button } from './Button'
+app/  →  domain/  →  shared/
+app/  →  shared/
 ```
 
-### `utils/`
+- `domain/`은 `app/`을 import하지 않는다
+- `shared/`는 `domain/`과 `app/`을 import하지 않는다
 
-공통 유틸리티 함수.
+---
 
-```typescript
-// utils/color.ts
-export function lighten(color: string, amount: number): string;
-export function darken(color: string, amount: number): string;
+## "어디에 넣어야 하나?" 판단 기준
+
+| 조건 | 위치 |
+|---|---|
+| `import React` / `useState` / `useEffect` 등 React hook이 있다 | `app/` |
+| `localStorage` / `fetch` / 파일 I/O가 있다 | `app/infra/` |
+| palette / theme / token 개념을 다루되 React 없다 | `domain/` |
+| 어떤 도메인 지식도 없는 순수 함수다 | `shared/utils/` |
+| 전역 CSS 파일이다 | `shared/styles/` |
+| 페이지별 정적 텍스트/JSON 콘텐츠다 | `app/content/` |
+| 앱 동작 설정 (라우트, 기본값) 이다 | `app/config/` |
+
+---
+
+## 컴포넌트 디렉토리 구조
+
+각 컴포넌트는 독립 폴더로 구성한다.
+
 ```
-
-### `pages/`
-
-페이지 단위 컴포넌트. POC에서는 Exhibition 단일 페이지.
+app/components/Button/
+├── Button.tsx          # 컴포넌트 구현
+├── Button.module.css   # CSS Modules 스타일
+├── Button.types.ts     # Props 타입
+└── index.ts            # export { Button } from './Button'
+```
 
 ---
 
@@ -181,21 +151,12 @@ export function darken(color: string, amount: number): string;
 ### 파일명
 
 | 유형 | 패턴 | 예시 |
-|------|------|------|
+|---|---|---|
 | 컴포넌트 | PascalCase | `Button.tsx` |
 | 타입 | PascalCase + `.types.ts` | `Button.types.ts` |
-| 스타일 | PascalCase + `.styles.ts` | `Button.styles.ts` |
+| 훅 | camelCase + `use` prefix | `useTheme.ts` |
 | 유틸 | camelCase | `color.ts` |
-| 상수 | camelCase 또는 UPPER_CASE | `constants/index.ts` |
-
-### 변수/함수명
-
-| 유형 | 패턴 | 예시 |
-|------|------|------|
-| 컴포넌트 | PascalCase | `Button`, `ThemeProvider` |
-| 함수 | camelCase | `createTheme`, `resolvePalette` |
-| 상수 | camelCase 또는 UPPER_CASE | `defaultPalette`, `CSS_VAR_PREFIX` |
-| 타입/인터페이스 | PascalCase | `ButtonProps`, `Theme` |
+| 상수/설정 | camelCase | `theme-presets.ts` |
 
 ### CSS 변수
 
@@ -203,8 +164,8 @@ export function darken(color: string, amount: number): string;
 --{prefix}-{category}-{property}-{variant}
 
 예시:
---ds-color-bg-primary
---ds-color-text-secondary
+--ds-color-bg-base
+--ds-color-text-primary
 --ds-shadow-md
 --ds-spacing-4
 --ds-radius-md
@@ -214,45 +175,25 @@ export function darken(color: string, amount: number): string;
 
 ## Import 규칙
 
-### Path Alias 사용
+### Path Alias
 
 ```typescript
-// Good
-import { Button } from '@components/Button';
-import { useTheme } from '@themes';
-import type { Theme } from '@/@types/theme';
+// tsconfig.json에 정의된 alias 사용
+import { Button } from '@app/components/Button';
+import { createPalette } from '@domain/palettes';
+import { clsx } from '@shared/utils/clsx';
 
-// Bad
-import { Button } from '../../../components/Button';
+// 상대 경로는 같은 계층 내부에서만 허용
+import { PaletteType } from './types';
 ```
 
 ### 배럴 Export
 
 ```typescript
-// components/index.ts
+// app/components/index.ts
 export { Button } from './Button';
 export { Card } from './Card';
-export { Input } from './Input';
-export { Navigation } from './Navigation';
 
 // 사용
-import { Button, Card, Input } from '@components';
-```
-
----
-
-## 에이전틱 친화 포인트
-
-```
-✅ 파일명으로 역할 즉시 파악
-   Button.types.ts → "타입 정의 파일"
-
-✅ 단일 책임 원칙
-   한 파일 = 한 가지 역할
-
-✅ 배럴 export로 import 단순화
-   AI가 참조 경로 쉽게 파악
-
-✅ 타입 파일 분리
-   API 변경 시 영향 범위 명확
+import { Button, Card } from '@app/components';
 ```

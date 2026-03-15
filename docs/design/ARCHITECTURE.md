@@ -91,41 +91,47 @@ ThemeProvider
 
 ---
 
-## 폴더 구조 (v4)
+## 폴더 구조 (E12: 3계층)
+
+`src/`는 **domain / app / shared** 3계층으로 구성된다.
+→ 상세 구조: [02-folder-structure.md](./02-folder-structure.md)
 
 ```
 src/
-├── @types/              # 전역 타입
-├── config/              # Site Style (E06)
-│   └── site-style.ts
-├── palettes/            # Palette 레이어 (E01)
-│   ├── presets/         # default, vivid, pastel
-│   ├── strategies/      # light-bg, colored-bg, dark-bg
-│   └── types.ts
-├── styles/              # Style 레이어 (E02)
-│   ├── presets/         # minimal, neumorphism
-│   └── types.ts
-├── themes/
-│   ├── combine.ts       # combineTheme (E03)
-│   ├── presets.ts       # palettePresets, stylePresets
-│   └── ThemeProvider.tsx
-├── tokens/
-│   ├── primitives/      # 원시 토큰
-│   └── typography/      # Text Styles, Semantic (E05)
-├── components/
-│   ├── Button/          # 상태/shadow 검증
-│   ├── Card/            # surface/shadow 검증
-│   ├── Input/           # border/focus 검증
-│   └── Navigation/      # layout/spacing + 테마 토글
+├── domain/         # 비즈니스 개념 (React/브라우저 없음)
+│   ├── palettes/   # 팔레트 도메인
+│   ├── themes/     # 테마 도메인 (ThemeProvider 포함)
+│   ├── tokens/     # 디자인 토큰
+│   ├── styles/     # 스타일 프리셋 로직 (.ts)
+│   └── constants/  # 도메인 상수
 │
-├── utils/
-│   ├── color.ts         # lighten, darken, adjustHue
-│   ├── palette.ts       # resolvePalette
-│   └── css.ts           # CSS 변수 주입
+├── app/            # React 애플리케이션 레이어
+│   ├── components/ # UI 컴포넌트
+│   ├── pages/      # 페이지 뷰
+│   ├── layouts/    # 레이아웃
+│   ├── hooks/      # React 훅
+│   ├── state/      # 앱 상태
+│   ├── content/    # 정적 콘텐츠
+│   ├── config/     # 앱 설정
+│   └── infra/      # 외부 경계 (localStorage, export)
 │
-└── pages/
-    └── Exhibition/      # 단일 전시 페이지
+├── shared/         # 범용 유틸/자산
+│   ├── utils/      # 순수 함수
+│   ├── styles/     # 전역 CSS 파일
+│   ├── @types/     # TypeScript 선언
+│   └── assets/     # 정적 자산
+│
+└── App.tsx
 ```
+
+### 의존성 방향
+
+```
+app/  →  domain/  →  shared/
+app/  →  shared/
+```
+
+`domain/`은 `app/`을 import하지 않는다.
 
 ---
 
