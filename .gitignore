@@ -49,3 +49,6 @@ coverage/
 
 # pnpm 사용 시 npm lock 파일 제외
 package-lock.json
+
+# Git worktrees
+.worktrees/
