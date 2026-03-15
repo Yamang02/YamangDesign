@@ -8,7 +8,7 @@ import { resolveColorValue } from '../../../palettes/mapping/resolve';
 import { ScaleSelectionModal } from './ScaleSelectionModal';
 import type { SemanticTokenPath } from '../../../palettes/mapping/recommendations';
 import type { BgStrategy, SemanticMapping } from '../../../palettes/types';
-import type { ExpandedPalette } from '../../../palettes/types';
+import type { ComputedPalette } from '../../../palettes/types';
 import type { GeneratedScales } from '../../../@types/tokens';
 import styles from './ColorUsageDiagram.module.css';
 
@@ -16,7 +16,7 @@ import styles from './ColorUsageDiagram.module.css';
 const TOKEN_TO_PATH: Record<string, SemanticTokenPath> = {
   '--ds-color-bg-base': 'bg.base',
   '--ds-color-bg-surface': 'bg.surface',
-  '--ds-color-bg-surfaceBrand': 'bg.surfaceBrand',
+  '--ds-color-bg-surface-brand': 'bg.surfaceBrand',
   '--ds-color-bg-elevated': 'bg.elevated',
   '--ds-color-bg-muted': 'bg.muted',
   '--ds-color-text-primary': 'text.primary',
@@ -89,7 +89,7 @@ const semanticMappings: Array<{ category: string; items: SemanticToken[] }> = [
     items: [
       { token: '--ds-color-bg-base', note: '페이지 배경', source: null },
       { token: '--ds-color-bg-surface', note: 'Flat 카드', source: 'neutral-50' },
-      { token: '--ds-color-bg-surfaceBrand', note: '브랜드톤이 가미된 배경', source: 'primary-50' },
+      { token: '--ds-color-bg-surface-brand', note: '브랜드톤이 가미된 배경', source: 'primary-50' },
       { token: '--ds-color-bg-elevated', note: '모달, 팝오버', source: null },
       { token: '--ds-color-bg-muted', note: '비활성 영역', source: 'neutral-100' },
     ],
@@ -397,7 +397,7 @@ export interface ColorUsageDiagramProps {
   /** 인터랙티브 모드 (스와치 클릭 시 매핑 편집) */
   interactive?: boolean;
   /** 팔레트 (scales + semantic) */
-  palette?: ExpandedPalette;
+  palette?: ComputedPalette;
   /** 현재 시맨틱 매핑 (편집 시) */
   mapping?: SemanticMapping;
   /** 매핑 변경 콜백 */

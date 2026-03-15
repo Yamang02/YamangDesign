@@ -46,7 +46,7 @@ export const themeRegistry: ThemeGroup[] = [
 export function findThemeById(id: string): PaletteDefinition | undefined {
   return themeRegistry
     .flatMap((group) => group.themes)
-    .find((theme) => theme.metadata?.id === id);
+    .find((theme) => theme.id === id);
 }
 
 /** 카테고리별 테마 조회 */
@@ -63,8 +63,8 @@ export function searchThemesByName(query: string): PaletteDefinition[] {
     .flatMap((group) => group.themes)
     .filter(
       (theme) =>
-        theme.metadata?.displayName?.toLowerCase().includes(lowerQuery) ||
-        theme.metadata?.description?.toLowerCase().includes(lowerQuery)
+        theme.displayName?.toLowerCase().includes(lowerQuery) ||
+        theme.description?.toLowerCase().includes(lowerQuery)
     );
 }
 

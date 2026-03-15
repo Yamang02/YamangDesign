@@ -4,14 +4,14 @@
  * theme-presets.ts가 단일 소스(SOT) - registry에서 자동 수집
  */
 import type { PaletteDefinition } from '../palettes';
-import type { ExternalPalette } from '../@types/tokens';
+import type { ColorInput } from '../@types/tokens';
 import type { PaletteName } from '../@types/theme';
 import { themePresets } from './theme-presets';
 
 export { themePresets };
 
 /** 색상 시작점 (ColorPicker용 - 단일 primary 베이스) */
-export const colorStartPoints: Record<string, ExternalPalette> = {
+export const colorStartPoints: Record<string, ColorInput> = {
   indigo: { primary: '#6366F1' },
   emerald: { primary: '#10B981' },
   rose: { primary: '#F43F5E' },
@@ -19,13 +19,13 @@ export const colorStartPoints: Record<string, ExternalPalette> = {
   cyan: { primary: '#06B6D4' },
 };
 
-/** ExternalPalette를 PaletteDefinition으로 확장 (custom용) */
+/** ColorInput을 PaletteDefinition으로 확장 (custom용) */
 export function toThemePreset(
-  colors: ExternalPalette,
-  name: PaletteName = 'custom'
+  colors: ColorInput,
+  id: PaletteName = 'custom'
 ): PaletteDefinition {
   return {
-    name,
+    id,
     colors,
     bgStrategy: 'light',
   };

@@ -8,9 +8,12 @@ import { themePresets, isCustomSemanticPaletteId } from './theme-presets';
 import { defaultSemanticMappings } from '../palettes/strategies/default-mappings';
 import { getMergedMapping } from '../palettes/mapping/resolve';
 
+export const CUSTOM_THEME_PRESETS_STORAGE_KEY = 'yamang-custom-theme-presets';
+
+/** @deprecated CUSTOM_THEME_PRESETS_STORAGE_KEY 사용 권장 */
 export const CUSTOM_SEMANTIC_PRESETS_STORAGE_KEY = 'yamang-custom-semantic-presets';
 
-export interface CustomSemanticPreset {
+export interface CustomThemePreset {
   id: string;
   /** 베이스 프리셋 ID (theme-presets 키) */
   basePaletteId: PaletteName;
@@ -21,14 +24,20 @@ export interface CustomSemanticPreset {
   createdAt?: string;
 }
 
-export interface StoredCustomSemanticPresets {
+/** @deprecated CustomThemePreset 사용 권장 */
+export type CustomSemanticPreset = CustomThemePreset;
+
+export interface StoredCustomThemePresets {
   version: string;
-  presets: CustomSemanticPreset[];
+  presets: CustomThemePreset[];
 }
+
+/** @deprecated StoredCustomThemePresets 사용 권장 */
+export type StoredCustomSemanticPresets = StoredCustomThemePresets;
 
 /** 커스텀 프리셋 → PaletteDefinition (베이스 + semanticOverrides 병합) */
 export function presetToPaletteDefinition(
-  preset: CustomSemanticPreset
+  preset: CustomThemePreset
 ): PaletteDefinition | null {
   const base =
     preset.basePaletteId === 'custom' || isCustomSemanticPaletteId(preset.basePaletteId)
@@ -42,7 +51,7 @@ export function presetToPaletteDefinition(
   const finalMapping = getMergedMapping(baseMapping, preset.semanticOverrides);
   return {
     ...base,
-    name: preset.id,
+    id: preset.id,
     semanticMapping: finalMapping,
   };
 }

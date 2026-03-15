@@ -31,7 +31,7 @@ import {
 import { useTheme } from '../../../themes';
 import { palettePresets } from '../../../themes/presets';
 import { presetToPaletteDefinition } from '../../../constants/semantic-presets';
-import type { CustomSemanticPreset } from '../../../constants/semantic-presets';
+import type { CustomThemePreset } from '../../../constants/semantic-presets';
 import { defaultSemanticMappings } from '../../../palettes/strategies/default-mappings';
 import { getMergedMapping } from '../../../palettes/mapping/resolve';
 import { neutralPresets } from '../../../tokens/global/neutral-presets';
@@ -127,7 +127,7 @@ function PaletteDetail({
 
 type DetailSelection =
   | { type: 'palette'; definition: PaletteDefinition }
-  | { type: 'custom'; preset: CustomSemanticPreset }
+  | { type: 'custom'; preset: CustomThemePreset }
   | { type: 'neutral'; name: NeutralPresetName }
   | { type: 'system'; name: SystemPresetName }
   | null;
@@ -341,8 +341,8 @@ function ThemeCard({
 
   return (
     <ComparisonCard
-      key={def.metadata?.id ?? def.name}
-      title={def.metadata?.displayName ?? capitalize(def.name)}
+      key={def.id}
+      title={def.displayName ?? capitalize(def.id)}
       subtitle={def.subname}
       styleVars={styleVars}
       onClick={onClick}
@@ -391,7 +391,7 @@ function CustomPresetCard({
   onDelete,
   selected,
 }: {
-  preset: CustomSemanticPreset;
+  preset: CustomThemePreset;
   onClick: () => void;
   onMappingClick: (e: React.MouseEvent) => void;
   onDelete: (e: React.MouseEvent) => void;
@@ -403,7 +403,7 @@ function CustomPresetCard({
   const styleVars = getPaletteVariablesFromDefinition(def);
   const baseDisplayName =
     palettePresets[preset.basePaletteId as keyof typeof palettePresets]
-      ?.metadata?.displayName ?? capitalize(preset.basePaletteId);
+      ?.displayName ?? capitalize(preset.basePaletteId);
   const title = preset.displayName ?? `${baseDisplayName} (커스텀)`;
 
   return (
@@ -496,7 +496,7 @@ export function PaletteLab() {
     setDetailSelection({ type: 'palette', definition: def });
   };
 
-  const handleCustomPresetSelect = (preset: CustomSemanticPreset) => {
+  const handleCustomPresetSelect = (preset: CustomThemePreset) => {
     setDetailSelection({ type: 'custom', preset });
   };
 
@@ -505,12 +505,12 @@ export function PaletteLab() {
     designNav?.openDesignSettings('semantic');
   };
 
-  const handleCustomMappingClick = (_preset: CustomSemanticPreset) => (e: React.MouseEvent) => {
+  const handleCustomMappingClick = (_preset: CustomThemePreset) => (e: React.MouseEvent) => {
     e.stopPropagation();
     designNav?.openDesignSettings('semantic');
   };
 
-  const handleCustomDelete = (preset: CustomSemanticPreset) => (e: React.MouseEvent) => {
+  const handleCustomDelete = (preset: CustomThemePreset) => (e: React.MouseEvent) => {
     e.stopPropagation();
     deleteCustomSemanticPreset(preset.id);
     if (detailSelection?.type === 'custom' && detailSelection.preset.id === preset.id) {
@@ -528,11 +528,11 @@ export function PaletteLab() {
 
   const detailTitle = detailSelection
     ? detailSelection.type === 'palette'
-      ? detailSelection.definition.metadata?.displayName ??
-        capitalize(detailSelection.definition.name)
+      ? detailSelection.definition.displayName ??
+        capitalize(detailSelection.definition.id)
       : detailSelection.type === 'custom'
         ? detailSelection.preset.displayName ??
-          `${palettePresets[detailSelection.preset.basePaletteId as keyof typeof palettePresets]?.metadata?.displayName ?? detailSelection.preset.basePaletteId} (커스텀)`
+          `${palettePresets[detailSelection.preset.basePaletteId as keyof typeof palettePresets]?.displayName ?? detailSelection.preset.basePaletteId} (커스텀)`
         : capitalize(detailSelection.name)
     : '';
   const detailOpen = !!detailSelection;
@@ -568,14 +568,13 @@ export function PaletteLab() {
                   ) : (
                     (themesByCategory[group.category] ?? []).map((def) => (
                       <ThemeCard
-                        key={def.metadata?.id ?? def.name}
+                        key={def.id}
                         def={def}
                         onClick={() => handlePaletteSelect(def)}
                         onMappingClick={handleMappingIconClick(def)}
                         selected={
                           detailSelection?.type === 'palette' &&
-                          detailSelection.definition.metadata?.id ===
-                            def.metadata?.id
+                          detailSelection.definition.id === def.id
                         }
                       />
                     ))

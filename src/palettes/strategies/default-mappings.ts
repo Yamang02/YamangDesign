@@ -8,6 +8,7 @@ import type { BgStrategy, SemanticMapping } from '../types';
 const lightMapping: SemanticMapping = {
   bg: {
     base: '#FFFFFF',
+    subtle: { scale: 'neutral', step: 50 },
     surface: { scale: 'neutral', step: 50 },
     surfaceBrand: { scale: 'primary', step: 50 },
     elevated: '#FFFFFF',
@@ -70,6 +71,7 @@ const lightMapping: SemanticMapping = {
 const coloredMapping: SemanticMapping = {
   bg: {
     base: { scale: 'neutral', step: 100 },
+    subtle: { scale: 'neutral', step: 50 },
     surface: { scale: 'neutral', step: 50 },
     surfaceBrand: { scale: 'primary', step: 50 },
     elevated: '#FFFFFF',
@@ -132,6 +134,7 @@ const coloredMapping: SemanticMapping = {
 const darkMapping: SemanticMapping = {
   bg: {
     base: { scale: 'neutral', step: 900 },
+    subtle: { scale: 'neutral', step: 800 },
     surface: { scale: 'neutral', step: 800 },
     surfaceBrand: { scale: 'primary', step: 900 },
     elevated: { scale: 'neutral', step: 700 },

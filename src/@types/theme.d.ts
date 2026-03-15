@@ -1,9 +1,4 @@
 /**
- * 테마 이름 (하위 호환 - deprecated, palette/style 사용)
- */
-export type ThemeName = 'minimal' | 'neumorphism' | 'brutalism';
-
-/**
  * Palette/Style 이름 (E03)
  * PaletteName은 theme-presets에서 유도 (registry → themePresets 단일 소스)
  */
@@ -28,6 +23,7 @@ export interface ActionColors {
 export interface ThemeColors {
   bg: {
     base: string;
+    subtle: string;
     surface: string;
     surfaceBrand: string;
     elevated: string;

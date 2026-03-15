@@ -2,7 +2,7 @@
  * 외부에서 입력되는 색상 팔레트
  * E09: Neutral(무채색) / Sub(컬러풀 보조색) 분리
  */
-export interface ExternalPalette {
+export interface ColorInput {
   /** 주조색 - 필수. 브랜드/주요 액션 컬러 */
   primary: string;
 
@@ -41,9 +41,6 @@ export interface ResolvedColors {
     };
   };
 }
-
-/** @deprecated E01: ResolvedColors로 마이그레이션 */
-export type ResolvedPalette = ResolvedColors;
 
 /**
  * 색상 스케일 (10단계)

@@ -1,5 +1,5 @@
 import type {
-  ExternalPalette,
+  ColorInput,
   ResolvedColors,
   ColorScale,
   GeneratedScales,
@@ -37,10 +37,10 @@ function deriveSub(primary: string): string {
 }
 
 /**
- * 외부 팔레트를 완전한 팔레트로 변환
+ * 색상 입력을 완전한 팔레트로 변환
  * E09: neutral 항상, sub 항상 (Primary 제외 일관된 Auto 파생)
  */
-export function resolvePalette(input: ExternalPalette): ResolvedColors {
+export function resolvePalette(input: ColorInput): ResolvedColors {
   const { primary, secondary, accent, neutral, sub } = input;
   const neutralSource = neutral ?? sub ?? deriveNeutral(primary);
   const subResolved = sub ?? deriveSub(primary);
@@ -95,37 +95,3 @@ export function generateColorScales(palette: ResolvedColors): GeneratedScales {
   };
 }
 
-/** 액션 색상 (버튼 등 상태별) */
-export interface ActionColors {
-  default: string;
-  hover: string;
-  active?: string;
-}
-
-/**
- * 스케일에서 액션 색상 생성
- * E03: combineTheme에서 사용
- */
-export function generateActionColors(scales: GeneratedScales): {
-  primary: ActionColors;
-  secondary: ActionColors;
-  accent: ActionColors;
-} {
-  return {
-    primary: {
-      default: scales.primary[500],
-      hover: scales.primary[600],
-      active: scales.primary[700],
-    },
-    secondary: {
-      default: scales.secondary[500],
-      hover: scales.secondary[600],
-      active: scales.secondary[700],
-    },
-    accent: {
-      default: scales.accent[500],
-      hover: scales.accent[600],
-      active: scales.accent[700],
-    },
-  };
-}

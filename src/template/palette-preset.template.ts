@@ -63,7 +63,10 @@
 import type { PaletteDefinition } from '../palettes/types';
 
 export const myPresetPalette: PaletteDefinition = {
-  name: 'myPreset', // camelCase, 고유 식별자
+  id: 'myPreset', // camelCase, 고유 식별자. theme-presets 키로 사용됨. 고유해야 함
+  displayName: '내 프리셋 이름',
+  category: 'natural', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
+  description: '프리셋 설명',
   subname: '내 프리셋 이름', // 사용자에게 보여줄 이름
   colors: {
     primary: '#E94E70', // 필수
@@ -74,13 +77,6 @@ export const myPresetPalette: PaletteDefinition = {
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
   contrast: 'normal', // 'normal' | 'high'
-
-  metadata: {
-    id: 'myPreset', // theme-presets 키로 사용됨. 고유해야 함
-    displayName: '내 프리셋 이름',
-    category: 'natural', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
-    description: '프리셋 설명',
-  },
 
   // ---------------------------------------------------------------------------
   // 시맨틱 매핑 오버라이드 (선택)

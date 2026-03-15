@@ -67,6 +67,7 @@ export function resolveSemanticMapping(
   return {
     bg: {
       base: resolve(mapping.bg.base),
+      subtle: resolve(mapping.bg.subtle),
       surface: resolve(mapping.bg.surface),
       surfaceBrand: resolve(mapping.bg.surfaceBrand),
       elevated: resolve(mapping.bg.elevated),

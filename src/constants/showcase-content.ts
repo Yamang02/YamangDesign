@@ -224,7 +224,7 @@ export const showcaseSectionTokens: Record<
     { token: '--ds-spacing-3', label: '패딩 sm' },
     { token: '--ds-spacing-4', label: '패딩 md' },
     { token: '--ds-spacing-6', label: '패딩 lg' },
-    { token: '--ds-color-bg-surfaceBrand', label: 'elevated 배경' },
+    { token: '--ds-color-bg-surface-brand', label: 'elevated 배경' },
     { token: '--ds-color-bg-base', label: 'outlined 배경' },
     { token: '--ds-color-bg-surface', label: 'flat 배경' },
     { token: '--ds-color-bg-muted', label: 'flat hover' },

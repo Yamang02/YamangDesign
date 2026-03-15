@@ -3,11 +3,11 @@ import styles from './ColorPicker.module.css';
 import { HexInput } from './HexInput';
 import { PresetManager } from './PresetManager';
 import { Icon } from '../Icon';
-import type { ExternalPalette } from '../../@types/tokens';
+import type { ColorInput } from '../../@types/tokens';
 import { themePresets } from '../../constants/palette-definitions';
 
 const colorFields: {
-  key: keyof ExternalPalette;
+  key: keyof ColorInput;
   label: string;
   required: boolean;
 }[] = [
@@ -20,7 +20,7 @@ const colorFields: {
 
 const themePresetEntries = Object.entries(themePresets) as [
   string,
-  { name: string; colors: ExternalPalette },
+  { id: string; displayName?: string; colors: ColorInput },
 ][];
 
 export function ColorPicker({
@@ -32,14 +32,14 @@ export function ColorPicker({
   onDeletePreset,
   onLoadThemePreset,
 }: ColorPickerProps) {
-  const handleColorChange = (key: keyof ExternalPalette, value: string) => {
+  const handleColorChange = (key: keyof ColorInput, value: string) => {
     onChange({
       ...palette,
       [key]: value || undefined,
     });
   };
 
-  const handleClearColor = (key: keyof ExternalPalette) => {
+  const handleClearColor = (key: keyof ColorInput) => {
     const newPalette = { ...palette };
     delete newPalette[key];
     onChange(newPalette);
@@ -88,7 +88,7 @@ export function ColorPicker({
                 type="button"
                 className={styles.themePresetChip}
                 onClick={() => onLoadThemePreset(def.colors)}
-                title={def.name}
+                title={def.displayName ?? def.id}
               >
                 <span
                   className={styles.themePresetDot}
@@ -97,7 +97,7 @@ export function ColorPicker({
                   }}
                 />
                 <span className={styles.themePresetLabel}>
-                  {def.name.charAt(0).toUpperCase() + def.name.slice(1)}
+                  {(def.displayName ?? def.id).charAt(0).toUpperCase() + (def.displayName ?? def.id).slice(1)}
                 </span>
               </button>
             ))}

@@ -1,4 +1,4 @@
-import type { ExternalPalette } from './tokens';
+import type { ColorInput } from './tokens';
 
 /**
  * 저장된 팔레트 프리셋
@@ -6,7 +6,7 @@ import type { ExternalPalette } from './tokens';
 export interface PalettePreset {
   id: string;
   name: string;
-  palette: ExternalPalette;
+  palette: ColorInput;
   createdAt: number;
   isDefault?: boolean;
 }

@@ -9,6 +9,7 @@ export type RecommendationLevel = 'recommended' | 'warning' | 'neutral';
 /** SemanticMapping 내부 키 경로 (편집 가능한 토큰만) */
 export type SemanticTokenPath =
   | 'bg.base'
+  | 'bg.subtle'
   | 'bg.surface'
   | 'bg.surfaceBrand'
   | 'bg.elevated'
