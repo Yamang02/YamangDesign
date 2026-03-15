@@ -1,4 +1,17 @@
 /**
+ * HEX 값을 6자리 대문자로 정규화 (#abc → #AABBCC)
+ */
+export function normalizeHex(value: string): string {
+  if (/^#[A-Fa-f0-9]{3}$/.test(value)) {
+    const r = value[1];
+    const g = value[2];
+    const b = value[3];
+    return `#${r}${r}${g}${g}${b}${b}`.toUpperCase();
+  }
+  return value.toUpperCase();
+}
+
+/**
  * HEX를 RGB로 변환
  */
 export function hexToRgb(hex: string): { r: number; g: number; b: number } {
@@ -29,7 +42,7 @@ export function rgbToHex(r: number, g: number, b: number): string {
     const hex = Math.round(Math.max(0, Math.min(255, n))).toString(16);
     return hex.length === 1 ? '0' + hex : hex;
   };
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return normalizeHex(`#${toHex(r)}${toHex(g)}${toHex(b)}`);
 }
 
 /**

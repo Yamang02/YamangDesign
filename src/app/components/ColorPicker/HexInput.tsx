@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react';
 import type { HexInputProps } from './ColorPicker.types';
 import styles from './HexInput.module.css';
+import { normalizeHex } from '@shared/utils/color';
 
 const HEX_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 
 function isValidHex(value: string): boolean {
   return HEX_REGEX.test(value);
-}
-
-function normalizeHex(value: string): string {
-  if (/^#[A-Fa-f0-9]{3}$/.test(value)) {
-    const r = value[1];
-    const g = value[2];
-    const b = value[3];
-    return `#${r}${r}${g}${g}${b}${b}`.toUpperCase();
-  }
-  return value.toUpperCase();
 }
 
 export function HexInput({

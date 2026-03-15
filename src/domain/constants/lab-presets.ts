@@ -1,6 +1,12 @@
 /**
+ * 앱 레이어 — Lab/Build 페이지용 CSS 변수 생성 헬퍼 (E11 P07)
+ *
+ * 역할: 도메인 프리셋(palettePresets, stylePresets)을 받아
+ * 페이지 inline style에 주입할 CSS 변수 객체를 생성한다.
+ * 도메인 레이어가 아닌 앱 레이어다. 페이지·컴포넌트에서만 import할 것.
+ *
+ * 도메인 프리셋 참조: themes/presets → palettes/presets/registry (단일 소스)
  * E01: Lab 비교용 CSS 변수 프리셋
- * 각 Lab에서 프리셋을 나란히 비교하기 위한 inline style 오버라이드
  */
 import { palettePresets, stylePresets } from '../themes/presets';
 import { systemColorPresets } from '../tokens/global/system-colors';

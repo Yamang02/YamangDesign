@@ -6,33 +6,29 @@
 import type { StyleDefinition, ResolvedStyle } from './types';
 
 /**
- * StyleDefinition의 material/filter/spatial/createVars 슬롯에서 CSS 변수 맵 생성
+ * StyleDefinition의 material/filter/spatial/createVars 슬롯에서 CSS 변수 맵 생성.
+ *
+ * surface/filter/spatial 변수는 슬롯이 없을 때도 항상 기본값을 포함해 출력한다.
+ * 이유: LabLayout의 [data-shell] [data-context="preview"] CSS 규칙이 이 변수들을
+ * *-global 앨리어스로 복원하므로, inline style에 명시적 기본값이 없으면 전역 테마의
+ * surface 효과(예: glassmorphism blur)가 다른 스타일 프리뷰에 누수된다. (E11 P06)
  */
 export function extractStyleVars(
   def: StyleDefinition,
   bgColor: string
 ): Record<string, string> {
-  const vars: Record<string, string> = {};
-
-  if (def.material) {
-    if (def.material.backdropFilter)
-      vars['--ds-surface-backdrop'] = def.material.backdropFilter;
-    if (def.material.backgroundAlpha !== undefined)
-      vars['--ds-surface-bg-alpha'] = String(def.material.backgroundAlpha);
-    if (def.material.backgroundImage)
-      vars['--ds-surface-texture'] = def.material.backgroundImage;
-    if (def.material.backgroundBlendMode)
-      vars['--ds-surface-blend'] = def.material.backgroundBlendMode;
-  }
-
-  if (def.filter?.element) vars['--ds-filter'] = def.filter.element;
-
-  if (def.spatial) {
-    if (def.spatial.perspective)
-      vars['--ds-perspective'] = def.spatial.perspective;
-    if (def.spatial.transformStyle)
-      vars['--ds-transform-style'] = def.spatial.transformStyle;
-  }
+  const vars: Record<string, string> = {
+    '--ds-surface-backdrop': def.material?.backdropFilter ?? 'none',
+    '--ds-surface-bg-alpha':
+      def.material?.backgroundAlpha !== undefined
+        ? String(def.material.backgroundAlpha)
+        : '1',
+    '--ds-surface-texture': def.material?.backgroundImage ?? 'none',
+    '--ds-surface-blend': def.material?.backgroundBlendMode ?? 'normal',
+    '--ds-filter': def.filter?.element ?? 'none',
+    '--ds-perspective': def.spatial?.perspective ?? 'none',
+    '--ds-transform-style': def.spatial?.transformStyle ?? 'flat',
+  };
 
   const custom = def.createVars?.({ bgColor }) ?? {};
   return { ...vars, ...custom };
