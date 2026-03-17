@@ -12,6 +12,7 @@ import { palettePresets } from '@domain/themes/presets';
 import type { StyleName } from '@shared/@types/theme';
 import type { StyleDefinition } from '@domain/styles';
 import overviewJson from '@app/content/labs/style-lab/overview.json';
+import type { StyleLabOverview, StyleVariant } from '@app/content/labs/style-lab/types';
 import { StyleOverviewDiagram } from './StyleOverviewDiagram';
 import styles from './StyleLab.module.css';
 
@@ -38,13 +39,13 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-type StyleMeta = { description: string; characteristics: string[] };
-const STYLE_METADATA: Record<string, StyleMeta> = Object.fromEntries(
-  (overviewJson.styleVariants as Array<StyleMeta & { name: string }>).map((v) => [
-    v.name.toLowerCase(),
-    { description: v.description, characteristics: v.characteristics },
-  ])
-);
+const STYLE_METADATA: Partial<Record<string, Pick<StyleVariant, 'description' | 'characteristics'>>> =
+  Object.fromEntries(
+    (overviewJson as StyleLabOverview).styleVariants.map((v) => [
+      v.name.toLowerCase(),
+      { description: v.description, characteristics: v.characteristics },
+    ])
+  );
 
 /** E06 P02: Property Matrix — 스타일별 슬롯 값 표 */
 function PropertyMatrix({
