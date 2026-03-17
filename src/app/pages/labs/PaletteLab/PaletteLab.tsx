@@ -9,6 +9,8 @@ import {
   LabSection,
   LabOverview,
   ComparisonCard,
+  ComparisonGrid,
+  ColorSwatchGrid,
   type TocItem,
 } from '../../../layouts';
 import { DetailPanel } from '../../../components';
@@ -59,26 +61,18 @@ function PaletteDetail({
         <p className={styles.paletteSubname}>{definition.subname}</p>
       )}
       <h4 className={styles.detailSectionTitle}>기본 색상</h4>
-      <div className={styles.colorSwatches}>
-        {(['primary', 'secondary', 'accent', 'sub', 'neutral'] as const).map(
-          (key) => {
+      <ColorSwatchGrid
+        swatches={(['primary', 'secondary', 'accent', 'sub', 'neutral'] as const)
+          .filter((key) => {
             const scale = expanded.scales[key];
-            if (!scale || Object.keys(scale).length === 0) return null;
+            return scale && Object.keys(scale).length > 0;
+          })
+          .map((key) => {
+            const scale = expanded.scales[key]!;
             const base = scale[500] ?? scale[400] ?? Object.values(scale)[0];
-            return (
-              <div key={key} className={styles.colorRow}>
-                <span className={styles.colorLabel}>{capitalize(key)}</span>
-                <span
-                  className={styles.colorSample}
-                  style={{ backgroundColor: base }}
-                  title={base}
-                />
-                <code className={styles.colorHex}>{base}</code>
-              </div>
-            );
-          }
-        )}
-      </div>
+            return { label: capitalize(key), color: base };
+          })}
+      />
       <h4 className={styles.detailSectionTitle}>확장 스케일 (50~900)</h4>
       <div className={styles.scaleGrid}>
         {PALETTE_SCALES.map((colorKey) => {
@@ -140,17 +134,7 @@ function NeutralPresetDetail({ presetName }: { presetName: NeutralPresetName }) 
   return (
     <div className={styles.paletteDetail}>
       <h4 className={styles.detailSectionTitle}>기본 색상</h4>
-      <div className={styles.colorSwatches}>
-        <div className={styles.colorRow}>
-          <span className={styles.colorLabel}>Neutral</span>
-          <span
-            className={styles.colorSample}
-            style={{ backgroundColor: base }}
-            title={base}
-          />
-          <code className={styles.colorHex}>{base}</code>
-        </div>
-      </div>
+      <ColorSwatchGrid swatches={[{ label: 'Neutral', color: base }]} />
       <h4 className={styles.detailSectionTitle}>Neutral 스케일 (50~900)</h4>
       <div className={styles.scaleGrid}>
         <div className={styles.scaleColumn}>
@@ -189,23 +173,12 @@ function SystemPresetDetail({ presetName }: { presetName: SystemPresetName }) {
   return (
     <div className={styles.paletteDetail}>
       <h4 className={styles.detailSectionTitle}>기본 색상</h4>
-      <div className={styles.colorSwatches}>
-        {SYSTEM_COLOR_KEYS.map((colorKey) => {
-          const base =
-            preset.colors[colorKey as keyof typeof preset.colors][500];
-          return (
-            <div key={colorKey} className={styles.colorRow}>
-              <span className={styles.colorLabel}>{capitalize(colorKey)}</span>
-              <span
-                className={styles.colorSample}
-                style={{ backgroundColor: base }}
-                title={base}
-              />
-              <code className={styles.colorHex}>{base}</code>
-            </div>
-          );
-        })}
-      </div>
+      <ColorSwatchGrid
+        swatches={SYSTEM_COLOR_KEYS.map((colorKey) => ({
+          label: capitalize(colorKey),
+          color: preset.colors[colorKey as keyof typeof preset.colors][500],
+        }))}
+      />
       <h4 className={styles.detailSectionTitle}>시스템 컬러 (50, 500, 700)</h4>
       <div className={styles.scaleGrid}>
         {SYSTEM_COLOR_KEYS.map((colorKey) => (
@@ -551,7 +524,7 @@ export function PaletteLab() {
             <div className={styles.categoryContent}>
             {themeRegistry.map((group) =>
               activeBrandTab === group.category ? (
-                <div key={group.category} className={styles.comparisonGrid}>
+                <ComparisonGrid key={group.category} className={styles.comparisonGrid}>
                   {(themesByCategory[group.category] ?? []).length === 0 ? (
                     <EmptyCategory
                       message={`등록된 ${group.displayName} 테마가 없습니다`}
@@ -570,11 +543,11 @@ export function PaletteLab() {
                       />
                     ))
                   )}
-                </div>
+                </ComparisonGrid>
               ) : null
             )}
             {activeBrandTab === 'custom' && (
-              <div className={styles.comparisonGrid}>
+              <ComparisonGrid className={styles.comparisonGrid}>
                 {customSemanticPresets.length === 0 ? (
                   <EmptyCategory message="저장된 커스텀 프리셋이 없습니다. 다른 탭에서 시맨틱 매핑을 편집한 뒤 적용해 보세요." />
                 ) : (
@@ -592,14 +565,14 @@ export function PaletteLab() {
                     />
                   ))
                 )}
-              </div>
+              </ComparisonGrid>
             )}
             </div>
           </div>
         </LabSection>
 
         <LabSection title={sectionTitles.neutralPresets} id="neutral-presets">
-          <div className={styles.comparisonGrid}>
+          <ComparisonGrid className={styles.comparisonGrid}>
             {comparisonPresets.neutralPresets.map((presetName) => (
               <NeutralPresetCard
                 key={presetName}
@@ -611,11 +584,11 @@ export function PaletteLab() {
                 }
               />
             ))}
-          </div>
+          </ComparisonGrid>
         </LabSection>
 
         <LabSection title={sectionTitles.systemColors} id="system-colors">
-          <div className={styles.comparisonGrid}>
+          <ComparisonGrid className={styles.comparisonGrid}>
             {comparisonPresets.systemPresets.map((presetName) => (
               <SystemColorCard
                 key={presetName}
@@ -627,7 +600,7 @@ export function PaletteLab() {
                 }
               />
             ))}
-          </div>
+          </ComparisonGrid>
         </LabSection>
       </LabLayout>
 
