@@ -21,6 +21,7 @@ export function Button({
       data-variant={variant}
       data-size={size}
       data-disabled={disabled || undefined}
+      aria-disabled={disabled || undefined}
     >
       {children}
     </button>

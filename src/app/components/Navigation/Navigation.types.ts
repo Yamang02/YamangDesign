@@ -9,7 +9,7 @@ export interface NavigationProps {
   /**
    * 브랜드 클릭 핸들러
    */
-  onBrandClick?: () => void;
+  onLogoClick?: () => void;
 
   /**
    * 테마 토글 표시 여부

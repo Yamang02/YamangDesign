@@ -57,4 +57,19 @@ export interface SelectProps {
    * 라벨 텍스트
    */
   label?: string;
+
+  /**
+   * controlled open 상태
+   */
+  open?: boolean;
+
+  /**
+   * controlled open 변경 핸들러
+   */
+  onOpenChange?: (open: boolean) => void;
+
+  /**
+   * trigger 버튼 추가 클래스명
+   */
+  triggerClassName?: string;
 }

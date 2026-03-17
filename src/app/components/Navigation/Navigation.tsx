@@ -24,7 +24,7 @@ const themeOptions = [
 
 export function Navigation({
   brand = 'Design System',
-  onBrandClick,
+  onLogoClick,
   showThemeToggle = true,
   showColorEditor = false,
   sticky = true,
@@ -105,9 +105,9 @@ export function Navigation({
                   palette={editingColors}
                   onChange={handleColorChange}
                   presets={presets}
-                  onSavePreset={handleSavePreset}
-                  onLoadPreset={handleLoadPreset}
-                  onDeletePreset={deletePreset}
+                  onSave={handleSavePreset}
+                  onSelect={handleLoadPreset}
+                  onDelete={deletePreset}
                   onLoadThemePreset={(colors) => setEditingColors(colors)}
                 />
 
@@ -153,13 +153,13 @@ export function Navigation({
       <div className={styles.left}>
         <span
           className={styles.brand}
-          onClick={onBrandClick}
-          role={onBrandClick ? 'button' : undefined}
-          tabIndex={onBrandClick ? 0 : undefined}
+          onClick={onLogoClick}
+          role={onLogoClick ? 'button' : undefined}
+          tabIndex={onLogoClick ? 0 : undefined}
           onKeyDown={(e) => {
-            if (onBrandClick && (e.key === 'Enter' || e.key === ' ')) {
+            if (onLogoClick && (e.key === 'Enter' || e.key === ' ')) {
               e.preventDefault();
-              onBrandClick();
+              onLogoClick();
             }
           }}
         >

@@ -27,9 +27,9 @@ export function ColorPicker({
   palette,
   onChange,
   presets,
-  onSavePreset,
-  onLoadPreset,
-  onDeletePreset,
+  onSave,
+  onSelect,
+  onDelete,
   onLoadThemePreset,
 }: ColorPickerProps) {
   const handleColorChange = (key: keyof ColorInput, value: string) => {
@@ -107,9 +107,9 @@ export function ColorPicker({
 
       <PresetManager
         presets={presets}
-        onSave={onSavePreset}
-        onLoad={onLoadPreset}
-        onDelete={onDeletePreset}
+        onSave={onSave}
+        onSelect={onSelect}
+        onDelete={onDelete}
       />
     </div>
   );

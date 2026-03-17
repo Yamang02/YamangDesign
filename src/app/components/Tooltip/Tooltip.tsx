@@ -14,9 +14,11 @@ export function Tooltip({
   delay = siteStyle.guidance.tooltipDelay,
   maxWidth = '200px',
   portal = false,
+  open,
   children,
 }: TooltipProps) {
   const [visible, setVisible] = useState(false);
+  const isVisible = open !== undefined ? open : visible;
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLSpanElement | null>(null);
@@ -59,16 +61,16 @@ export function Tooltip({
   }, [position]);
 
   useLayoutEffect(() => {
-    if (visible && portal) {
+    if (isVisible && portal) {
       // 첫 렌더링 후 툴팁 크기가 측정된 후 위치 계산
       requestAnimationFrame(() => {
         requestAnimationFrame(updatePosition);
       });
     }
-  }, [visible, portal, updatePosition]);
+  }, [isVisible, portal, updatePosition]);
 
   useEffect(() => {
-    if (!visible || !portal) return;
+    if (!isVisible || !portal) return;
     const handler = () => updatePosition();
     window.addEventListener('scroll', handler, true);
     window.addEventListener('resize', handler);
@@ -76,7 +78,7 @@ export function Tooltip({
       window.removeEventListener('scroll', handler, true);
       window.removeEventListener('resize', handler);
     };
-  }, [visible, portal, updatePosition]);
+  }, [isVisible, portal, updatePosition]);
 
   const handleMouseEnter = () => {
     timeoutRef.current = setTimeout(() => setVisible(true), delay);
@@ -97,7 +99,7 @@ export function Tooltip({
     };
   }, []);
 
-  const tooltipEl = visible && (
+  const tooltipEl = isVisible && (
     <span
       ref={tooltipRef}
       className={`${styles.tooltip} ${portal ? styles.portal : styles[position]}`}

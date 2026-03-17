@@ -7,7 +7,7 @@ import { resolvePalette, generateColorScales } from '@domain/palettes/palette';
 export function PresetManager({
   presets,
   onSave,
-  onLoad,
+  onSelect,
   onDelete,
 }: PresetManagerProps) {
   const [newPresetName, setNewPresetName] = useState('');
@@ -60,11 +60,11 @@ export function PresetManager({
             <div
               key={preset.id}
               className={styles.presetItem}
-              onClick={() => onLoad(preset)}
+              onClick={() => onSelect(preset)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  onLoad(preset);
+                  onSelect(preset);
                 }
               }}
               role="button"

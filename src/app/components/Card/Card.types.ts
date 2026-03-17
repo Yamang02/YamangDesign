@@ -22,6 +22,11 @@ export interface CardProps {
   clickable?: boolean;
 
   /**
+   * 비활성화 상태
+   */
+  disabled?: boolean;
+
+  /**
    * 클릭 핸들러
    */
   onClick?: () => void;

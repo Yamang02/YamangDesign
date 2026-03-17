@@ -14,8 +14,17 @@ export function Select({
   fullWidth = false,
   className,
   label,
+  open,
+  onOpenChange,
+  triggerClassName,
 }: SelectProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = open !== undefined ? open : internalOpen;
+
+  const setOpen = (next: boolean) => {
+    if (open === undefined) setInternalOpen(next);
+    onOpenChange?.(next);
+  };
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -28,7 +37,7 @@ export function Select({
         wrapperRef.current &&
         !wrapperRef.current.contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        setOpen(false);
       }
     };
 
@@ -51,19 +60,19 @@ export function Select({
             const option = options[highlightedIndex];
             if (!option.disabled) {
               onChange(option.value);
-              setIsOpen(false);
+              setOpen(false);
             }
           } else {
-            setIsOpen(!isOpen);
+            setOpen(!isOpen);
           }
           break;
         case 'Escape':
-          setIsOpen(false);
+          setOpen(false);
           break;
         case 'ArrowDown':
           event.preventDefault();
           if (!isOpen) {
-            setIsOpen(true);
+            setOpen(true);
           } else {
             setHighlightedIndex((prev) => {
               const next = prev + 1;
@@ -108,7 +117,7 @@ export function Select({
   const handleOptionClick = (optionValue: string, optionDisabled?: boolean) => {
     if (optionDisabled) return;
     onChange(optionValue);
-    setIsOpen(false);
+    setOpen(false);
   };
 
   return (
@@ -120,12 +129,12 @@ export function Select({
 
       <button
         type="button"
-        className={clsx(styles.trigger, fullWidth && styles.fullWidth)}
+        className={clsx(styles.trigger, fullWidth && styles.fullWidth, triggerClassName)}
         data-size={size}
         data-variant={variant}
         data-open={isOpen || undefined}
         data-disabled={disabled || undefined}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
+        onClick={() => !disabled && setOpen(!isOpen)}
         onKeyDown={handleKeyDown}
         aria-haspopup="listbox"
         aria-expanded={isOpen}

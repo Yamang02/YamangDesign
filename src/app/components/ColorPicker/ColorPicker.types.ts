@@ -5,9 +5,9 @@ export interface ColorPickerProps {
   palette: ColorInput;
   onChange: (palette: ColorInput) => void;
   presets: PalettePreset[];
-  onSavePreset: (name: string) => void;
-  onLoadPreset: (preset: PalettePreset) => void;
-  onDeletePreset: (id: string) => void;
+  onSave: (name: string) => void;
+  onSelect: (preset: PalettePreset) => void;
+  onDelete: (id: string) => void;
   /** E06: 테마 프리셋 불러오기 (선택적) */
   onLoadThemePreset?: (colors: ColorInput) => void;
 }
