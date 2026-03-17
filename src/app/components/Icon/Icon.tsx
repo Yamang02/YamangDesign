@@ -4,12 +4,6 @@ import styles from './Icon.module.css';
 import { materialIcons } from './icons/material';
 import { nucleoIcons } from './icons/nucleo';
 
-const sizeMap = {
-  sm: 16,
-  md: 20,
-  lg: 24,
-} as const;
-
 export function Icon({
   name,
   library = 'material',
@@ -19,7 +13,7 @@ export function Icon({
   title,
   style,
 }: IconProps) {
-  const sizeValue = typeof size === 'number' ? size : sizeMap[size];
+  const sizeClass = styles[`size${size.charAt(0).toUpperCase() + size.slice(1)}`];
 
   // Material Icons (fill-based)
   if (library === 'material') {
@@ -31,10 +25,10 @@ export function Icon({
     }
 
     return (
-      <span className={clsx(styles.icon, className)} style={style}>
+      <span className={clsx(styles.icon, sizeClass, className)} style={style}>
         <svg
-          width={sizeValue}
-          height={sizeValue}
+          width="100%"
+          height="100%"
           viewBox="0 0 24 24"
           fill={color}
           role={title ? 'img' : 'presentation'}
@@ -60,10 +54,10 @@ export function Icon({
     const { path, stroke } = iconData;
 
     return (
-      <span className={clsx(styles.icon, className)} style={style}>
+      <span className={clsx(styles.icon, sizeClass, className)} style={style}>
         <svg
-          width={sizeValue}
-          height={sizeValue}
+          width="100%"
+          height="100%"
           viewBox="0 0 24 24"
           fill={stroke ? 'none' : color}
           stroke={stroke ? color : 'none'}

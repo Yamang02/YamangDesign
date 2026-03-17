@@ -1,6 +1,6 @@
 export type IconLibrary = 'nucleo' | 'material';
 
-export type IconSize = 'sm' | 'md' | 'lg' | number;
+export type IconSize = 'sm' | 'md' | 'lg';
 
 export interface IconProps {
   /**
@@ -14,7 +14,7 @@ export interface IconProps {
   library?: IconLibrary;
 
   /**
-   * 아이콘 크기 (sm: 16, md: 20, lg: 24 또는 숫자)
+   * 아이콘 크기 (sm: 16px, md: 20px, lg: 24px)
    */
   size?: IconSize;
 
