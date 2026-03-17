@@ -4,7 +4,7 @@
  * E05 P03: DetailPanel — JSON 출력 대신 구조화된 토큰 테이블 + 라이브 프리뷰
  */
 import { useState } from 'react';
-import { LabLayout, LabSection, LabOverview, LabCard, ComparisonCard, type TocItem } from '../../../layouts';
+import { LabLayout, LabSection, LabOverview, LabCard, ComparisonCard, ComparisonGrid, TokenValueRow, type TocItem } from '../../../layouts';
 import { DetailPanel } from '../../../components';
 import {
   sampleText,
@@ -55,13 +55,7 @@ function TextStyleDetail({ name }: { name: TextStyleName }) {
   return (
     <div>
       {fields.map(({ label, value, token }) => (
-        <div key={label} className={styles.detailRow}>
-          <span className={styles.detailLabel}>{label}</span>
-          <div className={styles.detailValue}>
-            {token != null && <code className={styles.detailToken}>{token}</code>}
-            <span>{value}</span>
-          </div>
-        </div>
+        <TokenValueRow key={label} label={label} token={token} value={value} />
       ))}
       <p
         className={styles.detailPreview}
@@ -237,13 +231,7 @@ export function FontLab() {
         </LabSection>
 
         <LabSection title={sectionTitles.fontFamilies} id="font-families">
-          <div
-            style={{
-              display: 'flex',
-              gap: 'var(--ds-spacing-6)',
-              flexWrap: 'wrap',
-            }}
-          >
+          <ComparisonGrid>
             <ComparisonCard title={fontFamilyLabels.sans}>
               <p
                 style={{
@@ -312,7 +300,7 @@ export function FontLab() {
                 {sampleText.alphabet}
               </p>
             </ComparisonCard>
-          </div>
+          </ComparisonGrid>
         </LabSection>
       </LabLayout>
 
