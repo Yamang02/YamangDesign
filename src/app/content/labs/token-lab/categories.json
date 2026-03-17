@@ -55,35 +55,28 @@
       "tokens": ["--shell-badge-custom", "--shell-badge-semantic", "--shell-badge-natural"]
     }
   ],
-  "globalColorTokens": [
-    "--ds-color-primary-500",
-    "--ds-color-secondary-500",
-    "--ds-color-accent-500",
-    "--ds-color-neutral-500",
-    "--ds-color-sub-500"
-  ],
-  "globalSpacingTokens": [
-    "--ds-spacing-1",
-    "--ds-spacing-2",
-    "--ds-spacing-3",
-    "--ds-spacing-4",
-    "--ds-spacing-5",
-    "--ds-spacing-6"
-  ],
-  "globalTypographyTokens": [
-    "--ds-text-xs",
-    "--ds-text-sm",
-    "--ds-text-md",
-    "--ds-text-lg",
-    "--ds-font-sans",
-    "--ds-font-mono"
-  ],
-  "globalMotionTokens": [
-    "--ds-duration-fast",
-    "--ds-duration-normal",
-    "--ds-duration-slow",
-    "--ds-ease-easeOut",
-    "--ds-ease-productive"
+  "globalGroups": [
+    {
+      "title": "Color",
+      "tokens": ["--ds-color-primary-500", "--ds-color-secondary-500", "--ds-color-accent-500", "--ds-color-neutral-500", "--ds-color-sub-500"],
+      "showSwatch": true
+    },
+    {
+      "title": "Spacing",
+      "tokens": ["--ds-spacing-1", "--ds-spacing-2", "--ds-spacing-3", "--ds-spacing-4", "--ds-spacing-5", "--ds-spacing-6"],
+      "showSwatch": false
+    },
+    {
+      "title": "Motion",
+      "tokens": ["--ds-duration-fast", "--ds-duration-normal", "--ds-duration-slow", "--ds-ease-easeOut", "--ds-ease-productive"],
+      "showSwatch": false
+    },
+    {
+      "title": "Typography",
+      "tokens": ["--ds-text-xs", "--ds-text-sm", "--ds-text-md", "--ds-text-lg", "--ds-font-sans", "--ds-font-mono"],
+      "showSwatch": false,
+      "fullRow": true
+    }
   ],
   "aliasGroups": [
     {

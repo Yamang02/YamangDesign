@@ -26,20 +26,16 @@ import styles from './TokenLab.module.css';
 
 type ShellCategory = { title: string; tokens: string[]; fullRow?: boolean };
 type TokenGroup = { title: string; tokens: string[] };
+type GlobalGroup = { title: string; tokens: string[]; showSwatch: boolean; fullRow?: boolean };
+
 const {
   shellCategories: SHELL_CATEGORIES,
-  globalColorTokens: GLOBAL_COLOR_TOKENS,
-  globalSpacingTokens: GLOBAL_SPACING_TOKENS,
-  globalTypographyTokens: GLOBAL_TYPOGRAPHY_TOKENS,
-  globalMotionTokens: GLOBAL_MOTION_TOKENS,
+  globalGroups: GLOBAL_GROUPS,
   aliasGroups: ALIAS_GROUPS,
   sysGroups: SYS_GROUPS,
 } = categoriesJson as {
   shellCategories: ShellCategory[];
-  globalColorTokens: string[];
-  globalSpacingTokens: string[];
-  globalTypographyTokens: string[];
-  globalMotionTokens: string[];
+  globalGroups: GlobalGroup[];
   aliasGroups: TokenGroup[];
   sysGroups: TokenGroup[];
 };
@@ -309,45 +305,35 @@ function ShellTokensSection({ onSelectToken }: { onSelectToken?: (token: string)
 
 // --- DS Global ---
 function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => void }) {
+  const gridGroups = GLOBAL_GROUPS.filter((g) => !g.fullRow);
+  const fullRowGroups = GLOBAL_GROUPS.filter((g) => g.fullRow);
+
   return (
     <LabSection title="Global" id="ds-global">
       <div className={styles.tokenCategoryGrid}>
-        <div className={styles.tokenCategory}>
-          <h3 className={styles.categoryTitle}>Color</h3>
-          <TokenTable
-          tokens={GLOBAL_COLOR_TOKENS}
-          showSwatchColumn
-          onSelectToken={onSelectToken}
-          formatDisplayValue={formatTokenDisplayValue}
-        />
-        </div>
-        <div className={styles.tokenCategory}>
-          <h3 className={styles.categoryTitle}>Spacing</h3>
-          <TokenTable
-          tokens={GLOBAL_SPACING_TOKENS}
-          showSwatchColumn={false}
-          onSelectToken={onSelectToken}
-          formatDisplayValue={formatTokenDisplayValue}
-        />
-        </div>
-        <div className={styles.tokenCategory}>
-          <h3 className={styles.categoryTitle}>Motion</h3>
-          <TokenTable
-          tokens={GLOBAL_MOTION_TOKENS}
-          showSwatchColumn={false}
-          onSelectToken={onSelectToken}
-          formatDisplayValue={formatTokenDisplayValue}
-        />
-        </div>
+        {gridGroups.map((g) => (
+          <div key={g.title} className={styles.tokenCategory}>
+            <h3 className={styles.categoryTitle}>{g.title}</h3>
+            <TokenTable
+              tokens={g.tokens}
+              showSwatchColumn={g.showSwatch}
+              onSelectToken={onSelectToken}
+              formatDisplayValue={formatTokenDisplayValue}
+            />
+          </div>
+        ))}
       </div>
-      <div className={styles.tokenCategoryFullRow}>
-        <h3 className={styles.categoryTitle}>Typography</h3>
-        <TokenTable
-          tokens={GLOBAL_TYPOGRAPHY_TOKENS}
-          showSwatchColumn={false}
-          onSelectToken={onSelectToken}
-        />
-      </div>
+      {fullRowGroups.map((g) => (
+        <div key={g.title} className={styles.tokenCategoryFullRow}>
+          <h3 className={styles.categoryTitle}>{g.title}</h3>
+          <TokenTable
+            tokens={g.tokens}
+            showSwatchColumn={g.showSwatch}
+            onSelectToken={onSelectToken}
+            formatDisplayValue={formatTokenDisplayValue}
+          />
+        </div>
+      ))}
     </LabSection>
   );
 }
