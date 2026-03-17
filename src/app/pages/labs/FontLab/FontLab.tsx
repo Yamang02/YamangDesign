@@ -19,17 +19,7 @@ import type { TextStyleName, SemanticTextRole } from '@domain/tokens/typography'
 import { FontOverviewDiagram } from './FontOverviewDiagram';
 import styles from './FontLab.module.css';
 
-const semanticRoles: SemanticTextRole[] = [
-  'page-title',
-  'section-title',
-  'card-title',
-  'button',
-  'input',
-  'input-label',
-  'helper-text',
-  'tooltip',
-  'badge',
-];
+const semanticRoles = Object.keys(semanticText) as SemanticTextRole[];
 
 const textStyleNames = Object.keys(textStyles) as TextStyleName[];
 
