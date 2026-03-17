@@ -1,4 +1,12 @@
 {
+  "permissions": {
+    "additionalDirectories": [
+      "C:\\Users\\ljj02\\AppData\\Roaming\\Code\\User"
+    ],
+    "allow": [
+      "Read(//c/Users/ljj02/AppData/Roaming/Cursor/User/**)"
+    ]
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true
   }
