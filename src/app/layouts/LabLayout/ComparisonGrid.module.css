@@ -1,0 +1,6 @@
+/* @layer shell — ComparisonGrid: flex-wrap 그리드 레이아웃 표준화 */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-6);
+}

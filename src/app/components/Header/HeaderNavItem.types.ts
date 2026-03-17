@@ -5,4 +5,5 @@ export interface HeaderNavItemProps {
   label: string;
   active?: boolean;
   onClick: () => void;
+  display?: 'icon+label' | 'icon-only' | 'label-only';
 }

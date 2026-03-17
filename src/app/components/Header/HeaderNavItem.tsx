@@ -5,7 +5,7 @@ import { clsx } from '@shared/utils/clsx';
 import type { HeaderNavItemProps } from './HeaderNavItem.types';
 import styles from './HeaderNav.module.css';
 
-export function HeaderNavItem({ icon, label, active, onClick }: HeaderNavItemProps) {
+export function HeaderNavItem({ icon, label, active, onClick, display = 'icon+label' }: HeaderNavItemProps) {
   return (
     <button
       type="button"
@@ -14,8 +14,8 @@ export function HeaderNavItem({ icon, label, active, onClick }: HeaderNavItemPro
       aria-label={label}
       aria-current={active ? 'page' : undefined}
     >
-      <span className={styles.navItemIcon}>{icon}</span>
-      <span className={styles.navItemLabel}>{label}</span>
+      {display !== 'label-only' && <span className={styles.navItemIcon}>{icon}</span>}
+      {display !== 'icon-only' && <span className={styles.navItemLabel}>{label}</span>}
     </button>
   );
 }

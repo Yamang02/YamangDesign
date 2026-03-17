@@ -7,7 +7,7 @@
 
 ## 구현 상세
 
-### 섹션 타입 카탈로그 (초안, 확정 필요)
+### 섹션 타입 카탈로그
 
 | 타입 | 설명 | 사용 예 |
 |---|---|---|
@@ -17,55 +17,76 @@
 | **Settings** | 값 입력/수정 폼 | DesignSettingsLab 탭 섹션들 |
 | **Overview** | 요약 다이어그램/설명 | 각 랩 상단 LabOverview |
 
-### ComparisonGrid 표준 조합 (핵심)
-```tsx
-// 현재: 랩마다 다름
-// 목표: 이 조합만 사용
-<ComparisonGridWrapper paletteVars={vars}>
-  <div className={styles.comparisonGrid}>
-    {items.map(item => (
-      <ComparisonCard
-        key={item.id}
-        title={item.name}
-        selected={selected?.id === item.id}
-        onClick={() => setSelected(item)}
-      >
-        {/* 시각화 */}
-      </ComparisonCard>
-    ))}
-  </div>
-</ComparisonGridWrapper>
+### 신규 공통 컴포넌트
 
-<DetailPanel open={!!selected} onClose={() => setSelected(null)} title={selected?.name ?? ''}>
-  {/* 상세 내용 */}
-</DetailPanel>
+**TabBar** (`src/app/layouts/LabLayout/TabBar.tsx`)
+```tsx
+interface TabBarProps {
+  tabs: { id: string; label: string }[];
+  activeTab: string;
+  onChange: (id: string) => void;
+}
+```
+LabLayout tab 모드와 DesignSettingsLab의 탭을 통일.
+
+**ComparisonGrid** (`src/app/layouts/LabLayout/ComparisonGrid.tsx`)
+```tsx
+interface ComparisonGridProps {
+  children: React.ReactNode;
+  paletteVars?: Record<string, string>; // CSS vars → wrapper style로 주입 (cascade)
+  className?: string;
+}
+```
+`flex-wrap` 그리드 레이아웃 표준화. `paletteVars` 시 wrapper에 인라인으로 CSS 변수 주입.
+`ComparisonCard`의 `styleVars`는 optional 유지 (개별 카드 차별화 케이스).
+
+**DetailPanel 공통 블록** (3개, `src/app/layouts/LabLayout/` 내)
+```tsx
+// TokenValueRow: 토큰명 + 값 한 행 (FontLab, TokenLab에서 사용)
+interface TokenValueRowProps {
+  label: string;
+  token?: string;   // "--ds-xxx" 코드 표시 (optional)
+  value: string;
+}
+
+// ColorSwatchGrid: 색상 스케일 그리드 (PaletteLab)
+interface ColorSwatchGridProps {
+  swatches: { label: string; color: string }[];
+}
+
+// MetadataTable: key-value 테이블 (StyleLab, TokenLab)
+interface MetadataTableProps {
+  rows: { key: string; value: string }[];
+  title?: string;
+}
 ```
 
-### 메뉴/NavItem variant 규칙
-| 상황 | display |
-|---|---|
-| 메인 사이드바 카테고리 | 아이콘 only + tooltip |
-| 사이드바 서브메뉴 | 아이콘 + 텍스트 |
-| 헤더 네비 | 아이콘 + 텍스트 |
-| 탭 바 | 텍스트 only (또는 아이콘 + 텍스트) |
+**HeaderNavItem display prop** (`src/app/components/Header/HeaderNavItem.tsx`)
+```tsx
+display?: 'icon+label' | 'icon-only' | 'label-only'  // default: 'icon+label'
+```
 
-→ NavItem에 `display: 'icon-only' | 'icon+label' | 'label-only'` prop 도입
+### 구현 전략: 랩 단위 (공통 컴포넌트 먼저, 랩별 적용)
 
-### 탭 바 컴포넌트 추출
-현재 DesignSettingsLab과 LabLayout 두 곳에 각각 탭 구현 → 공통 `TabBar` 컴포넌트 추출
+Step 1 (공통 컴포넌트 생성) → Step 2~6 (랩별 적용) 순서로 각 단계를 독립 커밋.
 
-### DetailPanel 내부 공통 블록
-각 랩의 detail 내용이 공통 빌딩 블록을 공유하도록:
-- `TokenValueRow`: 토큰 이름 + 값 한 행
-- `ColorSwatchGrid`: 색상 그리드
-- `MetadataTable`: key-value 테이블
+| Step | 대상 | 작업 내용 |
+|---|---|---|
+| 1 | 공통 컴포넌트 | TabBar, ComparisonGrid, TokenValueRow, ColorSwatchGrid, MetadataTable 신규 + HeaderNavItem display prop |
+| 2 | PaletteLab | ComparisonGrid(paletteVars) + ColorSwatchGrid 적용 |
+| 3 | StyleLab | ComparisonGrid + MetadataTable 적용 |
+| 4 | TokenLab | ComparisonGrid + TokenValueRow + MetadataTable 적용 |
+| 5 | FontLab | ComparisonGrid + TokenValueRow 적용 |
+| 6 | DesignSettingsLab + LabLayout | TabBar 적용 |
 
 ## 체크리스트
-- [ ] 섹션 타입 카탈로그 5가지 최종 확정
-- [ ] `ComparisonGridWrapper` 컴포넌트 추출 (paletteVars 맥락 주입 담당)
-- [ ] PaletteLab / StyleLab / TokenLab: ComparisonGrid 패턴 통일 적용
-- [ ] `NavItem` display prop 도입 및 기존 NavItem 사용처 일괄 업데이트
-- [ ] `TabBar` 컴포넌트 추출 → DesignSettingsLab + LabLayout에 적용
-- [ ] DetailPanel 내부 공통 블록 컴포넌트 추출 (`TokenValueRow`, `ColorSwatchGrid`, `MetadataTable`)
-- [ ] 각 랩 detail 내용 → 공통 블록 사용으로 교체
-- [ ] 새 랩 추가 시 이 카탈로그만 보면 되는지 검증 (간단한 스모크 테스트)
+- [x] 섹션 타입 카탈로그 5가지 최종 확정
+- [x] HeaderNavItem display prop 추가
+- [ ] `TabBar` 컴포넌트 신규 생성
+- [ ] `ComparisonGrid` 컴포넌트 신규 생성
+- [ ] `TokenValueRow` / `ColorSwatchGrid` / `MetadataTable` 공통 블록 신규 생성
+- [ ] PaletteLab: ComparisonGrid + ColorSwatchGrid 적용
+- [ ] StyleLab: ComparisonGrid + MetadataTable 적용
+- [ ] TokenLab: ComparisonGrid + TokenValueRow + MetadataTable 적용
+- [ ] FontLab: ComparisonGrid + TokenValueRow 적용
+- [ ] DesignSettingsLab + LabLayout: TabBar 적용

@@ -1,0 +1,47 @@
+/* @layer shell — DetailPanel 공통 블록: key-value 테이블 */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.title {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-spacing-3);
+  padding: var(--ds-spacing-1) 0;
+  border-bottom: 1px solid var(--shell-border-subtle);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.key {
+  flex: 0 0 auto;
+  min-width: 80px;
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+}
+
+.value {
+  flex: 1;
+  font-size: var(--ds-text-sm);
+  font-family: var(--ds-font-mono);
+  color: var(--shell-text-primary);
+  word-break: break-all;
+}

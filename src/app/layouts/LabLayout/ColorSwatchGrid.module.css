@@ -1,0 +1,27 @@
+/* @layer shell — DetailPanel 공통 블록: 색상 스와치 그리드 */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-2);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--shell-border-subtle);
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: var(--ds-text-xs);
+  color: var(--shell-text-secondary);
+  white-space: nowrap;
+}
