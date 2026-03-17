@@ -147,13 +147,6 @@
   gap: var(--ds-spacing-3);
 }
 
-/* Section description & categories */
-.sectionDesc {
-  font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
-  margin: 0 0 var(--ds-spacing-4);
-}
-
 /* E08: 테이블들을 2~3열 그리드로 배치 */
 .tokenCategoryGrid {
   display: grid;
@@ -192,33 +185,6 @@
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-color-text-primary);
   margin: 0 0 var(--ds-spacing-1);
-}
-
-/* 값의 공통 부분을 제목 쪽에 표시 (반복 값 정리) */
-.categoryValueNote {
-  font-size: var(--ds-text-xs);
-  color: var(--ds-color-text-muted);
-  margin: 0 0 var(--ds-spacing-2);
-}
-
-/* Scalar token card (E05 P04) */
-.scalarCard {
-  padding: var(--ds-spacing-3);
-  border-radius: var(--ds-radius-md);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
-  background-color: var(--ds-color-bg-surface);
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-}
-
-.scalarCard .tokenName {
-  font-size: var(--ds-text-xs);
-}
-
-.scalarCard .tokenValue {
-  font-size: var(--ds-text-xs);
-  word-break: break-all;
 }
 
 .sysUsage .categoryTitle {

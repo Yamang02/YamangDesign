@@ -515,7 +515,7 @@ export function TokenLab() {
           </LabOverview>
         </LabSection>
         <ShellTokensSection onSelectToken={setSelectedToken} />
-        <LabSection title="Design System" id="ds-tokens">
+        <LabSection title="Design System" id="ds-tokens" card={false}>
           <GlobalSection onSelectToken={setSelectedToken} />
           <AliasSection onSelectToken={setSelectedToken} />
         </LabSection>
