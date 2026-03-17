@@ -99,39 +99,6 @@ section[id] {
   scroll-margin-top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
 }
 
-/* E02 P04: 탭 모드 (navigationMode="tab") */
-.tabBar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-1);
-  padding: var(--ds-spacing-2) var(--ds-spacing-6);
-  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
-  background: var(--shell-bg-muted);
-}
-
-.tab,
-.tabActive {
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-secondary);
-  background: none;
-  border: none;
-  border-radius: var(--ds-radius-md);
-  cursor: pointer;
-  transition: color 150ms ease, background 150ms ease;
-}
-
-.tab:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-surface);
-}
-
-.tabActive {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-surface);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-default);
-}
 
 /* E03: 반응형 */
 @media (max-width: 768px) {

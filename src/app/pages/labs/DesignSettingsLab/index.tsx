@@ -4,7 +4,7 @@
  */
 import { useState, useMemo, useCallback } from 'react';
 import { Icon } from '../../../components';
-import { LabLayout } from '../../../layouts';
+import { LabLayout, TabBar } from '../../../layouts';
 import { useTheme } from '@domain/themes';
 import { resolveSelection } from '../../../hooks/usePaletteResolution';
 import { useGlobalSettings } from '../../../components/GlobalSettings';
@@ -106,20 +106,12 @@ export function DesignSettingsLab({
           </div>
         </div>
 
-        <div className={styles.tabBar} role="tablist">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              aria-selected={activeTab === tab.id}
-              className={activeTab === tab.id ? `${styles.tab} ${styles.tabActive}` : styles.tab}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <TabBar
+          tabs={tabs}
+          activeTab={activeTab}
+          onChange={(id) => setActiveTab(id as DesignSettingsTabId)}
+          variant="underline"
+        />
 
         <div className={styles.content} role="tabpanel">
           {activeTab === 'preset' && <PresetTab settings={settings} />}

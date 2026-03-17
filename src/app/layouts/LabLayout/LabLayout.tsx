@@ -4,6 +4,7 @@
  */
 import { useState, useEffect, useMemo } from 'react';
 import { LabToc } from './LabToc';
+import { TabBar } from './TabBar';
 import styles from './LabLayout.module.css';
 import type { TocItem, TocItemTree } from './types';
 
@@ -88,20 +89,12 @@ export function LabLayout({
         />
       )}
       {useTabBar && (
-        <div className={styles.tabBar} role="tablist">
-          {flatItems.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={activeSection === item.id}
-              className={activeSection === item.id ? styles.tabActive : styles.tab}
-              onClick={() => handleNavClick(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+        <TabBar
+          tabs={flatItems.map((item) => ({ id: item.id, label: item.label }))}
+          activeTab={activeSection ?? flatItems[0]?.id ?? ''}
+          onChange={handleNavClick}
+          variant="pill"
+        />
       )}
       <div className={styles.labLayout}>
         <header className={styles.labHeader}>
