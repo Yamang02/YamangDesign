@@ -9,6 +9,8 @@ import {
   LabCard,
   LabOverview,
   ComparisonCard,
+  TokenValueRow,
+  MetadataTable,
   type TocItem,
   type TocItemTree,
 } from '../../../layouts';
@@ -107,29 +109,24 @@ function getTokenMeta(token: string): { layer: string; layerNote: string; catego
   return { layer: '—', layerNote: '', category: '—' };
 }
 
-/** 해석 체인 표시용: 토큰 → 최종 값 (getComputedStyle은 이미 해석된 값 반환) */
-function getResolutionChain(token: string, resolvedValue: string): string[] {
-  return [token, `→ ${resolvedValue || '(not set)'}`];
-}
 
 function TokenDetailContent({ token }: { token: string }) {
   const value = useCssVar(token);
   const meta = getTokenMeta(token);
-  const chain = getResolutionChain(token, value);
 
   return (
     <div className={styles.tokenDetail}>
-      <p className={styles.tokenDetailMeta}>
-        <strong>카테고리:</strong> {meta.category} · <strong>레이어:</strong> {meta.layer} — {meta.layerNote}
-      </p>
-      <h4 className={styles.tokenDetailHeading}>현재 값</h4>
-      <code className={styles.tokenDetailValue}>
-        {formatTokenDisplayValue(token, value || '')}
-      </code>
-      <h4 className={styles.tokenDetailHeading}>해석 체인</h4>
-      <pre className={styles.tokenDetailChain}>
-        {chain.join('\n')}
-      </pre>
+      <MetadataTable
+        rows={[
+          { key: '카테고리', value: meta.category },
+          { key: '레이어', value: `${meta.layer} — ${meta.layerNote}` },
+        ]}
+      />
+      <TokenValueRow
+        label="현재 값"
+        token={token}
+        value={formatTokenDisplayValue(token, value || '')}
+      />
     </div>
   );
 }
