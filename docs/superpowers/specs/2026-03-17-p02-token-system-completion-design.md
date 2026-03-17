@@ -40,16 +40,18 @@ CSS 하드코딩 값을 제거하고 모든 값이 토큰을 통해 일관되게
 ## Step 1: 토큰 파이프라인 수정
 
 ### 1-1. `src/shared/utils/css.ts`
-`flattenToCSSVars`의 키 변환 시 `.` → `-` 치환 추가.
+`flattenToCSSVars`의 `kebabKey` 생성 직후에 `.` → `-` 치환 추가.
 
 ```ts
-// toKebabCase 또는 varName 생성 직후
-const varName = prefix
-  ? `${prefix}-${kebabKey.replace(/\./g, '-')}`
-  : kebabKey.replace(/\./g, '-');
+// 변경 전
+const kebabKey = toKebabCase(key);
+
+// 변경 후
+const kebabKey = toKebabCase(key).replace(/\./g, '-');
 ```
 
 효과: `spacing['0.5']` → `--ds-spacing-0-5`, `1.5` → `--ds-spacing-1-5` 등 자동 처리.
+점 치환은 `kebabKey` 단계에서 적용해야 함 (varName 조합 후 적용 시 prefix 구분자와 혼용 위험).
 
 ### 1-2. `src/domain/tokens/global/sizes.ts`
 신규 토큰 추가:
@@ -67,8 +69,19 @@ export const componentSize = {
 ```
 
 ### 1-3. `src/domain/themes/ThemeProvider.tsx`
-신규 토큰 객체를 `flattenToCSSVars`에 추가:
+1. import 구문에 `iconSize`, `componentSize` 추가:
+```ts
+import {
+  spacing,
+  fontFamily,
+  // ... 기존 항목들
+  componentHeight,
+  iconSize,       // 추가
+  componentSize,  // 추가
+} from '../tokens/global';
+```
 
+2. `flattenToCSSVars`에 신규 토큰 객체 추가:
 ```ts
 const primitiveCSSVars = flattenToCSSVars({
   // 기존
@@ -121,34 +134,41 @@ Tooltip 고정 토큰 추가:
 ## Step 2: CSS 하드코딩 교체
 
 ### Avatar.module.css
+`--ds-size-sm/md/lg`는 신규 토큰이 아니라 ThemeProvider가 `componentHeight`에서 이미 생성하는 기존 토큰 (`32px / 40px / 48px`).
+Avatar 사이즈가 `componentHeight`와 우연히 일치하는 것이 아니라, Avatar도 컴포넌트 높이 스케일을 의도적으로 공유하는 것으로 간주.
+향후 Avatar 사이즈를 독립적으로 변경해야 한다면 전용 토큰 도입 필요.
+
 ```css
 /* Before */
 .avatar[data-size='sm'] { width: 32px; height: 32px; }
 .avatar[data-size='md'] { width: 40px; height: 40px; }
 .avatar[data-size='lg'] { width: 48px; height: 48px; }
 
-/* After */
+/* After — 기존 --ds-size-sm/md/lg 토큰 참조 */
 .avatar[data-size='sm'] { width: var(--ds-size-sm); height: var(--ds-size-sm); }
 .avatar[data-size='md'] { width: var(--ds-size-md); height: var(--ds-size-md); }
 .avatar[data-size='lg'] { width: var(--ds-size-lg); height: var(--ds-size-lg); }
 ```
 
 ### Tooltip.module.css
+`--shell-tooltip-bg`, `--shell-tooltip-text`는 `shell-variables.css`에 이미 정의되어 있음.
+`--shell-tooltip-padding`, `--shell-tooltip-font-size`, `--shell-tooltip-radius` 3개만 신규 추가.
+fallback은 방어적 목적으로 추가 (shell-variables.css 로드 실패 시 대비).
+
 ```css
 /* Before */
 padding: 6px 10px;
 font-size: 13px;
 border-radius: 6px;
-/* fallback 없음 */
-color: var(--shell-tooltip-text);
-background-color: var(--shell-tooltip-bg);
+color: var(--shell-tooltip-text);          /* 이미 shell-variables.css에 정의됨 */
+background-color: var(--shell-tooltip-bg); /* 이미 shell-variables.css에 정의됨 */
 
 /* After */
 padding: var(--shell-tooltip-padding);
 font-size: var(--shell-tooltip-font-size);
 border-radius: var(--shell-tooltip-radius);
-color: var(--shell-tooltip-text, #FFFFFF);
-background-color: var(--shell-tooltip-bg, rgba(0,0,0,0.85));
+color: var(--shell-tooltip-text, #FFFFFF);                 /* fallback 방어적 추가 */
+background-color: var(--shell-tooltip-bg, rgba(0,0,0,0.85)); /* fallback 방어적 추가 */
 ```
 
 ### HexInput.module.css
@@ -210,21 +230,28 @@ const sizeValue = typeof size === 'number' ? size : sizeMap[size];
 
 // After
 // sizeMap 제거. size prop은 'sm' | 'md' | 'lg'만 허용.
-<span className={clsx(styles.icon, styles[`size-${size}`], className)} style={style}>
+// CSS Modules는 camelCase 컨벤션 → sizeSm / sizeMd / sizeLg 클래스명 사용
+<span className={clsx(styles.icon, styles[`size${size.charAt(0).toUpperCase() + size.slice(1)}`], className)} style={style}>
   <svg width="100%" height="100%" ...>
 ```
 
 ### Icon.module.css
+기존 `.icon` 규칙 유지 + size 클래스 추가.
+(기존 `flex-shrink: 0` 반드시 보존)
+
 ```css
+/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 .icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.icon.size-sm { width: var(--ds-icon-size-sm); height: var(--ds-icon-size-sm); }
-.icon.size-md { width: var(--ds-icon-size-md); height: var(--ds-icon-size-md); }
-.icon.size-lg { width: var(--ds-icon-size-lg); height: var(--ds-icon-size-lg); }
+/* camelCase 컨벤션 준수 */
+.sizeSm { width: var(--ds-icon-size-sm); height: var(--ds-icon-size-sm); }
+.sizeMd { width: var(--ds-icon-size-md); height: var(--ds-icon-size-md); }
+.sizeLg { width: var(--ds-icon-size-lg); height: var(--ds-icon-size-lg); }
 ```
 
 ### Icon.types.ts
