@@ -13,20 +13,20 @@
 
 /* Sizes */
 .avatar[data-size='sm'] {
-  width: 32px;
-  height: 32px;
+  width: var(--ds-size-sm);
+  height: var(--ds-size-sm);
   font-size: var(--ds-text-xs);
 }
 
 .avatar[data-size='md'] {
-  width: 40px;
-  height: 40px;
+  width: var(--ds-size-md);
+  height: var(--ds-size-md);
   font-size: var(--ds-text-sm);
 }
 
 .avatar[data-size='lg'] {
-  width: 48px;
-  height: 48px;
+  width: var(--ds-size-lg);
+  height: var(--ds-size-lg);
   font-size: var(--ds-text-md);
 }
 

@@ -2,7 +2,7 @@
 /* E08 P05: 공통 토큰 테이블 (Build Design tokens 패턴 정렬) */
 .tokenTableWrap {
   overflow-x: auto;
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-md);
   margin-bottom: var(--ds-spacing-4);
 }
@@ -105,7 +105,7 @@
   width: 24px;
   height: 24px;
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   vertical-align: middle;
 }
 
@@ -178,7 +178,7 @@
 .previewCard {
   padding: var(--ds-spacing-4);
   border-radius: var(--ds-radius-lg);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   background-color: var(--ds-color-bg-base);
   display: flex;
   flex-direction: column;
@@ -256,7 +256,7 @@
 .scalarCard {
   padding: var(--ds-spacing-3);
   border-radius: var(--ds-radius-md);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   background-color: var(--ds-color-bg-surface);
   display: flex;
   flex-direction: column;

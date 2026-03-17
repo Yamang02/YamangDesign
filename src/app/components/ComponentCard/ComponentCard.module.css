@@ -76,7 +76,7 @@
 }
 .usedInBadge {
   font-size: var(--ds-text-xs);
-  padding: 2px var(--ds-spacing-2);
+  padding: var(--ds-spacing-0-5) var(--ds-spacing-2);
   background-color: var(--ds-color-bg-subtle);
   color: var(--ds-color-text-secondary);
   border-radius: var(--ds-radius-sm);
@@ -99,7 +99,7 @@
 }
 .composedOfBadge {
   font-size: var(--ds-text-xs);
-  padding: 2px var(--ds-spacing-2);
+  padding: var(--ds-spacing-0-5) var(--ds-spacing-2);
   background-color: var(--ds-color-bg-subtle);
   color: var(--ds-color-text-secondary);
   border-radius: var(--ds-radius-sm);

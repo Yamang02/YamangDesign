@@ -121,7 +121,7 @@
 }
 .tableWrap {
   overflow-x: auto;
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-md);
 }
 .previewTable {

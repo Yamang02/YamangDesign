@@ -48,7 +48,7 @@
   padding: var(--ds-spacing-6);
   background-color: var(--ds-color-bg-base);
   border-radius: var(--ds-radius-lg);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
 }
 
 .previewContainerSystem {
@@ -130,6 +130,6 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--ds-radius-md);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   flex-shrink: 0;
 }

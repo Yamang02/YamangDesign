@@ -19,8 +19,8 @@
 }
 
 .colorPreview {
-  width: 28px;
-  height: 28px;
+  width: var(--ds-component-size-color-preview);
+  height: var(--ds-component-size-color-preview);
   border-radius: var(--ds-radius-sm);
   border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
   flex-shrink: 0;
@@ -43,7 +43,7 @@
 .hexInput {
   flex: 1;
   min-width: 0;
-  height: 28px;
+  height: var(--ds-component-size-color-preview);
   padding: 0 var(--ds-spacing-1);
   font-size: var(--ds-text-code-size);
   line-height: var(--ds-text-code-leading);

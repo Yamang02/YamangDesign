@@ -10,13 +10,13 @@
 .tooltip {
   position: absolute;
   z-index: var(--ds-z-tooltip);
-  padding: 6px 10px;
-  font-size: 13px;
+  padding: var(--shell-tooltip-padding);
+  font-size: var(--shell-tooltip-font-size);
   line-height: 1.4;
   font-weight: 500;
-  color: var(--shell-tooltip-text);
-  background-color: var(--shell-tooltip-bg);
-  border-radius: 6px;
+  color: var(--shell-tooltip-text, #FFFFFF);
+  background-color: var(--shell-tooltip-bg, rgba(0, 0, 0, 0.85));
+  border-radius: var(--shell-tooltip-radius);
   pointer-events: none;
   white-space: normal;
   box-shadow: none;

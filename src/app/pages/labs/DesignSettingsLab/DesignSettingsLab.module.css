@@ -175,7 +175,7 @@
   padding: var(--ds-spacing-2);
   background: var(--ds-color-bg-muted);
   border-radius: var(--ds-radius-md);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
 }
 
 .componentMappingListSection {
@@ -226,7 +226,7 @@
   padding: var(--ds-spacing-3);
   background: var(--ds-color-bg-base);
   border-radius: var(--ds-radius-md);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   overflow: auto;
 }
 
@@ -266,7 +266,7 @@
   padding: var(--ds-spacing-1) var(--ds-spacing-2);
   font-size: var(--ds-text-sm);
   font-family: inherit;
-  border: 1px solid var(--ds-color-border-default);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
   border-radius: var(--ds-radius-sm);
   background: var(--ds-color-bg-base);
   color: var(--ds-color-text-primary);
@@ -283,7 +283,7 @@
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   margin-right: var(--ds-spacing-1);
   vertical-align: middle;
 }
@@ -330,7 +330,7 @@
   padding: var(--ds-spacing-4);
   background: var(--ds-color-bg-muted);
   border-radius: var(--ds-radius-md);
-  border: 1px solid var(--ds-color-border-subtle);
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
   min-height: 200px;
   display: flex;
   flex-direction: column;
