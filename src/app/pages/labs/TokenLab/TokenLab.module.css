@@ -117,29 +117,6 @@
 }
 
 
-.componentTabs {
-  display: inline-flex;
-  gap: 2px;
-  padding: 2px;
-  border-radius: var(--ds-radius-full);
-  background-color: var(--ds-color-bg-muted);
-}
-
-.componentTab {
-  border: none;
-  background: none;
-  padding: var(--ds-spacing-1) var(--ds-spacing-3);
-  border-radius: var(--ds-radius-full);
-  font-size: var(--ds-text-xs);
-  cursor: pointer;
-  color: var(--ds-color-text-secondary);
-}
-
-.componentTab[data-active='true'] {
-  background-color: var(--ds-color-bg-base);
-  color: var(--ds-color-text-primary);
-}
-
 .componentLayout {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
@@ -242,24 +219,6 @@
 .scalarCard .tokenValue {
   font-size: var(--ds-text-xs);
   word-break: break-all;
-}
-
-/* DS Tokens wrapper (TOC scroll target) */
-.dsTokensWrapper {
-  margin-bottom: var(--ds-spacing-8);
-}
-
-.dsTokensWrapper .sectionTitle {
-  font-size: var(--ds-text-xl);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-4);
-}
-
-.dsTokensWrapper .sectionContent {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-8);
 }
 
 .sysUsage .categoryTitle {

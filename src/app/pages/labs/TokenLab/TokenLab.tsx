@@ -9,6 +9,7 @@ import {
   LabCard,
   LabOverview,
   ComparisonCard,
+  TabBar,
   TokenValueRow,
   MetadataTable,
   type TocItem,
@@ -427,19 +428,12 @@ function ComponentInspector() {
 
   return (
     <LabSection title="Component Inspector" id="component-inspector">
-      <div className={styles.componentTabs}>
-        {COMPONENT_ORDER.map((key) => (
-          <button
-            key={key}
-            type="button"
-            className={styles.componentTab}
-            data-active={activeComponent === key}
-            onClick={() => setActiveComponent(key)}
-          >
-            {key}
-          </button>
-        ))}
-      </div>
+      <TabBar
+        variant="pill"
+        tabs={COMPONENT_ORDER.map((key) => ({ id: key, label: key }))}
+        activeTab={activeComponent}
+        onChange={(id) => setActiveComponent(id as ComponentKey)}
+      />
 
       <div className={styles.componentLayout}>
         <LabCard>
@@ -521,13 +515,10 @@ export function TokenLab() {
           </LabOverview>
         </LabSection>
         <ShellTokensSection onSelectToken={setSelectedToken} />
-        <section id="ds-tokens" className={styles.dsTokensWrapper}>
-          <h2 className={styles.sectionTitle}>Design System</h2>
-          <div className={styles.sectionContent}>
-            <GlobalSection onSelectToken={setSelectedToken} />
-            <AliasSection onSelectToken={setSelectedToken} />
-          </div>
-        </section>
+        <LabSection title="Design System" id="ds-tokens">
+          <GlobalSection onSelectToken={setSelectedToken} />
+          <AliasSection onSelectToken={setSelectedToken} />
+        </LabSection>
         <SysTokensSection onSelectToken={setSelectedToken} />
         <ComponentInspector />
       </LabLayout>

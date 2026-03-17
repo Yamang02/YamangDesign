@@ -5,6 +5,7 @@ export {
   ComparisonCard,
   LabToc,
   LabOverview,
+  TabBar,
   type TocItem,
   type TocItemTree,
   type OverviewItem,
