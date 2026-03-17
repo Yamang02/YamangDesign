@@ -11,6 +11,7 @@ import { stylePresets } from '@domain/themes/presets';
 import { palettePresets } from '@domain/themes/presets';
 import type { StyleName } from '@shared/@types/theme';
 import type { StyleDefinition } from '@domain/styles';
+import overviewJson from '@app/content/labs/style-lab/overview.json';
 import { StyleOverviewDiagram } from './StyleOverviewDiagram';
 import styles from './StyleLab.module.css';
 
@@ -37,26 +38,13 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const STYLE_METADATA: Partial<
-  Record<StyleName, { description: string; characteristics: string[] }>
-> = {
-  minimal: {
-    description: '클린하고 모던한 스타일',
-    characteristics: ['아래 방향 드롭 섀도우', '얇은 테두리 (1px)', '플랫한 배경'],
-  },
-  neumorphism: {
-    description: '소프트하고 입체적인 스타일',
-    characteristics: ['양방향 그림자 (raised)', '테두리 없음', '배경과 융합'],
-  },
-  brutalism: {
-    description: '거칠고 강렬한 비주얼',
-    characteristics: ['하드 드롭 섀도우', '굵은 테두리 (3px)', '강한 대비'],
-  },
-  glassmorphism: {
-    description: '유리 효과 스타일',
-    characteristics: ['배경 블러', '반투명 표면', '얇은 밝은 테두리'],
-  },
-};
+type StyleMeta = { description: string; characteristics: string[] };
+const STYLE_METADATA: Record<string, StyleMeta> = Object.fromEntries(
+  (overviewJson.styleVariants as Array<StyleMeta & { name: string }>).map((v) => [
+    v.name.toLowerCase(),
+    { description: v.description, characteristics: v.characteristics },
+  ])
+);
 
 /** E06 P02: Property Matrix — 스타일별 슬롯 값 표 */
 function PropertyMatrix({
