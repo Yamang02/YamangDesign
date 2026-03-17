@@ -149,21 +149,21 @@ size?: 'sm' | 'md' | 'lg'; // number 제거
 ## 체크리스트
 
 ### Step 1: 토큰 파이프라인
-- [ ] `css.ts`: kebabKey에 `.` → `-` 치환 추가
-- [ ] `sizes.ts`: `iconSize`, `componentSize` 추가
-- [ ] `ThemeProvider.tsx`: import + flattenToCSSVars에 신규 토큰 추가
-- [ ] `variables.css`: 신규 토큰 문서화
-- [ ] `shell-variables.css`: tooltip 토큰 3개 추가
+- [x] `css.ts`: kebabKey에 `.` → `-` 치환 추가
+- [x] `sizes.ts`: `iconSize`, `componentSize` 추가
+- [x] `ThemeProvider.tsx`: import + flattenToCSSVars에 신규 토큰 추가
+- [x] `variables.css`: 신규 토큰 문서화
+- [x] `shell-variables.css`: tooltip 토큰 3개 추가
 
 ### Step 2: CSS 교체
-- [ ] `Avatar.module.css`: 32/40/48px → --ds-size-sm/md/lg
-- [ ] `Tooltip.module.css`: padding/font-size/radius 토큰화 + fallback 추가
-- [ ] `HexInput.module.css`: 28px → --ds-component-size-color-preview
-- [ ] `ColorPicker.module.css`: gap 2px + border 1px 교체
-- [ ] `ComponentCard.module.css`: padding 2px 교체
-- [ ] 전체 `border: 1px solid var(--ds-color-border-*)` → ds-border 토큰 패턴 (15곳)
+- [x] `Avatar.module.css`: 32/40/48px → --ds-size-sm/md/lg
+- [x] `Tooltip.module.css`: padding/font-size/radius 토큰화 + fallback 추가
+- [x] `HexInput.module.css`: 28px → --ds-component-size-color-preview
+- [x] `ColorPicker.module.css`: gap 2px + border 1px 교체
+- [x] `ComponentCard.module.css`: padding 2px 교체
+- [x] 전체 `border: 1px solid var(--ds-color-border-*)` → ds-border 토큰 패턴 (15곳)
 
 ### Step 3: Icon 리팩터링
-- [ ] `Icon.types.ts`: size에서 number 제거
-- [ ] `Icon.tsx`: sizeMap 제거, SVG 100%, span CSS 크기 제어
-- [ ] `Icon.module.css`: sizeSm/sizeMd/sizeLg 클래스 추가
+- [x] `Icon.types.ts`: size에서 number 제거
+- [x] `Icon.tsx`: sizeMap 제거, SVG 100%, span CSS 크기 제어
+- [x] `Icon.module.css`: sizeSm/sizeMd/sizeLg 클래스 추가
