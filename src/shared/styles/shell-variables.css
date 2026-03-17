@@ -46,6 +46,9 @@
   --shell-overlay: rgba(0, 0, 0, 0.5);
   --shell-tooltip-bg: rgba(0, 0, 0, 0.85);
   --shell-tooltip-text: #FFFFFF;
+  --shell-tooltip-padding: 6px 10px;
+  --shell-tooltip-font-size: 13px;
+  --shell-tooltip-radius: 6px;
 
   /* 프리셋 배지 고정 색 (Yamang/custom/semantic/natural/category) */
   --shell-badge-custom: #10B981;

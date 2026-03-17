@@ -6,6 +6,16 @@ export const componentHeight = {
   xl: '56px',
 } as const;
 
+export const iconSize = {
+  sm: '16px',
+  md: '20px',
+  lg: '24px',
+} as const;
+
+export const componentSize = {
+  colorPreview: '28px',
+} as const;
+
 export const zIndex = {
   hide: -1,
   base: 0,

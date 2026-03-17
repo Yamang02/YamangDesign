@@ -41,12 +41,17 @@
 
   /* Spacing (ThemeProvider 주입) */
   --ds-spacing-0: initial;
+  --ds-spacing-0-5: initial;
   --ds-spacing-1: initial;
+  --ds-spacing-1-5: initial;
   --ds-spacing-2: initial;
+  --ds-spacing-2-5: initial;
   --ds-spacing-3: initial;
+  --ds-spacing-3-5: initial;
   --ds-spacing-4: initial;
   --ds-spacing-5: initial;
   --ds-spacing-6: initial;
+  --ds-spacing-7: initial;
   --ds-spacing-8: initial;
 
   /* Typography */
@@ -81,6 +86,14 @@
   --ds-size-sm: initial;
   --ds-size-md: initial;
   --ds-size-lg: initial;
+
+  /* Icon sizes */
+  --ds-icon-size-sm: initial;
+  --ds-icon-size-md: initial;
+  --ds-icon-size-lg: initial;
+
+  /* Component sizes */
+  --ds-component-size-color-preview: initial;
 
   /* Z-index */
   --ds-z-dropdown: initial;

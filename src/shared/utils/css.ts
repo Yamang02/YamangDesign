@@ -26,7 +26,7 @@ export function flattenToCSSVars(
   for (const [key, value] of Object.entries(obj)) {
     if (key.startsWith('_')) continue;
 
-    const kebabKey = toKebabCase(key);
+    const kebabKey = toKebabCase(key).replace(/\./g, '-');
     const varName = prefix ? `${prefix}-${kebabKey}` : kebabKey;
 
     if (typeof value === 'object' && value !== null) {
