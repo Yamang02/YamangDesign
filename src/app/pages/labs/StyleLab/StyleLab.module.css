@@ -1,23 +1,5 @@
 /* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* E05: StyleLab 비교 그리드 + DetailPanel 상세 */
-.comparisonGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--ds-spacing-6);
-}
-
-@media (max-width: 700px) {
-  .comparisonGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 450px) {
-  .comparisonGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .cardInner {
   padding: var(--ds-spacing-4);
   border-radius: var(--ds-radius-lg);
@@ -49,37 +31,6 @@
   margin: 0 0 var(--ds-spacing-2) 0;
 }
 
-.shadowList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-2);
-}
-
-.shadowRow {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-}
-
-.shadowKey {
-  font-size: var(--ds-text-xs);
-  color: var(--shell-text-secondary);
-}
-
-.shadowValue {
-  font-size: 11px;
-  font-family: ui-monospace, monospace;
-  color: var(--shell-text-muted);
-  word-break: break-all;
-}
-
-.borderInfo {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-}
 
 .detailDescription {
   margin: 0 0 var(--ds-spacing-2) 0;

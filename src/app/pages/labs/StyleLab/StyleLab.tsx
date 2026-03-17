@@ -3,7 +3,7 @@
  */
 import { useState, useMemo } from 'react';
 import { Button, Card, DetailPanel } from '../../../components';
-import { LabLayout, LabSection, LabOverview, ComparisonCard, type TocItem } from '../../../layouts';
+import { LabLayout, LabSection, LabOverview, ComparisonCard, ComparisonGrid, MetadataTable, type TocItem } from '../../../layouts';
 import { sampleText, buttonLabels, sectionTitles } from '@app/content/lab-content';
 import { getStyleVariables, getPaletteVariablesFromDefinition, comparisonPresets } from '@domain/constants';
 import { createStyle } from '@domain/styles';
@@ -178,28 +178,26 @@ function StyleDetail({ name }: { name: StyleName }) {
           </ul>
         </>
       )}
-      <h4 className={styles.detailSectionTitle}>Shadow</h4>
-      <div className={styles.shadowList}>
-        {(['none', 'sm', 'md', 'lg', 'xl', 'inset'] as const).map((key) => {
-          const value =
-            key === 'none'
-              ? resolved.shadows.none
-              : resolved.shadows[key as keyof typeof resolved.shadows];
-          if (value === undefined) return null;
-          return (
-            <div key={key} className={styles.shadowRow}>
-              <code className={styles.shadowKey}>shadow-{key}</code>
-              <code className={styles.shadowValue}>{value}</code>
-            </div>
-          );
-        })}
-      </div>
-      <h4 className={styles.detailSectionTitle}>Stroke</h4>
-      <div className={styles.borderInfo}>
-        <span>width: {resolved.border.width}</span>
-        <span>style: {resolved.border.style}</span>
-        <span>colorStrategy: {styleDef.stroke.colorStrategy}</span>
-      </div>
+      <MetadataTable
+        title="Shadow"
+        rows={(['none', 'sm', 'md', 'lg', 'xl', 'inset'] as const)
+          .filter((key) => {
+            const v = key === 'none' ? resolved.shadows.none : resolved.shadows[key as keyof typeof resolved.shadows];
+            return v !== undefined;
+          })
+          .map((key) => {
+            const v = key === 'none' ? resolved.shadows.none : resolved.shadows[key as keyof typeof resolved.shadows];
+            return { key: `shadow-${key}`, value: v! };
+          })}
+      />
+      <MetadataTable
+        title="Stroke"
+        rows={[
+          { key: 'width', value: resolved.border.width },
+          { key: 'style', value: resolved.border.style },
+          { key: 'colorStrategy', value: styleDef.stroke.colorStrategy },
+        ]}
+      />
     </div>
   );
 }
@@ -229,86 +227,82 @@ export function StyleLab() {
         </LabSection>
 
         <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
-          <div style={fixedPaletteVars} className={styles.comparisonWrapper}>
-            <div className={styles.comparisonGrid}>
-              {comparisonPresets.styles.map((styleName) => (
-                <ComparisonCard
-                  key={styleName}
-                  title={capitalize(styleName)}
-                  styleVars={getStyleVariables(styleName, bgColor)}
-                  onClick={() => setSelectedStyle(styleName)}
-                  selected={selectedStyle === styleName}
+          <ComparisonGrid paletteVars={fixedPaletteVars} className={styles.comparisonWrapper}>
+            {comparisonPresets.styles.map((styleName) => (
+              <ComparisonCard
+                key={styleName}
+                title={capitalize(styleName)}
+                styleVars={getStyleVariables(styleName, bgColor)}
+                onClick={() => setSelectedStyle(styleName)}
+                selected={selectedStyle === styleName}
+              >
+                <div
+                  className={styles.cardInner}
+                  style={{ backgroundColor: 'var(--ds-color-bg-base)' }}
                 >
-                  <div
-                    className={styles.cardInner}
-                    style={{ backgroundColor: 'var(--ds-color-bg-base)' }}
-                  >
-                    <div data-context="preview">
-                      {shadowKeys.map((size) => (
-                        <div
-                          key={size}
-                          className={styles.shadowDemo}
-                          style={{
-                            boxShadow: `var(--ds-shadow-${size})`,
-                            backgroundColor: 'var(--ds-color-bg-base)',
-                          }}
-                        >
-                          shadow-{size}
-                        </div>
-                      ))}
-                    </div>
+                  <div data-context="preview">
+                    {shadowKeys.map((size) => (
+                      <div
+                        key={size}
+                        className={styles.shadowDemo}
+                        style={{
+                          boxShadow: `var(--ds-shadow-${size})`,
+                          backgroundColor: 'var(--ds-color-bg-base)',
+                        }}
+                      >
+                        shadow-{size}
+                      </div>
+                    ))}
                   </div>
-                </ComparisonCard>
-              ))}
-            </div>
-          </div>
+                </div>
+              </ComparisonCard>
+            ))}
+          </ComparisonGrid>
         </LabSection>
 
         <LabSection
           title={sectionTitles.componentComparison}
           id="component-comparison"
         >
-          <div style={fixedPaletteVars} className={styles.comparisonWrapper}>
-            <div className={styles.comparisonGrid}>
-              {comparisonPresets.styles.map((styleName) => (
-                <ComparisonCard
-                  key={styleName}
-                  title={capitalize(styleName)}
-                  styleVars={getStyleVariables(styleName, bgColor)}
-                  onClick={() => setSelectedStyle(styleName)}
-                  selected={selectedStyle === styleName}
+          <ComparisonGrid paletteVars={fixedPaletteVars} className={styles.comparisonWrapper}>
+            {comparisonPresets.styles.map((styleName) => (
+              <ComparisonCard
+                key={styleName}
+                title={capitalize(styleName)}
+                styleVars={getStyleVariables(styleName, bgColor)}
+                onClick={() => setSelectedStyle(styleName)}
+                selected={selectedStyle === styleName}
+              >
+                <div
+                  className={styles.cardInner}
+                  style={{
+                    backgroundColor: 'var(--ds-color-bg-base)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'var(--ds-spacing-4)',
+                  }}
                 >
                   <div
-                    className={styles.cardInner}
-                    style={{
-                      backgroundColor: 'var(--ds-color-bg-base)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'var(--ds-spacing-4)',
-                    }}
+                    style={{ display: 'flex', gap: 'var(--ds-spacing-3)' }}
                   >
-                    <div
-                      style={{ display: 'flex', gap: 'var(--ds-spacing-3)' }}
-                    >
-                      <Button variant="primary">{buttonLabels.primary}</Button>
-                      <Button variant="secondary">{buttonLabels.secondary}</Button>
-                    </div>
-                    <Card padding="md">
-                      <p
-                        style={{
-                          margin: 0,
-                          fontSize: 'var(--ds-text-sm)',
-                          color: 'var(--shell-text-primary)',
-                        }}
-                      >
-                        {sampleText.pangram.en}
-                      </p>
-                    </Card>
+                    <Button variant="primary">{buttonLabels.primary}</Button>
+                    <Button variant="secondary">{buttonLabels.secondary}</Button>
                   </div>
-                </ComparisonCard>
-              ))}
-            </div>
-          </div>
+                  <Card padding="md">
+                    <p
+                      style={{
+                        margin: 0,
+                        fontSize: 'var(--ds-text-sm)',
+                        color: 'var(--shell-text-primary)',
+                      }}
+                    >
+                      {sampleText.pangram.en}
+                    </p>
+                  </Card>
+                </div>
+              </ComparisonCard>
+            ))}
+          </ComparisonGrid>
         </LabSection>
       </LabLayout>
 
