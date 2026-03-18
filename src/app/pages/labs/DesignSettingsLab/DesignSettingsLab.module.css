@@ -56,10 +56,10 @@
 }
 
 
-/* P07: 컴포넌트 매핑 탭 3패널 — 가용 너비 100% */
+/* P07: 컴포넌트 매핑 탭 2패널 — 가용 너비 100% */
 .componentMappingRoot {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr) 360px;
+  grid-template-columns: 200px minmax(0, 1fr);
   gap: var(--ds-spacing-4);
   min-height: 400px;
   width: 100%;
@@ -224,25 +224,6 @@
 .clearComponentBtn:hover {
   color: var(--shell-text-primary);
   background: var(--shell-bg-subtle);
-}
-
-.componentMappingPreview {
-  padding: var(--ds-spacing-4);
-  background: var(--shell-bg-muted);
-  border-radius: var(--ds-radius-md);
-  border: 1px solid var(--shell-border-subtle);
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ds-spacing-4);
-}
-
-.componentMappingPreviewLabel {
-  font-size: var(--ds-text-caption-size);
-  color: var(--shell-text-muted);
-  margin: 0;
 }
 
 .componentMappingEmpty {

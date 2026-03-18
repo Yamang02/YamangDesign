@@ -11,6 +11,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: var(--ds-spacing-4);
+  width: 100%;
 }
 
 .inventoryCard {

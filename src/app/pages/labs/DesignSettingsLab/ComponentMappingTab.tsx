@@ -1,10 +1,8 @@
 /**
- * P07: 컴포넌트 매핑 탭 — 행별 ✕, 컴포넌트 전체 초기화, 컬러 스와치, previewVariants 기반 Preview
+ * P07: 컴포넌트 매핑 탭 — 행별 ✕, 컴포넌트 전체 초기화, 컬러 스와치
  */
-import type { ReactNode } from 'react';
-import { useState, useMemo, useCallback } from 'react';
-import { Icon, Button, Input, Select, Card, Badge } from '../../../components';
-import { showcaseContent, selectShowcase } from '@app/content/showcase-content';
+import { useState, useCallback } from 'react';
+import { Icon } from '../../../components';
 import {
   loadComponentMappingOverrides,
   saveComponentMappingOverrides,
@@ -50,62 +48,6 @@ function looksLikeColor(value: string): boolean {
   );
 }
 
-function renderPreviewByVariants(
-  id: string,
-  comp: ComponentDef | null
-): ReactNode {
-  const variants = comp?.previewVariants;
-  if (id === 'button' && Array.isArray(variants)) {
-    return variants.map((v) => (
-      <Button key={v} variant={v as 'primary' | 'outline' | 'ghost'}>{showcaseContent.button}</Button>
-    ));
-  }
-  if (id === 'input') {
-    return <Input placeholder={showcaseContent.input} />;
-  }
-  if (id === 'select') {
-    return (
-      <Select
-        options={[...selectShowcase.fruitOptions]}
-        value="apple"
-        onChange={() => {}}
-        variant="outline"
-        placeholder={showcaseContent.select}
-      />
-    );
-  }
-  if (id === 'card') {
-    const variant = variants?.[0] ?? 'elevated';
-    return (
-      <Card variant={variant as 'elevated'} padding="md">
-        <Card.Header>{showcaseContent.card.title}</Card.Header>
-        <Card.Body>{showcaseContent.card.body}</Card.Body>
-        <Card.Footer>
-          <Button variant="primary" size="sm">
-            {showcaseContent.button}
-          </Button>
-        </Card.Footer>
-      </Card>
-    );
-  }
-  if (id === 'badge' && Array.isArray(variants)) {
-    return variants.map((v) => (
-      <Badge key={v} variant={v as 'primary' | 'outline' | 'subtle'}>{showcaseContent.badge}</Badge>
-    ));
-  }
-  if (comp?.tokens?.length) {
-    return (
-      <p className={styles.componentMappingEmpty}>
-        {comp.tokens.map((t) => t.default.replace('--ds-', '')).join(', ')}
-      </p>
-    );
-  }
-  return (
-    <p className={styles.componentMappingEmpty}>
-      미리보기를 지원하지 않는 컴포넌트입니다.
-    </p>
-  );
-}
 
 export function ComponentMappingTab() {
   const [overrides, setOverrides] = useState<ComponentMappingOverrides>(() =>
@@ -166,18 +108,6 @@ export function ComponentMappingTab() {
     [overrides, persistOverrides]
   );
 
-
-  type CssVarStyle = React.CSSProperties & Record<`--${string}`, string>;
-  const previewStyle = useMemo((): CssVarStyle => {
-    if (!selectedId) return {};
-    const compOverrides = overrides[selectedId];
-    if (!compOverrides || Object.keys(compOverrides).length === 0) return {};
-    const s: Record<string, string> = {};
-    for (const [token, value] of Object.entries(compOverrides)) {
-      if (value) s[token] = value.startsWith('var(') ? value : value;
-    }
-    return s as CssVarStyle;
-  }, [selectedId, overrides]);
 
   return (
     <div className={styles.componentMappingRoot}>
@@ -295,20 +225,6 @@ export function ComponentMappingTab() {
         )}
       </div>
 
-      <div className={styles.componentMappingPreview} aria-label="Live Preview">
-        {selectedId ? (
-          <>
-            <p className={styles.componentMappingPreviewLabel}>Live Preview</p>
-            <div data-context="preview" style={previewStyle}>
-              {renderPreviewByVariants(selectedId, selectedComponent)}
-            </div>
-          </>
-        ) : (
-          <p className={styles.componentMappingEmpty}>
-            컴포넌트를 선택하면 미리보기가 표시됩니다.
-          </p>
-        )}
-      </div>
     </div>
   );
 }

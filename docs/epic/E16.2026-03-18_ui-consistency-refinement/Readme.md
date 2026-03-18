@@ -22,6 +22,7 @@ E15까지의 작업으로 토큰 레이어 분리(shell/ds/sys)와 LabLayout 표
 - [P04: 기타 개선](./P04-misc-improvements.md)
 - [P05: ComponentDetailModal 프리뷰 컨텍스트 복원](./P05-modal-preview-context.md)
 - [P06: shell 토큰 네임스페이스 분리](./P06-shell-token-namespace-cleanup.md)
+- [P07: UI 레이아웃 수정](./P07-ui-layout-fixes.md)
 
 ## 상태
 - [x] P01 완료
@@ -29,4 +30,5 @@ E15까지의 작업으로 토큰 레이어 분리(shell/ds/sys)와 LabLayout 표
 - [x] P03 완료
 - [x] P04 완료
 - [x] P05 완료
-- [ ] P06 완료
+- [x] P06 완료
+- [ ] P07 완료
