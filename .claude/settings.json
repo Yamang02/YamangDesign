@@ -30,14 +30,18 @@
       "Bash(for d in docs/epic/*/)",
       "Bash(do echo \"=== $d ===\")",
       "Read(//c/Users/ljj02/Desktop/dev/YamangDesign/**)",
-      "Bash(# E12 상태 확인 - domain/ app/ shared/ 구조가 있는지 ls src/)"
+      "Bash(# E12 상태 확인 - domain/ app/ shared/ 구조가 있는지 ls src/)",
+      "Bash(xargs grep -l \"LabLayout\")",
+      "Bash(grep -l \"var\\(--ds-\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Header/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Navigation/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Footer/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Tooltip/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/DetailPanel/*.css)",
+      "Bash(grep -oh \"var\\(--ds-[^\\)]*\\)\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Header/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Navigation/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Footer/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Tooltip/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/DetailPanel/*.css)"
     ],
     "additionalDirectories": [
       "C:\\Users\\ljj02\\AppData\\Roaming\\Code\\User",
       "C:\\Users\\ljj02\\Desktop\\dev\\YamangDesign",
       "C:\\Users\\ljj02\\.claude\\skills\\yamang-epic",
       "C:\\Users\\ljj02\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.2\\skills\\brainstorming",
-      "C:\\Users\\ljj02\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.2\\skills\\writing-plans"
+      "C:\\Users\\ljj02\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.2\\skills\\writing-plans",
+      "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"
     ]
   },
   "enabledPlugins": {
