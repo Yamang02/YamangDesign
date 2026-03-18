@@ -1,4 +1,4 @@
-/* @layer mixed — 크롬(--shell-*) + [data-context="preview"] 복원 블록. */
+/* @layer shell — 크롬(--shell-*). */
 /* E03: app-max-width로 Header와 정렬 (TOC + 본문 통합) */
 .labLayoutWrapper {
   display: flex;
@@ -8,28 +8,11 @@
   width: 100%;
 }
 
-/* E03 P04: Lab UI는 [data-shell]에서 토큰 적용 (shell-variables.css). 여기서는 preview 복원만. */
-
-/* ─── Preview 복원 ([data-context="preview"]) ───────
-   [data-shell] 안에서 테마 토큰을 복원.
-   ThemeProvider가 주입한 *-global 별칭을 참조.
-   이 블록 내부는 --ds-* 유지 필수. ───────────────── */
+/* ─── Preview 내 surface 효과 복원 ───────────────────
+   [data-shell]이 neumorphism/glassmorphism 등 테마 효과를 억제하므로,
+   preview 영역에서는 테마 surface 효과를 복원한다.
+   --ds-color-* 복원 불필요: [data-shell]이 더 이상 색상 토큰을 재정의하지 않음. ── */
 [data-shell] [data-context="preview"] {
-  --ds-color-bg-base: var(--ds-color-bg-base-global, #FFFFFF);
-  --ds-color-bg-surface: var(--ds-color-bg-surface-global, #F8F9FA);
-  --ds-color-bg-muted: var(--ds-color-bg-muted-global, #F1F2F3);
-  --ds-color-text-primary: var(--ds-color-text-primary-global, #111827);
-  --ds-color-text-secondary: var(--ds-color-text-secondary-global, #6B7280);
-  --ds-color-text-muted: var(--ds-color-text-muted-global, #9CA3AF);
-  --ds-color-border-subtle: var(--ds-color-border-subtle-global, #E5E7EB);
-  --ds-color-border-default: var(--ds-color-border-default-global, #D1D5DB);
-  --ds-color-border-focus: var(--ds-color-border-focus-global, #6366F1);
-  --ds-color-action-primary-default: var(--ds-color-action-primary-default-global);
-  --ds-color-action-primary-hover: var(--ds-color-action-primary-hover-global);
-  --ds-color-action-primary-active: var(--ds-color-action-primary-active-global);
-  --ds-color-text-on-action: var(--ds-color-text-on-action-global);
-  --ds-shadow-sm: var(--ds-shadow-sm-global);
-  --ds-shadow-md: var(--ds-shadow-md-global);
   --ds-surface-backdrop: var(--ds-surface-backdrop-global, none);
   --ds-surface-bg-alpha: var(--ds-surface-bg-alpha-global, 1);
   --ds-surface-texture: var(--ds-surface-texture-global, none);
