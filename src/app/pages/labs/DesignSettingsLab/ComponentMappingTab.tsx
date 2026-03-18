@@ -1,7 +1,7 @@
 /**
  * P07: 컴포넌트 매핑 탭 — 행별 ✕, 컴포넌트 전체 초기화, 컬러 스와치
  */
-import { useState, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Icon } from '../../../components';
 import {
   loadComponentMappingOverrides,
