@@ -24,6 +24,10 @@
   --ds-color-border-subtle: var(--ds-color-border-subtle-global, #E5E7EB);
   --ds-color-border-default: var(--ds-color-border-default-global, #D1D5DB);
   --ds-color-border-focus: var(--ds-color-border-focus-global, #6366F1);
+  --ds-color-action-primary-default: var(--ds-color-action-primary-default-global);
+  --ds-color-action-primary-hover: var(--ds-color-action-primary-hover-global);
+  --ds-color-action-primary-active: var(--ds-color-action-primary-active-global);
+  --ds-color-text-on-action: var(--ds-color-text-on-action-global);
   --ds-shadow-sm: var(--ds-shadow-sm-global);
   --ds-shadow-md: var(--ds-shadow-md-global);
   --ds-surface-backdrop: var(--ds-surface-backdrop-global, none);

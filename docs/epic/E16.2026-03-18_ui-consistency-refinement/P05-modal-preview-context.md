@@ -25,8 +25,14 @@ ComponentDetailModal body가 항상 `data-context="preview"`를 가져,
 
 `body`에 항상 `data-context="preview"`를 설정하고, `style`은 `previewStyle`이 있을 때만 적용한다.
 
+**근본 원인:**
+`[data-shell] [data-context="preview"]` 복원 블록(LabLayout.module.css)에
+action 토큰(`--ds-color-action-primary-default`, `--ds-color-text-on-action`)이
+누락되어 있었음. `data-context="preview"` 설정만으로는 부족하고 복원 블록도 완전해야 함.
+
 **변경 파일:**
 - `src/app/components/ComponentDetailModal/ComponentDetailModal.tsx`
+- `src/app/layouts/LabLayout/LabLayout.module.css`
 
 ## 체크리스트
 - [x] ComponentDetailModal body에 `data-context="preview"` 고정 설정
