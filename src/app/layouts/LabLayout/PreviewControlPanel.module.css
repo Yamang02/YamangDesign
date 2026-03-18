@@ -1,0 +1,52 @@
+/* E15 P04: PreviewControlPanel — 프리뷰 테마 컨트롤 pill 버튼 그룹 */
+
+.controlPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.controlLabel {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--shell-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.controlOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-spacing-1);
+}
+
+.controlOption {
+  padding: var(--ds-spacing-1) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  background: none;
+  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.controlOption:hover {
+  color: var(--shell-text-primary);
+  border-color: var(--shell-border-default);
+  background-color: var(--shell-bg-muted);
+}
+
+.controlOption:focus-visible {
+  outline: 2px solid var(--shell-border-focus);
+  outline-offset: 2px;
+}
+
+.controlOptionActive {
+  color: var(--shell-border-focus);
+  border-color: var(--shell-border-focus);
+  background-color: var(--shell-bg-muted);
+  font-weight: var(--ds-font-weight-medium);
+}

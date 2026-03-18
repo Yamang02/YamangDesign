@@ -3,8 +3,7 @@
  * P05: 패널 아키텍처 전환 — PreviewPanel 배열, Brand/System 컬럼 의도 명확화
  */
 import { useState, useCallback } from 'react';
-import { Select } from '../../../components';
-import { LabLayout, LabSection, type TocItem } from '../../../layouts';
+import { LabLayout, LabSection, PreviewControlPanel, type TocItem } from '../../../layouts';
 import { sectionTitles, fontFamilyLabels } from '@app/content/lab-content';
 import { comparisonPresets } from '@domain/constants';
 import type { PaletteName, StyleName, SystemPresetName } from '@shared/@types/theme';
@@ -65,41 +64,36 @@ export function Playground() {
     >
       <LabSection title={sectionTitles.combinationSelect} id="combination-select">
         {/* TODO(E07): 패널별 독립 Controls */}
-        <div className={styles.selectRow}>
-          <Select
+        <div className={styles.controlsStack}>
+          <PreviewControlPanel
             label="Palette (Brand)"
-            options={paletteOptions}
             value={panels[0].palette}
+            options={paletteOptions}
             onChange={(v) => updateAllPanels({ palette: v as PaletteName })}
-            placeholder="Palette 선택"
           />
-          <Select
+          <PreviewControlPanel
             label="System"
-            options={systemPresetOptions}
             value={panels[0].systemPreset}
+            options={systemPresetOptions}
             onChange={(v) => updateAllPanels({ systemPreset: v as SystemPresetName })}
-            placeholder="System 선택"
           />
-          <Select
+          <PreviewControlPanel
             label="Neutral"
-            options={neutralPresetOptions}
             value={panels[0].neutralPreset}
+            options={neutralPresetOptions}
             onChange={(v) => updateAllPanels({ neutralPreset: v as NeutralPresetName })}
-            placeholder="Neutral 선택"
           />
-          <Select
+          <PreviewControlPanel
             label="Style"
-            options={styleOptions}
             value={panels[0].style}
+            options={styleOptions}
             onChange={(v) => updateAllPanels({ style: v as StyleName })}
-            placeholder="Style 선택"
           />
-          <Select
+          <PreviewControlPanel
             label="Font"
-            options={fontOptions}
             value={panels[0].font}
+            options={fontOptions}
             onChange={(v) => updateAllPanels({ font: v as FontKey })}
-            placeholder="Font 선택"
           />
         </div>
       </LabSection>

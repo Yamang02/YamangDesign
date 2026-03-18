@@ -27,7 +27,8 @@
       "Bash(echo \"EXIT:$?\")",
       "Bash(git -C /c/Users/ljj02/Desktop/dev/YamangDesign/.worktrees/e11-domain-model-restructure diff --stat)",
       "Bash(git -C /c/Users/ljj02/Desktop/dev/YamangDesign/.worktrees/e11-domain-model-restructure status --short)",
-      "Bash(grep -r \"from ''../palettes/types''\\\\|from ''../../palettes/types''\\\\|from ''../../../palettes/types''\" /c/Users/ljj02/Desktop/dev/YamangDesign/.worktrees/e11-domain-model-restructure/src --include=\"*.ts\" --include=\"*.tsx\" -l)"
+      "Bash(grep -r \"from ''../palettes/types''\\\\|from ''../../palettes/types''\\\\|from ''../../../palettes/types''\" /c/Users/ljj02/Desktop/dev/YamangDesign/.worktrees/e11-domain-model-restructure/src --include=\"*.ts\" --include=\"*.tsx\" -l)",
+      "Bash(node -e \":*)"
     ],
     "additionalDirectories": [
       "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"

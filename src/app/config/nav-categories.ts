@@ -7,6 +7,7 @@ export interface NavItem {
   id: string;
   label: string;
   icon?: string;
+  iconLibrary?: IconLibrary;
 }
 
 export interface NavCategory {
@@ -27,7 +28,7 @@ export const navCategories: NavCategory[] = [
       { id: 'palette', label: 'Palette', icon: 'palette' },
       { id: 'style', label: 'Style', icon: 'auto-awesome' },
       { id: 'font', label: 'Font', icon: 'text-fields' },
-      { id: 'tokens', label: 'Tokens', icon: 'view-module' },
+      { id: 'tokens', label: 'Tokens', icon: 'category' },
     ],
   },
   {
@@ -36,25 +37,25 @@ export const navCategories: NavCategory[] = [
     iconLibrary: 'material',
     tooltip: 'Build',
     items: [
-      { id: 'atoms', label: 'Atoms', icon: 'circle' },
-      { id: 'molecules', label: 'Molecules', icon: 'donut-small' },
-      { id: 'organisms', label: 'Organisms', icon: 'grid-view' },
+      { id: 'atoms', label: 'Atoms', icon: 'atom', iconLibrary: 'nucleo' },
+      { id: 'molecules', label: 'Molecules', icon: 'circles-relation', iconLibrary: 'nucleo' },
+      { id: 'organisms', label: 'Organisms', icon: 'auto-awesome-mosaic' },
     ],
   },
   {
     id: 'context',
-    icon: 'frame-inspect',
+    icon: 'devices',
     iconLibrary: 'material',
     tooltip: 'Context',
     items: [
-      { id: 'service', label: 'Service', icon: 'phone-iphone' },
-      { id: 'shell', label: 'Shell', icon: 'desktop-windows' },
+      { id: 'service', label: 'Service', icon: 'browser', iconLibrary: 'nucleo' },
+      { id: 'shell', label: 'Shell', icon: 'shell', iconLibrary: 'nucleo' },
     ],
   },
   {
     id: 'playground',
-    icon: 'tune',
-    iconLibrary: 'material',
+    icon: 'ferris-wheel',
+    iconLibrary: 'nucleo',
     tooltip: 'Playground',
   },
 ];

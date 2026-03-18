@@ -6,11 +6,97 @@
   gap: var(--ds-spacing-8);
 }
 
-/* Controls (Playground과 동일) */
-.selectRow {
+/* 컴포넌트 인벤토리 (ShellContext 패턴 동일) */
+.inventoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--ds-spacing-4);
+}
+
+.inventoryCard {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-6);
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  padding: var(--ds-spacing-4);
+  border: 1px solid var(--shell-border-subtle);
+  border-radius: var(--ds-radius-lg);
+  background: var(--shell-bg-surface);
+}
+
+.inventoryCardTitle {
+  font-size: var(--ds-text-lg);
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-primary);
+  margin-bottom: var(--ds-spacing-1);
+}
+
+.inventoryCardPath {
+  font-size: var(--ds-text-xs);
+  font-family: var(--ds-font-mono);
+  color: var(--shell-text-secondary);
+  margin-bottom: var(--ds-spacing-3);
+}
+
+.inventoryCardDivider {
+  height: 1px;
+  background: var(--shell-border-subtle);
+  margin: 0 0 var(--ds-spacing-3) 0;
+}
+
+.inventoryCardTokens {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.tokenTag {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-xs);
+  color: var(--shell-action-primary);
+  background: var(--shell-bg-primary-subtle);
+  padding: 2px 6px;
+  border-radius: var(--ds-radius-sm);
+  display: inline-block;
+}
+
+/* Token Map 테이블 */
+.tokenMapTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ds-text-sm);
+}
+
+.tokenMapTable th,
+.tokenMapTable td {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  text-align: left;
+  border-bottom: 1px solid var(--shell-border-subtle);
+}
+
+.tokenMapTable th {
+  font-weight: var(--ds-font-weight-semibold);
+  color: var(--shell-text-primary);
+  background: var(--shell-bg-subtle);
+}
+
+.tokenMapTable td {
+  color: var(--shell-text-secondary);
+}
+
+.tokenMapTable td:last-child {
+  font-family: var(--ds-font-mono);
+  color: var(--shell-action-primary);
+}
+
+/* Controls — PreviewControlPanel 스택 */
+.controlsStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-5);
 }
 
 /* E08 P02: 탭 전환 */

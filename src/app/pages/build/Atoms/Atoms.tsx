@@ -29,8 +29,6 @@ import {
   iconShowcase,
 } from '@app/content/showcase-content';
 import type { ShowcaseSectionId } from '@app/content/showcase-content';
-import { getThemeVariables, comparisonPresets } from '@domain/constants';
-import type { PaletteName, StyleName } from '@shared/@types/theme';
 import styles from '../Components/Components.module.css';
 
 /** 복잡도 순: Badge → Icon → Avatar → Button → Input → Select → Card */
@@ -322,20 +320,8 @@ function getSectionTitle(id: ShowcaseSectionId): string {
   return showcaseSections[id];
 }
 
-const paletteOptions = comparisonPresets.palettes.map((p) => ({
-  value: p,
-  label: capitalize(p),
-}));
-const styleOptions = comparisonPresets.styles.map((s) => ({
-  value: s,
-  label: capitalize(s),
-}));
-
 export function Atoms() {
   const [detailSection, setDetailSection] = useState<ShowcaseSectionId | null>(null);
-  const [palette, setPalette] = useState<PaletteName>(comparisonPresets.palettes[0]);
-  const [style, setStyle] = useState<StyleName>(comparisonPresets.styles[0]);
-  const themeVars = getThemeVariables(palette, style) as React.CSSProperties;
 
   return (
     <>
@@ -345,23 +331,7 @@ export function Atoms() {
         showToc={false}
         tocItems={tocItems}
       >
-        <div className={styles.buildControls} data-build-controls>
-          <Select
-            label="Palette"
-            options={paletteOptions}
-            value={palette}
-            onChange={(v) => setPalette(v as PaletteName)}
-            placeholder="Palette 선택"
-          />
-          <Select
-            label="Style"
-            options={styleOptions}
-            value={style}
-            onChange={(v) => setStyle(v as StyleName)}
-            placeholder="Style 선택"
-          />
-        </div>
-        <div data-context="preview" style={themeVars} className={styles.buildPreviewWrap}>
+        <div data-context="preview" className={styles.buildPreviewWrap}>
           <div className={styles.showcaseGrid}>
             {SHOWCASE_GRID_IDS.map((id) => (
               <ComponentCard
@@ -383,7 +353,7 @@ export function Atoms() {
         open={!!detailSection}
         onClose={() => setDetailSection(null)}
         title={detailSection ? getSectionTitle(detailSection) : ''}
-        previewStyle={themeVars}
+        previewStyle={{}}
       >
         {detailSection && <ComponentShowcase id={detailSection} />}
       </ComponentDetailModal>

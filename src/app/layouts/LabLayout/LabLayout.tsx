@@ -5,8 +5,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { LabToc } from './LabToc';
 import { TabBar } from './TabBar';
+import { Icon } from '@app/components/Icon';
 import styles from './LabLayout.module.css';
 import type { TocItem, TocItemTree } from './types';
+import { useInspector } from '@app/context/InspectorContext';
 
 function flattenTocIds(items: (TocItem | TocItemTree)[]): string[] {
   return items.flatMap((item) => {
@@ -66,6 +68,8 @@ export function LabLayout({
     return () => observer.disconnect();
   }, [useToc, idsToObserve]);
 
+  const inspector = useInspector();
+
   const handleNavClick = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -86,6 +90,17 @@ export function LabLayout({
           items={tocItems}
           activeId={activeSection}
           onItemClick={handleNavClick}
+          footer={inspector ? (
+            <button
+              type="button"
+              className={`${styles.tocInspectorBtn} ${inspector.isOpen ? styles.tocInspectorBtnActive : ''}`}
+              onClick={() => inspector.isOpen ? inspector.closeInspector() : inspector.openInspector()}
+              aria-pressed={inspector.isOpen}
+              title="Component Inspector"
+            >
+              <Icon name="inspect" library="nucleo" size="sm" title="Inspector" />
+            </button>
+          ) : undefined}
         />
       )}
       {useTabBar && (

@@ -12,13 +12,6 @@ import type { IconLibrary } from '../Icon';
 import type { HeaderNavProps } from './HeaderNav.types';
 import styles from './HeaderNav.module.css';
 
-const categoryLabels: Record<string, string> = {
-  labs: 'Labs',
-  build: 'Build',
-  context: 'Context',
-  playground: 'Playground',
-};
-
 export function HeaderNav({
   activePage,
   onSelect,
@@ -29,7 +22,7 @@ export function HeaderNav({
   return (
     <nav className={styles.nav} aria-label="주 메뉴" data-shell>
       {navCategories.map((category) => {
-        const label = categoryLabels[category.id] ?? category.tooltip;
+        const label = category.tooltip;
         const icon = (
           <Icon
             name={category.icon}
@@ -48,6 +41,7 @@ export function HeaderNav({
                 id: item.id,
                 label: item.label,
                 icon: item.icon,
+                iconLibrary: item.iconLibrary,
               }))}
               active={category.items.some((item) => item.id === activePage)}
               activeItemId={activePage}

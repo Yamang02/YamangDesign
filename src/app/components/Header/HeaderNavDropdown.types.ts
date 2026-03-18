@@ -4,6 +4,7 @@ export interface HeaderNavDropdownItem {
   id: string;
   label: string;
   icon?: string;
+  iconLibrary?: 'material' | 'nucleo';
 }
 
 export interface HeaderNavDropdownProps {

@@ -1,6 +1,9 @@
 export {
   LabLayout,
+  PreviewControlPanel,
+  type PreviewControlOption,
   LabSection,
+  LabPanel,
   LabCard,
   ComparisonCard,
   ComparisonGrid,

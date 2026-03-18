@@ -1,12 +1,5 @@
 /* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
 /* E07: Components 쇼케이스 + DetailPanel 상세 */
-/* E08 P03: Build 경량 Controls (Palette + Style) */
-.buildControls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-6);
-  margin-bottom: var(--ds-spacing-6);
-}
 .buildPreviewWrap {
   /* 테마 변수 상속 영역 */
 }

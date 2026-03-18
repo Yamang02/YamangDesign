@@ -2,23 +2,19 @@
  * E06 P03: Token Lab 3-레이어 뷰
  * --shell-* / --ds-* / --sys-* 구분, Architecture 다이어그램, 카테고리별 토큰 표시
  */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   LabLayout,
   LabSection,
-  LabCard,
+  LabPanel,
   LabOverview,
-  ComparisonCard,
-  TabBar,
   TokenValueRow,
   MetadataTable,
   type TocItem,
   type TocItemTree,
 } from '../../../layouts';
-import { Button, Input, Card, Badge, DetailPanel } from '../../../components';
-import { sampleText } from '@app/content/lab-content';
-import { componentTokenMap, getThemeVariables } from '@domain/constants';
-import { useTheme } from '@domain/themes';
+import { Input, Badge, DetailPanel } from '../../../components';
+import { useCssVar } from '@app/hooks/useCssVar';
 import { formatStructuredDisplay } from '@shared/utils/css-structured';
 import { TokenOverviewDiagram } from './TokenOverviewDiagram';
 import categoriesJson from '../../../content/labs/token-lab/categories.json';
@@ -57,24 +53,7 @@ const tocItems: (TocItem | TocItemTree)[] = [
     ],
   },
   { id: 'sys-tokens', label: 'System' },
-  { id: 'component-inspector', label: 'Component Inspector' },
 ];
-
-function useCssVar(name: string): string {
-  const [value, setValue] = useState('');
-
-  useEffect(() => {
-    const read = () => {
-      const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-      setValue(v);
-    };
-    read();
-    const id = window.setInterval(read, 500);
-    return () => window.clearInterval(id);
-  }, [name]);
-
-  return value;
-}
 
 // E08 P08: 토큰 → 카테고리·레이어 (Detail Panel용)
 function getTokenMeta(token: string): { layer: string; layerNote: string; category: string } {
@@ -309,7 +288,7 @@ function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => v
   const fullRowGroups = GLOBAL_GROUPS.filter((g) => g.fullRow);
 
   return (
-    <LabSection title="Global" id="ds-global">
+    <LabPanel title="Global" id="ds-global">
       <div className={styles.tokenCategoryGrid}>
         {gridGroups.map((g) => (
           <div key={g.title} className={styles.tokenCategory}>
@@ -334,14 +313,14 @@ function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => v
           />
         </div>
       ))}
-    </LabSection>
+    </LabPanel>
   );
 }
 
 // --- DS Alias (역할별 세분화) ---
 function AliasSection({ onSelectToken }: { onSelectToken?: (token: string) => void }) {
   return (
-    <LabSection title="Alias" id="ds-alias">
+    <LabPanel title="Alias" id="ds-alias">
       <div className={styles.tokenCategoryGrid}>
         {ALIAS_GROUPS.map((g) => (
           <div key={g.title} className={styles.tokenCategory}>
@@ -350,7 +329,7 @@ function AliasSection({ onSelectToken }: { onSelectToken?: (token: string) => vo
           </div>
         ))}
       </div>
-    </LabSection>
+    </LabPanel>
   );
 }
 
@@ -378,116 +357,6 @@ function SysTokensSection({ onSelectToken }: { onSelectToken?: (token: string) =
   );
 }
 
-// --- Component Inspector ---
-type ComponentKey = keyof typeof componentTokenMap;
-const COMPONENT_ORDER: ComponentKey[] = ['Button', 'Input', 'Card', 'Badge'];
-
-function ComponentTokenTableRow({ role, token }: { role: string; token: string }) {
-  const value = useCssVar(token);
-  const showSwatch = isColorValue(value);
-  return (
-    <tr>
-      <td className={styles.tokenNameCell}>{role}</td>
-      <td className={styles.tokenNameCell} title={token}>
-        <span className={styles.tokenNameInner}>{token}</span>
-      </td>
-      <td className={styles.tokenValueCell}>{value || '(not set)'}</td>
-      <td className={styles.tokenSwatchCell}>
-        {showSwatch && (
-          <span
-            className={styles.tokenSwatch}
-            data-context="preview"
-            style={{ backgroundColor: value }}
-            title={value}
-          />
-        )}
-      </td>
-    </tr>
-  );
-}
-
-function ComponentInspector() {
-  const [activeComponent, setActiveComponent] = useState<ComponentKey>('Button');
-  const tokens = componentTokenMap[activeComponent];
-  const { theme } = useTheme();
-  const styleVars = getThemeVariables(theme.palette, theme.style);
-
-  return (
-    <LabSection title="Component Inspector" id="component-inspector">
-      <TabBar
-        variant="pill"
-        tabs={COMPONENT_ORDER.map((key) => ({ id: key, label: key }))}
-        activeTab={activeComponent}
-        onChange={(id) => setActiveComponent(id as ComponentKey)}
-      />
-
-      <div className={styles.componentLayout}>
-        <LabCard>
-          <h3 className={styles.previewTitle}>사용 토큰 목록</h3>
-          <div className={styles.tokenTableWrap}>
-            <table className={styles.tokenTable}>
-              <thead>
-                <tr>
-                  <th>역할</th>
-                  <th>토큰</th>
-                  <th>값</th>
-                  <th aria-label="스와치" />
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(tokens).map(([role, token]) => (
-                  <ComponentTokenTableRow key={role} role={role} token={token} />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </LabCard>
-
-        <div className={styles.previewCard}>
-          <h3 className={styles.previewTitle}>라이브 프리뷰 (테마 반응형)</h3>
-          <div className={styles.previewBody}>
-            {activeComponent === 'Button' && (
-              <ComparisonCard title="Button" styleVars={styleVars}>
-                <Button variant="primary">Primary</Button>
-                <Button variant="secondary">Secondary</Button>
-                <Button variant="ghost">Ghost</Button>
-              </ComparisonCard>
-            )}
-            {activeComponent === 'Input' && (
-              <ComparisonCard title="Input" styleVars={styleVars}>
-                <Input placeholder="이메일을 입력하세요" />
-                <Input placeholder="에러 상태" isError errorMessage="필수 입력값입니다" />
-              </ComparisonCard>
-            )}
-            {activeComponent === 'Card' && (
-              <ComparisonCard title="Card" styleVars={styleVars}>
-                <Card padding="md">
-                  <h4
-                    style={{
-                      margin: 0,
-                      marginBottom: 'var(--ds-spacing-2)',
-                      fontSize: 'var(--ds-text-lg)',
-                      fontWeight: 'var(--ds-font-weight-semibold)',
-                    }}
-                  >
-                    Card Title
-                  </h4>
-                  <p style={{ margin: 0, fontSize: 'var(--ds-text-sm)' }}>{sampleText.pangram.en}</p>
-                </Card>
-              </ComparisonCard>
-            )}
-            {activeComponent === 'Badge' && (
-              <ComparisonCard title="Badge" styleVars={styleVars}>
-                <Badge>Default</Badge>
-                <Badge variant="primary">Primary</Badge>
-              </ComparisonCard>
-            )}
-          </div>
-        </div>
-      </div>
-    </LabSection>
-  );
-}
 
 export function TokenLab() {
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
@@ -506,7 +375,6 @@ export function TokenLab() {
           <AliasSection onSelectToken={setSelectedToken} />
         </LabSection>
         <SysTokensSection onSelectToken={setSelectedToken} />
-        <ComponentInspector />
       </LabLayout>
 
       <DetailPanel

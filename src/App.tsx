@@ -27,6 +27,8 @@ import {
 } from '@app/pages';
 import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
 import { DesignSettingsNavContext } from '@app/context/DesignSettingsNavContext';
+import { InspectorProvider } from '@app/context/InspectorContext';
+import { ComponentInspectorPanel } from '@app/components/ComponentInspector/ComponentInspectorPanel';
 
 /** E06 P01 + P05: Labs / Build / Context / Playground / Design Settings */
 export type PageName =
@@ -170,6 +172,7 @@ function App() {
 
   return (
     <DesignSettingsNavContext.Provider value={{ openDesignSettings }}>
+      <InspectorProvider>
       <ThemeProvider
         initialStyleName={initialSettings?.styleName ?? 'minimal'}
         initialPalette={initialSettings?.palette ?? defaultPalette}
@@ -197,7 +200,9 @@ function App() {
           </main>
           <Footer />
         </div>
+        <ComponentInspectorPanel />
       </ThemeProvider>
+      </InspectorProvider>
     </DesignSettingsNavContext.Provider>
   );
 }

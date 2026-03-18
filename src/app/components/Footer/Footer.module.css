@@ -1,4 +1,7 @@
 /* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
+/* @tokens: --shell-bg-base, --shell-bg-subtle, --shell-bg-hover, --shell-text-primary,
+            --shell-text-secondary, --shell-text-tertiary, --shell-border-default,
+            --shell-border-hover, --shell-text-hover */
 .footer {
   padding: var(--ds-spacing-5) var(--ds-spacing-8);
   border-top: 1px solid var(--shell-border-default);

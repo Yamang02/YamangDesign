@@ -1,10 +1,43 @@
 {
   "permissions": {
-    "additionalDirectories": [
-      "C:\\Users\\ljj02\\AppData\\Roaming\\Code\\User"
-    ],
     "allow": [
-      "Read(//c/Users/ljj02/AppData/Roaming/Cursor/User/**)"
+      "Read(//c/Users/ljj02/AppData/Roaming/Cursor/User/**)",
+      "Bash(node -e \":*)",
+      "Bash(xargs cat)",
+      "Read(//c/Users/ljj02/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/skills/brainstorming/**)",
+      "Read(//c/Users/ljj02/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/**)",
+      "Read(//c/Users/ljj02/.claude/plugins/**)",
+      "Bash(bash \"C:/Users/ljj02/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/skills/brainstorming/scripts/start-server.sh\" --project-dir \"C:/Users/ljj02/Desktop/dev/YamangDesign\")",
+      "Bash(curl -s http://localhost:56785)",
+      "Bash(netstat -ano)",
+      "Read(//c/Users/ljj02/.claude/skills/yamang-epic/**)",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:phosphoricons.com)",
+      "WebFetch(domain:tabler.io)",
+      "WebFetch(domain:api.phosphoricons.com)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/spiral.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/playground.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/game-controller.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/swipe.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/tabler/tabler-icons/main/icons/outline/sandbox.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/flower.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/phosphor-icons/core/main/assets/regular/hurricane.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/shell.svg\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/ferris-wheel.svg\")",
+      "Bash(timeout 15 npm run dev)",
+      "Bash(grep -o \"''[a-z-]*''\" src/app/components/Icon/icons/nucleo.ts)",
+      "Bash(for d in docs/epic/*/)",
+      "Bash(do echo \"=== $d ===\")",
+      "Read(//c/Users/ljj02/Desktop/dev/YamangDesign/**)",
+      "Bash(# E12 상태 확인 - domain/ app/ shared/ 구조가 있는지 ls src/)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\ljj02\\AppData\\Roaming\\Code\\User",
+      "C:\\Users\\ljj02\\Desktop\\dev\\YamangDesign",
+      "C:\\Users\\ljj02\\.claude\\skills\\yamang-epic",
+      "C:\\Users\\ljj02\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.2\\skills\\brainstorming",
+      "C:\\Users\\ljj02\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\5.0.2\\skills\\writing-plans"
     ]
   },
   "enabledPlugins": {

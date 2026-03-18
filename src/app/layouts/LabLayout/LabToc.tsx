@@ -3,11 +3,13 @@
  */
 import styles from './LabLayout.module.css';
 import type { TocItem, TocItemTree } from './types';
+import { useInspector } from '@app/context/InspectorContext';
 
 interface LabTocProps {
   items: TocItem[] | TocItemTree[];
   activeId: string | null;
   onItemClick: (id: string) => void;
+  footer?: React.ReactNode;
 }
 
 function hasChildren(item: TocItem | TocItemTree): item is TocItemTree {
@@ -46,12 +48,21 @@ function renderTocItems(
   });
 }
 
-export function LabToc({ items, activeId, onItemClick }: LabTocProps) {
+export function LabToc({ items, activeId, onItemClick, footer }: LabTocProps) {
+  const inspector = useInspector();
+
   return (
-    <nav className={styles.toc} aria-label="Table of contents">
+    <nav
+      ref={(el) => {
+        if (inspector?.tocAnchorRef) inspector.tocAnchorRef.current = el;
+      }}
+      className={styles.toc}
+      aria-label="Table of contents"
+    >
       <ul className={styles.tocList}>
         {renderTocItems(items, activeId, onItemClick)}
       </ul>
+      {footer != null && <div className={styles.tocFooter}>{footer}</div>}
     </nav>
   );
 }

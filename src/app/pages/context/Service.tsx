@@ -7,6 +7,8 @@ import { ServiceContext } from './Service/ServiceContext';
 import type { TocItem } from '../../layouts';
 
 const tocItems: TocItem[] = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'token-map', label: 'Token Map' },
   { id: 'controls', label: 'Controls' },
   { id: 'page-preview', label: 'Page Preview' },
 ];

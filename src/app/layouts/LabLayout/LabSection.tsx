@@ -22,19 +22,30 @@ export function LabSection({
   id,
   description,
 }: LabSectionProps) {
-  const content = (
-    <section id={id} className={styles.labSection}>
-      <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>{title}</h2>
-        {description != null && (
-          <p className={styles.sectionDescInline}>{description}</p>
-        )}
-      </div>
-      <div className={styles.sectionContent}>{children}</div>
-    </section>
+  const header = (
+    <div className={styles.sectionHeader}>
+      <h2 className={styles.sectionTitle}>{title}</h2>
+      {description != null && (
+        <p className={styles.sectionDescInline}>{description}</p>
+      )}
+    </div>
   );
 
-  if (!card) return content;
+  if (!card) {
+    return (
+      <section id={id} className={styles.labSection}>
+        {header}
+        <div className={styles.sectionContent}>{children}</div>
+      </section>
+    );
+  }
 
-  return <div className={styles.sectionCard}>{content}</div>;
+  return (
+    <section id={id} className={styles.labSection}>
+      {header}
+      <div className={styles.sectionCard}>
+        <div className={styles.sectionContent}>{children}</div>
+      </div>
+    </section>
+  );
 }

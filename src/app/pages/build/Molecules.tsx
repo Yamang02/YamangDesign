@@ -13,19 +13,12 @@ import {
   CompositionMap,
   Icon,
   Input,
-  Select,
   TokenSection,
 } from '../../components';
 import { LabLayout } from '../../layouts';
 import { MOLECULES } from '@app/content/build-content';
-import { getThemeVariables, comparisonPresets } from '@domain/constants';
 import type { MoleculeId } from '@app/content/build-content';
-import type { PaletteName, StyleName } from '@shared/@types/theme';
 import styles from './Components/Components.module.css';
-
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 function MoleculePreview({ id }: { id: MoleculeId }) {
   switch (id) {
@@ -118,20 +111,8 @@ function MoleculeModalContent({ id }: { id: MoleculeId }) {
   );
 }
 
-const paletteOptions = comparisonPresets.palettes.map((p) => ({
-  value: p,
-  label: capitalize(p),
-}));
-const styleOptions = comparisonPresets.styles.map((s) => ({
-  value: s,
-  label: capitalize(s),
-}));
-
 export function Molecules() {
   const [detailId, setDetailId] = useState<MoleculeId | null>(null);
-  const [palette, setPalette] = useState<PaletteName>(comparisonPresets.palettes[0]);
-  const [style, setStyle] = useState<StyleName>(comparisonPresets.styles[0]);
-  const themeVars = getThemeVariables(palette, style) as React.CSSProperties;
 
   return (
     <>
@@ -141,23 +122,7 @@ export function Molecules() {
         showToc={false}
         tocItems={[]}
       >
-        <div className={styles.buildControls} data-build-controls>
-          <Select
-            label="Palette"
-            options={paletteOptions}
-            value={palette}
-            onChange={(v) => setPalette(v as PaletteName)}
-            placeholder="Palette 선택"
-          />
-          <Select
-            label="Style"
-            options={styleOptions}
-            value={style}
-            onChange={(v) => setStyle(v as StyleName)}
-            placeholder="Style 선택"
-          />
-        </div>
-        <div data-context="preview" style={themeVars} className={styles.buildPreviewWrap}>
+        <div data-context="preview" className={styles.buildPreviewWrap}>
           <div className={styles.showcaseGrid}>
             {MOLECULES.map((m) => (
               <ComponentCard
@@ -178,7 +143,7 @@ export function Molecules() {
         open={!!detailId}
         onClose={() => setDetailId(null)}
         title={detailId ? MOLECULES.find((m) => m.id === detailId)?.title ?? '' : ''}
-        previewStyle={themeVars}
+        previewStyle={{}}
       >
         {detailId && <MoleculeModalContent id={detailId} />}
       </ComponentDetailModal>

@@ -70,7 +70,7 @@ export function HeaderNavDropdown({
               onClick={() => handleSelect(item.id)}
               role="menuitem"
             >
-              {item.icon && <Icon name={item.icon} size="sm" />}
+              {item.icon && <Icon name={item.icon} library={item.iconLibrary ?? 'material'} size="sm" />}
               <span>{item.label}</span>
             </button>
           ))}

@@ -1,4 +1,7 @@
 /* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
+/* @tokens: --shell-action-active, --shell-bg-elevated, --shell-bg-hover, --shell-bg-primary-subtle,
+            --shell-border-default, --shell-shadow-md, --shell-text-hover,
+            --shell-text-primary, --shell-text-secondary */
 .navDropdown {
   position: relative;
 }

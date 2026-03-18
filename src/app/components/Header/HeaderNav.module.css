@@ -1,4 +1,7 @@
 /* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
+/* @tokens: --shell-bg-hover, --shell-text-hover, --shell-text-primary, --shell-text-tertiary,
+            --shell-text-secondary, --shell-bg-elevated, --shell-border-default,
+            --shell-shadow-lg, --shell-bg-primary-subtle */
 /* E02: 아이콘 기반 네비게이션 */
 
 .nav {

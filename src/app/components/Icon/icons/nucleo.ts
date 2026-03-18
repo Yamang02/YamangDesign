@@ -14,6 +14,32 @@ export const nucleoIcons: Record<string, { path: string; stroke?: boolean }> = {
     stroke: true,
   },
 
+  // Design system structure (Tabler Icons + Lucide Icons, MIT)
+  'shell': {
+    path: 'M14 11a2 2 0 1 1-4 0 4 4 0 0 1 8 0 6 6 0 0 1-12 0 8 8 0 0 1 16 0 10 10 0 1 1-20 0 11.93 11.93 0 0 1 2.42-7.22 2 2 0 1 1 3.16 2.44',
+    stroke: true,
+  },
+  'ferris-wheel': {
+    path: 'M12 2v4 M6.8 15l-3.5 2 M20.7 7l-3.5 2 M6.8 9L3.3 7 M20.7 17l-3.5-2 M9 22l3-8 3 8 M8 22h8 M18 18.7a9 9 0 1 0-12 0',
+    stroke: true,
+  },
+  'atom': {
+    path: 'M12 12v.01 M19.071 4.929c-1.562 -1.562 -6 .337 -9.9 4.243c-3.905 3.905 -5.804 8.337 -4.242 9.9c1.562 1.561 6 -.338 9.9 -4.244c3.905 -3.905 5.804 -8.337 4.242 -9.9 M4.929 4.929c-1.562 1.562 .337 6 4.243 9.9c3.905 3.905 8.337 5.804 9.9 4.242c1.561 -1.562 -.338 -6 -4.244 -9.9c-3.905 -3.905 -8.337 -5.804 -9.9 -4.242',
+    stroke: true,
+  },
+  'circles-relation': {
+    path: 'M9.183 6.117a6 6 0 1 0 4.511 3.986 M14.813 17.883a6 6 0 1 0 -4.496 -3.954',
+    stroke: true,
+  },
+  'browser': {
+    path: 'M4 8h16 M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12 M8 4v4',
+    stroke: true,
+  },
+  'layout-navbar': {
+    path: 'M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12 M4 9l16 0',
+    stroke: true,
+  },
+
   // UI Elements
   'grid': {
     path: 'M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z',
@@ -25,6 +51,12 @@ export const nucleoIcons: Record<string, { path: string; stroke?: boolean }> = {
   },
   'layers': {
     path: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+    stroke: true,
+  },
+
+  // Inspector
+  'inspect': {
+    path: 'M3 3h4v4H3V3zm14 0h4v4h-4V3zM3 17h4v4H3v-4zm14 0h4v4h-4v-4zM7 5h10M5 7v10M19 7v10M7 19h10',
     stroke: true,
   },
 

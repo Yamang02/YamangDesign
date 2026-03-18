@@ -1,5 +1,8 @@
 export { LabLayout } from './LabLayout';
+export { PreviewControlPanel } from './PreviewControlPanel';
+export type { PreviewControlOption } from './PreviewControlPanel';
 export { LabSection } from './LabSection';
+export { LabPanel } from './LabPanel';
 export { LabCard } from './LabCard';
 export { ComparisonCard } from './ComparisonCard';
 export { LabToc } from './LabToc';

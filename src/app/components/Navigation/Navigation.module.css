@@ -1,4 +1,7 @@
 /* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
+/* @tokens: --shell-action-primary, --shell-bg-base, --shell-bg-elevated, --shell-bg-surface,
+            --shell-text-primary, --shell-text-secondary, --shell-border-default,
+            --shell-shadow-sm, --shell-shadow-lg */
 .nav {
   display: flex;
   align-items: center;

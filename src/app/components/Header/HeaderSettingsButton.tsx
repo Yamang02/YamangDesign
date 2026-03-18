@@ -17,12 +17,12 @@ export function HeaderSettingsButton({
         styles.navItemWithLabel
       )}
       onClick={() => onOpenSettings?.()}
-      aria-label="settings"
+      aria-label="Settings"
     >
       <span className={styles.navItemIcon}>
         <Icon name="settings" size="md" />
       </span>
-      <span className={styles.navItemLabel}>settings</span>
+      <span className={styles.navItemLabel}>Settings</span>
     </button>
   );
 }
