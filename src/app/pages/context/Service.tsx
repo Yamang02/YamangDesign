@@ -15,7 +15,7 @@ const tocItems: TocItem[] = [
 
 export function Service() {
   return (
-    <LabLayout title="Service" subtitle="서비스 UI 결과물 미리보기" tocItems={tocItems}>
+    <LabLayout title="Service" tocItems={tocItems}>
       <ServiceContext />
     </LabLayout>
   );

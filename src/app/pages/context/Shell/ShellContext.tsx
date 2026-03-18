@@ -67,7 +67,16 @@ export function ShellContext() {
               <Header onLogoClick={() => {}}>
                 <HeaderNav activePage={previewPage} onSelect={setPreviewPage} />
               </Header>
-              <div style={{ flex: 1, minHeight: 120, background: 'var(--shell-bg-surface)' }} />
+              <div className={styles.livePreviewBody}>
+                <nav className={styles.livePreviewSidebar}>
+                  {['Labs', 'Build', 'Context', 'Playground'].map((item) => (
+                    <div key={item} className={styles.livePreviewSidebarItem}>{item}</div>
+                  ))}
+                </nav>
+                <main className={styles.livePreviewMain}>
+                  <div className={styles.livePreviewPlaceholder}>콘텐츠 영역</div>
+                </main>
+              </div>
               <Footer />
             </div>
           </div>

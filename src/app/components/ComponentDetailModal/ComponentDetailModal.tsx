@@ -59,7 +59,7 @@ export function ComponentDetailModal({
             <Icon name="close" size="sm" />
           </button>
         </header>
-        <div className={styles.body} data-context={previewStyle ? 'preview' : undefined} style={previewStyle}>
+        <div className={styles.body} data-context="preview" style={previewStyle}>
           {children}
         </div>
       </div>

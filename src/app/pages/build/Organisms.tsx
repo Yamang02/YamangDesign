@@ -211,7 +211,6 @@ export function Organisms() {
     <>
       <LabLayout
         title="Organisms"
-        subtitle="Molecules를 묶어 페이지 섹션을 구성"
         showToc={false}
         tocItems={[]}
       >

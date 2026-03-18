@@ -224,7 +224,7 @@
 }
 .previewTable th {
   font-weight: var(--ds-font-weight-semibold);
-  background: var(--shell-bg-subtle);
+  background: var(--ds-color-bg-muted);
 }
 
 /* E08 P02: Article 목업 */

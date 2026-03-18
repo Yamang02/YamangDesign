@@ -14,8 +14,8 @@
   font-size: var(--shell-tooltip-font-size);
   line-height: 1.4;
   font-weight: 500;
-  color: var(--shell-tooltip-text, #FFFFFF);
-  background-color: var(--shell-tooltip-bg, rgba(0, 0, 0, 0.85));
+  color: var(--shell-tooltip-text);
+  background-color: var(--shell-tooltip-bg);
   border-radius: var(--shell-tooltip-radius);
   pointer-events: none;
   white-space: normal;

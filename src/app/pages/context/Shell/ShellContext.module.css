@@ -109,23 +109,59 @@
   overflow: hidden;
   background: var(--shell-bg-base);
   box-shadow: var(--shell-shadow-md);
+  height: 340px;
 }
 
 .livePreviewScale {
   transform: scale(0.5);
   transform-origin: top left;
   width: 200%;
-  min-height: 400px;
+  height: 600px;
   display: flex;
   flex-direction: column;
 }
 
 .livePreviewInner {
-  width: 50%;
-  min-height: 400px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+/* Live Preview body: sidebar + main */
+.livePreviewBody {
+  flex: 1;
+  display: flex;
+  background: var(--shell-bg-surface);
+}
+
+.livePreviewSidebar {
+  width: 180px;
+  padding: var(--ds-spacing-3);
+  border-right: 1px solid var(--shell-border-subtle);
+  background: var(--shell-bg-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-1);
+}
+
+.livePreviewSidebarItem {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  font-size: var(--ds-text-sm);
+  color: var(--shell-text-secondary);
+  border-radius: var(--ds-radius-sm);
+}
+
+.livePreviewMain {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.livePreviewPlaceholder {
+  font-size: var(--ds-text-lg);
+  color: var(--shell-text-muted);
 }
 
 .livePreviewCaption {

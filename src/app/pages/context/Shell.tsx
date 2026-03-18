@@ -14,7 +14,7 @@ const tocItems: TocItem[] = [
 
 export function Shell() {
   return (
-    <LabLayout title="Shell" subtitle="크롬 --shell-* 토큰 해부도" tocItems={tocItems}>
+    <LabLayout title="Shell" tocItems={tocItems}>
       <ShellContext />
     </LabLayout>
   );

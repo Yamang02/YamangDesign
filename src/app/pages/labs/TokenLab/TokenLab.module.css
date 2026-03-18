@@ -186,14 +186,3 @@
   color: var(--ds-color-text-primary);
   margin: 0 0 var(--ds-spacing-1);
 }
-
-.sysUsage .categoryTitle {
-  margin-bottom: var(--ds-spacing-2);
-}
-
-.sysUsageRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-3);
-  align-items: flex-start;
-}

@@ -118,7 +118,6 @@ export function Molecules() {
     <>
       <LabLayout
         title="Molecules"
-        subtitle="Atoms를 조합한 의미 있는 UI 패턴"
         showToc={false}
         tocItems={[]}
       >

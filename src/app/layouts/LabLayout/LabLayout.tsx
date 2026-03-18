@@ -22,7 +22,6 @@ function flattenTocIds(items: (TocItem | TocItemTree)[]): string[] {
 
 export interface LabLayoutProps {
   title: string;
-  subtitle?: string;
   children: React.ReactNode;
   /** TOC 표시 여부 (기본: true) */
   showToc?: boolean;
@@ -30,15 +29,17 @@ export interface LabLayoutProps {
   tocItems?: TocItem[] | TocItemTree[];
   /** 기본값: 'scroll'. 'tab'이면 TOC 대신 상단 탭 바 렌더 */
   navigationMode?: 'scroll' | 'tab';
+  /** 헤더 행 우측에 표시할 액션 요소 */
+  headerActions?: React.ReactNode;
 }
 
 export function LabLayout({
   title,
-  subtitle,
   children,
   showToc = true,
   tocItems = [],
   navigationMode = 'scroll',
+  headerActions,
 }: LabLayoutProps) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const idsToObserve = useMemo(() => flattenTocIds(tocItems), [tocItems]);
@@ -113,8 +114,10 @@ export function LabLayout({
       )}
       <div className={styles.labLayout}>
         <header className={styles.labHeader}>
-          <h1 className={styles.title}>{title}</h1>
-          {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+          <div className={styles.labHeaderRow}>
+            <h1 className={styles.title}>{title}</h1>
+            {headerActions && <div className={styles.labHeaderActions}>{headerActions}</div>}
+          </div>
         </header>
         <div className={styles.labContent}>{children}</div>
       </div>

@@ -1,10 +1,10 @@
 /**
- * P07: 디자인 설정 페이지 — 프리셋 | 시맨틱 매핑 | 컴포넌트 매핑
- * P08: 액션을 헤더 행 우측 아이콘 버튼으로 이동 (내보내기/가져오기/초기화/적용)
+ * E16 P02: 디자인 설정 페이지 — LabLayout + LabSection 패턴으로 통일
+ * 프리셋 / 시맨틱 매핑 / 컴포넌트 매핑을 스크롤 섹션으로 배치.
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { Icon } from '../../../components';
-import { LabLayout, TabBar } from '../../../layouts';
+import { LabLayout, LabSection } from '../../../layouts';
 import { useTheme } from '@domain/themes';
 import { resolveSelection } from '../../../hooks/usePaletteResolution';
 import { useGlobalSettings } from '../../../components/GlobalSettings';
@@ -24,11 +24,23 @@ export interface DesignSettingsLabProps {
   initialTab?: DesignSettingsTabId;
 }
 
+const tocItems = [
+  { id: 'preset', label: '프리셋' },
+  { id: 'semantic', label: '시맨틱 매핑' },
+  { id: 'component', label: '컴포넌트 매핑' },
+];
+
 export function DesignSettingsLab({
   onApply,
-  initialTab = 'preset',
+  initialTab,
 }: DesignSettingsLabProps) {
-  const [activeTab, setActiveTab] = useState<DesignSettingsTabId>(initialTab);
+  useEffect(() => {
+    if (initialTab && initialTab !== 'preset') {
+      requestAnimationFrame(() => {
+        document.getElementById(initialTab)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }, [initialTab]);
 
   const settings = useGlobalSettings({
     onApply,
@@ -57,75 +69,62 @@ export function DesignSettingsLab({
     await settings.importSettings();
   }, [settings]);
 
-  const tabs: { id: DesignSettingsTabId; label: string }[] = [
-    { id: 'preset', label: '프리셋' },
-    { id: 'semantic', label: '시맨틱 매핑' },
-    { id: 'component', label: '컴포넌트 매핑' },
-  ];
+  const headerActions = (
+    <>
+      <button
+        type="button"
+        className={styles.headerIconBtn}
+        onClick={handleExport}
+        aria-label="내보내기"
+      >
+        <Icon name="download" library="nucleo" size="sm" />
+      </button>
+      <button
+        type="button"
+        className={styles.headerIconBtn}
+        onClick={handleImport}
+        aria-label="가져오기"
+      >
+        <Icon name="upload" library="nucleo" size="sm" />
+      </button>
+      <button
+        type="button"
+        className={styles.headerIconBtn}
+        onClick={handleReset}
+        aria-label="초기화"
+      >
+        <Icon name="refresh" library="nucleo" size="sm" />
+      </button>
+      <button
+        type="button"
+        className={styles.applyBtn}
+        onClick={handleApply}
+        disabled={!settings.hasChanges}
+        aria-label="적용"
+      >
+        <Icon name="check" library="nucleo" size="sm" />
+        적용
+      </button>
+    </>
+  );
 
   return (
-    <LabLayout title="디자인 설정" showToc={false}>
-      <div className={styles.page}>
-        <div className={styles.headerRow}>
-          <h1 className={styles.title}>디자인 시스템 설정</h1>
-          <div className={styles.headerActions}>
-            <button
-              type="button"
-              className={styles.headerIconBtn}
-              onClick={handleExport}
-              aria-label="내보내기"
-            >
-              <Icon name="download" library="nucleo" size="sm" />
-            </button>
-            <button
-              type="button"
-              className={styles.headerIconBtn}
-              onClick={handleImport}
-              aria-label="가져오기"
-            >
-              <Icon name="upload" library="nucleo" size="sm" />
-            </button>
-            <button
-              type="button"
-              className={styles.headerIconBtn}
-              onClick={handleReset}
-              aria-label="초기화"
-            >
-              <Icon name="refresh" library="nucleo" size="sm" />
-            </button>
-            <button
-              type="button"
-              className={styles.applyBtn}
-              onClick={handleApply}
-              disabled={!settings.hasChanges}
-              aria-label="적용"
-            >
-              <Icon name="check" library="nucleo" size="sm" />
-              적용
-            </button>
-          </div>
-        </div>
+    <LabLayout title="디자인 설정" tocItems={tocItems} headerActions={headerActions}>
+      <LabSection title="프리셋" id="preset" card>
+        <PresetTab settings={settings} />
+      </LabSection>
 
-        <TabBar
-          tabs={tabs}
-          activeTab={activeTab}
-          onChange={(id) => setActiveTab(id as DesignSettingsTabId)}
-          variant="underline"
+      <LabSection title="시맨틱 매핑" id="semantic" card>
+        <SemanticTab
+          definition={definitionForSemantic}
+          overrides={settings.semanticMapping}
+          onOverridesChange={settings.setSemanticMapping}
         />
+      </LabSection>
 
-        <div className={styles.content} role="tabpanel">
-          {activeTab === 'preset' && <PresetTab settings={settings} />}
-          {activeTab === 'semantic' && (
-            <SemanticTab
-              definition={definitionForSemantic}
-              overrides={settings.semanticMapping}
-              onOverridesChange={settings.setSemanticMapping}
-            />
-          )}
-          {activeTab === 'component' && <ComponentMappingTab />}
-        </div>
-
-      </div>
+      <LabSection title="컴포넌트 매핑" id="component" card>
+        <ComponentMappingTab />
+      </LabSection>
     </LabLayout>
   );
 }

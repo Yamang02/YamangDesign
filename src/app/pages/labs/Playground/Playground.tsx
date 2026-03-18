@@ -59,7 +59,6 @@ export function Playground() {
   return (
     <LabLayout
       title="Playground"
-      subtitle="Palette × Style × Font 조합 실험"
       tocItems={tocItems}
     >
       <LabSection title={sectionTitles.combinationSelect} id="combination-select">

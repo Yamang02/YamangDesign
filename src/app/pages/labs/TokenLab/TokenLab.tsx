@@ -13,7 +13,7 @@ import {
   type TocItem,
   type TocItemTree,
 } from '../../../layouts';
-import { Input, Badge, DetailPanel } from '../../../components';
+import { DetailPanel } from '../../../components';
 import { useCssVar } from '@app/hooks/useCssVar';
 import { formatStructuredDisplay } from '@shared/utils/css-structured';
 import { TokenOverviewDiagram } from './TokenOverviewDiagram';
@@ -344,14 +344,6 @@ function SysTokensSection({ onSelectToken }: { onSelectToken?: (token: string) =
             <TokenTable tokens={g.tokens} onSelectToken={onSelectToken} />
           </div>
         ))}
-      </div>
-      <div className={styles.sysUsage}>
-        <h3 className={styles.categoryTitle}>사용 예시</h3>
-        <div className={styles.sysUsageRow} data-context="preview">
-          <Input placeholder="정상" />
-          <Input placeholder="에러 상태" isError errorMessage="필수 입력값입니다" />
-          <Badge variant="primary">Primary</Badge>
-        </div>
       </div>
     </LabSection>
   );

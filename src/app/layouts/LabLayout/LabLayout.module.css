@@ -163,18 +163,27 @@ section[id] {
   margin-bottom: var(--ds-spacing-8);
 }
 
+.labHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-spacing-4);
+  flex-wrap: wrap;
+}
+
+.labHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-1);
+}
+
 .title {
   font-size: var(--ds-text-3xl);
   font-weight: var(--ds-font-weight-bold);
   color: var(--shell-text-primary);
-  margin: 0 0 var(--ds-spacing-2) 0;
-}
-
-.subtitle {
-  font-size: var(--ds-text-md);
-  color: var(--shell-text-secondary);
   margin: 0;
 }
+
 
 
 .labContent {

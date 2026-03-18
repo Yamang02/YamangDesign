@@ -327,7 +327,6 @@ export function Atoms() {
     <>
       <LabLayout
         title="Atoms"
-        subtitle="단일 UI 요소 — 더 이상 분해할 수 없는 기본 단위"
         showToc={false}
         tocItems={tocItems}
       >
