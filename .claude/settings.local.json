@@ -31,10 +31,15 @@
       "Bash(node -e \":*)",
       "Bash(grep -oh \"var\\(--ds-color-[^\\)]*\\)\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/ComponentDetailModal/*.css)",
       "Bash(grep -oh \"var\\(--ds-color-[^\\)]*\\)\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/ComponentInspector/*.css)",
-      "Bash(/dev/null:*)"
+      "Bash(/dev/null:*)",
+      "Bash(wc -l \"c:\\\\Users\\\\ljj02\\\\Desktop\\\\dev\\\\YamangDesign\\\\src\\\\shared\\\\utils\"/*.ts)",
+      "Bash(npx vitest run)",
+      "Bash(grep -E \"\\\\.\\(ts|tsx|css\\)$\")",
+      "Bash(xargs grep -l \"ds-color-action-primary-default\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"
+      "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic",
+      "C:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"
     ]
   }
 }

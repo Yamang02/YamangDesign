@@ -1,58 +1,59 @@
-/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
-/* Lab Overview - 조정 가능 요소 요약 카드 (E04: --shell-* 토큰 사용) */
-.overview {
-  width: 100%;
-  box-sizing: border-box;
+@layer shell {
+  /* Lab Overview - 조정 가능 요소 요약 카드 (E04: --shell-* 토큰 사용) */
+  .overview {
+    width: 100%;
+    box-sizing: border-box;
 
-  background: linear-gradient(
-    135deg,
-    var(--shell-bg-surface) 0%,
-    var(--shell-bg-subtle) 100%
-  );
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-lg);
-  padding: var(--ds-spacing-6);
-  margin-bottom: var(--ds-spacing-6);
-}
+    background: linear-gradient(
+      135deg,
+      var(--shell-bg-surface) 0%,
+      var(--shell-bg-subtle) 100%
+    );
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-lg);
+    padding: var(--ds-spacing-6);
+    margin-bottom: var(--ds-spacing-6);
+  }
 
-.description {
-  font-size: var(--ds-text-md);
-  color: var(--shell-text-secondary);
-  margin: 0 0 var(--ds-spacing-4) 0;
-  line-height: 1.6;
-}
+  .description {
+    font-size: var(--ds-text-md);
+    color: var(--shell-text-secondary);
+    margin: 0 0 var(--ds-spacing-4) 0;
+    line-height: 1.6;
+  }
 
-.itemGrid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-3);
-}
+  .itemGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-3);
+  }
 
-.item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-  padding: var(--ds-spacing-3) var(--ds-spacing-4);
-  background-color: var(--shell-bg-base);
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-md);
-  min-width: 140px;
-}
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+    padding: var(--ds-spacing-3) var(--ds-spacing-4);
+    background-color: var(--shell-bg-base);
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+    min-width: 140px;
+  }
 
-.itemLabel {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-}
+  .itemLabel {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+  }
 
-.itemDesc {
-  font-size: var(--ds-text-xs);
-  color: var(--shell-text-muted);
-}
+  .itemDesc {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-muted);
+  }
 
-.customContent {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-6);
-  margin-top: var(--ds-spacing-4);
+  .customContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-6);
+    margin-top: var(--ds-spacing-4);
+  }
 }

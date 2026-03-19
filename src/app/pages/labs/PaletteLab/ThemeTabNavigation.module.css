@@ -1,36 +1,37 @@
-/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
-/* P04: ThemeTabNavigation */
-.tabList {
-  display: flex;
-  gap: 0;
-  padding: 0;
-  border-bottom: 1px solid var(--shell-border-subtle);
-  background-color: var(--shell-bg-surface);
-}
+@layer shell {
+  /* P04: ThemeTabNavigation */
+  .tabList {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--shell-border-subtle);
+    background-color: var(--shell-bg-surface);
+  }
 
-.tab {
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-secondary);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  cursor: pointer;
-  transition: color 150ms ease, border-color 150ms ease;
-}
+  .tab {
+    padding: var(--ds-spacing-2) var(--ds-spacing-4);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
 
-.tab:hover {
-  color: var(--shell-text-primary);
-}
+  .tab:hover {
+    color: var(--shell-text-primary);
+  }
 
-.tab:focus-visible {
-  outline: 2px solid var(--shell-focus-ring);
-  outline-offset: 2px;
-}
+  .tab:focus-visible {
+    outline: 2px solid var(--shell-focus-ring);
+    outline-offset: 2px;
+  }
 
-.tab[data-active='true'] {
-  color: var(--shell-action-primary);
-  border-bottom-color: var(--shell-action-primary);
+  .tab[data-active='true'] {
+    color: var(--shell-action-primary);
+    border-bottom-color: var(--shell-action-primary);
+  }
 }

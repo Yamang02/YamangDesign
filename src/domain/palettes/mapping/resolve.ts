@@ -3,12 +3,19 @@
  * ScaleReference 또는 직접 색상 → 실제 hex/rgb 문자열
  */
 import type { GeneratedScales } from '@shared/@types/tokens';
-import type { ScaleReference, SemanticMapping, SemanticColors } from '../types';
+import type {
+  ScaleReference,
+  MixReference,
+  SemanticMapping,
+  SemanticColors,
+  SemanticMappingValue,
+} from '../types';
 import type { SemanticTokenPath } from './recommendations';
+import { colorMix } from '@shared/utils/color';
 
 /** ScaleReference 여부 판별 */
 function isScaleReference(
-  value: string | ScaleReference
+  value: SemanticMappingValue
 ): value is ScaleReference {
   return (
     typeof value === 'object' &&
@@ -18,14 +25,31 @@ function isScaleReference(
   );
 }
 
+/** MixReference 여부 판별 */
+function isMixReference(value: SemanticMappingValue): value is MixReference {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'base' in value &&
+    'mix' in value &&
+    'ratio' in value
+  );
+}
+
 /**
  * 단일 값을 해석: ScaleReference → scales에서 조회, string → 그대로 반환
  * sub는 항상 scales에 포함됨
  */
 export function resolveColorValue(
-  value: string | ScaleReference,
+  value: SemanticMappingValue,
   scales: GeneratedScales
 ): string {
+  if (isMixReference(value)) {
+    const base = resolveColorValue(value.base, scales);
+    const mix = resolveColorValue(value.mix, scales);
+    return colorMix(base, mix, value.ratio);
+  }
+
   if (!isScaleReference(value)) {
     return value;
   }
@@ -61,14 +85,15 @@ export function resolveSemanticMapping(
   mapping: SemanticMapping,
   scales: GeneratedScales
 ): SemanticColors {
-  const resolve = (v: string | ScaleReference) =>
-    resolveColorValue(v, scales);
+  const resolve = (v: SemanticMappingValue) => resolveColorValue(v, scales);
 
   return {
     bg: {
       base: resolve(mapping.bg.base),
       subtle: resolve(mapping.bg.subtle),
+      surfaceLow: resolve(mapping.bg.surfaceLow),
       surface: resolve(mapping.bg.surface),
+      surfaceHigh: resolve(mapping.bg.surfaceHigh),
       surfaceBrand: resolve(mapping.bg.surfaceBrand),
       elevated: resolve(mapping.bg.elevated),
       muted: resolve(mapping.bg.muted),
@@ -147,7 +172,6 @@ export function getMergedMapping(
 }
 
 export type { SemanticTokenPath };
-export type SemanticMappingValue = string | ScaleReference;
 
 export function updateMappingAtPath(
   mapping: SemanticMapping,

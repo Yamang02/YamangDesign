@@ -4,6 +4,8 @@
  * E02 P01: elevation/stroke 재명명, material/filter/spatial/createVars 슬롯 추가
  */
 
+import type { BgStrategy } from '../palettes';
+
 /** 스타일 프리셋 이름 (E06 P02: glassmorphism 추가) */
 export type StyleName =
   | 'minimal'
@@ -65,7 +67,31 @@ export interface StyleDefinition {
    * Escape hatch: 위 슬롯으로 표현 불가한 임의의 CSS 변수.
    * 변수명은 --ds- 접두사 사용을 권장하지만 강제하지 않음.
    */
+  /** 서술적 메타데이터 (UI 표시 및 연구 자료) */
+  metadata?: StyleMetadata;
+
+  /** 이 스타일이 의도대로 작동하는 bgStrategy */
+  preferredBgStrategies?: BgStrategy[];
+
+  /** 이 bgStrategy에서는 효과가 소멸됨 (경고용) */
+  incompatibleBgStrategies?: BgStrategy[];
+
+  /**
+   * Escape hatch: 스타일별 임의 CSS 변수 주입
+   * (예: P01 radius/motion override, style 전용 CSS 변수)
+   */
   createVars?: (context: { bgColor: string }) => Record<string, string>;
+}
+
+export interface StyleMetadata {
+  /** 사조가 유행한 시대 */
+  era: string;
+  /** 기원 분야 */
+  origin: string;
+  /** 핵심 시각적 특징 (UI 표시용) */
+  characteristics: string[];
+  /** 한 줄 설명 */
+  description: string;
 }
 
 /**

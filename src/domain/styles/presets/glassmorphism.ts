@@ -3,9 +3,18 @@
  * 배경 블러·투명도로 유리 효과
  */
 import type { StyleDefinition } from '../types';
+import { easing } from '@domain/tokens/global';
 
 export const glassmorphismStyle: StyleDefinition = {
   name: 'glassmorphism',
+  metadata: {
+    era: '2020-',
+    origin: 'UI trend',
+    characteristics: ['frosted glass', 'transparency', 'layered depth'],
+    description: 'frosted glass, transparency, layered depth',
+  },
+  preferredBgStrategies: ['dark', 'colored'],
+  incompatibleBgStrategies: ['light'],
 
   elevation: {
     create: () => ({
@@ -30,4 +39,22 @@ export const glassmorphismStyle: StyleDefinition = {
     backgroundAlpha: 0.55,
     backgroundBlendMode: 'normal',
   },
+  createVars: () => ({
+    // Radius (P01)
+    '--ds-radius-sm': '8px',
+    '--ds-radius-md': '16px',
+    '--ds-radius-lg': '20px',
+    '--ds-radius-xl': '24px',
+    '--ds-radius-full': '9999px',
+
+    // Motion (P01)
+    '--ds-duration-instant': '0ms',
+    '--ds-duration-fast': '150ms',
+    '--ds-duration-normal': '250ms',
+    '--ds-duration-slow': '400ms',
+
+    '--ds-ease-easeOut': easing.expressive,
+    '--ds-ease-easeInOut': easing.expressive,
+    '--ds-ease-productive': easing.expressive,
+  }),
 };

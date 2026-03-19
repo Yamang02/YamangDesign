@@ -1,22 +1,23 @@
-/* @layer ds — 트리 텍스트는 shell 맥락에서 읽기만 함 */
-.tree {
-  margin: 0;
-  padding: var(--ds-spacing-4);
-  background: var(--ds-color-bg-subtle);
-  border-radius: var(--ds-radius-md);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
-  overflow-x: auto;
-  font-size: var(--ds-text-sm);
-  line-height: 1.6;
-}
+@layer ds {
+  .tree {
+    margin: 0;
+    padding: var(--ds-spacing-4);
+    background: var(--ds-color-bg-subtle);
+    border-radius: var(--ds-radius-md);
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    overflow-x: auto;
+    font-size: var(--ds-text-sm);
+    line-height: 1.6;
+  }
 
-.code {
-  font-family: ui-monospace, 'SF Mono', 'Consolas', monospace;
-  color: var(--ds-color-text-primary);
-  white-space: pre;
-  display: block;
-}
+  .code {
+    font-family: ui-monospace, 'SF Mono', 'Consolas', monospace;
+    color: var(--ds-color-text-primary);
+    white-space: pre;
+    display: block;
+  }
 
-.line {
-  display: block;
+  .line {
+    display: block;
+  }
 }

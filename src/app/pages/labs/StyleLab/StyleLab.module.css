@@ -1,125 +1,293 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-/* E05: StyleLab 비교 그리드 + DetailPanel 상세 */
-.cardInner {
-  padding: var(--ds-spacing-4);
-  border-radius: var(--ds-radius-lg);
-}
+@layer override {
+  /* E05: StyleLab 비교 그리드 + DetailPanel 상세 */
+  /* E18 P01: 정보 영역 --shell-*, 프리뷰는 --ds-* + surface 시스템 */
+  .cardInner {
+    padding: var(--ds-spacing-4);
+    border-radius: var(--ds-radius-lg);
+    /* surface 시스템: bg-alpha로 투명도, backdrop-filter로 블러 적용 */
+    background-color: color-mix(
+      in srgb,
+      var(--ds-color-bg-base) calc(var(--ds-surface-bg-alpha, 1) * 100%),
+      transparent
+    );
+    backdrop-filter: var(--ds-surface-backdrop, none);
+    -webkit-backdrop-filter: var(--ds-surface-backdrop, none);
+  }
 
-.shadowDemo {
-  padding: var(--ds-spacing-4);
-  border-radius: var(--ds-radius-md);
-  margin-bottom: var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-}
+  .shadowDemo {
+    padding: var(--ds-spacing-4);
+    border-radius: var(--ds-radius-md);
+    margin-bottom: var(--ds-spacing-3);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background-color: color-mix(
+      in srgb,
+      var(--ds-color-bg-base) calc(var(--ds-surface-bg-alpha, 1) * 85%),
+      transparent
+    );
+    backdrop-filter: var(--ds-surface-backdrop, none);
+    -webkit-backdrop-filter: var(--ds-surface-backdrop, none);
+  }
 
-.shadowDemo:last-child {
-  margin-bottom: 0;
-}
+  .shadowDemo:last-child {
+    margin-bottom: 0;
+  }
 
-/* StyleDetail */
-.styleDetail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-4);
-}
+  /* StyleDetail */
+  .styleDetail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+  }
 
-.detailSectionTitle {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-  margin: 0 0 var(--ds-spacing-2) 0;
-}
+  .detailSectionTitle {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+    margin: 0 0 var(--ds-spacing-2) 0;
+  }
 
 
-.detailDescription {
-  margin: 0 0 var(--ds-spacing-2) 0;
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-  line-height: 1.5;
-}
+  .detailDescription {
+    margin: 0 0 var(--ds-spacing-2) 0;
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    line-height: 1.5;
+  }
 
-.characteristicsList {
-  margin: 0 0 var(--ds-spacing-4) 0;
-  padding-left: var(--ds-spacing-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-}
+  .characteristicsList {
+    margin: 0 0 var(--ds-spacing-4) 0;
+    padding-left: var(--ds-spacing-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+  }
 
-.characteristicItem {
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-}
+  .characteristicItem {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+  }
 
-/* E06 P02: Property Matrix */
-.propertyMatrixWrap {
-  overflow-x: auto;
-  width: 100%;
-}
+  /* E06 P02: Property Matrix */
+  .propertyMatrixWrap {
+    overflow-x: auto;
+    width: 100%;
+  }
 
-.propertyMatrix {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--ds-text-sm);
-}
+  .propertyMatrix {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--ds-text-sm);
+  }
 
-.propertyMatrix th,
-.propertyMatrix td {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  text-align: left;
-  border-bottom: 1px solid var(--shell-border-subtle);
-}
+  .propertyMatrix th,
+  .propertyMatrix td {
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    text-align: left;
+    border-bottom: 1px solid var(--shell-border-subtle);
+  }
 
-.propertyMatrixDim {
-  color: var(--shell-text-secondary);
-  font-weight: var(--ds-font-weight-medium);
-  white-space: nowrap;
-}
+  .propertyMatrixDim {
+    color: var(--shell-text-secondary);
+    font-weight: var(--ds-font-weight-medium);
+    white-space: nowrap;
+  }
 
-.propertyMatrixPreset {
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-}
+  .propertyMatrixPreset {
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+  }
 
-.propertyMatrixPresetBtn {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
+  .propertyMatrixPresetBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 
-.propertyMatrixPresetBtn:hover {
-  color: var(--shell-action-primary);
-}
+  .propertyMatrixPresetBtn:hover {
+    color: var(--shell-action-primary);
+  }
 
-.propertyMatrixCellWrap {
-  container-type: inline-size;
-}
+  .propertyMatrixCellWrap {
+    container-type: inline-size;
+  }
 
-.propertyMatrixCellWrap[data-active] {
-  background: var(--shell-bg-primary-subtle);
-}
+  .propertyMatrixCellWrap[data-active] {
+    background: var(--shell-bg-primary-subtle);
+  }
 
-.propertyMatrixCell {
-  font-family: ui-monospace, monospace;
-  font-size: clamp(9px, 1.4cqi, 11px);
-  color: var(--shell-text-secondary);
-  white-space: nowrap;
-}
+  .propertyMatrixCell {
+    font-family: ui-monospace, monospace;
+    font-size: clamp(9px, 1.4cqi, 11px);
+    color: var(--shell-text-secondary);
+    white-space: nowrap;
+  }
 
-.propertyMatrixCellWrap[data-active] .propertyMatrixCell {
-  color: var(--shell-text-primary);
-}
+  .propertyMatrixCellWrap[data-active] .propertyMatrixCell {
+    color: var(--shell-text-primary);
+  }
 
-.comparisonWrapper {
-  width: 100%;
-  padding: var(--ds-spacing-2);
-  border-radius: var(--ds-radius-lg);
-  /* E06 P02: glassmorphism 블러가 보이도록 배경 그라데이션 */
-  background: linear-gradient(135deg, #E0E7FF 0%, #FCE7F3 50%, #DDD6FE 100%);
+  .comparisonWrapper {
+    width: 100%;
+    padding: var(--ds-spacing-2);
+    border-radius: var(--ds-radius-lg);
+  }
+
+  .comparisonWrapperNeutral {
+    background: var(--shell-bg-muted);
+  }
+
+  .comparisonWrapperGlass {
+    /* glassmorphism 블러 가시성 확인용 프리뷰 배경 */
+    background: linear-gradient(135deg, #E0E7FF 0%, #FCE7F3 50%, #DDD6FE 100%);
+  }
+
+  /* Comparison controls (P06) */
+  .comparisonControls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-4);
+    margin-bottom: var(--ds-spacing-4);
+    align-items: center;
+  }
+
+  .controlGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+  }
+
+  .controlLabel {
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+    white-space: nowrap;
+  }
+
+  .paletteSelect {
+    appearance: none;
+    background: var(--shell-bg-muted);
+    border: 1px solid var(--shell-border-subtle);
+    color: var(--shell-text-primary);
+    border-radius: var(--ds-radius-sm);
+    padding: var(--ds-spacing-1) var(--ds-spacing-2);
+    font-size: var(--ds-text-sm);
+  }
+
+  .paletteSelect:hover {
+    background: var(--shell-bg-surface);
+    border-color: var(--shell-border-default);
+  }
+
+  .paletteSelect:focus-visible {
+    outline: 2px solid var(--shell-border-focus);
+    outline-offset: 2px;
+    border-color: var(--shell-border-focus);
+  }
+
+  .styleCheckboxRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-3);
+  }
+
+  .styleCheckbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-primary);
+    user-select: none;
+  }
+
+  .styleMinHint {
+    color: var(--shell-text-secondary);
+    font-size: var(--ds-text-xs);
+  }
+
+  .styleAffinityWarning {
+    margin: var(--ds-spacing-3) 0 var(--ds-spacing-4);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    border-radius: var(--ds-radius-sm);
+    border: 1px solid var(--shell-border-strong);
+    background: var(--shell-bg-muted);
+    color: var(--shell-text-secondary);
+    font-size: var(--ds-text-xs);
+  }
+
+  /* Token Diff (semantic alias token value table) */
+  .tokenDiffEmpty {
+    margin-top: var(--ds-spacing-3);
+    padding: var(--ds-spacing-3);
+    border: 1px dashed var(--shell-border-subtle);
+    border-radius: var(--ds-radius-sm);
+    color: var(--shell-text-secondary);
+    font-size: var(--ds-text-sm);
+  }
+
+  /* Token Diff (style vars + surface vars with differences only) */
+  .tokenDiffTableWrap {
+    overflow-x: auto;
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+    margin-top: var(--ds-spacing-4);
+  }
+
+  .tokenDiffTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: var(--ds-text-sm);
+  }
+
+  .tokenDiffTable th,
+  .tokenDiffTable td {
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    text-align: left;
+    border-bottom: 1px solid var(--shell-border-subtle);
+    vertical-align: middle;
+  }
+
+  .tokenDiffTable th {
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-secondary);
+    background: var(--shell-bg-muted);
+  }
+
+  .tokenDiffNameTh,
+  .tokenDiffNameTd {
+    width: 140px;
+    min-width: 140px;
+  }
+
+  .tokenDiffNameCode {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: var(--ds-text-xs);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tokenDiffValueTd {
+    word-break: break-all;
+  }
+
+  .tokenDiffValueTh {
+    min-width: 160px;
+  }
+
+  .tokenDiffValueCode {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: var(--ds-text-xs);
+  }
+
+  .tokenDiffDifferent {
+    background: var(--shell-bg-primary-subtle);
+  }
 }

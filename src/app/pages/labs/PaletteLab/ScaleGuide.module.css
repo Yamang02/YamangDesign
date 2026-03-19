@@ -1,96 +1,97 @@
-/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
-/* ScaleGuide - ColorUsageDiagram과 동일한 스타일 패턴 사용 */
+@layer shell {
+  /* ScaleGuide - ColorUsageDiagram과 동일한 스타일 패턴 사용 */
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-4);
-}
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+  }
 
-.sectionTitle {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-  margin: 0;
-  padding-bottom: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--shell-border-subtle);
-}
+  .sectionTitle {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+    margin: 0;
+    padding-bottom: var(--ds-spacing-2);
+    border-bottom: 1px solid var(--shell-border-subtle);
+  }
 
-.sectionHint {
-  font-weight: var(--ds-font-weight-normal);
-  color: var(--shell-text-muted);
-}
+  .sectionHint {
+    font-weight: var(--ds-font-weight-normal);
+    color: var(--shell-text-muted);
+  }
 
-/* Step List - 세로 나열 */
-.stepList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-2);
-}
+  /* Step List - 세로 나열 */
+  .stepList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-2);
+  }
 
-.stepRow {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-3);
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  background-color: var(--shell-bg-base);
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-md);
-  transition: border-color 150ms ease;
-}
+  .stepRow {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    background-color: var(--shell-bg-base);
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+    transition: border-color 150ms ease;
+  }
 
-.stepRow:hover {
-  border-color: var(--shell-border-default);
-}
+  .stepRow:hover {
+    border-color: var(--shell-border-default);
+  }
 
-/* Color Swatch - ColorUsageDiagram과 동일 */
-.colorSwatch {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--ds-radius-md);
-  border: 1px solid var(--shell-border-subtle);
-  flex-shrink: 0;
-}
+  /* Color Swatch - ColorUsageDiagram과 동일 */
+  .colorSwatch {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--ds-radius-md);
+    border: 1px solid var(--shell-border-subtle);
+    flex-shrink: 0;
+  }
 
-.stepNumber {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-bold);
-  color: var(--shell-text-primary);
-  font-family: var(--ds-font-mono);
-  min-width: 32px;
-}
+  .stepNumber {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-bold);
+    color: var(--shell-text-primary);
+    font-family: var(--ds-font-mono);
+    min-width: 32px;
+  }
 
-.stepInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  min-width: 0;
-}
+  .stepInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+  }
 
-.usage {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-primary);
-}
+  .usage {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-primary);
+  }
 
-.usageEn {
-  font-size: var(--ds-text-xs);
-  color: var(--shell-text-muted);
-}
+  .usageEn {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-muted);
+  }
 
-/* Usage Tags - ColorUsageDiagram .usageTag과 동일 */
-.examples {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-1);
-  flex-shrink: 0;
-}
+  /* Usage Tags - ColorUsageDiagram .usageTag과 동일 */
+  .examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-1);
+    flex-shrink: 0;
+  }
 
-.usageTag {
-  font-size: 10px;
-  padding: 2px 6px;
-  background-color: var(--shell-bg-muted);
-  border-radius: var(--ds-radius-sm);
-  color: var(--shell-text-secondary);
+  .usageTag {
+    font-size: 10px;
+    padding: 2px 6px;
+    background-color: var(--shell-bg-muted);
+    border-radius: var(--ds-radius-sm);
+    color: var(--shell-text-secondary);
+  }
 }

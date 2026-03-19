@@ -3,9 +3,16 @@
  * 가벼운 drop shadow, 명확한 border
  */
 import type { StyleDefinition } from '../types';
+import { easing } from '@domain/tokens/global';
 
 export const minimalStyle: StyleDefinition = {
   name: 'minimal',
+  metadata: {
+    era: '2010s',
+    origin: 'digital product design',
+    characteristics: ['flat surfaces', 'subtle shadows', 'clean lines'],
+    description: 'flat surfaces, subtle shadows, clean lines',
+  },
 
   elevation: {
     create: () => ({
@@ -23,4 +30,21 @@ export const minimalStyle: StyleDefinition = {
     style: 'solid',
     colorStrategy: 'palette',
   },
+  createVars: () => ({
+    // Radius (P01)
+    '--ds-radius-sm': '4px',
+    '--ds-radius-md': '8px',
+    '--ds-radius-lg': '12px',
+    '--ds-radius-xl': '16px',
+    '--ds-radius-full': '9999px',
+
+    // Motion (P01)
+    '--ds-duration-instant': '0ms',
+    '--ds-duration-fast': '100ms',
+    '--ds-duration-normal': '200ms',
+    '--ds-duration-slow': '300ms',
+    '--ds-ease-easeOut': easing.easeOut,
+    '--ds-ease-easeInOut': easing.easeOut,
+    '--ds-ease-productive': easing.easeOut,
+  }),
 };

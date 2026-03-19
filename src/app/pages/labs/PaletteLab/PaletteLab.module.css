@@ -1,145 +1,205 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-/* E05: PaletteLab 비교 그리드 + DetailPanel 상세 */
-/* P05: 시맨틱 매핑 섹션 (DetailPanel 내) */
-.semanticSection {
-  margin-top: var(--ds-spacing-6);
-  padding-top: var(--ds-spacing-4);
-  border-top: 1px solid var(--shell-border-subtle);
-}
+@layer ds {
+  /* E05: PaletteLab 비교 그리드 + DetailPanel 상세 */
+  /* P05: 시맨틱 매핑 섹션 (DetailPanel 내) */
+  .semanticSection {
+    margin-top: var(--ds-spacing-6);
+    padding-top: var(--ds-spacing-4);
+    border-top: 1px solid var(--shell-border-subtle);
+  }
 
-.brandColorsBody {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
+  .brandColorsBody {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 
-.brandColorsBody .categoryContent {
-  padding-top: var(--ds-spacing-4);
-}
+  .brandColorsBody .categoryContent {
+    padding-top: var(--ds-spacing-4);
+  }
 
-/* 카드 너비 고정 (일관된 그리드) — flex/wrap/gap은 ComparisonGrid가 처리 */
-.comparisonGrid > * {
-  flex: 0 0 260px;
-  min-width: 0;
-}
+  /* 카드 너비 고정 (일관된 그리드) — flex/wrap/gap은 ComparisonGrid가 처리 */
+  .comparisonGrid > * {
+    flex: 0 0 260px;
+    min-width: 0;
+  }
 
-.colorColumn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  margin-bottom: var(--ds-spacing-3);
-}
+  .colorColumn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    margin-bottom: var(--ds-spacing-3);
+  }
 
-.colorColumn:last-child {
-  margin-bottom: 0;
-}
+  .colorColumn:last-child {
+    margin-bottom: 0;
+  }
 
-.colorKeyLabel {
-  font-size: var(--ds-text-xs);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-secondary);
-  margin: 0;
-  min-width: 64px;
-  text-transform: capitalize;
-}
+  .colorKeyLabel {
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+    margin: 0;
+    min-width: 64px;
+    text-transform: capitalize;
+  }
 
-.swatchRow {
-  display: flex;
-  gap: 2px;
-  flex-wrap: wrap;
-}
+  .swatchRow {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+  }
 
-.swatch {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-}
+  .swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+  }
 
-/* PaletteDetail */
-.paletteDetail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-4);
-}
+  /* PaletteDetail */
+  .paletteDetail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+  }
 
-.paletteSubname {
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-  margin: 0 0 var(--ds-spacing-2) 0;
-  padding-bottom: var(--ds-spacing-2);
-  border-bottom: 1px solid var(--shell-border-subtle);
-}
+  .paletteSubname {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    margin: 0 0 var(--ds-spacing-2) 0;
+    padding-bottom: var(--ds-spacing-2);
+    border-bottom: 1px solid var(--shell-border-subtle);
+  }
 
-.detailSectionTitle {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-  margin: 0 0 var(--ds-spacing-2) 0;
-}
+  .detailSectionTitle {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+    margin: 0 0 var(--ds-spacing-2) 0;
+  }
 
 
-.scaleGrid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-3);
-}
+  .scaleGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-3);
+  }
 
-.scaleColumn {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-}
+  .scaleColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+  }
 
-.scaleLabel {
-  font-size: var(--ds-text-xs);
-  color: var(--shell-text-secondary);
-}
+  .scaleLabel {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+  }
 
-.scaleRow {
-  display: flex;
-  gap: 2px;
-}
+  .scaleRow {
+    display: flex;
+    gap: 2px;
+  }
 
-.scaleSwatch {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid var(--shell-border-subtle);
-}
+  .scaleSwatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid var(--shell-border-subtle);
+  }
 
-.scaleLabels {
-  display: flex;
-  gap: 2px;
-}
+  .scaleLabels {
+    display: flex;
+    gap: 2px;
+  }
 
-.scaleStep {
-  width: 20px;
-  font-size: 10px;
-  color: var(--shell-text-muted);
-}
+  .scaleStep {
+    width: 20px;
+    font-size: 10px;
+    color: var(--shell-text-muted);
+  }
 
-/* Custom 카드 액션 그룹 */
-.customCardActions {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-}
+  .surfacePreviewRoot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-3);
+    padding: var(--ds-spacing-3);
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+    background: var(--ds-color-bg-base);
+  }
 
-/* P05: 시맨틱 매핑 아이콘 (테마 카드 우측 상단) */
-.mappingIconBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--ds-spacing-2);
-  background: none;
-  border: none;
-  color: var(--shell-text-secondary);
-  cursor: pointer;
-  border-radius: var(--ds-radius-sm);
-}
+  .surfaceLowLayer {
+    padding: var(--ds-spacing-3);
+    border-radius: var(--ds-radius-md);
+    background: var(--ds-color-bg-surface-low);
+    border: 1px solid var(--ds-color-border-subtle);
+  }
 
-.mappingIconBtn:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-muted);
+  .surfaceLayer {
+    margin-top: var(--ds-spacing-2);
+    padding: var(--ds-spacing-3);
+    border-radius: var(--ds-radius-md);
+    background: var(--ds-color-bg-surface);
+    border: 1px solid var(--ds-color-border-subtle);
+  }
+
+  .surfaceHighLayer {
+    margin-top: var(--ds-spacing-2);
+    padding: var(--ds-spacing-3);
+    border-radius: var(--ds-radius-sm);
+    background: var(--ds-color-bg-surface-high);
+    border: 1px solid var(--ds-color-border-default);
+  }
+
+  .surfaceElevatedLayer {
+    padding: var(--ds-spacing-3);
+    border-radius: var(--ds-radius-md);
+    background: var(--ds-color-bg-elevated);
+    border: 1px solid var(--ds-color-border-default);
+  }
+
+  .surfaceLabel {
+    margin: 0;
+    font-size: var(--ds-text-xs);
+    color: var(--ds-color-text-secondary);
+    text-transform: lowercase;
+  }
+
+  .surfaceTextPrimary {
+    margin: var(--ds-spacing-2) 0 0 0;
+    font-size: var(--ds-text-sm);
+    color: var(--ds-color-text-primary);
+  }
+
+  .surfaceTextSecondary {
+    margin: var(--ds-spacing-1) 0 0 0;
+    font-size: var(--ds-text-sm);
+    color: var(--ds-color-text-secondary);
+  }
+
+  /* Custom 카드 액션 그룹 */
+  .customCardActions {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  /* P05: 시맨틱 매핑 아이콘 (테마 카드 우측 상단) */
+  .mappingIconBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ds-spacing-2);
+    background: none;
+    border: none;
+    color: var(--shell-text-secondary);
+    cursor: pointer;
+    border-radius: var(--ds-radius-sm);
+  }
+
+  .mappingIconBtn:hover {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-muted);
+  }
 }

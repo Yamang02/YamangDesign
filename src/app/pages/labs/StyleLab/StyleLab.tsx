@@ -1,19 +1,20 @@
 /**
  * E05/E06 P02: Style Lab - Property Matrix, 비교 뷰, DetailPanel
  */
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Card, DetailPanel } from '../../../components';
 import { LabLayout, LabSection, LabOverview, ComparisonCard, ComparisonGrid, MetadataTable, type TocItem } from '../../../layouts';
 import { sampleText, buttonLabels, sectionTitles } from '@app/content/lab-content';
-import { getStyleVariables, getPaletteVariablesFromDefinition, comparisonPresets } from '@domain/constants';
+import { getStyleVariables, getPaletteVariablesFromDefinition, getThemeVariables, comparisonPresets } from '@domain/constants';
 import { createStyle } from '@domain/styles';
 import { stylePresets } from '@domain/themes/presets';
 import { palettePresets } from '@domain/themes/presets';
-import type { StyleName } from '@shared/@types/theme';
+import type { PaletteName, StyleName } from '@shared/@types/theme';
 import type { StyleDefinition } from '@domain/styles';
 import overviewJson from '@app/content/labs/style-lab/overview.json';
 import type { StyleLabOverview, StyleVariant } from '@app/content/labs/style-lab/types';
 import { StyleOverviewDiagram } from './StyleOverviewDiagram';
+import { TokenDiffTable } from './TokenDiffTable';
 import styles from './StyleLab.module.css';
 
 const shadowKeys = ['sm', 'md', 'lg'] as const;
@@ -24,15 +25,15 @@ const tocItems: TocItem[] = [
   { id: 'property-matrix', label: 'Property Matrix' },
   { id: 'shadow-comparison', label: sectionTitles.shadowComparison },
   { id: 'component-comparison', label: sectionTitles.componentComparison },
+  { id: 'token-diff', label: 'Token Diff' },
 ];
 
-/** E06 P02: 기준 팔레트 변수 (Comparison 섹션 고정 배경용) */
-function useFixedPaletteVars(): Record<string, string> {
+/** E06 P02: 기준 팔레트 변수 (Comparison 섹션 배경용) */
+function usePaletteVars(paletteId: PaletteName): Record<string, string> {
   return useMemo(() => {
-    const firstPaletteId = comparisonPresets.palettes[0];
-    const def = firstPaletteId ? palettePresets[firstPaletteId] : undefined;
+    const def = palettePresets[paletteId];
     return def ? getPaletteVariablesFromDefinition(def) : {};
-  }, []);
+  }, [paletteId]);
 }
 
 function capitalize(str: string): string {
@@ -193,8 +194,27 @@ function StyleDetail({ name }: { name: StyleName }) {
 
 export function StyleLab() {
   const [selectedStyle, setSelectedStyle] = useState<StyleName | null>(null);
-  const fixedPaletteVars = useFixedPaletteVars();
+  const [paletteId, setPaletteId] = useState<PaletteName>('default');
+  const [baseStyle, setBaseStyle] = useState<StyleName>('minimal');
+  const [compareStyle, setCompareStyle] = useState<StyleName>('neumorphism');
+  const [previewBackdrop, setPreviewBackdrop] = useState<'neutral' | 'glass'>('neutral');
 
+  const paletteVars = usePaletteVars(paletteId);
+  const activeStyles = useMemo(
+    () => [baseStyle, compareStyle].filter((s, i, arr) => arr.indexOf(s) === i),
+    [baseStyle, compareStyle]
+  );
+
+  const styleAffinityWarning = useMemo(() => {
+    const styleDef = stylePresets[baseStyle];
+    const paletteDef = palettePresets[paletteId];
+    const bg = paletteDef?.bgStrategy;
+    if (!styleDef?.incompatibleBgStrategies?.length || !bg) return null;
+    if (!styleDef.incompatibleBgStrategies.includes(bg)) return null;
+    return `경고: ${capitalize(baseStyle)}는 bgStrategy가 '${bg}'일 때 효과가 소멸할 수 있습니다.`;
+  }, [baseStyle, paletteId]);
+
+  // P04: Overview 요약을 도메인 데이터(StyleDefinition)에서 추출
   return (
     <>
       <LabLayout
@@ -215,28 +235,108 @@ export function StyleLab() {
           />
         </LabSection>
 
+        <LabSection title="Comparison Controls" id="comparison-controls" card={false}>
+          <div className={styles.comparisonControls}>
+            <label className={styles.controlGroup}>
+              <span className={styles.controlLabel}>Palette</span>
+              <select
+                className={styles.paletteSelect}
+                value={paletteId}
+                onChange={(e) => setPaletteId(e.target.value as PaletteName)}
+              >
+                {comparisonPresets.palettes.map((p) => (
+                  <option key={p} value={p}>
+                    {capitalize(p)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <div className={styles.controlGroup}>
+              <span className={styles.controlLabel}>Base Style</span>
+              <select
+                className={styles.paletteSelect}
+                value={baseStyle}
+                onChange={(e) => {
+                  const next = e.target.value as StyleName;
+                  setBaseStyle(next);
+                  if (next === compareStyle) {
+                    const fallback = comparisonPresets.styles.find((s) => s !== next);
+                    if (fallback) setCompareStyle(fallback);
+                  }
+                }}
+              >
+                {comparisonPresets.styles.map((styleName) => (
+                  <option key={styleName} value={styleName}>
+                    {capitalize(styleName)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.controlGroup}>
+              <span className={styles.controlLabel}>Compare Style</span>
+              <select
+                className={styles.paletteSelect}
+                value={compareStyle}
+                onChange={(e) => setCompareStyle(e.target.value as StyleName)}
+              >
+                {comparisonPresets.styles
+                  .filter((styleName) => styleName !== baseStyle)
+                  .map((styleName) => (
+                    <option key={styleName} value={styleName}>
+                      {capitalize(styleName)}
+                    </option>
+                  ))}
+              </select>
+            </div>
+
+            <div className={styles.controlGroup}>
+              <span className={styles.controlLabel}>Preview Backdrop</span>
+              <select
+                className={styles.paletteSelect}
+                value={previewBackdrop}
+                onChange={(e) => setPreviewBackdrop(e.target.value as 'neutral' | 'glass')}
+              >
+                <option value="neutral">Neutral</option>
+                <option value="glass">Glass-friendly</option>
+              </select>
+            </div>
+          </div>
+
+          {styleAffinityWarning && (
+            <div className={styles.styleAffinityWarning} role="alert">
+              {styleAffinityWarning}
+            </div>
+          )}
+        </LabSection>
+
         <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
-          <ComparisonGrid paletteVars={fixedPaletteVars} className={styles.comparisonWrapper}>
-            {comparisonPresets.styles.map((styleName) => (
+          <ComparisonGrid
+            paletteVars={paletteVars}
+            className={`${styles.comparisonWrapper} ${
+              previewBackdrop === 'glass'
+                ? styles.comparisonWrapperGlass
+                : styles.comparisonWrapperNeutral
+            }`}
+          >
+            {activeStyles.map((styleName) => (
               <ComparisonCard
                 key={styleName}
                 title={capitalize(styleName)}
                 styleVars={getStyleVariables(styleName, bgColor)}
+                surfaceContent
                 onClick={() => setSelectedStyle(styleName)}
                 selected={selectedStyle === styleName}
               >
-                <div
-                  className={styles.cardInner}
-                  style={{ backgroundColor: 'var(--ds-color-bg-base)' }}
-                >
-                  <div data-context="preview">
+                <div className={styles.cardInner}>
+                  <div>
                     {shadowKeys.map((size) => (
                       <div
                         key={size}
                         className={styles.shadowDemo}
                         style={{
                           boxShadow: `var(--ds-shadow-${size})`,
-                          backgroundColor: 'var(--ds-color-bg-base)',
                         }}
                       >
                         shadow-{size}
@@ -253,19 +353,25 @@ export function StyleLab() {
           title={sectionTitles.componentComparison}
           id="component-comparison"
         >
-          <ComparisonGrid paletteVars={fixedPaletteVars} className={styles.comparisonWrapper}>
-            {comparisonPresets.styles.map((styleName) => (
+          <ComparisonGrid
+            className={`${styles.comparisonWrapper} ${
+              previewBackdrop === 'glass'
+                ? styles.comparisonWrapperGlass
+                : styles.comparisonWrapperNeutral
+            }`}
+          >
+            {activeStyles.map((styleName) => (
               <ComparisonCard
                 key={styleName}
                 title={capitalize(styleName)}
-                styleVars={getStyleVariables(styleName, bgColor)}
+                styleVars={getThemeVariables(paletteId, styleName)}
+                surfaceContent
                 onClick={() => setSelectedStyle(styleName)}
                 selected={selectedStyle === styleName}
               >
                 <div
                   className={styles.cardInner}
                   style={{
-                    backgroundColor: 'var(--ds-color-bg-base)',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 'var(--ds-spacing-4)',
@@ -292,6 +398,14 @@ export function StyleLab() {
               </ComparisonCard>
             ))}
           </ComparisonGrid>
+        </LabSection>
+
+        <LabSection title="Token Diff" id="token-diff" card={false}>
+          <TokenDiffTable
+            baseStyle={baseStyle}
+            compareStyles={[compareStyle]}
+            paletteId={paletteId}
+          />
         </LabSection>
       </LabLayout>
 

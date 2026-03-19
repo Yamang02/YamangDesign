@@ -167,3 +167,18 @@ export function getLightness(hex: string): number {
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
   return hsl.l / 100;
 }
+
+/**
+ * 두 hex 색상을 ratio(0~1) 비율로 혼합. ratio=0이면 base, ratio=1이면 mix
+ */
+export function colorMix(base: string, mix: string, ratio: number): string {
+  const clamped = Math.max(0, Math.min(1, ratio));
+  const baseRgb = hexToRgb(normalizeHex(base));
+  const mixRgb = hexToRgb(normalizeHex(mix));
+
+  return rgbToHex(
+    baseRgb.r + (mixRgb.r - baseRgb.r) * clamped,
+    baseRgb.g + (mixRgb.g - baseRgb.g) * clamped,
+    baseRgb.b + (mixRgb.b - baseRgb.b) * clamped
+  );
+}

@@ -1,71 +1,72 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-}
+@layer ds {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+  }
 
-.label {
-  font-size: var(--ds-text-caption-size);
-  line-height: var(--ds-text-caption-leading);
-  font-weight: var(--ds-text-caption-weight);
-  color: var(--ds-color-text-secondary);
-}
+  .label {
+    font-size: var(--ds-text-caption-size);
+    line-height: var(--ds-text-caption-leading);
+    font-weight: var(--ds-text-caption-weight);
+    color: var(--ds-color-text-secondary);
+  }
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-1);
-}
+  .row {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-1);
+  }
 
-.colorPreview {
-  width: var(--ds-component-size-color-preview);
-  height: var(--ds-component-size-color-preview);
-  border-radius: var(--ds-radius-sm);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
-  flex-shrink: 0;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
+  .colorPreview {
+    width: var(--ds-component-size-color-preview);
+    height: var(--ds-component-size-color-preview);
+    border-radius: var(--ds-radius-sm);
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
 
-.nativeColorInput {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  opacity: 0;
-}
+  .nativeColorInput {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+  }
 
-.hexInput {
-  flex: 1;
-  min-width: 0;
-  height: var(--ds-component-size-color-preview);
-  padding: 0 var(--ds-spacing-1);
-  font-size: var(--ds-text-code-size);
-  line-height: var(--ds-text-code-leading);
-  font-weight: var(--ds-text-code-weight);
-  font-family: var(--ds-text-code-font, var(--ds-font-mono));
-  background-color: var(--ds-color-bg-surface);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
-  border-radius: var(--ds-radius-sm);
-  color: var(--ds-color-text-primary);
-  outline: none;
-  transition: var(--ds-transition-color);
-}
+  .hexInput {
+    flex: 1;
+    min-width: 0;
+    height: var(--ds-component-size-color-preview);
+    padding: 0 var(--ds-spacing-1);
+    font-size: var(--ds-text-code-size);
+    line-height: var(--ds-text-code-leading);
+    font-weight: var(--ds-text-code-weight);
+    font-family: var(--ds-text-code-font, var(--ds-font-mono));
+    background-color: var(--ds-color-bg-surface);
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-text-primary);
+    outline: none;
+    transition: var(--ds-transition-color);
+  }
 
-.hexInput:focus-visible {
-  border-color: var(--ds-color-action-primary-default);
-}
+  .hexInput:focus-visible {
+    border-color: var(--ds-color-action-primary-default);
+  }
 
-.hexInput[data-error='true'] {
-  border-color: var(--sys-color-error);
-}
+  .hexInput[data-error='true'] {
+    border-color: var(--sys-color-error);
+  }
 
-.hexInput:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  .hexInput:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

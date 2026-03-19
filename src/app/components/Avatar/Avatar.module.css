@@ -1,51 +1,52 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-.avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  font-family: var(--ds-font-sans);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-on-action);
-}
+@layer ds {
+  .avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    font-family: var(--ds-font-sans);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-text-on-action);
+  }
 
-/* Sizes */
-.avatar[data-size='sm'] {
-  width: var(--ds-size-sm);
-  height: var(--ds-size-sm);
-  font-size: var(--ds-text-xs);
-}
+  /* Sizes */
+  .avatar[data-size='sm'] {
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
+    font-size: var(--ds-text-xs);
+  }
 
-.avatar[data-size='md'] {
-  width: var(--ds-size-md);
-  height: var(--ds-size-md);
-  font-size: var(--ds-text-sm);
-}
+  .avatar[data-size='md'] {
+    width: var(--ds-size-md);
+    height: var(--ds-size-md);
+    font-size: var(--ds-text-sm);
+  }
 
-.avatar[data-size='lg'] {
-  width: var(--ds-size-lg);
-  height: var(--ds-size-lg);
-  font-size: var(--ds-text-md);
-}
+  .avatar[data-size='lg'] {
+    width: var(--ds-size-lg);
+    height: var(--ds-size-lg);
+    font-size: var(--ds-text-md);
+  }
 
-/* Variants - initials background */
-.avatar[data-variant='primary'] {
-  background-color: var(--ds-color-action-primary-default);
-}
+  /* Variants - initials background */
+  .avatar[data-variant='primary'] {
+    background-color: var(--ds-color-action-primary-default);
+  }
 
-.avatar[data-variant='secondary'] {
-  background-color: var(--ds-color-action-secondary-default);
-}
+  .avatar[data-variant='secondary'] {
+    background-color: var(--ds-color-action-secondary-default);
+  }
 
-.avatar[data-variant='accent'] {
-  background-color: var(--ds-color-action-accent-default);
-}
+  .avatar[data-variant='accent'] {
+    background-color: var(--ds-color-action-accent-default);
+  }
 
-/* Image */
-.avatarImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  /* Image */
+  .avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }

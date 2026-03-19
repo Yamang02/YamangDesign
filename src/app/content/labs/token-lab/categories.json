@@ -83,8 +83,10 @@
       "title": "배경 (bg)",
       "tokens": [
         "--ds-color-bg-base",
+        "--ds-color-bg-surface-low",
         "--ds-color-bg-surface",
-        "--ds-color-bg-surfaceBrand",
+        "--ds-color-bg-surface-high",
+        "--ds-color-bg-surface-brand",
         "--ds-color-bg-elevated",
         "--ds-color-bg-muted"
       ]

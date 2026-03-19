@@ -1,18 +1,19 @@
-/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
-/* P04: EmptyCategory */
-.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-  padding: var(--ds-spacing-6);
-  background-color: var(--shell-bg-muted);
-  border: 1px dashed var(--shell-border-subtle);
-  border-radius: var(--ds-radius-md);
-}
+@layer shell {
+  /* P04: EmptyCategory */
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: var(--ds-spacing-6);
+    background-color: var(--shell-bg-muted);
+    border: 1px dashed var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+  }
 
-.message {
-  margin: 0;
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-muted);
+  .message {
+    margin: 0;
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-muted);
+  }
 }

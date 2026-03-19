@@ -1,21 +1,23 @@
-/**
- * E04 P02: 시스템 상태 컬러 (--sys-*)
- * 테마 무관, 컨텍스트 무관. error/warning/success/info 고정값.
- */
-:root {
-  --sys-color-error: #DC2626;
-  --sys-color-error-subtle: #FEF2F2;
-  --sys-color-error-emphasis: #991B1B;
+@layer tokens {
+  /**
+   * E04 P02: 시스템 상태 컬러 (--sys-*)
+   * 테마 무관, 컨텍스트 무관. error/warning/success/info 고정값.
+   */
+  :root {
+    --sys-color-error: #DC2626;
+    --sys-color-error-subtle: #FEF2F2;
+    --sys-color-error-emphasis: #991B1B;
 
-  --sys-color-warning: #D97706;
-  --sys-color-warning-subtle: #FFFBEB;
-  --sys-color-warning-emphasis: #B45309;
+    --sys-color-warning: #D97706;
+    --sys-color-warning-subtle: #FFFBEB;
+    --sys-color-warning-emphasis: #B45309;
 
-  --sys-color-success: #16A34A;
-  --sys-color-success-subtle: #F0FDF4;
-  --sys-color-success-emphasis: #15803D;
+    --sys-color-success: #16A34A;
+    --sys-color-success-subtle: #F0FDF4;
+    --sys-color-success-emphasis: #15803D;
 
-  --sys-color-info: #2563EB;
-  --sys-color-info-subtle: #EFF6FF;
-  --sys-color-info-emphasis: #1D4ED8;
+    --sys-color-info: #2563EB;
+    --sys-color-info-subtle: #EFF6FF;
+    --sys-color-info-emphasis: #1D4ED8;
+  }
 }

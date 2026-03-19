@@ -1,263 +1,264 @@
-/* E06 P06: Service Context — DS 테마가 적용된 서비스 UI 미리보기. */
-/* Shell 레이어: 이 페이지 자체는 [data-shell] 내부이므로 --shell-* 사용 가능. */
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-8);
-}
+@layer override {
+  /* E06 P06: Service Context — DS 테마가 적용된 서비스 UI 미리보기. */
+  /* Shell 레이어: 이 페이지 자체는 [data-shell] 내부이므로 --shell-* 사용 가능. */
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-8);
+  }
 
-/* 컴포넌트 인벤토리 (ShellContext 패턴 동일) */
-.inventoryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--ds-spacing-4);
-  width: 100%;
-}
+  /* 컴포넌트 인벤토리 (ShellContext 패턴 동일) */
+  .inventoryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--ds-spacing-4);
+    width: 100%;
+  }
 
-.inventoryCard {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  text-align: left;
-  padding: var(--ds-spacing-4);
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-lg);
-  background: var(--shell-bg-surface);
-}
+  .inventoryCard {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    padding: var(--ds-spacing-4);
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-lg);
+    background: var(--shell-bg-surface);
+  }
 
-.inventoryCardTitle {
-  font-size: var(--ds-text-lg);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-  margin-bottom: var(--ds-spacing-1);
-}
+  .inventoryCardTitle {
+    font-size: var(--ds-text-lg);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+    margin-bottom: var(--ds-spacing-1);
+  }
 
-.inventoryCardPath {
-  font-size: var(--ds-text-xs);
-  font-family: var(--ds-font-mono);
-  color: var(--shell-text-secondary);
-  margin-bottom: var(--ds-spacing-3);
-}
+  .inventoryCardPath {
+    font-size: var(--ds-text-xs);
+    font-family: var(--ds-font-mono);
+    color: var(--shell-text-secondary);
+    margin-bottom: var(--ds-spacing-3);
+  }
 
-.inventoryCardDivider {
-  height: 1px;
-  background: var(--shell-border-subtle);
-  margin: 0 0 var(--ds-spacing-3) 0;
-}
+  .inventoryCardDivider {
+    height: 1px;
+    background: var(--shell-border-subtle);
+    margin: 0 0 var(--ds-spacing-3) 0;
+  }
 
-.inventoryCardTokens {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-}
+  .inventoryCardTokens {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+  }
 
-.tokenTag {
-  font-family: var(--ds-font-mono);
-  font-size: var(--ds-text-xs);
-  color: var(--shell-action-primary);
-  background: var(--shell-bg-primary-subtle);
-  padding: 2px 6px;
-  border-radius: var(--ds-radius-sm);
-  display: inline-block;
-}
+  .tokenTag {
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-text-xs);
+    color: var(--shell-action-primary);
+    background: var(--shell-bg-primary-subtle);
+    padding: 2px 6px;
+    border-radius: var(--ds-radius-sm);
+    display: inline-block;
+  }
 
-/* Token Map 테이블 */
-.tokenMapTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--ds-text-sm);
-}
+  /* Token Map 테이블 */
+  .tokenMapTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--ds-text-sm);
+  }
 
-.tokenMapTable th,
-.tokenMapTable td {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  text-align: left;
-  border-bottom: 1px solid var(--shell-border-subtle);
-}
+  .tokenMapTable th,
+  .tokenMapTable td {
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    text-align: left;
+    border-bottom: 1px solid var(--shell-border-subtle);
+  }
 
-.tokenMapTable th {
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-subtle);
-}
+  .tokenMapTable th {
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-subtle);
+  }
 
-.tokenMapTable td {
-  color: var(--shell-text-secondary);
-}
+  .tokenMapTable td {
+    color: var(--shell-text-secondary);
+  }
 
-.tokenMapTable td:last-child {
-  font-family: var(--ds-font-mono);
-  color: var(--shell-action-primary);
-}
+  .tokenMapTable td:last-child {
+    font-family: var(--ds-font-mono);
+    color: var(--shell-action-primary);
+  }
 
-/* Controls — PreviewControlPanel 스택 */
-.controlsStack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-5);
-}
+  /* Controls — PreviewControlPanel 스택 */
+  .controlsStack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-5);
+  }
 
-/* E08 P02: 탭 전환 */
-.tabRow {
-  display: flex;
-  gap: var(--ds-spacing-2);
-  margin-bottom: var(--ds-spacing-4);
-}
-.tabBtn {
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-md);
-  background: var(--shell-bg-base);
-  color: var(--shell-text-primary);
-  cursor: pointer;
-}
-.tabBtn[data-active="true"] {
-  background: var(--shell-bg-hover);
-  border-color: var(--shell-border-focus);
-}
+  /* E08 P02: 탭 전환 */
+  .tabRow {
+    display: flex;
+    gap: var(--ds-spacing-2);
+    margin-bottom: var(--ds-spacing-4);
+  }
+  .tabBtn {
+    padding: var(--ds-spacing-2) var(--ds-spacing-4);
+    font-size: var(--ds-text-sm);
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+    background: var(--shell-bg-base);
+    color: var(--shell-text-primary);
+    cursor: pointer;
+  }
+  .tabBtn[data-active="true"] {
+    background: var(--shell-bg-hover);
+    border-color: var(--shell-border-focus);
+  }
 
-/* Page Preview: 서비스 페이지 목업 */
-.pagePreview {
-  padding: var(--ds-spacing-6);
-  background: var(--shell-bg-surface);
-  border: 1px solid var(--shell-border-subtle);
-  border-radius: var(--ds-radius-lg);
-}
+  /* Page Preview: 서비스 페이지 목업 */
+  .pagePreview {
+    padding: var(--ds-spacing-6);
+    background: var(--shell-bg-surface);
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-lg);
+  }
 
-.pagePreviewInner {
-  max-width: 56rem;
-  margin: 0 auto;
-  min-height: 480px;
-}
+  .pagePreviewInner {
+    max-width: 56rem;
+    margin: 0 auto;
+    min-height: 480px;
+  }
 
-/* Page Preview 내부는 data-context="preview" + themeVars 적용됨 */
-.hero {
-  padding: var(--ds-spacing-12) var(--ds-spacing-6);
-  text-align: center;
-}
+  /* Page Preview 내부는 data-context="preview" + themeVars 적용됨 */
+  .hero {
+    padding: var(--ds-spacing-12) var(--ds-spacing-6);
+    text-align: center;
+  }
 
-.heroTitle {
-  font-size: var(--ds-text-3xl);
-  font-weight: var(--ds-font-weight-bold);
-  color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-3) 0;
-}
+  .heroTitle {
+    font-size: var(--ds-text-3xl);
+    font-weight: var(--ds-font-weight-bold);
+    color: var(--ds-color-text-primary);
+    margin: 0 0 var(--ds-spacing-3) 0;
+  }
 
-.heroSubtitle {
-  font-size: var(--ds-text-lg);
-  color: var(--ds-color-text-secondary);
-  margin: 0 0 var(--ds-spacing-6) 0;
-}
+  .heroSubtitle {
+    font-size: var(--ds-text-lg);
+    color: var(--ds-color-text-secondary);
+    margin: 0 0 var(--ds-spacing-6) 0;
+  }
 
-.heroButtons {
-  display: flex;
-  gap: var(--ds-spacing-4);
-  justify-content: center;
-  flex-wrap: wrap;
-}
+  .heroButtons {
+    display: flex;
+    gap: var(--ds-spacing-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-.cardGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ds-spacing-6);
-  padding: var(--ds-spacing-8) var(--ds-spacing-6);
-}
-
-@media (max-width: 768px) {
   .cardGrid {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ds-spacing-6);
+    padding: var(--ds-spacing-8) var(--ds-spacing-6);
+  }
+
+  @media (max-width: 768px) {
+    .cardGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .formSection {
+    padding: var(--ds-spacing-8) var(--ds-spacing-6);
+    max-width: 28rem;
+    margin: 0 auto;
+  }
+
+  .previewFooter {
+    padding: var(--ds-spacing-4) var(--ds-spacing-6);
+    text-align: center;
+    font-size: var(--ds-text-sm);
+    color: var(--ds-color-text-secondary);
+    border-top: 1px solid var(--ds-color-border-subtle);
+  }
+
+  /* E08 P02: Dashboard 목업 */
+  .dashboardSection {
+    padding: var(--ds-spacing-6);
+  }
+  .pageHeading {
+    font-size: var(--ds-text-xl);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-text-primary);
+    margin: 0 0 var(--ds-spacing-6) 0;
+  }
+  .statsRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ds-spacing-4);
+    margin-bottom: var(--ds-spacing-8);
+  }
+  .statCard {
+    min-width: 0;
+  }
+  .tableWrap {
+    overflow-x: auto;
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border-radius: var(--ds-radius-md);
+  }
+  .previewTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--ds-text-sm);
+  }
+  .previewTable th,
+  .previewTable td {
+    padding: var(--ds-spacing-3) var(--ds-spacing-4);
+    text-align: left;
+    border-bottom: 1px solid var(--ds-color-border-subtle);
+    color: var(--ds-color-text-primary);
+  }
+  .previewTable th {
+    font-weight: var(--ds-font-weight-semibold);
+    background: var(--ds-color-bg-muted);
+  }
+
+  /* E08 P02: Article 목업 */
+  .articleSection {
+    padding: var(--ds-spacing-8) var(--ds-spacing-6);
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+  .articleTitle {
+    font-size: var(--ds-text-2xl);
+    font-weight: var(--ds-font-weight-bold);
+    color: var(--ds-color-text-primary);
+    margin: 0 0 var(--ds-spacing-2) 0;
+  }
+  .articleMeta {
+    margin: 0 0 var(--ds-spacing-6) 0;
+  }
+  .articleBody {
+    font-size: var(--ds-text-base);
+    line-height: 1.6;
+    color: var(--ds-color-text-primary);
+  }
+  .articleBody h2 {
+    font-size: var(--ds-text-lg);
+    font-weight: var(--ds-font-weight-semibold);
+    margin: var(--ds-spacing-6) 0 var(--ds-spacing-2) 0;
+  }
+  .articleBody p {
+    margin: 0 0 var(--ds-spacing-4) 0;
+  }
+  .articleBody ul {
+    margin: 0 0 var(--ds-spacing-4) 0;
+    padding-left: var(--ds-spacing-6);
   }
 }
-
-.formSection {
-  padding: var(--ds-spacing-8) var(--ds-spacing-6);
-  max-width: 28rem;
-  margin: 0 auto;
-}
-
-.previewFooter {
-  padding: var(--ds-spacing-4) var(--ds-spacing-6);
-  text-align: center;
-  font-size: var(--ds-text-sm);
-  color: var(--ds-color-text-secondary);
-  border-top: 1px solid var(--ds-color-border-subtle);
-}
-
-/* E08 P02: Dashboard 목업 */
-.dashboardSection {
-  padding: var(--ds-spacing-6);
-}
-.pageHeading {
-  font-size: var(--ds-text-xl);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-6) 0;
-}
-.statsRow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ds-spacing-4);
-  margin-bottom: var(--ds-spacing-8);
-}
-.statCard {
-  min-width: 0;
-}
-.tableWrap {
-  overflow-x: auto;
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
-  border-radius: var(--ds-radius-md);
-}
-.previewTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--ds-text-sm);
-}
-.previewTable th,
-.previewTable td {
-  padding: var(--ds-spacing-3) var(--ds-spacing-4);
-  text-align: left;
-  border-bottom: 1px solid var(--ds-color-border-subtle);
-  color: var(--ds-color-text-primary);
-}
-.previewTable th {
-  font-weight: var(--ds-font-weight-semibold);
-  background: var(--ds-color-bg-muted);
-}
-
-/* E08 P02: Article 목업 */
-.articleSection {
-  padding: var(--ds-spacing-8) var(--ds-spacing-6);
-  max-width: 42rem;
-  margin: 0 auto;
-}
-.articleTitle {
-  font-size: var(--ds-text-2xl);
-  font-weight: var(--ds-font-weight-bold);
-  color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-2) 0;
-}
-.articleMeta {
-  margin: 0 0 var(--ds-spacing-6) 0;
-}
-.articleBody {
-  font-size: var(--ds-text-base);
-  line-height: 1.6;
-  color: var(--ds-color-text-primary);
-}
-.articleBody h2 {
-  font-size: var(--ds-text-lg);
-  font-weight: var(--ds-font-weight-semibold);
-  margin: var(--ds-spacing-6) 0 var(--ds-spacing-2) 0;
-}
-.articleBody p {
-  margin: 0 0 var(--ds-spacing-4) 0;
-}
-.articleBody ul {
-  margin: 0 0 var(--ds-spacing-4) 0;
-  padding-left: var(--ds-spacing-6);
-}
-

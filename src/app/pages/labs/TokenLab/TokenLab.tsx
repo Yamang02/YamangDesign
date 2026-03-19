@@ -1,6 +1,7 @@
 /**
  * E06 P03: Token Lab 3-레이어 뷰
  * --shell-* / --ds-* / --sys-* 구분, Architecture 다이어그램, 카테고리별 토큰 표시
+ * P04: Overview 항목을 ThemeTokenSet 데이터에서 동적 생성
  */
 import { useState } from 'react';
 import {
@@ -24,6 +25,8 @@ type ShellCategory = { title: string; tokens: string[]; fullRow?: boolean };
 type TokenGroup = { title: string; tokens: string[] };
 type GlobalGroup = { title: string; tokens: string[]; showSwatch: boolean; fullRow?: boolean };
 
+type SortMode = 'semantic' | 'name';
+
 const {
   shellCategories: SHELL_CATEGORIES,
   globalGroups: GLOBAL_GROUPS,
@@ -39,6 +42,21 @@ const {
 /** 구조화 필요한 값(shadow, border, transition 등)은 구조화 표기로 표시 */
 function formatTokenDisplayValue(token: string, value: string): string {
   return formatStructuredDisplay(token, value || '');
+}
+
+function filterAndSortTokens(
+  tokens: string[],
+  search: string,
+  sortMode: SortMode
+): string[] {
+  const q = search.trim().toLowerCase();
+  const filtered = q ? tokens.filter((t) => t.toLowerCase().includes(q)) : tokens;
+  if (sortMode === 'name') return [...filtered].sort((a, b) => a.localeCompare(b));
+  return filtered;
+}
+
+function groupKey(prefix: string, title: string): string {
+  return `${prefix}:${title}`;
 }
 
 const tocItems: (TocItem | TocItemTree)[] = [
@@ -250,7 +268,19 @@ function TokenTable({
 }
 
 // --- Shell Tokens ---
-function ShellTokensSection({ onSelectToken }: { onSelectToken?: (token: string) => void }) {
+function ShellTokensSection({
+  onSelectToken,
+  search,
+  sortMode,
+  collapsed,
+  onToggleCollapsed,
+}: {
+  onSelectToken?: (token: string) => void;
+  search: string;
+  sortMode: SortMode;
+  collapsed: Record<string, boolean>;
+  onToggleCollapsed: (key: string) => void;
+}) {
   const gridCategories = SHELL_CATEGORIES.filter((c) => !c.fullRow);
   const fullRowCategories = SHELL_CATEGORIES.filter((c) => c.fullRow);
 
@@ -259,9 +289,19 @@ function ShellTokensSection({ onSelectToken }: { onSelectToken?: (token: string)
       <div className={styles.tokenCategoryGrid}>
         {gridCategories.map((cat) => (
           <div key={cat.title} className={styles.tokenCategory}>
-            <h3 className={styles.categoryTitle}>{cat.title}</h3>
+            <button
+              type="button"
+              className={styles.groupHeaderBtn}
+              aria-expanded={!collapsed[groupKey('shell', cat.title)]}
+              onClick={() => onToggleCollapsed(groupKey('shell', cat.title))}
+            >
+              <span>{cat.title}</span>
+              <span className={styles.groupHeaderIcon}>
+                {collapsed[groupKey('shell', cat.title)] ? '+' : '-'}
+              </span>
+            </button>
             <TokenTable
-              tokens={cat.tokens}
+              tokens={filterAndSortTokens(cat.tokens, search, sortMode)}
               onSelectToken={onSelectToken}
               formatDisplayValue={formatTokenDisplayValue}
             />
@@ -270,12 +310,24 @@ function ShellTokensSection({ onSelectToken }: { onSelectToken?: (token: string)
       </div>
       {fullRowCategories.map((cat) => (
         <div key={cat.title} className={styles.tokenCategoryFullRow}>
-          <h3 className={styles.categoryTitle}>{cat.title}</h3>
-          <TokenTable
-              tokens={cat.tokens}
+          <button
+            type="button"
+            className={styles.groupHeaderBtn}
+            aria-expanded={!collapsed[groupKey('shell', cat.title)]}
+            onClick={() => onToggleCollapsed(groupKey('shell', cat.title))}
+          >
+            <span>{cat.title}</span>
+            <span className={styles.groupHeaderIcon}>
+              {collapsed[groupKey('shell', cat.title)] ? '+' : '-'}
+            </span>
+          </button>
+          {!collapsed[groupKey('shell', cat.title)] && (
+            <TokenTable
+              tokens={filterAndSortTokens(cat.tokens, search, sortMode)}
               onSelectToken={onSelectToken}
               formatDisplayValue={formatTokenDisplayValue}
             />
+          )}
         </div>
       ))}
     </LabSection>
@@ -283,7 +335,19 @@ function ShellTokensSection({ onSelectToken }: { onSelectToken?: (token: string)
 }
 
 // --- DS Global ---
-function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => void }) {
+function GlobalSection({
+  onSelectToken,
+  search,
+  sortMode,
+  collapsed,
+  onToggleCollapsed,
+}: {
+  onSelectToken?: (token: string) => void;
+  search: string;
+  sortMode: SortMode;
+  collapsed: Record<string, boolean>;
+  onToggleCollapsed: (key: string) => void;
+}) {
   const gridGroups = GLOBAL_GROUPS.filter((g) => !g.fullRow);
   const fullRowGroups = GLOBAL_GROUPS.filter((g) => g.fullRow);
 
@@ -292,9 +356,19 @@ function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => v
       <div className={styles.tokenCategoryGrid}>
         {gridGroups.map((g) => (
           <div key={g.title} className={styles.tokenCategory}>
-            <h3 className={styles.categoryTitle}>{g.title}</h3>
+            <button
+              type="button"
+              className={styles.groupHeaderBtn}
+              aria-expanded={!collapsed[groupKey('global', g.title)]}
+              onClick={() => onToggleCollapsed(groupKey('global', g.title))}
+            >
+              <span>{g.title}</span>
+              <span className={styles.groupHeaderIcon}>
+                {collapsed[groupKey('global', g.title)] ? '+' : '-'}
+              </span>
+            </button>
             <TokenTable
-              tokens={g.tokens}
+              tokens={filterAndSortTokens(g.tokens, search, sortMode)}
               showSwatchColumn={g.showSwatch}
               onSelectToken={onSelectToken}
               formatDisplayValue={formatTokenDisplayValue}
@@ -304,13 +378,25 @@ function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => v
       </div>
       {fullRowGroups.map((g) => (
         <div key={g.title} className={styles.tokenCategoryFullRow}>
-          <h3 className={styles.categoryTitle}>{g.title}</h3>
-          <TokenTable
-            tokens={g.tokens}
-            showSwatchColumn={g.showSwatch}
-            onSelectToken={onSelectToken}
-            formatDisplayValue={formatTokenDisplayValue}
-          />
+          <button
+            type="button"
+            className={styles.groupHeaderBtn}
+            aria-expanded={!collapsed[groupKey('global', g.title)]}
+            onClick={() => onToggleCollapsed(groupKey('global', g.title))}
+          >
+            <span>{g.title}</span>
+            <span className={styles.groupHeaderIcon}>
+              {collapsed[groupKey('global', g.title)] ? '+' : '-'}
+            </span>
+          </button>
+          {!collapsed[groupKey('global', g.title)] && (
+            <TokenTable
+              tokens={filterAndSortTokens(g.tokens, search, sortMode)}
+              showSwatchColumn={g.showSwatch}
+              onSelectToken={onSelectToken}
+              formatDisplayValue={formatTokenDisplayValue}
+            />
+          )}
         </div>
       ))}
     </LabPanel>
@@ -318,14 +404,42 @@ function GlobalSection({ onSelectToken }: { onSelectToken?: (token: string) => v
 }
 
 // --- DS Alias (역할별 세분화) ---
-function AliasSection({ onSelectToken }: { onSelectToken?: (token: string) => void }) {
+function AliasSection({
+  onSelectToken,
+  search,
+  sortMode,
+  collapsed,
+  onToggleCollapsed,
+}: {
+  onSelectToken?: (token: string) => void;
+  search: string;
+  sortMode: SortMode;
+  collapsed: Record<string, boolean>;
+  onToggleCollapsed: (key: string) => void;
+}) {
   return (
     <LabPanel title="Alias" id="ds-alias">
       <div className={styles.tokenCategoryGrid}>
         {ALIAS_GROUPS.map((g) => (
           <div key={g.title} className={styles.tokenCategory}>
-            <h3 className={styles.categoryTitle}>{g.title}</h3>
-            <TokenTable tokens={g.tokens} showSwatchColumn onSelectToken={onSelectToken} />
+            <button
+              type="button"
+              className={styles.groupHeaderBtn}
+              aria-expanded={!collapsed[groupKey('alias', g.title)]}
+              onClick={() => onToggleCollapsed(groupKey('alias', g.title))}
+            >
+              <span>{g.title}</span>
+              <span className={styles.groupHeaderIcon}>
+                {collapsed[groupKey('alias', g.title)] ? '+' : '-'}
+              </span>
+            </button>
+            {!collapsed[groupKey('alias', g.title)] && (
+              <TokenTable
+                tokens={filterAndSortTokens(g.tokens, search, sortMode)}
+                showSwatchColumn
+                onSelectToken={onSelectToken}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -334,14 +448,41 @@ function AliasSection({ onSelectToken }: { onSelectToken?: (token: string) => vo
 }
 
 // --- Sys Tokens ---
-function SysTokensSection({ onSelectToken }: { onSelectToken?: (token: string) => void }) {
+function SysTokensSection({
+  onSelectToken,
+  search,
+  sortMode,
+  collapsed,
+  onToggleCollapsed,
+}: {
+  onSelectToken?: (token: string) => void;
+  search: string;
+  sortMode: SortMode;
+  collapsed: Record<string, boolean>;
+  onToggleCollapsed: (key: string) => void;
+}) {
   return (
     <LabSection title="System" id="sys-tokens">
       <div className={styles.tokenCategoryGrid}>
         {SYS_GROUPS.map((g) => (
           <div key={g.title} className={styles.tokenCategory}>
-            <h3 className={styles.categoryTitle}>{g.title}</h3>
-            <TokenTable tokens={g.tokens} onSelectToken={onSelectToken} />
+            <button
+              type="button"
+              className={styles.groupHeaderBtn}
+              aria-expanded={!collapsed[groupKey('sys', g.title)]}
+              onClick={() => onToggleCollapsed(groupKey('sys', g.title))}
+            >
+              <span>{g.title}</span>
+              <span className={styles.groupHeaderIcon}>
+                {collapsed[groupKey('sys', g.title)] ? '+' : '-'}
+              </span>
+            </button>
+            {!collapsed[groupKey('sys', g.title)] && (
+              <TokenTable
+                tokens={filterAndSortTokens(g.tokens, search, sortMode)}
+                onSelectToken={onSelectToken}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -352,6 +493,15 @@ function SysTokensSection({ onSelectToken }: { onSelectToken?: (token: string) =
 
 export function TokenLab() {
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [sortMode, setSortMode] = useState<SortMode>('semantic');
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+
+  const toggleCollapsed = (key: string) => {
+    setCollapsed((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const normalizedSearch = search.trim().toLowerCase();
 
   return (
     <>
@@ -359,14 +509,62 @@ export function TokenLab() {
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
             <TokenOverviewDiagram />
+            <div className={styles.tokenLabControls}>
+              <div className={styles.controlRow}>
+                <label className={styles.controlGroup}>
+                  <span className={styles.controlLabel}>검색</span>
+                  <input
+                    className={styles.controlInput}
+                    value={search}
+                    placeholder="토큰 이름/키워드 검색"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </label>
+                <label className={styles.controlGroup}>
+                  <span className={styles.controlLabel}>정렬</span>
+                  <select
+                    className={styles.controlSelect}
+                    value={sortMode}
+                    onChange={(e) => setSortMode(e.target.value as SortMode)}
+                  >
+                    <option value="semantic">역할/시멘틱 그룹 순</option>
+                    <option value="name">이름순(보조)</option>
+                  </select>
+                </label>
+              </div>
+            </div>
           </LabOverview>
         </LabSection>
-        <ShellTokensSection onSelectToken={setSelectedToken} />
+        <ShellTokensSection
+          onSelectToken={setSelectedToken}
+          search={normalizedSearch}
+          sortMode={sortMode}
+          collapsed={collapsed}
+          onToggleCollapsed={toggleCollapsed}
+        />
         <LabSection title="Design System" id="ds-tokens" card={false}>
-          <GlobalSection onSelectToken={setSelectedToken} />
-          <AliasSection onSelectToken={setSelectedToken} />
+          <GlobalSection
+            onSelectToken={setSelectedToken}
+            search={normalizedSearch}
+            sortMode={sortMode}
+            collapsed={collapsed}
+            onToggleCollapsed={toggleCollapsed}
+          />
+          <AliasSection
+            onSelectToken={setSelectedToken}
+            search={normalizedSearch}
+            sortMode={sortMode}
+            collapsed={collapsed}
+            onToggleCollapsed={toggleCollapsed}
+          />
         </LabSection>
-        <SysTokensSection onSelectToken={setSelectedToken} />
+        <SysTokensSection
+          onSelectToken={setSelectedToken}
+          search={normalizedSearch}
+          sortMode={sortMode}
+          collapsed={collapsed}
+          onToggleCollapsed={toggleCollapsed}
+        />
       </LabLayout>
 
       <DetailPanel

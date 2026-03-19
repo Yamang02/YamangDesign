@@ -1,77 +1,82 @@
-/**
- * E04: 앱 셸 토큰 (--shell-*)
- * 단일 라이트 크롬: :root 기본값 라이트. [data-shell]에서 DS 토큰 매핑.
- */
-:root {
-  /* E01/E04: 헤더 높이 (DetailPanel, TOC sticky 등에서 사용) */
-  --nav-height: 64px;
+@layer tokens {
+  /**
+   * E04: 앱 셸 토큰 (--shell-*)
+   * 단일 라이트 크롬: :root 기본값 라이트. [data-shell]에서 DS 토큰 매핑.
+   */
+  :root {
+    /* E01/E04: 헤더 높이 (DetailPanel, TOC sticky 등에서 사용) */
+    --nav-height: 64px;
 
-  /* 배경 - 라이트 (E03 단일 크롬) */
-  --shell-bg-base: #FFFFFF;
-  --shell-bg-subtle: #F8F9FA;
-  --shell-bg-surface: #F1F3F5;
-  --shell-bg-muted: #F1F3F5;
-  --shell-bg-elevated: #FFFFFF;
-  --shell-bg-hover: rgba(55, 65, 81, 0.07);
-  --shell-text-hover: #1F2937;
+    /* 배경 - 라이트 (E03 단일 크롬) */
+    --shell-bg-base: #FFFFFF;
+    --shell-bg-subtle: #F8F9FA;
+    --shell-bg-surface: #F1F3F5;
+    --shell-bg-muted: #F1F3F5;
+    --shell-bg-elevated: #FFFFFF;
+    --shell-bg-hover: rgba(55, 65, 81, 0.07);
+    --shell-text-hover: #1F2937;
 
-  /* 텍스트 */
-  --shell-text-primary: #1A1A1A;
-  --shell-text-secondary: #6B7280;
-  --shell-text-tertiary: #9CA3AF;
-  --shell-text-muted: #6B7280;
-  --shell-text-on-action: #FFFFFF;
+    /* 텍스트 */
+    --shell-text-primary: #1A1A1A;
+    --shell-text-secondary: #6B7280;
+    --shell-text-tertiary: #9CA3AF;
+    --shell-text-muted: #6B7280;
+    --shell-text-on-action: #FFFFFF;
+    --shell-font-brand: 'Griun PolSensibility', 'Cormorant Garamond', 'Noto Serif KR', Georgia, 'Times New Roman', serif;
 
-  /* 경계선 */
-  --shell-border-default: #E5E7EB;
-  --shell-border-subtle: #F3F4F6;
-  --shell-border-strong: #D1D5DB;
-  --shell-border-hover: #9CA3AF;
-  --shell-border-focus: #374151;
+    /* 경계선 */
+    --shell-border-default: #E5E7EB;
+    --shell-border-subtle: #F3F4F6;
+    --shell-border-strong: #D1D5DB;
+    --shell-border-hover: #9CA3AF;
+    --shell-border-focus: #374151;
 
-  /* 액션 - E05: 중립 회색 (팔레트 독립) */
-  --shell-action-primary: #374151;
-  --shell-action-hover: #1F2937;
-  --shell-action-active: #D1D5DB;
+    /* 액션 - E05: 중립 회색 (팔레트 독립) */
+    --shell-action-primary: #374151;
+    --shell-action-hover: #1F2937;
+    --shell-action-active: #D1D5DB;
 
-  /* 포커스 */
-  --shell-focus-ring: #374151;
+    /* 포커스 */
+    --shell-focus-ring: #374151;
 
-  /* 섀도우 (라이트 기준) */
-  --shell-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shell-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shell-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    /* 섀도우 (라이트 기준) */
+    --shell-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shell-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shell-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
 
-  /* 오버레이·툴팁 (딤/툴팁 가독성 유지) */
-  --shell-overlay: rgba(0, 0, 0, 0.5);
-  --shell-tooltip-bg: rgba(0, 0, 0, 0.85);
-  --shell-tooltip-text: #FFFFFF;
-  --shell-tooltip-padding: 6px 10px;
-  --shell-tooltip-font-size: 13px;
-  --shell-tooltip-radius: 6px;
+    /* 오버레이·툴팁 (딤/툴팁 가독성 유지) */
+    --shell-overlay: rgba(0, 0, 0, 0.5);
+    --shell-tooltip-bg: rgba(0, 0, 0, 0.85);
+    --shell-tooltip-text: #FFFFFF;
+    --shell-tooltip-padding: 6px 10px;
+    --shell-tooltip-font-size: 13px;
+    --shell-tooltip-radius: 6px;
 
-  /* 프리셋 배지 고정 색 (Yamang/custom/semantic/natural/category) */
-  --shell-badge-custom: #10B981;
-  --shell-badge-semantic: #F59E0B;
-  --shell-badge-natural: #8B5CF6;
+    /* 프리셋 배지 고정 색 (Yamang/custom/semantic/natural/category) */
+    --shell-badge-custom: #10B981;
+    --shell-badge-semantic: #F59E0B;
+    --shell-badge-natural: #8B5CF6;
 
-  /* E05: 중립 회색 (호버/포커스 링 등) */
-  --shell-bg-primary-subtle: rgba(55, 65, 81, 0.08);
-  --shell-focus-glow: 0 0 0 2px rgba(55, 65, 81, 0.15);
+    /* E05: 중립 회색 (호버/포커스 링 등) */
+    --shell-bg-primary-subtle: rgba(55, 65, 81, 0.08);
+    --shell-focus-glow: 0 0 0 2px rgba(55, 65, 81, 0.15);
+  }
 }
 
-/**
- * 앱 셸 컨텍스트: 테마 시각 효과(neumorphism/glassmorphism 등)만 차단.
- * --ds-color-* 재정의 없음 — DS 컴포넌트는 어디서든 테마 토큰에 반응.
- * 크롬 컴포넌트는 --shell-* 직접 참조 (Header, Nav, Footer 등).
- */
-[data-shell] {
-  /* 테마 스타일(뉴모피즘/글래스모피즘 등) 크롬에서 차단 */
-  --ds-surface-backdrop: none;
-  --ds-surface-bg-alpha: 1;
-  --ds-surface-texture: none;
-  --ds-surface-blend: normal;
-  --ds-filter: none;
-  --ds-perspective: none;
-  --ds-transform-style: flat;
+@layer shell {
+  /**
+   * 앱 셸 컨텍스트: 테마 시각 효과(neumorphism/glassmorphism 등)만 차단.
+   * --ds-color-* 재정의 없음 — DS 컴포넌트는 어디서든 테마 토큰에 반응.
+   * 크롬 컴포넌트는 --shell-* 직접 참조 (Header, Nav, Footer 등).
+   */
+  [data-shell] {
+    /* 테마 스타일(뉴모피즘/글래스모피즘 등) 크롬에서 차단 */
+    --ds-surface-backdrop: none;
+    --ds-surface-bg-alpha: 1;
+    --ds-surface-texture: none;
+    --ds-surface-blend: normal;
+    --ds-filter: none;
+    --ds-perspective: none;
+    --ds-transform-style: flat;
+  }
 }

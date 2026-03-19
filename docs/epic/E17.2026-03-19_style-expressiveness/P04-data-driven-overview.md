@@ -104,3 +104,5 @@ function buildStyleComparisonMatrix(styles: StyleDefinition[]): MatrixRow[] {
 - [ ] FontLab Overview의 정적 수치가 있다면 typography 토큰 데이터에서 추출
 - [ ] StyleLab의 Property Matrix가 스타일 추가 시 자동으로 열이 늘어나는지 확인
 - [ ] 새 스타일 프리셋을 임시로 추가했을 때 Overview 수치가 자동 갱신되는지 확인
+- [ ] Overview 유틸 함수에서 `createVars()` 호출 시 사용하는 컨텍스트 객체 규격(예: `bgColor` hex 문자열 여부)을 P01과 일치시켜 실패 안전하게 동작하는지 확인
+- [ ] Overview 계산에 필요한 재계산 범위를 제한(메모이제이션/캐싱)하고, 렌더마다 불필요한 비용이 발생하지 않는지 확인

@@ -1,5 +1,4 @@
-/* @layer mixed — 크롬(--shell-*)과 콘텐츠(--ds-*) 혼재. 섹션 주석 참조. */
-
+@layer override {
 /* ─── Chrome (shell) ─────────────────────────────── */
 .overlay {
   position: fixed;
@@ -239,4 +238,5 @@
 .applyBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
 }

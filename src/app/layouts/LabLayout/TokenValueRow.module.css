@@ -1,40 +1,41 @@
-/* @layer shell — DetailPanel 공통 블록: 토큰명 + 값 한 행 */
-.row {
-  display: flex;
-  align-items: baseline;
-  gap: var(--ds-spacing-3);
-  padding: var(--ds-spacing-1) 0;
-  border-bottom: 1px solid var(--shell-border-subtle);
-  min-width: 0;
-}
+@layer shell {
+  .row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--ds-spacing-3);
+    padding: var(--ds-spacing-1) 0;
+    border-bottom: 1px solid var(--shell-border-subtle);
+    min-width: 0;
+  }
 
-.row:last-child {
-  border-bottom: none;
-}
+  .row:last-child {
+    border-bottom: none;
+  }
 
-.label {
-  flex: 0 0 auto;
-  min-width: 100px;
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-}
+  .label {
+    flex: 0 0 auto;
+    min-width: 100px;
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+  }
 
-.token {
-  flex: 1;
-  font-size: var(--ds-text-xs);
-  font-family: var(--ds-font-mono);
-  color: var(--shell-text-secondary);
-  background: var(--shell-bg-subtle, rgba(0, 0, 0, 0.04));
-  padding: 2px 6px;
-  border-radius: var(--ds-radius-sm);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  .token {
+    flex: 1;
+    font-size: var(--ds-text-xs);
+    font-family: var(--ds-font-mono);
+    color: var(--shell-text-secondary);
+    background: var(--shell-bg-subtle, rgba(0, 0, 0, 0.04));
+    padding: 2px 6px;
+    border-radius: var(--ds-radius-sm);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.value {
-  flex: 0 0 auto;
-  font-size: var(--ds-text-sm);
-  font-family: var(--ds-font-mono);
-  color: var(--shell-text-primary);
+  .value {
+    flex: 0 0 auto;
+    font-size: var(--ds-text-sm);
+    font-family: var(--ds-font-mono);
+    color: var(--shell-text-primary);
+  }
 }

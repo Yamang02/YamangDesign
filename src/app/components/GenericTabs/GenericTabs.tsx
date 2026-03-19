@@ -30,6 +30,7 @@ export function GenericTabs<T extends string>({
           data-active={activeTab === tab.id}
           onClick={() => onTabChange(tab.id)}
           tabIndex={activeTab === tab.id ? 0 : -1}
+          title={tab.label}
         >
           {tab.label}
         </button>

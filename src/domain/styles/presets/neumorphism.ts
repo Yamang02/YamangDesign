@@ -4,9 +4,17 @@
  */
 import { lighten, darken } from '@shared/utils/color';
 import type { StyleDefinition } from '../types';
+import { easing } from '@domain/tokens/global';
 
 export const neumorphismStyle: StyleDefinition = {
   name: 'neumorphism',
+  metadata: {
+    era: '2019-',
+    origin: 'UI concept',
+    characteristics: ['soft extrusion', 'monochrome surfaces', 'tactile depth'],
+    description: 'soft extrusion, monochrome surfaces, tactile depth',
+  },
+  preferredBgStrategies: ['colored'],
 
   elevation: {
     create: ({ bgColor }) => {
@@ -28,4 +36,22 @@ export const neumorphismStyle: StyleDefinition = {
     style: 'none',
     colorStrategy: 'transparent',
   },
+  createVars: () => ({
+    // Radius (P01)
+    '--ds-radius-sm': '8px',
+    '--ds-radius-md': '12px',
+    '--ds-radius-lg': '16px',
+    '--ds-radius-xl': '20px',
+    '--ds-radius-full': '9999px',
+
+    // Motion (P01)
+    '--ds-duration-instant': '0ms',
+    '--ds-duration-fast': '200ms',
+    '--ds-duration-normal': '350ms',
+    '--ds-duration-slow': '500ms',
+
+    '--ds-ease-easeOut': easing.easeInOut,
+    '--ds-ease-easeInOut': easing.easeInOut,
+    '--ds-ease-productive': easing.easeInOut,
+  }),
 };

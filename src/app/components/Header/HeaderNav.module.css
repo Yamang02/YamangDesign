@@ -1,225 +1,226 @@
-/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
-/* @tokens: --shell-bg-hover, --shell-text-hover, --shell-text-primary, --shell-text-tertiary,
-            --shell-text-secondary, --shell-bg-elevated, --shell-border-default,
-            --shell-shadow-lg, --shell-bg-primary-subtle */
-/* E02: 아이콘 기반 네비게이션 */
+@layer shell {
+  /* @tokens: --shell-bg-hover, --shell-text-hover, --shell-text-primary, --shell-text-tertiary,
+              --shell-text-secondary, --shell-bg-elevated, --shell-border-default,
+              --shell-shadow-lg, --shell-bg-primary-subtle */
+  /* E02: 아이콘 기반 네비게이션 */
 
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--ds-spacing-2);
-  flex: 1;
-}
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--ds-spacing-2);
+    flex: 1;
+  }
 
-.divider {
-  width: 1px;
-  height: 24px;
-  background: var(--shell-border-default);
-  margin: 0 var(--ds-spacing-1);
-}
+  .divider {
+    width: 1px;
+    height: 24px;
+    background: var(--shell-border-default);
+    margin: 0 var(--ds-spacing-1);
+  }
 
-/* 단일 아이템 (아이콘 또는 아이콘+메뉴명) */
-/* 비활성: 연한 회색, active: 진한 회색, hover: 통일된 배경+진한 텍스트 */
-.navItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ds-spacing-1);
-  min-width: 40px;
-  height: 40px;
-  padding: 0 var(--ds-spacing-2);
-  border-radius: var(--ds-radius-md);
-  background: transparent;
-  border: none;
-  color: var(--shell-text-tertiary);
-  cursor: pointer;
-  font-size: var(--ds-text-body-md-size);
-  line-height: var(--ds-text-body-md-leading);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
+  /* 단일 아이템 (아이콘 또는 아이콘+메뉴명) */
+  /* 비활성: 연한 회색, active: 진한 회색, hover: 통일된 배경+진한 텍스트 */
+  .navItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-spacing-1);
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--ds-spacing-2);
+    border-radius: var(--ds-radius-md);
+    background: transparent;
+    border: none;
+    color: var(--shell-text-tertiary);
+    cursor: pointer;
+    font-size: var(--ds-text-body-md-size);
+    line-height: var(--ds-text-body-md-leading);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
 
-.navItemWithLabel {
-  justify-content: flex-start;
-  padding: 0 var(--ds-spacing-3);
-}
+  .navItemWithLabel {
+    justify-content: flex-start;
+    padding: 0 var(--ds-spacing-3);
+  }
 
-.navItemLabel {
-  white-space: nowrap;
-}
+  .navItemLabel {
+    white-space: nowrap;
+  }
 
-.navItem:hover {
-  background: var(--shell-bg-hover);
-  color: var(--shell-text-hover);
-}
+  .navItem:hover {
+    background: var(--shell-bg-hover);
+    color: var(--shell-text-hover);
+  }
 
-.navItem.active {
-  color: var(--shell-text-primary);
-}
+  .navItem.active {
+    color: var(--shell-text-primary);
+  }
 
-.navItemIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .navItemIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.navItemIcon svg {
-  width: 20px;
-  height: 20px;
-}
+  .navItemIcon svg {
+    width: 20px;
+    height: 20px;
+  }
 
-/* 드롭다운 트리거 */
-.dropdown {
-  position: relative;
-}
+  /* 드롭다운 트리거 */
+  .dropdown {
+    position: relative;
+  }
 
-.dropdownTrigger {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-1);
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  border-radius: var(--ds-radius-md);
-  background: transparent;
-  border: none;
-  color: var(--shell-text-tertiary);
-  cursor: pointer;
-  font-size: var(--ds-text-body-md-size);
-  line-height: var(--ds-text-body-md-leading);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
+  .dropdownTrigger {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-1);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    border-radius: var(--ds-radius-md);
+    background: transparent;
+    border: none;
+    color: var(--shell-text-tertiary);
+    cursor: pointer;
+    font-size: var(--ds-text-body-md-size);
+    line-height: var(--ds-text-body-md-leading);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
 
-.dropdownTrigger:hover {
-  background: var(--shell-bg-hover);
-  color: var(--shell-text-hover);
-}
+  .dropdownTrigger:hover {
+    background: var(--shell-bg-hover);
+    color: var(--shell-text-hover);
+  }
 
-.dropdownTrigger.open,
-.dropdownTrigger.active {
-  color: var(--shell-text-primary);
-}
+  .dropdownTrigger.open,
+  .dropdownTrigger.active {
+    color: var(--shell-text-primary);
+  }
 
-.dropdownLabel {
-  white-space: nowrap;
-}
+  .dropdownLabel {
+    white-space: nowrap;
+  }
 
-.chevron {
-  transition: transform 0.2s ease;
-}
+  .chevron {
+    transition: transform 0.2s ease;
+  }
 
-.chevronOpen {
-  transform: rotate(180deg);
-}
+  .chevronOpen {
+    transform: rotate(180deg);
+  }
 
-/* 드롭다운 메뉴 */
-.dropdownMenu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: var(--ds-spacing-1);
-  min-width: 180px;
-  padding: var(--ds-spacing-1);
-  background: var(--shell-bg-elevated);
-  border: 1px solid var(--shell-border-default);
-  border-radius: var(--ds-radius-lg);
-  box-shadow: var(--shell-shadow-lg);
-  z-index: var(--ds-z-dropdown);
-}
+  /* 드롭다운 메뉴 */
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: var(--ds-spacing-1);
+    min-width: 180px;
+    padding: var(--ds-spacing-1);
+    background: var(--shell-bg-elevated);
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-lg);
+    box-shadow: var(--shell-shadow-lg);
+    z-index: var(--ds-z-dropdown);
+  }
 
-.dropdownItem {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  width: 100%;
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  border-radius: var(--ds-radius-sm);
-  border: none;
-  background: none;
-  color: var(--shell-text-primary);
-  cursor: pointer;
-  font-size: var(--ds-text-body-md-size);
-  line-height: var(--ds-text-body-md-leading);
-  text-align: left;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
+  .dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    width: 100%;
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    border-radius: var(--ds-radius-sm);
+    border: none;
+    background: none;
+    color: var(--shell-text-primary);
+    cursor: pointer;
+    font-size: var(--ds-text-body-md-size);
+    line-height: var(--ds-text-body-md-leading);
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
 
-.dropdownItem:hover {
-  background: var(--shell-bg-hover);
-  color: var(--shell-text-hover);
-}
+  .dropdownItem:hover {
+    background: var(--shell-bg-hover);
+    color: var(--shell-text-hover);
+  }
 
-.dropdownItemActive {
-  background: var(--shell-bg-primary-subtle);
-  color: var(--shell-text-primary);
-}
+  .dropdownItemActive {
+    background: var(--shell-bg-primary-subtle);
+    color: var(--shell-text-primary);
+  }
 
-/* 설정 버튼 및 패널 */
-.settingsWrapper {
-  position: relative;
-}
+  /* 설정 버튼 및 패널 */
+  .settingsWrapper {
+    position: relative;
+  }
 
 
-.settingsPanel {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: var(--ds-spacing-1);
-  min-width: 280px;
-  max-width: 320px;
-  padding: var(--ds-spacing-4);
-  background: var(--shell-bg-elevated);
-  border: 1px solid var(--shell-border-default);
-  border-radius: var(--ds-radius-lg);
-  box-shadow: var(--shell-shadow-lg);
-  z-index: var(--ds-z-dropdown);
-}
+  .settingsPanel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: var(--ds-spacing-1);
+    min-width: 280px;
+    max-width: 320px;
+    padding: var(--ds-spacing-4);
+    background: var(--shell-bg-elevated);
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-lg);
+    box-shadow: var(--shell-shadow-lg);
+    z-index: var(--ds-z-dropdown);
+  }
 
-.settingsPanelHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--ds-spacing-4);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-primary);
-}
+  .settingsPanelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--ds-spacing-4);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+  }
 
-.settingsPanelClose {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--ds-spacing-1);
-  background: none;
-  border: none;
-  color: var(--shell-text-secondary);
-  cursor: pointer;
-  border-radius: var(--ds-radius-sm);
-}
+  .settingsPanelClose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--ds-spacing-1);
+    background: none;
+    border: none;
+    color: var(--shell-text-secondary);
+    cursor: pointer;
+    border-radius: var(--ds-radius-sm);
+  }
 
-.settingsPanelClose:hover {
-  background: var(--shell-bg-hover);
-  color: var(--shell-text-hover);
-}
+  .settingsPanelClose:hover {
+    background: var(--shell-bg-hover);
+    color: var(--shell-text-hover);
+  }
 
-.settingsPanelBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-4);
-}
+  .settingsPanelBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+  }
 
-.settingsSection {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-2);
-}
+  .settingsSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-2);
+  }
 
-.settingsSectionLabel {
-  font-size: var(--ds-text-label-size);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-secondary);
-}
+  .settingsSectionLabel {
+    font-size: var(--ds-text-label-size);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+  }
 
-.settingsPanelActions {
-  display: flex;
-  gap: var(--ds-spacing-2);
-  margin-top: var(--ds-spacing-4);
-  justify-content: flex-end;
+  .settingsPanelActions {
+    display: flex;
+    gap: var(--ds-spacing-2);
+    margin-top: var(--ds-spacing-4);
+    justify-content: flex-end;
+  }
 }

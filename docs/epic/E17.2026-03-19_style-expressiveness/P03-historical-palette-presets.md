@@ -57,4 +57,6 @@ src/domain/palettes/presets/
 - [ ] 각 프리셋에 recommendedForStyles 메타데이터 포함
 - [ ] registry.ts에 historical ThemeGroup 등록
 - [ ] PaletteLab에서 Historical 카테고리 탭이 나타나고 프리셋 선택 가능 확인
+- [ ] historical 프리셋의 `bgStrategy` 값이 P02의 bgStrategy 경고/추천 규칙과 일치하는지 확인
+- [ ] `recommendedForStyles` 기반 UI(추천 필터/배지 등)가 없으면 “Historical 탭에서 사조를 찾는 비용”이 커질 수 있으므로, 최소 기능이 제공되는지(또는 후속 phase로 연기하는지) 확인
 - [ ] 각 프리셋 적용 시 컬러 스케일이 정상 생성되는지 확인

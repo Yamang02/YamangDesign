@@ -1,11 +1,12 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-.icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+@layer ds {
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
-.sizeSm { width: var(--ds-icon-size-sm); height: var(--ds-icon-size-sm); }
-.sizeMd { width: var(--ds-icon-size-md); height: var(--ds-icon-size-md); }
-.sizeLg { width: var(--ds-icon-size-lg); height: var(--ds-icon-size-lg); }
+  .sizeSm { width: var(--ds-icon-size-sm); height: var(--ds-icon-size-sm); }
+  .sizeMd { width: var(--ds-icon-size-md); height: var(--ds-icon-size-md); }
+  .sizeLg { width: var(--ds-icon-size-lg); height: var(--ds-icon-size-lg); }
+}

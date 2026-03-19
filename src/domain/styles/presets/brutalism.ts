@@ -4,9 +4,16 @@
  */
 import { darken } from '@shared/utils/color';
 import type { StyleDefinition } from '../types';
+import { easing } from '@domain/tokens/global';
 
 export const brutalismStyle: StyleDefinition = {
   name: 'brutalism',
+  metadata: {
+    era: '2010s-',
+    origin: 'web design',
+    characteristics: ['raw aesthetic', 'high contrast', 'bold borders'],
+    description: 'raw aesthetic, high contrast, bold borders',
+  },
 
   elevation: {
     create: ({ bgColor }) => {
@@ -27,4 +34,22 @@ export const brutalismStyle: StyleDefinition = {
     style: 'solid',
     colorStrategy: 'palette',
   },
+  createVars: () => ({
+    // Radius (P01)
+    '--ds-radius-sm': '0px',
+    '--ds-radius-md': '0px',
+    '--ds-radius-lg': '0px',
+    '--ds-radius-xl': '0px',
+    '--ds-radius-full': '0px',
+
+    // Motion (P01)
+    '--ds-duration-instant': '0ms',
+    '--ds-duration-fast': '0ms',
+    '--ds-duration-normal': '50ms',
+    '--ds-duration-slow': '100ms',
+
+    '--ds-ease-easeOut': easing.linear,
+    '--ds-ease-easeInOut': easing.linear,
+    '--ds-ease-productive': easing.linear,
+  }),
 };

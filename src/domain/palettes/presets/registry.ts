@@ -6,6 +6,7 @@ import type { PaletteDefinition, ThemeCategory } from '../types';
 import * as defaultThemes from './default/index';
 import * as naturalThemes from './natural/index';
 import * as popThemes from './pop/index';
+import * as historicalThemes from './historical/index';
 
 export interface ThemeGroup {
   category: ThemeCategory;
@@ -37,6 +38,14 @@ export const themeRegistry: ThemeGroup[] = [
     displayName: 'Pop',
     description: '팝 문화에서 영감을 받은 테마',
     themes: Object.values(popThemes).filter(
+      (v): v is PaletteDefinition => v !== undefined && typeof v === 'object'
+    ),
+  },
+  {
+    category: 'historical',
+    displayName: 'Historical',
+    description: '역사적 디자인 사조에서 영감을 받은 대표 배색',
+    themes: Object.values(historicalThemes).filter(
       (v): v is PaletteDefinition => v !== undefined && typeof v === 'object'
     ),
   },

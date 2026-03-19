@@ -82,7 +82,9 @@ export const orientalChineseRestaurant01Palette: PaletteDefinition = {
     bg: {
       base: { scale: 'secondary', step: 400 },
       subtle: { scale: 'secondary', step: 200 },
+      surfaceLow: { scale: 'secondary', step: 400 },
       surface: { scale: 'secondary', step: 500 },
+      surfaceHigh: { scale: 'secondary', step: 600 },
       surfaceBrand: { scale: 'secondary', step: 600 },
       elevated: { scale: 'secondary', step: 100 },
       muted: { scale: 'secondary', step: 900 },

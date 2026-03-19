@@ -3,6 +3,7 @@
  */
 import { useState, useMemo, useCallback } from 'react';
 import { Icon, Select, Tooltip } from '../../../components';
+import { GenericTabs } from '../../../components/GenericTabs';
 import {
   themeRegistry,
   getThemesByCategory,
@@ -22,6 +23,14 @@ import styles from './PresetTab.module.css';
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+const CATEGORY_LABEL: Record<ThemeCategory, string> = {
+  default: '기본',
+  custom: '커스텀',
+  natural: '내추럴',
+  pop: '팝',
+  historical: '히스토리컬',
+};
 
 const COLOR_FIELDS: {
   key: keyof ColorInput;
@@ -93,13 +102,14 @@ function PresetItemCustom({
   return (
     <div className={`${styles.presetItem} ${isApplied ? styles.presetItemApplied : ''}`}>
       <div className={styles.presetBadges}>
-        <span className={`${styles.presetBadge} ${styles.custom}`}>Custom</span>
+        <span className={`${styles.presetBadge} ${styles.custom}`}>커스텀</span>
         <span className={styles.styleBadge}>{styleLabel}</span>
         {hasSemantic && <span className={styles.semanticDot} aria-hidden>·</span>}
       </div>
       <button
         type="button"
         className={styles.presetName}
+        title={preset.name}
         onClick={() => onLoad(preset)}
         style={{
           background: 'none',
@@ -157,7 +167,7 @@ export function PresetTab({ settings }: PresetTabProps) {
 
   const [saveName, setSaveName] = useState('');
   type PresetSubTab = ThemeCategory | 'all';
-  const [presetTab, setPresetTab] = useState<PresetSubTab>('custom');
+  const [presetTab, setPresetTab] = useState<PresetSubTab>('all');
   const [presetSearch, setPresetSearch] = useState('');
 
   const draftForCompare = useMemo(() => {
@@ -232,9 +242,14 @@ export function PresetTab({ settings }: PresetTabProps) {
   };
 
   const presetSubTabs: { id: PresetSubTab; label: string }[] = [
-    { id: 'custom', label: 'Custom' },
     { id: 'all', label: '전체' },
-    ...themeRegistry.map((g) => ({ id: g.category as PresetSubTab, label: g.displayName })),
+    { id: 'custom', label: '커스텀' },
+    ...themeRegistry
+      .filter((g) => g.category !== 'custom')
+      .map((g) => ({
+        id: g.category as PresetSubTab,
+        label: CATEGORY_LABEL[g.category] ?? g.displayName,
+      })),
   ];
 
   return (
@@ -350,22 +365,12 @@ export function PresetTab({ settings }: PresetTabProps) {
 
       <div className={styles.presetBrowser}>
         <div className={styles.presetTabsWrapper}>
-          <div className={styles.presetSubTabs} role="tablist" aria-label="프리셋 카테고리">
-            {presetSubTabs.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                aria-selected={presetTab === tab.id}
-                aria-controls={`panel-${tab.id}`}
-                id={`tab-${tab.id}`}
-                className={presetTab === tab.id ? `${styles.presetSubTab} ${styles.presetSubTabActive}` : styles.presetSubTab}
-                onClick={() => setPresetTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <GenericTabs
+            tabs={presetSubTabs}
+            activeTab={presetTab}
+            onTabChange={setPresetTab}
+            ariaLabel="프리셋 카테고리"
+          />
           <ThemeSearchBar
             value={presetSearch}
             onChange={setPresetSearch}
@@ -390,6 +395,9 @@ export function PresetTab({ settings }: PresetTabProps) {
                   {filteredAllThemes.map((def) => {
                     const presetId = def.id;
                     const isApplied = isPaletteEqual(draftForCompare.palette, def.colors);
+                    const category = themeRegistry.find((g) =>
+                      g.themes.some((t) => t.id === presetId)
+                    )?.category;
                     return (
                       <button
                         key={presetId}
@@ -402,10 +410,10 @@ export function PresetTab({ settings }: PresetTabProps) {
                       >
                         <div className={styles.presetBadges}>
                           <span className={styles.presetBadge + ' ' + styles.category}>
-                            {(themeRegistry.find((g) => g.themes.some((t) => t.id === presetId))?.displayName) ?? 'Preset'}
+                            {(category ? CATEGORY_LABEL[category] : undefined) ?? '프리셋'}
                           </span>
                         </div>
-                        <span className={styles.presetName}>
+                        <span className={styles.presetName} title={def.displayName ?? def.id}>
                           {def.displayName ?? def.id}
                         </span>
                         <div className={styles.presetColors}>
@@ -436,7 +444,7 @@ export function PresetTab({ settings }: PresetTabProps) {
                   message={
                     presetSearch
                       ? '검색 결과가 없습니다'
-                      : '저장된 Custom 프리셋이 없습니다. 편집 후 저장하세요.'
+                      : '저장된 커스텀 프리셋이 없습니다. 편집 후 저장하세요.'
                   }
                 />
               ) : (
@@ -480,7 +488,7 @@ export function PresetTab({ settings }: PresetTabProps) {
                       message={
                         presetSearch
                           ? '검색 결과가 없습니다'
-                          : `${group.displayName} 테마가 없습니다`
+                          : `${CATEGORY_LABEL[group.category] ?? group.displayName} 테마가 없습니다`
                       }
                     />
                   ) : (
@@ -507,10 +515,10 @@ export function PresetTab({ settings }: PresetTabProps) {
                                   styles.presetBadge + ' ' + badgeClass
                                 }
                               >
-                                {group.displayName}
+                                {CATEGORY_LABEL[group.category] ?? group.displayName}
                               </span>
                             </div>
-                            <span className={styles.presetName}>
+                            <span className={styles.presetName} title={def.displayName ?? def.id}>
                               {def.displayName ?? def.id}
                             </span>
                             <div className={styles.presetColors}>

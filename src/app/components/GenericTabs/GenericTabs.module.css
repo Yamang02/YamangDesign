@@ -1,36 +1,38 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-/* GenericTabs - 범용 탭 컴포넌트 스타일 */
-.tabList {
-  display: flex;
-  gap: 0;
-  padding: 0;
-  border-bottom: 1px solid var(--ds-color-border-subtle);
-  background-color: var(--ds-color-bg-surface);
-}
+@layer shell {
+  /* E18 P01: Lab 크롬 전용 — shell 토큰 사용 (테마 독립) */
+  /* GenericTabs - 범용 탭 컴포넌트 스타일 */
+  .tabList {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--shell-border-subtle);
+    background-color: var(--shell-bg-surface);
+  }
 
-.tab {
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--ds-color-text-secondary);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  cursor: pointer;
-  transition: color 150ms ease, border-color 150ms ease;
-}
+  .tab {
+    padding: var(--ds-spacing-2) var(--ds-spacing-4);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
 
-.tab:hover {
-  color: var(--ds-color-text-primary);
-}
+  .tab:hover {
+    color: var(--shell-text-primary);
+  }
 
-.tab:focus-visible {
-  outline: 2px solid var(--ds-color-border-focus);
-  outline-offset: 2px;
-}
+  .tab:focus-visible {
+    outline: 2px solid var(--shell-border-focus);
+    outline-offset: 2px;
+  }
 
-.tab[data-active='true'] {
-  color: var(--ds-color-action-primary-default);
-  border-bottom-color: var(--ds-color-action-primary-default);
+  .tab[data-active='true'] {
+    color: var(--shell-action-primary);
+    border-bottom-color: var(--shell-action-primary);
+  }
 }

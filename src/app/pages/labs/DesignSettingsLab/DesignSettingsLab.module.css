@@ -1,234 +1,236 @@
-/* E16 P02: 디자인 설정 페이지 — LabLayout 통일 */
-.headerIconBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  color: var(--shell-text-secondary);
-  background: none;
-  border: 1px solid transparent;
-  border-radius: var(--ds-radius-md);
-  cursor: pointer;
-}
+@layer shell {
+  /* E16 P02: 디자인 설정 페이지 — LabLayout 통일 */
+  .headerIconBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: var(--shell-text-secondary);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--ds-radius-md);
+    cursor: pointer;
+  }
 
-.headerIconBtn:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-subtle);
-}
-
-
-/* 탭 패널 공통: 가용 너비/높이 꽉 채움 */
-.content {
-  flex: 1;
-  min-height: 360px;
-  min-width: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: var(--ds-spacing-4);
-}
+  .headerIconBtn:hover {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-subtle);
+  }
 
 
-.applyBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-on-action);
-  background: var(--shell-action-primary);
-  border: none;
-  border-radius: var(--ds-radius-md);
-  cursor: pointer;
-  margin-left: var(--ds-spacing-2);
-}
-
-.applyBtn:hover:not(:disabled) {
-  background: var(--shell-action-hover);
-}
-
-.applyBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+  /* 탭 패널 공통: 가용 너비/높이 꽉 채움 */
+  .content {
+    flex: 1;
+    min-height: 360px;
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--ds-spacing-4);
+  }
 
 
-/* P07: 컴포넌트 매핑 탭 2패널 — 가용 너비 100% */
-.componentMappingRoot {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: var(--ds-spacing-4);
-  min-height: 400px;
-  width: 100%;
-  min-width: 0;
-  align-items: start;
-  flex: 1;
-}
+  .applyBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    padding: var(--ds-spacing-2) var(--ds-spacing-4);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-on-action);
+    background: var(--shell-action-primary);
+    border: none;
+    border-radius: var(--ds-radius-md);
+    cursor: pointer;
+    margin-left: var(--ds-spacing-2);
+  }
 
-.componentMappingList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-1);
-  padding: var(--ds-spacing-2);
-  background: var(--shell-bg-muted);
-  border-radius: var(--ds-radius-md);
-  border: 1px solid var(--shell-border-subtle);
-}
+  .applyBtn:hover:not(:disabled) {
+    background: var(--shell-action-hover);
+  }
 
-.componentMappingListSection {
-  margin-top: var(--ds-spacing-2);
-}
+  .applyBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-.componentMappingListSection:first-child {
-  margin-top: 0;
-}
 
-.componentMappingListSectionTitle {
-  font-size: var(--ds-text-caption-size);
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin: 0 0 var(--ds-spacing-1) 0;
-  padding: 0 var(--ds-spacing-2);
-}
+  /* P07: 컴포넌트 매핑 탭 2패널 — 가용 너비 100% */
+  .componentMappingRoot {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--ds-spacing-4);
+    min-height: 400px;
+    width: 100%;
+    min-width: 0;
+    align-items: start;
+    flex: 1;
+  }
 
-.componentMappingListItem {
-  display: block;
-  width: 100%;
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-primary);
-  background: transparent;
-  border: none;
-  border-radius: var(--ds-radius-sm);
-  text-align: left;
-  cursor: pointer;
-}
+  .componentMappingList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+    padding: var(--ds-spacing-2);
+    background: var(--shell-bg-muted);
+    border-radius: var(--ds-radius-md);
+    border: 1px solid var(--shell-border-subtle);
+  }
 
-.componentMappingListItem:hover {
-  background: var(--shell-bg-subtle);
-}
+  .componentMappingListSection {
+    margin-top: var(--ds-spacing-2);
+  }
 
-.componentMappingListItemActive {
-  background: var(--shell-action-primary);
-  color: var(--shell-text-on-action);
-}
+  .componentMappingListSection:first-child {
+    margin-top: 0;
+  }
 
-.componentMappingListItemActive:hover {
-  background: var(--shell-action-hover);
-}
+  .componentMappingListSectionTitle {
+    font-size: var(--ds-text-caption-size);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 var(--ds-spacing-1) 0;
+    padding: 0 var(--ds-spacing-2);
+  }
 
-.componentMappingTableWrap {
-  padding: var(--ds-spacing-3);
-  background: var(--shell-bg-base);
-  border-radius: var(--ds-radius-md);
-  border: 1px solid var(--shell-border-subtle);
-  overflow: auto;
-}
+  .componentMappingListItem {
+    display: block;
+    width: 100%;
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-primary);
+    background: transparent;
+    border: none;
+    border-radius: var(--ds-radius-sm);
+    text-align: left;
+    cursor: pointer;
+  }
 
-.componentMappingTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--ds-text-sm);
-}
+  .componentMappingListItem:hover {
+    background: var(--shell-bg-subtle);
+  }
 
-.componentMappingTable th,
-.componentMappingTable td {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  text-align: left;
-  border-bottom: 1px solid var(--shell-border-subtle);
-  vertical-align: top;
-}
+  .componentMappingListItemActive {
+    background: var(--shell-action-primary);
+    color: var(--shell-text-on-action);
+  }
 
-.componentMappingTable th {
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--shell-text-secondary);
-}
+  .componentMappingListItemActive:hover {
+    background: var(--shell-action-hover);
+  }
 
-.componentMappingTable td {
-  color: var(--shell-text-primary);
-}
+  .componentMappingTableWrap {
+    padding: var(--ds-spacing-3);
+    background: var(--shell-bg-base);
+    border-radius: var(--ds-radius-md);
+    border: 1px solid var(--shell-border-subtle);
+    overflow: auto;
+  }
 
-.componentMappingTable code {
-  font-size: 0.9em;
-  background: var(--shell-bg-muted);
-  padding: 2px 6px;
-  border-radius: var(--ds-radius-sm);
-}
+  .componentMappingTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--ds-text-sm);
+  }
 
-.componentMappingTable input {
-  width: 100%;
-  min-width: 120px;
-  padding: var(--ds-spacing-1) var(--ds-spacing-2);
-  font-size: var(--ds-text-sm);
-  font-family: inherit;
-  border: 1px solid var(--shell-border-default);
-  border-radius: var(--ds-radius-sm);
-  background: var(--shell-bg-base);
-  color: var(--shell-text-primary);
-}
+  .componentMappingTable th,
+  .componentMappingTable td {
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    text-align: left;
+    border-bottom: 1px solid var(--shell-border-subtle);
+    vertical-align: top;
+  }
 
-.componentMappingTable input:focus {
-  outline: none;
-  border-color: var(--shell-border-focus);
-  box-shadow: 0 0 0 2px var(--shell-border-focus);
-}
+  .componentMappingTable th {
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-secondary);
+  }
 
-.tokenSwatch {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  border: 1px solid var(--shell-border-subtle);
-  margin-right: var(--ds-spacing-1);
-  vertical-align: middle;
-}
+  .componentMappingTable td {
+    color: var(--shell-text-primary);
+  }
 
-.clearRowBtn {
-  padding: var(--ds-spacing-1);
-  background: none;
-  border: none;
-  color: var(--shell-text-muted);
-  cursor: pointer;
-  border-radius: var(--ds-radius-sm);
-}
+  .componentMappingTable code {
+    font-size: 0.9em;
+    background: var(--shell-bg-muted);
+    padding: 2px 6px;
+    border-radius: var(--ds-radius-sm);
+  }
 
-.clearRowBtn:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-muted);
-}
+  .componentMappingTable input {
+    width: 100%;
+    min-width: 120px;
+    padding: var(--ds-spacing-1) var(--ds-spacing-2);
+    font-size: var(--ds-text-sm);
+    font-family: inherit;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-sm);
+    background: var(--shell-bg-base);
+    color: var(--shell-text-primary);
+  }
 
-.clearComponentRow {
-  margin-top: var(--ds-spacing-3);
-  padding-top: var(--ds-spacing-2);
-  border-top: 1px solid var(--shell-border-subtle);
-}
+  .componentMappingTable input:focus {
+    outline: none;
+    border-color: var(--shell-border-focus);
+    box-shadow: 0 0 0 2px var(--shell-border-focus);
+  }
 
-.clearComponentBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-  background: none;
-  border: 1px solid var(--shell-border-default);
-  border-radius: var(--ds-radius-md);
-  cursor: pointer;
-}
+  .tokenSwatch {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1px solid var(--shell-border-subtle);
+    margin-right: var(--ds-spacing-1);
+    vertical-align: middle;
+  }
 
-.clearComponentBtn:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-subtle);
-}
+  .clearRowBtn {
+    padding: var(--ds-spacing-1);
+    background: none;
+    border: none;
+    color: var(--shell-text-muted);
+    cursor: pointer;
+    border-radius: var(--ds-radius-sm);
+  }
 
-.componentMappingEmpty {
-  padding: var(--ds-spacing-8);
-  text-align: center;
-  color: var(--shell-text-muted);
-  font-size: var(--ds-text-sm);
+  .clearRowBtn:hover {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-muted);
+  }
+
+  .clearComponentRow {
+    margin-top: var(--ds-spacing-3);
+    padding-top: var(--ds-spacing-2);
+    border-top: 1px solid var(--shell-border-subtle);
+  }
+
+  .clearComponentBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background: none;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    cursor: pointer;
+  }
+
+  .clearComponentBtn:hover {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-subtle);
+  }
+
+  .componentMappingEmpty {
+    padding: var(--ds-spacing-8);
+    text-align: center;
+    color: var(--shell-text-muted);
+    font-size: var(--ds-text-sm);
+  }
 }

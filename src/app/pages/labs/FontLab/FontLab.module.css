@@ -1,8 +1,10 @@
-/* E05 P03: FontLab Detail 패널 — 라이브 프리뷰. [data-shell] 내부이므로 --shell-* 사용. */
+@layer shell {
+  /* E05 P03: FontLab Detail 패널 — 라이브 프리뷰. [data-shell] 내부이므로 --shell-* 사용. */
 
-.detailPreview {
-  margin-top: var(--ds-spacing-4);
-  padding-top: var(--ds-spacing-4);
-  border-top: 1px solid var(--shell-border-default);
-  color: var(--shell-text-primary);
+  .detailPreview {
+    margin-top: var(--ds-spacing-4);
+    padding-top: var(--ds-spacing-4);
+    border-top: 1px solid var(--shell-border-default);
+    color: var(--shell-text-primary);
+  }
 }

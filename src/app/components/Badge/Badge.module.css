@@ -1,48 +1,49 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--ds-font-sans);
-  font-weight: var(--ds-font-weight-semibold);
-  border-radius: var(--ds-radius-full);
-  white-space: nowrap;
-}
+@layer ds {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--ds-font-sans);
+    font-weight: var(--ds-font-weight-semibold);
+    border-radius: var(--ds-radius-full);
+    white-space: nowrap;
+  }
 
-/* Sizes */
-.badge[data-size='sm'] {
-  padding: var(--ds-spacing-1) var(--ds-spacing-3);
-  font-size: var(--ds-text-xs);
-}
+  /* Sizes */
+  .badge[data-size='sm'] {
+    padding: var(--ds-spacing-1) var(--ds-spacing-3);
+    font-size: var(--ds-text-xs);
+  }
 
-.badge[data-size='md'] {
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-}
+  .badge[data-size='md'] {
+    padding: var(--ds-spacing-2) var(--ds-spacing-4);
+    font-size: var(--ds-text-sm);
+  }
 
-/* Variants */
-.badge[data-variant='primary'] {
-  background-color: var(--ds-color-action-primary-default);
-  color: var(--ds-color-text-on-action);
-}
+  /* Variants */
+  .badge[data-variant='primary'] {
+    background-color: var(--ds-color-action-primary-default);
+    color: var(--ds-color-text-on-action);
+  }
 
-.badge[data-variant='secondary'] {
-  background-color: var(--ds-color-action-secondary-default);
-  color: var(--ds-color-text-on-action);
-}
+  .badge[data-variant='secondary'] {
+    background-color: var(--ds-color-action-secondary-default);
+    color: var(--ds-color-text-on-action);
+  }
 
-.badge[data-variant='accent'] {
-  background-color: var(--ds-color-action-accent-default);
-  color: var(--ds-color-text-on-action);
-}
+  .badge[data-variant='accent'] {
+    background-color: var(--ds-color-action-accent-default);
+    color: var(--ds-color-text-on-action);
+  }
 
-.badge[data-variant='outline'] {
-  background-color: transparent;
-  color: var(--ds-color-action-primary-default);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-action-primary-default);
-}
+  .badge[data-variant='outline'] {
+    background-color: transparent;
+    color: var(--ds-color-action-primary-default);
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-action-primary-default);
+  }
 
-.badge[data-variant='subtle'] {
-  background-color: var(--ds-color-bg-muted);
-  color: var(--ds-color-text-primary);
+  .badge[data-variant='subtle'] {
+    background-color: var(--ds-color-bg-muted);
+    color: var(--ds-color-text-primary);
+  }
 }

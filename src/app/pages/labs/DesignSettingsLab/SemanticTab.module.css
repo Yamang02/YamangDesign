@@ -1,106 +1,108 @@
-/* P07: 시맨틱 매핑 탭 — 상단 action row + 2패널, 가용 너비/높이 100% */
-.root {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  flex: 1;
-  width: 100%;
-  min-width: 0;
-}
+@layer shell {
+  /* P07: 시맨틱 매핑 탭 — 상단 action row + 2패널, 가용 너비/높이 100% */
+  .root {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+  }
 
-.actionRow {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-3);
-  padding: var(--ds-spacing-2) 0;
-  margin-bottom: var(--ds-spacing-2);
-  flex-shrink: 0;
-}
+  .actionRow {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+    padding: var(--ds-spacing-2) 0;
+    margin-bottom: var(--ds-spacing-2);
+    flex-shrink: 0;
+  }
 
-.paletteBadge {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--shell-text-secondary);
-  padding: var(--ds-spacing-1) var(--ds-spacing-2);
-  background: var(--shell-bg-subtle);
-  border-radius: var(--ds-radius-sm);
-}
+  .paletteBadge {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+    padding: var(--ds-spacing-1) var(--ds-spacing-2);
+    background: var(--shell-bg-subtle);
+    border-radius: var(--ds-radius-sm);
+  }
 
-.actionGroup {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  margin-left: auto;
-}
+  .actionGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    margin-left: auto;
+  }
 
-.hiddenInput {
-  position: absolute;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
-}
+  .hiddenInput {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
 
-.resetBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-  background: none;
-  border: 1px solid var(--shell-border-default);
-  border-radius: var(--ds-radius-md);
-  cursor: pointer;
-}
+  .resetBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background: none;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    cursor: pointer;
+  }
 
-.resetBtn:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-subtle);
-}
+  .resetBtn:hover {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-subtle);
+  }
 
-.actionBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-  background: none;
-  border: 1px solid var(--shell-border-default);
-  border-radius: var(--ds-radius-md);
-  cursor: pointer;
-}
+  .actionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background: none;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    cursor: pointer;
+  }
 
-.actionBtn:hover {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-subtle);
-}
+  .actionBtn:hover {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-subtle);
+  }
 
-/* 2패널: ScaleStepGrid | ColorUsageDiagram — 가용 공간 꽉 채움 */
-.body {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  min-width: 0;
-  width: 100%;
-  overflow: hidden;
-}
+  /* 2패널: ScaleStepGrid | ColorUsageDiagram — 가용 공간 꽉 채움 */
+  .body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+  }
 
-.leftSlot {
-  flex: 0 0 280px;
-  min-width: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-right: 1px solid var(--shell-border-subtle);
-  overflow: hidden;
-}
+  .leftSlot {
+    flex: 0 0 280px;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--shell-border-subtle);
+    overflow: hidden;
+  }
 
-.main {
-  flex: 1;
-  min-width: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: var(--ds-spacing-4);
+  .main {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--ds-spacing-4);
+  }
 }

@@ -9,7 +9,9 @@ const lightMapping: SemanticMapping = {
   bg: {
     base: '#FFFFFF',
     subtle: { scale: 'neutral', step: 50 },
-    surface: { scale: 'neutral', step: 50 },
+    surfaceLow: { base: { scale: 'neutral', step: 50 }, mix: { scale: 'primary', step: 500 }, ratio: 0.03 },
+    surface: { base: { scale: 'neutral', step: 50 }, mix: { scale: 'primary', step: 500 }, ratio: 0.06 },
+    surfaceHigh: { base: { scale: 'neutral', step: 100 }, mix: { scale: 'primary', step: 500 }, ratio: 0.1 },
     surfaceBrand: { scale: 'primary', step: 50 },
     elevated: '#FFFFFF',
     muted: { scale: 'neutral', step: 100 },
@@ -72,7 +74,9 @@ const coloredMapping: SemanticMapping = {
   bg: {
     base: { scale: 'neutral', step: 100 },
     subtle: { scale: 'neutral', step: 50 },
-    surface: { scale: 'neutral', step: 50 },
+    surfaceLow: { base: { scale: 'neutral', step: 100 }, mix: { scale: 'primary', step: 500 }, ratio: 0.05 },
+    surface: { base: { scale: 'neutral', step: 50 }, mix: { scale: 'primary', step: 500 }, ratio: 0.1 },
+    surfaceHigh: { base: { scale: 'neutral', step: 200 }, mix: { scale: 'primary', step: 500 }, ratio: 0.15 },
     surfaceBrand: { scale: 'primary', step: 50 },
     elevated: '#FFFFFF',
     muted: { scale: 'neutral', step: 200 },
@@ -135,7 +139,9 @@ const darkMapping: SemanticMapping = {
   bg: {
     base: { scale: 'neutral', step: 900 },
     subtle: { scale: 'neutral', step: 800 },
-    surface: { scale: 'neutral', step: 800 },
+    surfaceLow: { base: { scale: 'neutral', step: 800 }, mix: { scale: 'primary', step: 800 }, ratio: 0.05 },
+    surface: { base: { scale: 'neutral', step: 800 }, mix: { scale: 'primary', step: 800 }, ratio: 0.08 },
+    surfaceHigh: { base: { scale: 'neutral', step: 700 }, mix: { scale: 'primary', step: 700 }, ratio: 0.12 },
     surfaceBrand: { scale: 'primary', step: 900 },
     elevated: { scale: 'neutral', step: 700 },
     muted: { scale: 'neutral', step: 800 },

@@ -1,46 +1,47 @@
-/* @layer shell — [data-shell] 컨텍스트. 색상 토큰은 --shell-* 직접 참조. */
-/* @tokens: --shell-bg-base, --shell-border-default, --shell-text-primary */
-/* E01: 헤더 레이아웃 - AI_Portfolio 스타일 2분할 */
+@layer shell {
+  /* @tokens: --shell-bg-base, --shell-border-default, --shell-text-primary */
+  /* E01: 헤더 레이아웃 - AI_Portfolio 스타일 2분할 */
 
-.header {
-  position: sticky;
-  top: 0;
-  background-color: var(--shell-bg-base);
-  border-bottom: 1px solid var(--shell-border-default);
-  z-index: var(--ds-z-sticky);
-}
+  .header {
+    position: sticky;
+    top: 0;
+    background-color: var(--shell-bg-base);
+    border-bottom: 1px solid var(--shell-border-default);
+    z-index: var(--ds-z-sticky);
+  }
 
-.container {
-  max-width: var(--app-max-width);
-  margin: 0 auto;
-  padding: 0 var(--ds-spacing-6);
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+  .container {
+    max-width: var(--app-max-width);
+    margin: 0 auto;
+    padding: 0 var(--ds-spacing-6);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.logo {
-  font-family: var(--ds-font-display);
-  font-size: var(--ds-text-xl);
-  font-weight: 400;
-  color: var(--shell-text-primary);
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: opacity 0.2s ease;
-}
+  .logo {
+    font-family: var(--shell-font-brand);
+    font-size: var(--ds-text-xl);
+    font-weight: 400;
+    color: var(--shell-text-primary);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s ease;
+  }
 
-.logo:hover {
-  opacity: 0.9;
-}
+  .logo:hover {
+    opacity: 0.9;
+  }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-spacing-2);
-  flex: 1;
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    flex: 1;
+  }
 }

@@ -1,59 +1,59 @@
-/* @layer shell — TabBar 공유 컴포넌트. LabLayout(pill) + DesignSettingsLab(underline) 공용. */
+@layer shell {
+  .tabBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-1);
+  }
 
-.tabBar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ds-spacing-1);
-}
+  .tab {
+    padding: var(--ds-spacing-2) var(--ds-spacing-4);
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 150ms ease, background 150ms ease;
+  }
 
-.tab {
-  padding: var(--ds-spacing-2) var(--ds-spacing-4);
-  font-size: var(--ds-text-sm);
-  color: var(--shell-text-secondary);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 150ms ease, background 150ms ease;
-}
+  .tab:hover {
+    color: var(--shell-text-primary);
+  }
 
-.tab:hover {
-  color: var(--shell-text-primary);
-}
+  /* ── underline variant (DesignSettingsLab 스타일) ── */
+  .underline {
+    border-bottom: 1px solid var(--shell-border-subtle);
+  }
 
-/* ── underline variant (DesignSettingsLab 스타일) ── */
-.underline {
-  border-bottom: 1px solid var(--shell-border-subtle);
-}
+  .underline .tab {
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
 
-.underline .tab {
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-}
+  .underline .tabActive {
+    color: var(--shell-text-primary);
+    font-weight: var(--ds-font-weight-medium);
+    border-bottom-color: var(--shell-action-primary);
+  }
 
-.underline .tabActive {
-  color: var(--shell-text-primary);
-  font-weight: var(--ds-font-weight-medium);
-  border-bottom-color: var(--shell-action-primary);
-}
+  /* ── pill variant (LabLayout 탭 모드 스타일) ── */
+  .pill {
+    padding: var(--ds-spacing-2) var(--ds-spacing-6);
+    border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    background: var(--shell-bg-muted);
+  }
 
-/* ── pill variant (LabLayout 탭 모드 스타일) ── */
-.pill {
-  padding: var(--ds-spacing-2) var(--ds-spacing-6);
-  border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
-  background: var(--shell-bg-muted);
-}
+  .pill .tab {
+    border-radius: var(--ds-radius-md);
+    font-weight: var(--ds-font-weight-medium);
+  }
 
-.pill .tab {
-  border-radius: var(--ds-radius-md);
-  font-weight: var(--ds-font-weight-medium);
-}
+  .pill .tab:hover {
+    background: var(--shell-bg-surface);
+  }
 
-.pill .tab:hover {
-  background: var(--shell-bg-surface);
-}
-
-.pill .tabActive {
-  color: var(--shell-text-primary);
-  background: var(--shell-bg-surface);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-default);
+  .pill .tabActive {
+    color: var(--shell-text-primary);
+    background: var(--shell-bg-surface);
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-default);
+  }
 }

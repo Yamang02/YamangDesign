@@ -1,188 +1,271 @@
-/* @layer ds — 테마 반응형. 모든 토큰 --ds-* 사용. */
-/* E08 P05: 공통 토큰 테이블 (Build Design tokens 패턴 정렬) */
-.tokenTableWrap {
-  overflow-x: auto;
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
-  border-radius: var(--ds-radius-md);
-  margin-bottom: var(--ds-spacing-4);
-}
-
-.tokenTableWrap:last-child {
-  margin-bottom: 0;
-}
-
-.tokenTable {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  font-size: var(--ds-text-sm);
-}
-
-.tokenTable th,
-.tokenTable td {
-  padding: var(--ds-spacing-2) var(--ds-spacing-3);
-  text-align: left;
-  border-bottom: 1px solid var(--ds-color-border-subtle);
-  vertical-align: middle;
-}
-
-.tokenTable th {
-  font-weight: var(--ds-font-weight-semibold);
-  color: var(--ds-color-text-secondary);
-  background: var(--ds-color-bg-muted);
-}
-
-/* 테이블 카드마다 동일한 열 너비 */
-.tokenTable th:nth-child(1),
-.tokenTable .tokenNameCell {
-  width: 100px;
-  min-width: 100px;
-}
-
-.tokenTable th:nth-child(3),
-.tokenTable .tokenSwatchCell,
-.tokenTable .tokenSwatchTh {
-  width: 48px;
-  min-width: 48px;
-}
-
-.tokenTable .tokenValueCell {
-  /* 2번째 열: 나머지 공간 (고정되지 않음) */
-  word-break: break-all;
-}
-
-/* 섹션 하단 한 행 차지: 폰트·shadow·focus 등 긴 값 카테고리 */
-.tokenCategoryFullRow {
-  width: 100%;
-  margin-top: var(--ds-spacing-6);
-}
-
-.tokenCategoryFullRow:first-of-type {
-  margin-top: var(--ds-spacing-4);
-}
-
-.tokenTable td {
-  color: var(--ds-color-text-primary);
-}
-
-.tokenTable tr:last-child td {
-  border-bottom: none;
-}
-
-.tokenTable .tokenNameCell {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: var(--ds-text-xs);
-  min-width: 0;
-}
-
-.tokenTable .tokenNameInner {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.tokenTable .tokenSwatchCell {
-  width: 48px;
-}
-
-.tokenTable .tokenSwatchTh {
-  width: 48px;
-  min-width: 48px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.tokenTable .tokenValueCell[data-structured] {
-  white-space: pre-line;
-  font-size: var(--ds-text-xs);
-  line-height: 1.5;
-  vertical-align: top;
-}
-
-.tokenTable .tokenSwatch {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--ds-radius-sm);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
-  vertical-align: middle;
-}
-
-/* E08 P08: Token Detail Panel */
-.tokenDetail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-4);
-}
-
-
-.componentLayout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  gap: var(--ds-spacing-6);
-  align-items: flex-start;
-}
-
-.previewCard {
-  padding: var(--ds-spacing-4);
-  border-radius: var(--ds-radius-lg);
-  border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
-  background-color: var(--ds-color-bg-base);
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-4);
-}
-
-.previewTitle {
-  font-size: var(--ds-text-sm);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--ds-color-text-secondary);
-  margin: 0;
-}
-
-.previewBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-spacing-3);
-}
-
-/* E08: 테이블들을 2~3열 그리드로 배치 */
-.tokenCategoryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--ds-spacing-6);
-  width: 100%;
-}
-
-@media (min-width: 900px) {
-  .tokenCategoryGrid {
-    grid-template-columns: repeat(2, 1fr);
+@layer shell {
+  /* E08 P05: 공통 토큰 테이블 (Build Design tokens 패턴 정렬) */
+  /* E18 P01: 정보 영역은 --shell-* (테마 독립), 프리뷰/스와치만 --ds-* 유지 */
+  .tokenTableWrap {
+    overflow-x: auto;
+    border: 1px solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-md);
+    margin-bottom: var(--ds-spacing-4);
   }
-}
 
-@media (min-width: 1200px) {
-  .tokenCategoryGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .tokenTableWrap:last-child {
+    margin-bottom: 0;
   }
-}
 
-.tokenCategory {
-  margin-bottom: 0;
-  min-width: 0;
-}
+  .tokenTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: var(--ds-text-sm);
+  }
 
-.tokenCategoryGrid .tokenCategory {
-  margin-bottom: 0;
-}
+  .tokenTable th,
+  .tokenTable td {
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    text-align: left;
+    border-bottom: 1px solid var(--shell-border-subtle);
+    vertical-align: middle;
+  }
 
-.tokenCategoryGrid .tokenCategory:last-child {
-  margin-bottom: 0;
-}
+  .tokenTable th {
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-secondary);
+    background: var(--shell-bg-muted);
+  }
 
-.categoryTitle {
-  font-size: var(--ds-text-xs);
-  font-weight: var(--ds-font-weight-medium);
-  color: var(--ds-color-text-primary);
-  margin: 0 0 var(--ds-spacing-1);
+  /* 테이블 카드마다 동일한 열 너비 */
+  .tokenTable th:nth-child(1),
+  .tokenTable .tokenNameCell {
+    width: 100px;
+    min-width: 100px;
+  }
+
+  .tokenTable th:nth-child(3),
+  .tokenTable .tokenSwatchCell,
+  .tokenTable .tokenSwatchTh {
+    width: 48px;
+    min-width: 48px;
+  }
+
+  .tokenTable .tokenValueCell {
+    /* 2번째 열: 나머지 공간 (고정되지 않음) */
+    word-break: break-all;
+  }
+
+  /* 섹션 하단 한 행 차지: 폰트·shadow·focus 등 긴 값 카테고리 */
+  .tokenCategoryFullRow {
+    width: 100%;
+    margin-top: var(--ds-spacing-6);
+  }
+
+  .tokenCategoryFullRow:first-of-type {
+    margin-top: var(--ds-spacing-4);
+  }
+
+  .tokenTable td {
+    color: var(--shell-text-primary);
+  }
+
+  .tokenTable tr:last-child td {
+    border-bottom: none;
+  }
+
+  .tokenTable .tokenNameCell {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: var(--ds-text-xs);
+    min-width: 0;
+  }
+
+  .tokenTable .tokenNameInner {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tokenTable .tokenSwatchCell {
+    width: 48px;
+  }
+
+  .tokenTable .tokenSwatchTh {
+    width: 48px;
+    min-width: 48px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .tokenTable .tokenValueCell[data-structured] {
+    white-space: pre-line;
+    font-size: var(--ds-text-xs);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+
+  .tokenTable .tokenSwatch {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--ds-radius-sm);
+    border: 1px solid var(--shell-border-subtle);
+    vertical-align: middle;
+  }
+
+  /* E08 P08: Token Detail Panel */
+  .tokenDetail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+  }
+
+
+  .componentLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: var(--ds-spacing-6);
+    align-items: flex-start;
+  }
+
+  .previewCard {
+    padding: var(--ds-spacing-4);
+    border-radius: var(--ds-radius-lg);
+    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    background-color: var(--ds-color-bg-base);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+  }
+
+  .previewTitle {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-color-text-secondary);
+    margin: 0;
+  }
+
+  .previewBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-3);
+  }
+
+  /* E08: 테이블들을 2~3열 그리드로 배치 */
+  .tokenCategoryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--ds-spacing-6);
+    width: 100%;
+  }
+
+  @media (min-width: 900px) {
+    .tokenCategoryGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .tokenCategoryGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .tokenCategory {
+    margin-bottom: 0;
+    min-width: 0;
+  }
+
+  .tokenCategoryGrid .tokenCategory {
+    margin-bottom: 0;
+  }
+
+  .tokenCategoryGrid .tokenCategory:last-child {
+    margin-bottom: 0;
+  }
+
+  .categoryTitle {
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-primary);
+    margin: 0 0 var(--ds-spacing-1);
+  }
+
+  /* TokenLab controls (P05) */
+  .tokenLabControls {
+    margin-top: var(--ds-spacing-4);
+  }
+
+  .controlRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-4);
+    align-items: center;
+  }
+
+  .controlGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+  }
+
+  .controlLabel {
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-secondary);
+    white-space: nowrap;
+  }
+
+  .controlInput {
+    background: var(--shell-bg-muted);
+    border: 1px solid var(--shell-border-subtle);
+    color: var(--shell-text-primary);
+    border-radius: var(--ds-radius-sm);
+    padding: var(--ds-spacing-1) var(--ds-spacing-2);
+    font-size: var(--ds-text-sm);
+    min-width: 260px;
+  }
+
+  .controlSelect {
+    appearance: none;
+    background: var(--shell-bg-muted);
+    border: 1px solid var(--shell-border-subtle);
+    color: var(--shell-text-primary);
+    border-radius: var(--ds-radius-sm);
+    padding: var(--ds-spacing-1) var(--ds-spacing-2);
+    font-size: var(--ds-text-sm);
+  }
+
+  .controlSelect:hover {
+    background: var(--shell-bg-surface);
+    border-color: var(--shell-border-default);
+  }
+
+  .controlSelect:focus-visible {
+    outline: 2px solid var(--shell-border-focus);
+    outline-offset: 2px;
+    border-color: var(--shell-border-focus);
+  }
+
+  /* Collapsible token groups (P05) */
+  .groupHeaderBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ds-spacing-2);
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 var(--ds-spacing-1) 0;
+    cursor: pointer;
+    text-align: left;
+
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-primary);
+  }
+
+  .groupHeaderIcon {
+    color: var(--shell-text-secondary);
+    font-size: var(--ds-text-xs);
+    flex: 0 0 auto;
+  }
 }

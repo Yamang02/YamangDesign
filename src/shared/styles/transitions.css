@@ -1,35 +1,37 @@
-/**
- * Transition Recipe 토큰
- * ThemeProvider가 주입한 --ds-duration-*, --ds-ease-* 를 조합해
- * 컴포넌트에서 일관된 transition 사용.
- * (duration/ease는 tokens/primitives/transition.ts → ThemeProvider에서 주입)
- * fallback: ThemeProvider 미주입 시에도 유효한 값 사용.
- */
-:root {
-  /* 단일 속성용 (fallback: 100ms, 200ms, cubic-bezier) */
-  --ds-transition-color: background-color var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1)),
-    color var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1)),
-    border-color var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
+@layer tokens {
+  /**
+   * Transition Recipe 토큰
+   * ThemeProvider가 주입한 --ds-duration-*, --ds-ease-* 를 조합해
+   * 컴포넌트에서 일관된 transition 사용.
+   * (duration/ease는 tokens/primitives/transition.ts → ThemeProvider에서 주입)
+   * fallback: ThemeProvider 미주입 시에도 유효한 값 사용.
+   */
+  :root {
+    /* 단일 속성용 (fallback: 100ms, 200ms, cubic-bezier) */
+    --ds-transition-color: background-color var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1)),
+      color var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1)),
+      border-color var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
 
-  --ds-transition-shadow: box-shadow var(--ds-duration-normal, 200ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
+    --ds-transition-shadow: box-shadow var(--ds-duration-normal, 200ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
 
-  --ds-transition-transform: transform var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
+    --ds-transition-transform: transform var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
 
-  --ds-transition-opacity: opacity var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
+    --ds-transition-opacity: opacity var(--ds-duration-fast, 100ms) var(--ds-ease-easeOut, cubic-bezier(0, 0, 0.2, 1));
 
-  /* 인터랙티브 컴포넌트 (버튼, 입력, 카드 호버 등) */
-  --ds-transition-interactive: var(--ds-transition-color), var(--ds-transition-shadow);
+    /* 인터랙티브 컴포넌트 (버튼, 입력, 카드 호버 등) */
+    --ds-transition-interactive: var(--ds-transition-color), var(--ds-transition-shadow);
 
-  /* transform 포함 (카드 lift, 버튼 active 등) */
-  --ds-transition-interactive-full: var(--ds-transition-color), var(--ds-transition-shadow),
-    var(--ds-transition-transform);
+    /* transform 포함 (카드 lift, 버튼 active 등) */
+    --ds-transition-interactive-full: var(--ds-transition-color), var(--ds-transition-shadow),
+      var(--ds-transition-transform);
 
-  /* color + shadow + transform 한 번에 */
-  --ds-transition-all: var(--ds-transition-interactive), var(--ds-transition-transform);
+    /* color + shadow + transform 한 번에 */
+    --ds-transition-all: var(--ds-transition-interactive), var(--ds-transition-transform);
 
-  /* 테마/레이아웃 전환 (느린 변화) */
-  --ds-transition-theme: background-color var(--ds-duration-slow, 300ms) var(--ds-ease-easeInOut, cubic-bezier(0.4, 0, 0.2, 1)),
-    box-shadow var(--ds-duration-slow, 300ms) var(--ds-ease-easeInOut, cubic-bezier(0.4, 0, 0.2, 1));
+    /* 테마/레이아웃 전환 (느린 변화) */
+    --ds-transition-theme: background-color var(--ds-duration-slow, 300ms) var(--ds-ease-easeInOut, cubic-bezier(0.4, 0, 0.2, 1)),
+      box-shadow var(--ds-duration-slow, 300ms) var(--ds-ease-easeInOut, cubic-bezier(0.4, 0, 0.2, 1));
+  }
 }
 
 /* 접근성: 동작 축소 선호 시 transition/animation 최소화 */

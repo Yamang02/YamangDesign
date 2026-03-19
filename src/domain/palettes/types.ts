@@ -4,6 +4,7 @@
  */
 
 import type { GeneratedScales } from '@shared/@types/tokens';
+import type { StyleName } from '@shared/@types/theme';
 
 // PaletteSelection은 E11 P03에서 state/ 레이어로 이동됨
 // 하위 호환을 위해 re-export 유지
@@ -20,7 +21,8 @@ export type ThemeCategory =
   | 'default'
   | 'custom'
   | 'natural'
-  | 'pop';
+  | 'pop'
+  | 'historical';
 
 /** 스케일 참조 (예: primary-500, neutral-900) */
 export interface ScaleReference {
@@ -28,69 +30,80 @@ export interface ScaleReference {
   step: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 }
 
+/** 두 스케일 값을 비율로 혼합하는 참조 */
+export interface MixReference {
+  base: ScaleReference;
+  mix: ScaleReference;
+  ratio: number;
+}
+
+export type SemanticMappingValue = string | ScaleReference | MixReference;
+
 /** 시맨틱 토큰 매핑 정의 (ScaleReference 또는 직접 색상) */
 export interface SemanticMapping {
   bg: {
-    base: string | ScaleReference;
-    subtle: string | ScaleReference;
-    surface: string | ScaleReference;
-    surfaceBrand: string | ScaleReference;
-    elevated: string | ScaleReference;
-    muted: string | ScaleReference;
+    base: SemanticMappingValue;
+    subtle: SemanticMappingValue;
+    surfaceLow: SemanticMappingValue;
+    surface: SemanticMappingValue;
+    surfaceHigh: SemanticMappingValue;
+    surfaceBrand: SemanticMappingValue;
+    elevated: SemanticMappingValue;
+    muted: SemanticMappingValue;
   };
   text: {
-    primary: string | ScaleReference;
-    secondary: string | ScaleReference;
-    muted: string | ScaleReference;
-    onAction: string | ScaleReference;
+    primary: SemanticMappingValue;
+    secondary: SemanticMappingValue;
+    muted: SemanticMappingValue;
+    onAction: SemanticMappingValue;
   };
   border: {
-    default: string | ScaleReference;
-    subtle: string | ScaleReference;
-    accent: string | ScaleReference;
-    focus: string | ScaleReference;
+    default: SemanticMappingValue;
+    subtle: SemanticMappingValue;
+    accent: SemanticMappingValue;
+    focus: SemanticMappingValue;
   };
 
   // E02: 액션 색상 (버튼 등 상태별)
   action: {
     primary: {
-      default: string | ScaleReference;
-      hover: string | ScaleReference;
-      active: string | ScaleReference;
+      default: SemanticMappingValue;
+      hover: SemanticMappingValue;
+      active: SemanticMappingValue;
     };
     secondary: {
-      default: string | ScaleReference;
-      hover: string | ScaleReference;
-      active: string | ScaleReference;
+      default: SemanticMappingValue;
+      hover: SemanticMappingValue;
+      active: SemanticMappingValue;
     };
     accent: {
-      default: string | ScaleReference;
-      hover: string | ScaleReference;
-      active: string | ScaleReference;
+      default: SemanticMappingValue;
+      hover: SemanticMappingValue;
+      active: SemanticMappingValue;
     };
   };
 
   // E02: 피드백 색상 (system-colors 대체)
   feedback: {
     error: {
-      bg: string | ScaleReference;
-      text: string | ScaleReference;
-      border: string | ScaleReference;
+      bg: SemanticMappingValue;
+      text: SemanticMappingValue;
+      border: SemanticMappingValue;
     };
     warning: {
-      bg: string | ScaleReference;
-      text: string | ScaleReference;
-      border: string | ScaleReference;
+      bg: SemanticMappingValue;
+      text: SemanticMappingValue;
+      border: SemanticMappingValue;
     };
     success: {
-      bg: string | ScaleReference;
-      text: string | ScaleReference;
-      border: string | ScaleReference;
+      bg: SemanticMappingValue;
+      text: SemanticMappingValue;
+      border: SemanticMappingValue;
     };
     info: {
-      bg: string | ScaleReference;
-      text: string | ScaleReference;
-      border: string | ScaleReference;
+      bg: SemanticMappingValue;
+      text: SemanticMappingValue;
+      border: SemanticMappingValue;
     };
   };
 }
@@ -100,7 +113,9 @@ export interface SemanticColors {
   bg: {
     base: string;
     subtle: string;
+    surfaceLow: string;
     surface: string;
+    surfaceHigh: string;
     surfaceBrand: string;
     elevated: string;
     muted: string;
@@ -172,6 +187,9 @@ export interface PaletteDefinition {
 
   /** 배경색 전략 */
   bgStrategy: BgStrategy;
+
+  /** 이 팔레트가 잘 어울리는 스타일 목록 (추천용) */
+  recommendedForStyles?: StyleName[];
 
   /** 대비 설정 */
   contrast?: 'normal' | 'high';

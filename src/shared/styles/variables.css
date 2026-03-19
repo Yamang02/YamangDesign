@@ -1,127 +1,131 @@
-/**
- * 디자인 토큰 CSS 변수 참조용
- * 실제 값은 ThemeProvider에서 JS로 주입됨.
- * IDE 자동완성 및 문서화 목적.
- */
-:root {
-  /* Colors (테마에서 주입) */
-  --ds-color-bg-base: initial;
-  --ds-color-bg-subtle: initial;
-  --ds-color-bg-surface: initial;
-  --ds-color-bg-surface-brand: initial;
-  --ds-color-bg-elevated: initial;
-  --ds-color-bg-muted: initial;
+@layer tokens {
+  /**
+   * 디자인 토큰 CSS 변수 참조용
+   * 실제 값은 ThemeProvider에서 JS로 주입됨.
+   * IDE 자동완성 및 문서화 목적.
+   */
+  :root {
+    /* Colors (테마에서 주입) */
+    --ds-color-bg-base: initial;
+    --ds-color-bg-subtle: initial;
+    --ds-color-bg-surface-low: initial;
+    --ds-color-bg-surface: initial;
+    --ds-color-bg-surface-high: initial;
+    --ds-color-bg-surface-brand: initial;
+    --ds-color-bg-elevated: initial;
+    --ds-color-bg-muted: initial;
 
-  /* Border (스타일별 ThemeProvider 주입: minimal 1px, brutalism 3px, neumorphism 0) */
-  --ds-border-width: 1px;
-  --ds-border-style: solid;
+    /* Border (스타일별 ThemeProvider 주입: minimal 1px, brutalism 3px, neumorphism 0) */
+    --ds-border-width: 1px;
+    --ds-border-style: solid;
 
-  --ds-color-text-primary: initial;
-  --ds-color-text-secondary: initial;
-  --ds-color-text-muted: initial;
-  --ds-color-text-inverse: initial;
-  --ds-color-text-on-action: initial;
+    --ds-color-text-primary: initial;
+    --ds-color-text-secondary: initial;
+    --ds-color-text-muted: initial;
+    --ds-color-text-inverse: initial;
+    --ds-color-text-on-action: initial;
 
-  --ds-color-border-default: initial;
-  --ds-color-border-subtle: initial;
-  --ds-color-border-accent: initial;
-  --ds-color-border-focus: initial;
+    --ds-color-border-default: initial;
+    --ds-color-border-subtle: initial;
+    --ds-color-border-accent: initial;
+    --ds-color-border-focus: initial;
 
-  --ds-color-action-primary-default: initial;
-  --ds-color-action-primary-hover: initial;
-  --ds-color-action-primary-active: initial;
-  --ds-color-action-secondary-default: initial;
-  --ds-color-action-secondary-hover: initial;
-  --ds-color-action-secondary-active: initial;
-  --ds-color-action-accent-default: initial;
-  --ds-color-action-accent-hover: initial;
-  --ds-color-action-accent-active: initial;
+    --ds-color-action-primary-default: initial;
+    --ds-color-action-primary-hover: initial;
+    --ds-color-action-primary-active: initial;
+    --ds-color-action-secondary-default: initial;
+    --ds-color-action-secondary-hover: initial;
+    --ds-color-action-secondary-active: initial;
+    --ds-color-action-accent-default: initial;
+    --ds-color-action-accent-hover: initial;
+    --ds-color-action-accent-active: initial;
 
-  /* System colors: E04 P02 → --sys-* (sys-variables.css) */
+    /* System colors: E04 P02 → --sys-* (sys-variables.css) */
 
-  /* Spacing (ThemeProvider 주입) */
-  --ds-spacing-0: initial;
-  --ds-spacing-0-5: initial;
-  --ds-spacing-1: initial;
-  --ds-spacing-1-5: initial;
-  --ds-spacing-2: initial;
-  --ds-spacing-2-5: initial;
-  --ds-spacing-3: initial;
-  --ds-spacing-3-5: initial;
-  --ds-spacing-4: initial;
-  --ds-spacing-5: initial;
-  --ds-spacing-6: initial;
-  --ds-spacing-7: initial;
-  --ds-spacing-8: initial;
+    /* Spacing (ThemeProvider 주입) */
+    --ds-spacing-0: initial;
+    --ds-spacing-0-5: initial;
+    --ds-spacing-1: initial;
+    --ds-spacing-1-5: initial;
+    --ds-spacing-2: initial;
+    --ds-spacing-2-5: initial;
+    --ds-spacing-3: initial;
+    --ds-spacing-3-5: initial;
+    --ds-spacing-4: initial;
+    --ds-spacing-5: initial;
+    --ds-spacing-6: initial;
+    --ds-spacing-7: initial;
+    --ds-spacing-8: initial;
 
-  /* Typography */
-  --ds-font-sans: initial;
-  --ds-font-mono: initial;
-  --ds-font-display: initial; /* 브랜드/헤더 전용 - Griun PolSensibility */
-  --ds-text-xs: initial;
-  --ds-text-sm: initial;
-  --ds-text-md: initial;
-  --ds-text-lg: initial;
-  --ds-text-xl: initial;
-  --ds-font-weight-normal: initial;
-  --ds-font-weight-medium: initial;
-  --ds-font-weight-semibold: initial;
-  --ds-font-weight-bold: initial;
-  --ds-leading-normal: initial;
+    /* Typography */
+    --ds-font-sans: initial;
+    --ds-font-mono: initial;
+    --ds-font-display: initial; /* 브랜드/헤더 전용 - Griun PolSensibility */
+    --ds-text-xs: initial;
+    --ds-text-sm: initial;
+    --ds-text-md: initial;
+    --ds-text-lg: initial;
+    --ds-text-xl: initial;
+    --ds-font-weight-normal: initial;
+    --ds-font-weight-medium: initial;
+    --ds-font-weight-semibold: initial;
+    --ds-font-weight-bold: initial;
+    --ds-leading-normal: initial;
 
-  /* Borders & Radius */
-  --ds-radius-sm: initial;
-  --ds-radius-md: initial;
-  --ds-radius-lg: initial;
-  --ds-radius-full: initial;
+    /* Borders & Radius */
+    --ds-radius-sm: initial;
+    --ds-radius-md: initial;
+    --ds-radius-lg: initial;
+    --ds-radius-full: initial;
 
-  /* Shadows (테마에서 주입) */
-  --ds-shadow-none: initial;
-  --ds-shadow-sm: initial;
-  --ds-shadow-md: initial;
-  --ds-shadow-lg: initial;
-  --ds-shadow-inset: initial;
+    /* Shadows (테마에서 주입) */
+    --ds-shadow-none: initial;
+    --ds-shadow-sm: initial;
+    --ds-shadow-md: initial;
+    --ds-shadow-lg: initial;
+    --ds-shadow-inset: initial;
 
-  /* Sizes */
-  --ds-size-sm: initial;
-  --ds-size-md: initial;
-  --ds-size-lg: initial;
+    /* Sizes */
+    --ds-size-sm: initial;
+    --ds-size-md: initial;
+    --ds-size-lg: initial;
 
-  /* Icon sizes */
-  --ds-icon-size-sm: initial;
-  --ds-icon-size-md: initial;
-  --ds-icon-size-lg: initial;
+    /* Icon sizes */
+    --ds-icon-size-sm: initial;
+    --ds-icon-size-md: initial;
+    --ds-icon-size-lg: initial;
 
-  /* Component sizes */
-  --ds-component-size-color-preview: initial;
+    /* Component sizes */
+    --ds-component-size-color-preview: initial;
 
-  /* Z-index */
-  --ds-z-dropdown: initial;
-  --ds-z-sticky: initial;
-  --ds-z-overlay: initial;
-  --ds-z-modal: initial;
-  --ds-z-tooltip: initial;
+    /* Z-index */
+    --ds-z-dropdown: initial;
+    --ds-z-sticky: initial;
+    --ds-z-overlay: initial;
+    --ds-z-modal: initial;
+    --ds-z-tooltip: initial;
 
-  /* Motion (ThemeProvider 주입) */
-  --ds-duration-instant: initial;
-  --ds-duration-fast: initial;
-  --ds-duration-normal: initial;
-  --ds-duration-slow: initial;
-  --ds-ease-linear: initial;
-  --ds-ease-easeOut: initial;
-  --ds-ease-easeInOut: initial;
-  --ds-ease-productive: initial;
-  --ds-ease-expressive: initial;
+    /* Motion (ThemeProvider 주입) */
+    --ds-duration-instant: initial;
+    --ds-duration-fast: initial;
+    --ds-duration-normal: initial;
+    --ds-duration-slow: initial;
+    --ds-ease-linear: initial;
+    --ds-ease-easeOut: initial;
+    --ds-ease-easeInOut: initial;
+    --ds-ease-productive: initial;
+    --ds-ease-expressive: initial;
 
-  /* State layer opacity */
-  --ds-state-hover-opacity: initial;
-  --ds-state-pressed-opacity: initial;
-  --ds-state-focus-opacity: initial;
-  --ds-state-selected-opacity: initial;
-  --ds-state-disabled-opacity: initial;
+    /* State layer opacity */
+    --ds-state-hover-opacity: initial;
+    --ds-state-pressed-opacity: initial;
+    --ds-state-focus-opacity: initial;
+    --ds-state-selected-opacity: initial;
+    --ds-state-disabled-opacity: initial;
 
-  /* Focus ring */
-  --ds-focus-ring-width: initial;
-  --ds-focus-ring-offset: initial;
-  --ds-focus-ring-color: initial;
+    /* Focus ring */
+    --ds-focus-ring-width: initial;
+    --ds-focus-ring-offset: initial;
+    --ds-focus-ring-color: initial;
+  }
 }

@@ -1,3 +1,10 @@
+/**
+ * CSS @layer Cascade 체계 (E18 P01.5)
+ * 순서: reset → tokens → shell → ds → preview → override
+ * 낮은 번호가 낮은 우선순위. 설계 문서: docs/design/21-css-layer-cascade.md
+ */
+@layer reset, tokens, shell, ds, preview, override;
+
 @import './shared/styles/fonts.css';
 @import './shared/styles/variables.css';
 @import './shared/styles/shell-variables.css';
@@ -36,12 +43,3 @@
   outline: none;
 }
 
-/* Remove default button styles */
-button {
-  font-family: inherit;
-}
-
-/* Remove default input styles */
-input {
-  font-family: inherit;
-}

@@ -106,6 +106,26 @@ function PaletteDetail({
           );
         })}
       </div>
+
+      <h4 className={styles.detailSectionTitle}>Surface 계층</h4>
+      <div className={styles.surfacePreviewRoot}>
+        <div className={styles.surfaceLowLayer}>
+          <p className={styles.surfaceLabel}>surfaceLow</p>
+          <div className={styles.surfaceLayer}>
+            <p className={styles.surfaceLabel}>surface</p>
+            <p className={styles.surfaceTextPrimary}>본문 텍스트 예시</p>
+            <p className={styles.surfaceTextSecondary}>Secondary 텍스트 예시</p>
+            <div className={styles.surfaceHighLayer}>
+              <p className={styles.surfaceLabel}>surfaceHigh</p>
+              <p className={styles.surfaceTextPrimary}>선택/호버 상태 예시</p>
+            </div>
+          </div>
+        </div>
+        <div className={styles.surfaceElevatedLayer}>
+          <p className={styles.surfaceLabel}>elevated</p>
+          <p className={styles.surfaceTextPrimary}>모달/드롭다운 예시</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -429,9 +449,7 @@ function CustomPresetCard({
 
 export function PaletteLab() {
   const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
-  const [activeBrandTab, setActiveBrandTab] = useState<BrandColorTabId>(
-    themeRegistry[0]?.category ?? 'default'
-  );
+  const [activeBrandTab, setActiveBrandTab] = useState<BrandColorTabId>('all');
 
   const designNav = useDesignSettingsNav();
   const {
@@ -446,6 +464,7 @@ export function PaletteLab() {
       ),
     []
   );
+
   /** 컬러팔레트 Overview 전용 - ThemeProvider의 현재 테마 반영 */
   const overviewColorPalette = useMemo(() => {
     const def = currentPaletteDefinition;
@@ -522,6 +541,37 @@ export function PaletteLab() {
               onTabChange={setActiveBrandTab}
             />
             <div className={styles.categoryContent}>
+            {activeBrandTab === 'all' && (
+              <ComparisonGrid className={styles.comparisonGrid}>
+                {themeRegistry.flatMap((group) =>
+                  (themesByCategory[group.category] ?? []).map((def) => (
+                    <ThemeCard
+                      key={def.id}
+                      def={def}
+                      onClick={() => handlePaletteSelect(def)}
+                      onMappingClick={handleMappingIconClick(def)}
+                      selected={
+                        detailSelection?.type === 'palette' &&
+                        detailSelection.definition.id === def.id
+                      }
+                    />
+                  ))
+                )}
+                {customSemanticPresets.map((preset) => (
+                  <CustomPresetCard
+                    key={preset.id}
+                    preset={preset}
+                    onClick={() => handleCustomPresetSelect(preset)}
+                    onMappingClick={handleCustomMappingClick(preset)}
+                    onDelete={handleCustomDelete(preset)}
+                    selected={
+                      detailSelection?.type === 'custom' &&
+                      detailSelection.preset.id === preset.id
+                    }
+                  />
+                ))}
+              </ComparisonGrid>
+            )}
             {themeRegistry.map((group) =>
               activeBrandTab === group.category ? (
                 <ComparisonGrid key={group.category} className={styles.comparisonGrid}>

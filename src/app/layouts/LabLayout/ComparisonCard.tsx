@@ -15,6 +15,8 @@ export interface ComparisonCardProps {
   selected?: boolean;
   /** 헤더 우측 상단 액션 (아이콘 버튼 등) */
   headerAction?: React.ReactNode;
+  /** 콘텐츠 영역에 surface(material) 토큰을 직접 적용 */
+  surfaceContent?: boolean;
 }
 
 export function ComparisonCard({
@@ -25,11 +27,15 @@ export function ComparisonCard({
   onClick,
   selected,
   headerAction,
+  surfaceContent = false,
 }: ComparisonCardProps) {
   return (
     <div
-      className={clsx(styles.comparisonCard, selected && styles.comparisonCardSelected)}
-      style={styleVars}
+      className={clsx(
+        styles.comparisonCard,
+        selected && styles.comparisonCardSelected,
+        surfaceContent && styles.comparisonCardSurface
+      )}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
@@ -55,8 +61,13 @@ export function ComparisonCard({
           </div>
         )}
       </div>
-      <div className={styles.comparisonContent}>
-        <div data-context="preview">{children}</div>
+      <div
+        className={clsx(styles.comparisonContent, surfaceContent && styles.comparisonContentSurface)}
+        data-context="preview"
+        data-scope="local"
+        style={styleVars}
+      >
+        <div>{children}</div>
       </div>
     </div>
   );
