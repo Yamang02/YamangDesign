@@ -50,4 +50,15 @@
     list-style: none;
     padding: 0;
   }
+
+  /* 기본 포커스링 — shell/ds 레이어에서 각자 재정의 가능 */
+  :focus-visible {
+    outline: var(--ds-focus-ring-width, 2px) solid var(--ds-focus-ring-color, #6366F1);
+    outline-offset: var(--ds-focus-ring-offset, 2px);
+  }
+
+  /* 테마 전환 애니메이션 — 필요 시 상위 레이어에서 재정의 가능 */
+  :root {
+    transition: var(--ds-transition-theme);
+  }
 }

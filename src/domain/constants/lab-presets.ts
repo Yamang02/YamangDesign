@@ -27,12 +27,15 @@ type CSSVariables = Record<string, string>;
  */
 export function getStyleVariables(
   styleName: StyleName,
-  bgColor: string = '#F5F5F5'
+  bgColor?: string
 ): CSSVariables {
   const styleDef = stylePresets[styleName];
   if (!styleDef) return {};
 
-  const resolved = createStyle(styleDef, bgColor);
+  const resolvedBgColor =
+    bgColor ?? createPalette(palettePresets.default).semantic.bg.base;
+
+  const resolved = createStyle(styleDef, resolvedBgColor);
 
   return {
     '--ds-shadow-none': resolved.shadows.none,

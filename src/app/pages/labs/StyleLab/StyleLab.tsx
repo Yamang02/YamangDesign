@@ -11,6 +11,7 @@ import { stylePresets } from '@domain/themes/presets';
 import { palettePresets } from '@domain/themes/presets';
 import type { PaletteName, StyleName } from '@shared/@types/theme';
 import type { StyleDefinition } from '@domain/styles';
+import { createPalette } from '@domain/palettes';
 import overviewJson from '@app/content/labs/style-lab/overview.json';
 import type { StyleLabOverview, StyleVariant } from '@app/content/labs/style-lab/types';
 import { StyleOverviewDiagram } from './StyleOverviewDiagram';
@@ -18,7 +19,6 @@ import { TokenDiffTable } from './TokenDiffTable';
 import styles from './StyleLab.module.css';
 
 const shadowKeys = ['sm', 'md', 'lg'] as const;
-const bgColor = '#F5F5F5';
 
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
@@ -146,11 +146,11 @@ function PropertyMatrix({
   );
 }
 
-function StyleDetail({ name }: { name: StyleName }) {
+function StyleDetail({ name, bgColor }: { name: StyleName; bgColor: string }) {
   const styleDef = stylePresets[name];
   const meta = STYLE_METADATA[name];
   if (!styleDef) return null;
-  const resolved = createStyle(styleDef, '#F5F5F5');
+  const resolved = createStyle(styleDef, bgColor);
 
   return (
     <div className={styles.styleDetail}>
@@ -200,6 +200,12 @@ export function StyleLab() {
   const [previewBackdrop, setPreviewBackdrop] = useState<'neutral' | 'glass'>('neutral');
 
   const paletteVars = usePaletteVars(paletteId);
+  const backgroundBaseColor = useMemo(() => {
+    const paletteDef = palettePresets[paletteId];
+    return paletteDef
+      ? createPalette(paletteDef).semantic.bg.base
+      : createPalette(palettePresets.default).semantic.bg.base;
+  }, [paletteId]);
   const activeStyles = useMemo(
     () => [baseStyle, compareStyle].filter((s, i, arr) => arr.indexOf(s) === i),
     [baseStyle, compareStyle]
@@ -324,7 +330,7 @@ export function StyleLab() {
               <ComparisonCard
                 key={styleName}
                 title={capitalize(styleName)}
-                styleVars={getStyleVariables(styleName, bgColor)}
+                styleVars={getStyleVariables(styleName, backgroundBaseColor)}
                 surfaceContent
                 onClick={() => setSelectedStyle(styleName)}
                 selected={selectedStyle === styleName}
@@ -414,7 +420,7 @@ export function StyleLab() {
         onClose={() => setSelectedStyle(null)}
         title={selectedStyle ? capitalize(selectedStyle) : ''}
       >
-        {selectedStyle && <StyleDetail name={selectedStyle} />}
+        {selectedStyle && <StyleDetail name={selectedStyle} bgColor={backgroundBaseColor} />}
       </DetailPanel>
     </>
   );

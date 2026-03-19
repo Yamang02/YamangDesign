@@ -135,8 +135,8 @@ function getValueByPath(
 ): string | import('@domain/palettes/types').ScaleReference {
   const [cat, key] = path.split('.');
   const category = mapping[cat as keyof SemanticMapping];
-  if (!category || typeof category !== 'object') return '#999';
-  return (category as Record<string, string | import('@domain/palettes/types').ScaleReference>)[key] ?? '#999';
+  if (!category || typeof category !== 'object') return 'var(--shell-text-tertiary)';
+  return (category as Record<string, string | import('@domain/palettes/types').ScaleReference>)[key] ?? 'var(--shell-text-tertiary)';
 }
 
 function SemanticMappingTabs({
@@ -244,7 +244,7 @@ function SemanticMappingTabs({
                               item.source!.split('-').pop() ?? '500',
                               10
                             );
-                            return step <= 400 ? 'var(--shell-text-primary)' : 'var(--shell-text-on-action, #FFF)';
+                            return step <= 400 ? 'var(--shell-text-primary)' : 'var(--shell-text-on-action)';
                           })(),
                         }}
                         title={`light-bg 기준: ${item.source}`}

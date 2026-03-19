@@ -123,8 +123,8 @@ export const iconShowcase = {
     sm: 'Small',
     md: 'Medium',
     lg: 'Large',
-    custom32: '32px',
-    custom48: '48px',
+    custom32: '32',
+    custom48: '48',
   },
   colorLabels: {
     primary: 'Primary',

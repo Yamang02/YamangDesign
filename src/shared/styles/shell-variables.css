@@ -6,6 +6,55 @@
   :root {
     /* E01/E04: 헤더 높이 (DetailPanel, TOC sticky 등에서 사용) */
     --nav-height: 64px;
+    --shell-size-sidebar-width: 200px;
+    --shell-size-toc-indent-step: 12px;
+    --ds-component-size-token-name-col: 100px;
+    --ds-component-size-token-swatch-col: 48px;
+    --ds-component-size-token-grid-min: 320px;
+    --ds-component-size-token-input-min: 260px;
+    --ds-component-size-token-value-col: 80px;
+    --ds-component-size-swatch-sm: 18px;
+    --ds-component-size-swatch-md: 20px;
+    --ds-component-size-nav-item: 40px;
+    --ds-component-size-dropdown-min: 180px;
+    --ds-component-size-dropdown-sm-min: 160px;
+    --ds-component-size-settings-panel-min: 280px;
+    --ds-component-size-settings-panel-max: 320px;
+    --ds-component-size-detail-panel-width: 320px;
+    --ds-component-size-inspector-width: 480px;
+    --ds-component-size-card-min-height: 180px;
+    --ds-component-size-card-min-width: 120px;
+    --ds-component-size-preview-min-height: 80px;
+    --ds-component-size-modal-max-width: 1200px;
+    --ds-component-size-modal-min-height: 200px;
+    --ds-component-size-auto-button-height: 22px;
+    --ds-component-size-list-max-height: 200px;
+    --ds-component-size-select-sm-min: 120px;
+    --ds-component-size-select-md-min: 160px;
+    --ds-component-size-select-lg-min: 200px;
+    --ds-component-size-select-dropdown-max-height: 240px;
+    --ds-component-size-comparison-card-min-width: 240px;
+    --ds-component-size-preset-sidebar: 300px;
+    --ds-component-size-preset-input-min: 140px;
+    --ds-component-size-tooltip-max-width: 200px;
+    --ds-component-size-showcase-grid-min: 300px;
+    --ds-component-size-showcase-card-min: 220px;
+    --ds-component-size-form-card-max-width: 360px;
+    --ds-component-size-live-preview-height: 340px;
+    --ds-component-size-live-preview-scale-height: 600px;
+    --ds-component-size-page-preview-min-height: 480px;
+    --ds-component-size-live-preview-sidebar-width: 180px;
+    --ds-component-size-service-inventory-card-min: 220px;
+    --ds-component-size-shell-inventory-card-min: 260px;
+    --ds-component-size-design-settings-content-min-height: 360px;
+    --ds-component-size-component-mapping-min-height: 400px;
+    --ds-component-size-setting-label-min: 70px;
+    --ds-component-size-palette-grid-card-min: 260px;
+    --ds-component-size-palette-diagram-fixed: 200px;
+    --ds-component-size-palette-modal-max-width: 420px;
+    --ds-component-size-palette-hex-input-width: 100px;
+    --ds-component-size-empty-category-min-height: 120px;
+    --ds-blur-sm: 4px;
 
     /* 배경 - 라이트 (E03 단일 크롬) */
     --shell-bg-base: #FFFFFF;

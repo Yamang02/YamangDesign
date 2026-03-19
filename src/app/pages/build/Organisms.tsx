@@ -37,7 +37,7 @@ function OrganismPreview({ id }: { id: OrganismId }) {
             justifyContent: 'space-between',
             padding: 'var(--ds-spacing-4)',
             background: 'var(--shell-bg-base)',
-            borderBottom: '1px solid var(--shell-border-default)',
+            borderBottom: 'var(--ds-border-width) solid var(--shell-border-default)',
             borderRadius: 'var(--ds-radius-md)',
           }}
         >
@@ -61,8 +61,9 @@ function OrganismPreview({ id }: { id: OrganismId }) {
             padding: 'var(--ds-spacing-4)',
             background: 'var(--shell-bg-surface)',
             borderRadius: 'var(--ds-radius-md)',
-            border: '1px solid var(--shell-border-subtle)',
-            width: 200,
+            border: 'var(--ds-border-width) solid var(--shell-border-subtle)',
+            width: 'var(--shell-size-sidebar-width)',
+            margin: '0 auto',
           }}
         >
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-2)' }}>
@@ -91,7 +92,7 @@ function OrganismPreview({ id }: { id: OrganismId }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(var(--ds-component-size-select-lg-min), 1fr))',
             gap: 'var(--ds-spacing-6)',
           }}
         >
@@ -108,7 +109,7 @@ function OrganismPreview({ id }: { id: OrganismId }) {
       );
     case 'form-card':
       return wrapper(
-        <div style={{ maxWidth: 360 }}>
+        <div style={{ maxWidth: 'var(--ds-component-size-form-card-max-width)', margin: '0 auto' }}>
           <Card variant="elevated" padding="lg">
           <Card.Body>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-spacing-4)' }}>

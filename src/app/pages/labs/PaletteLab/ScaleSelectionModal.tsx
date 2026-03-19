@@ -13,6 +13,7 @@ import {
 import type { BgStrategy, ScaleReference } from '@domain/palettes/types';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import styles from './ScaleSelectionModal.module.css';
+import { RUNTIME_COLOR_FALLBACK } from '@domain/constants/runtime-fallbacks';
 
 const SCALES: ScaleReference['scale'][] = [
   'primary',
@@ -172,7 +173,7 @@ export function ScaleSelectionModal({
             <div className={styles.scaleRow}>
               {SCALES.map((scale) => {
                 const scaleData = scales[scale];
-                const color = scaleData?.[500] ?? '#CCC';
+                const color = scaleData?.[500] ?? RUNTIME_COLOR_FALLBACK;
                 return (
                   <button
                     key={scale}
@@ -198,7 +199,7 @@ export function ScaleSelectionModal({
             <label className={styles.label}>Step</label>
             <div className={styles.stepRow}>
               {STEPS.map((step) => {
-                const color = scales[selectedScale]?.[step] ?? '#CCC';
+                const color = scales[selectedScale]?.[step] ?? RUNTIME_COLOR_FALLBACK;
                 return (
                   <button
                     key={step}

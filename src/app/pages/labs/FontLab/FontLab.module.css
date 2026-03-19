@@ -4,7 +4,7 @@
   .detailPreview {
     margin-top: var(--ds-spacing-4);
     padding-top: var(--ds-spacing-4);
-    border-top: 1px solid var(--shell-border-default);
+    border-top: var(--ds-border-width) solid var(--shell-border-default);
     color: var(--shell-text-primary);
   }
 }

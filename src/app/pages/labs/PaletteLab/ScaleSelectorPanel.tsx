@@ -13,6 +13,7 @@ import {
 import type { BgStrategy, ScaleReference } from '@domain/palettes/types';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import styles from './ScaleSelectorPanel.module.css';
+import { RUNTIME_COLOR_FALLBACK } from '@domain/constants/runtime-fallbacks';
 
 const SCALES: ScaleReference['scale'][] = [
   'primary',
@@ -161,7 +162,7 @@ export function ScaleSelectorPanel({
           <div className={styles.scaleList}>
             {SCALES.map((scale) => {
               const scaleData = scales[scale];
-              const color = scaleData?.[500] ?? '#CCC';
+              const color = scaleData?.[500] ?? RUNTIME_COLOR_FALLBACK;
               const isActive = selectedScale === scale && !useDirectColor;
               const rec = getScaleRecommendation(
                 semanticToken,
@@ -196,7 +197,7 @@ export function ScaleSelectorPanel({
           <label className={styles.label}>Step</label>
           <div className={styles.stepRow}>
             {STEPS.map((step) => {
-              const color = scales[selectedScale]?.[step] ?? '#CCC';
+              const color = scales[selectedScale]?.[step] ?? RUNTIME_COLOR_FALLBACK;
               return (
                 <button
                   key={step}

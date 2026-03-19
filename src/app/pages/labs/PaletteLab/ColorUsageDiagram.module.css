@@ -20,8 +20,8 @@
   }
 
   .diagramRow .componentDiagram {
-    flex: 0 0 200px;
-    min-width: 160px;
+    flex: 0 0 var(--ds-component-size-palette-diagram-fixed);
+    min-width: var(--ds-component-size-dropdown-sm-min);
   }
 
   .section {
@@ -36,7 +36,7 @@
     color: var(--shell-text-primary);
     margin: 0;
     padding-bottom: var(--ds-spacing-2);
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .sectionHint {
@@ -47,7 +47,7 @@
   /* Color Roles */
   .roleGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-palette-diagram-fixed), 1fr));
     gap: var(--ds-spacing-3);
   }
 
@@ -57,7 +57,7 @@
     gap: var(--ds-spacing-3);
     padding: var(--ds-spacing-4);
     background-color: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
     transition: border-color 150ms ease;
   }
@@ -73,10 +73,10 @@
   }
 
   .colorSwatch {
-    width: 40px;
-    height: 40px;
+    width: var(--ds-component-size-nav-item);
+    height: var(--ds-component-size-nav-item);
     border-radius: var(--ds-radius-md);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     flex-shrink: 0;
   }
 
@@ -104,8 +104,8 @@
   }
 
   .usageTag {
-    font-size: 10px;
-    padding: 2px 6px;
+    font-size: var(--ds-text-xs);
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
     background-color: var(--shell-bg-muted);
     border-radius: var(--ds-radius-sm);
     color: var(--shell-text-secondary);
@@ -117,7 +117,7 @@
     flex-direction: column;
     gap: 0;
     background-color: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
     overflow: hidden;
   }
@@ -126,7 +126,7 @@
     display: flex;
     gap: 0;
     padding: var(--ds-spacing-2) var(--ds-spacing-4) 0;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
     background-color: var(--shell-bg-surface);
   }
 
@@ -137,8 +137,8 @@
     color: var(--shell-text-secondary);
     background: none;
     border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    border-bottom: var(--ds-focus-ring-width) solid transparent;
+    margin-bottom: calc(var(--ds-border-width) * -1);
     cursor: pointer;
     transition: color 150ms ease, border-color 150ms ease;
   }
@@ -170,11 +170,11 @@
   }
 
   .tokenSwatch {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
+    width: var(--ds-size-md);
+    height: var(--ds-size-md);
+    min-width: var(--ds-size-md);
     border-radius: var(--ds-radius-sm);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     flex-shrink: 0;
   }
 
@@ -183,26 +183,26 @@
   }
 
   .tokenSwatch[role='button']:hover {
-    box-shadow: 0 0 0 2px var(--shell-action-primary);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--shell-action-primary);
   }
 
   .tokenSwatch[role='button']:focus-visible {
-    outline: 2px solid var(--shell-action-primary);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-action-primary);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   .tokenName {
     font-size: var(--ds-text-xs);
     font-family: ui-monospace, monospace;
-    padding: 2px 6px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
     background-color: var(--shell-bg-muted);
-    border-radius: 3px;
+    border-radius: var(--ds-radius-sm);
     color: var(--shell-text-secondary);
   }
 
   .sourceBadge {
-    font-size: 10px;
-    padding: 2px 8px;
+    font-size: var(--ds-text-xs);
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-2);
     border-radius: var(--ds-radius-sm);
     font-weight: var(--ds-font-weight-medium);
     white-space: nowrap;
@@ -218,12 +218,12 @@
   .componentDiagram {
     padding: var(--ds-spacing-3);
     background-color: var(--shell-bg-surface);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
   }
 
   .diagramTitle {
-    font-size: 10px;
+    font-size: var(--ds-text-xs);
     font-weight: var(--ds-font-weight-semibold);
     color: var(--shell-text-secondary);
     text-transform: uppercase;
@@ -244,18 +244,18 @@
   }
 
   .tokenExampleSample {
-    flex: 0 0 36px;
-    min-width: 36px;
+    flex: 0 0 calc(var(--ds-size-md) + var(--ds-spacing-1));
+    min-width: calc(var(--ds-size-md) + var(--ds-spacing-1));
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .tokenExampleSwatch {
-    width: 24px;
-    height: 18px;
-    border-radius: 4px;
-    border: 1px solid var(--shell-border-subtle);
+    width: var(--ds-size-sm);
+    height: var(--ds-component-size-swatch-sm);
+    border-radius: var(--ds-radius-sm);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .tokenExampleText {
@@ -265,22 +265,22 @@
   }
 
   .tokenExampleBorder {
-    width: 28px;
+    width: var(--ds-component-size-nav-item);
     height: 0;
-    border-top: 2px solid;
+    border-top: var(--ds-focus-ring-width) solid;
   }
 
   .tokenExampleBtn {
-    padding: 2px 8px;
-    font-size: 10px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-2);
+    font-size: var(--ds-text-xs);
     font-weight: var(--ds-font-weight-medium);
     border: none;
-    border-radius: 4px;
+    border-radius: var(--ds-radius-sm);
     line-height: 1.4;
   }
 
   .tokenExampleLabel {
-    font-size: 10px;
+    font-size: var(--ds-text-xs);
     color: var(--shell-text-primary);
     font-family: ui-monospace, monospace;
     flex: 1;

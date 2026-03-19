@@ -15,14 +15,14 @@
 
   .input {
     width: 100%;
-    min-width: 200px;
+    min-width: var(--shell-size-sidebar-width);
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
-    padding-left: calc(var(--ds-spacing-3) + 16px + var(--ds-spacing-2));
-    padding-right: calc(var(--ds-spacing-3) + 24px);
+    padding-left: calc(var(--ds-spacing-3) + var(--ds-icon-size-sm) + var(--ds-spacing-2));
+    padding-right: calc(var(--ds-spacing-3) + var(--ds-size-sm));
     font-size: var(--ds-text-sm);
     color: var(--shell-text-primary);
     background-color: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
   }
 
@@ -44,8 +44,8 @@
   }
 
   .input:focus-visible {
-    outline: 2px solid var(--shell-focus-ring);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-focus-ring);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   .clearBtn {
@@ -54,7 +54,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2px;
+    padding: var(--ds-spacing-0-5);
     background: none;
     border: none;
     cursor: pointer;

@@ -22,7 +22,7 @@ export const siteStyle = {
 
   /** 레이아웃 — TODO(P05): 실제 사용처 없음. 향후 레이아웃 시스템에서 활용 예정 */
   layout: {
-    maxContentWidth: '1200px',
+    maxContentWidth: '75rem',
     spacingScale: 'normal' as const,
   },
 

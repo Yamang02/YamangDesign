@@ -4,7 +4,7 @@
               --shell-border-hover, --shell-text-hover */
   .footer {
     padding: var(--ds-spacing-5) var(--ds-spacing-8);
-    border-top: 1px solid var(--shell-border-default);
+    border-top: var(--ds-border-width) solid var(--shell-border-default);
     background: linear-gradient(
       180deg,
       var(--shell-bg-subtle) 0%,
@@ -53,12 +53,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: var(--ds-size-md);
+    height: var(--ds-size-md);
     border-radius: var(--ds-radius-md);
     color: var(--shell-text-secondary);
     background: transparent;
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -82,7 +82,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
+    gap: var(--ds-spacing-0-5);
     text-align: center;
   }
 
@@ -102,7 +102,7 @@
   }
 
   /* Mobile */
-  @media (max-width: 767px) {
+  @media (max-width: 48rem) {
     .footer {
       padding: var(--ds-spacing-4);
     }

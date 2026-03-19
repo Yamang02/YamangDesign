@@ -13,8 +13,8 @@
   }
 
   .divider {
-    width: 1px;
-    height: 24px;
+    width: var(--ds-border-width);
+    height: var(--ds-size-sm);
     background: var(--shell-border-default);
     margin: 0 var(--ds-spacing-1);
   }
@@ -26,8 +26,8 @@
     align-items: center;
     justify-content: center;
     gap: var(--ds-spacing-1);
-    min-width: 40px;
-    height: 40px;
+    min-width: var(--ds-component-size-nav-item);
+    height: var(--ds-component-size-nav-item);
     padding: 0 var(--ds-spacing-2);
     border-radius: var(--ds-radius-md);
     background: transparent;
@@ -64,8 +64,8 @@
   }
 
   .navItemIcon svg {
-    width: 20px;
-    height: 20px;
+    width: var(--ds-component-size-swatch-md);
+    height: var(--ds-component-size-swatch-md);
   }
 
   /* 드롭다운 트리거 */
@@ -116,10 +116,10 @@
     top: 100%;
     left: 0;
     margin-top: var(--ds-spacing-1);
-    min-width: 180px;
+    min-width: var(--ds-component-size-dropdown-min);
     padding: var(--ds-spacing-1);
     background: var(--shell-bg-elevated);
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-lg);
     box-shadow: var(--shell-shadow-lg);
     z-index: var(--ds-z-dropdown);
@@ -163,11 +163,11 @@
     top: 100%;
     right: 0;
     margin-top: var(--ds-spacing-1);
-    min-width: 280px;
-    max-width: 320px;
+    min-width: var(--ds-component-size-settings-panel-min);
+    max-width: var(--ds-component-size-settings-panel-max);
     padding: var(--ds-spacing-4);
     background: var(--shell-bg-elevated);
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-lg);
     box-shadow: var(--shell-shadow-lg);
     z-index: var(--ds-z-dropdown);

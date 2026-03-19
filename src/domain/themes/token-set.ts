@@ -110,14 +110,18 @@ export function buildTokenSet(
       bg: expanded.semantic.bg,
       text: {
         ...expanded.semantic.text,
-        inverse:
-          palette.bgStrategy === 'dark'
-            ? expanded.semantic.text.primary
-            : '#FFFFFF',
+        inverse: expanded.semantic.text.onAction,
       },
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: feedbackColors,
+      demo: {
+        glass: {
+          start: expanded.scales.primary[100],
+          mid: expanded.scales.accent[100],
+          end: expanded.scales.secondary[100],
+        },
+      },
     },
   });
 
@@ -198,14 +202,18 @@ export function buildThemeAndTokenSet(
       bg: expanded.semantic.bg,
       text: {
         ...expanded.semantic.text,
-        inverse:
-          palette.bgStrategy === 'dark'
-            ? expanded.semantic.text.primary
-            : '#FFFFFF',
+        inverse: expanded.semantic.text.onAction,
       },
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: feedbackColors,
+      demo: {
+        glass: {
+          start: expanded.scales.primary[100],
+          mid: expanded.scales.accent[100],
+          end: expanded.scales.secondary[100],
+        },
+      },
     },
   });
 
@@ -228,10 +236,7 @@ export function buildThemeAndTokenSet(
       bg: expanded.semantic.bg,
       text: {
         ...expanded.semantic.text,
-        inverse:
-          palette.bgStrategy === 'dark'
-            ? expanded.semantic.text.primary
-            : '#FFFFFF',
+        inverse: expanded.semantic.text.onAction,
       },
       border: expanded.semantic.border,
       action: expanded.semantic.action,

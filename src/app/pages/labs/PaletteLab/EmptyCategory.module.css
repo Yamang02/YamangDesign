@@ -4,10 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 120px;
+    min-height: var(--ds-component-size-empty-category-min-height);
     padding: var(--ds-spacing-6);
     background-color: var(--shell-bg-muted);
-    border: 1px dashed var(--shell-border-subtle);
+    border: var(--ds-border-width) dashed var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
   }
 

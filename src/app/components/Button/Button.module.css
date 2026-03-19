@@ -82,7 +82,7 @@
   .button[data-variant='outline'] {
     background-color: transparent;
     color: var(--ds-color-action-primary-default);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-action-primary-default);
+    border: var(--ds-border-width) var(--ds-border-style) var(--ds-color-action-primary-default);
     box-shadow: none;
   }
 
@@ -126,13 +126,13 @@
 
   /* Focus */
   .button:focus-visible {
-    outline: 2px solid var(--ds-color-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   /* Active press effect */
   .button:active {
-    transform: translateY(1px);
+    transform: translateY(var(--ds-border-width));
   }
 
   /* Disabled */

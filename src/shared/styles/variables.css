@@ -39,6 +39,9 @@
     --ds-color-action-accent-default: initial;
     --ds-color-action-accent-hover: initial;
     --ds-color-action-accent-active: initial;
+    --ds-color-demo-glass-start: initial;
+    --ds-color-demo-glass-mid: initial;
+    --ds-color-demo-glass-end: initial;
 
     /* System colors: E04 P02 → --sys-* (sys-variables.css) */
 
@@ -97,6 +100,58 @@
 
     /* Component sizes */
     --ds-component-size-color-preview: initial;
+    --ds-component-size-token-name-col: initial;
+    --ds-component-size-token-swatch-col: initial;
+    --ds-component-size-token-grid-min: initial;
+    --ds-component-size-token-input-min: initial;
+    --ds-component-size-token-value-col: initial;
+    --ds-component-size-swatch-sm: initial;
+    --ds-component-size-swatch-md: initial;
+    --ds-component-size-nav-item: initial;
+    --ds-component-size-dropdown-min: initial;
+    --ds-component-size-dropdown-sm-min: initial;
+    --ds-component-size-settings-panel-min: initial;
+    --ds-component-size-settings-panel-max: initial;
+    --ds-component-size-detail-panel-width: initial;
+    --ds-component-size-inspector-width: initial;
+    --ds-component-size-card-min-height: initial;
+    --ds-component-size-card-min-width: initial;
+    --ds-component-size-preview-min-height: initial;
+    --ds-component-size-modal-max-width: initial;
+    --ds-component-size-modal-min-height: initial;
+    --ds-component-size-auto-button-height: initial;
+    --ds-component-size-list-max-height: initial;
+    --ds-component-size-select-sm-min: initial;
+    --ds-component-size-select-md-min: initial;
+    --ds-component-size-select-lg-min: initial;
+    --ds-component-size-select-dropdown-max-height: initial;
+    --ds-component-size-comparison-card-min-width: initial;
+    --ds-component-size-tooltip-max-width: initial;
+    --ds-component-size-showcase-grid-min: initial;
+    --ds-component-size-showcase-card-min: initial;
+    --ds-component-size-form-card-max-width: initial;
+    --ds-component-size-live-preview-height: initial;
+    --ds-component-size-live-preview-scale-height: initial;
+    --ds-component-size-page-preview-min-height: initial;
+    --ds-component-size-live-preview-sidebar-width: initial;
+    --ds-component-size-service-inventory-card-min: initial;
+    --ds-component-size-shell-inventory-card-min: initial;
+    --ds-component-size-design-settings-content-min-height: initial;
+    --ds-component-size-component-mapping-min-height: initial;
+    --ds-component-size-setting-label-min: initial;
+    --ds-component-size-palette-grid-card-min: initial;
+    --ds-component-size-palette-diagram-fixed: initial;
+    --ds-component-size-palette-modal-max-width: initial;
+    --ds-component-size-palette-hex-input-width: initial;
+    --ds-component-size-empty-category-min-height: initial;
+
+    /* Effects */
+    --ds-blur-sm: initial;
+
+    /* Breakpoints */
+    --ds-breakpoint-md: initial;
+    --ds-breakpoint-lg: initial;
+    --ds-breakpoint-xl: initial;
 
     /* Z-index */
     --ds-z-dropdown: initial;
@@ -124,8 +179,8 @@
     --ds-state-disabled-opacity: initial;
 
     /* Focus ring */
-    --ds-focus-ring-width: initial;
-    --ds-focus-ring-offset: initial;
-    --ds-focus-ring-color: initial;
+    --ds-focus-ring-width: 2px;
+    --ds-focus-ring-offset: 2px;
+    --ds-focus-ring-color: var(--ds-color-border-focus, #6366F1);
   }
 }

@@ -17,15 +17,15 @@
   /* E03: TOC */
   .toc {
     position: sticky;
-    top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
-    width: 200px;
+    top: calc(var(--nav-height) + var(--ds-spacing-6));
+    width: var(--shell-size-sidebar-width);
     flex-shrink: 0;
     padding: var(--ds-spacing-6);
     padding-right: 0;
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - var(--nav-height, 56px) - var(--ds-spacing-12));
+    max-height: calc(100vh - var(--nav-height) - var(--ds-spacing-12));
     overflow: hidden;
   }
 
@@ -48,7 +48,7 @@
     color: var(--shell-text-secondary);
     background: none;
     border: none;
-    border-left: 2px solid var(--shell-border-subtle);
+    border-left: var(--ds-focus-ring-width) solid var(--shell-border-subtle);
     text-align: left;
     cursor: pointer;
     transition: color 150ms ease, border-color 150ms ease;
@@ -59,8 +59,8 @@
   }
 
   .tocItem:focus-visible {
-    outline: 2px solid var(--shell-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   .tocItemActive {
@@ -76,7 +76,7 @@
   .tocFooter {
     margin-top: auto;
     padding-top: var(--ds-spacing-3);
-    border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border-top: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
     flex-shrink: 0;
     display: flex;
     justify-content: center;
@@ -86,11 +86,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: var(--ds-size-md);
+    height: var(--ds-size-md);
     padding: 0;
     background: none;
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) transparent;
+    border: var(--ds-border-width) var(--ds-border-style) transparent;
     border-radius: var(--ds-radius-sm);
     color: var(--shell-text-secondary);
     cursor: pointer;
@@ -104,8 +104,8 @@
   }
 
   .tocInspectorBtn:focus-visible {
-    outline: 2px solid var(--shell-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   .tocInspectorBtnActive {
@@ -116,12 +116,12 @@
 
   /* E03: TOC 클릭 시 스크롤 위치 보정 */
   section[id] {
-    scroll-margin-top: calc(var(--nav-height, 56px) + var(--ds-spacing-6));
+    scroll-margin-top: calc(var(--nav-height) + var(--ds-spacing-6));
   }
 
 
   /* E03: 반응형 */
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     .toc {
       display: none;
     }
@@ -172,7 +172,7 @@
   /* E02: 섹션 카드 (콘텐츠 영역만 감쌈, 타이틀은 밖에) */
   .sectionCard {
     background-color: var(--shell-bg-base);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
     border-radius: var(--ds-radius-lg);
     padding: var(--ds-spacing-6);
     box-shadow: var(--shell-shadow-sm);
@@ -202,6 +202,7 @@
   .sectionContent {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--ds-spacing-4);
   }
 
@@ -211,9 +212,9 @@
     background-color: var(--shell-bg-base);
     border-radius: var(--ds-radius-md);
     box-shadow: var(--shell-shadow-sm);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
-    min-width: 120px;
-    min-height: 80px;
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
+    min-width: var(--ds-component-size-card-min-width);
+    min-height: var(--ds-component-size-preview-min-height);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,10 +239,10 @@
   /* E05: ComparisonCard */
   .comparisonCard {
     flex: 1;
-    min-width: 240px;
+    min-width: var(--ds-component-size-comparison-card-min-width);
     padding: var(--ds-spacing-5);
     background-color: var(--shell-bg-base);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
     border-radius: var(--ds-radius-lg);
     transition: border-color 150ms ease, box-shadow 150ms ease;
   }
@@ -266,7 +267,7 @@
     gap: var(--ds-spacing-2);
     margin-bottom: var(--ds-spacing-4);
     padding-bottom: var(--ds-spacing-3);
-    border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
   }
 
   .comparisonHeaderMain {
@@ -306,13 +307,14 @@
   .comparisonGrid {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--ds-spacing-6);
   }
 
   /* LabPanel — 서브섹션 패널 (타이틀이 카드 헤더 안에) */
   .panelCard {
     background-color: var(--shell-bg-base);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
     border-radius: var(--ds-radius-lg);
     padding: var(--ds-spacing-5);
     box-shadow: var(--shell-shadow-sm);

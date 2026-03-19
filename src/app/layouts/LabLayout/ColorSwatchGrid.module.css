@@ -13,10 +13,10 @@
   }
 
   .swatch {
-    width: 32px;
-    height: 32px;
+    width: var(--ds-size-md);
+    height: var(--ds-size-md);
     border-radius: var(--ds-radius-sm);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     flex-shrink: 0;
   }
 

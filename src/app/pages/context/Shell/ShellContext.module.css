@@ -9,7 +9,7 @@
   /* E08 P04: 컴포넌트 인벤토리 카드 */
   .inventoryGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-shell-inventory-card-min), 1fr));
     gap: var(--ds-spacing-4);
     width: 100%;
   }
@@ -20,7 +20,7 @@
     align-items: stretch;
     text-align: left;
     padding: var(--ds-spacing-4);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-lg);
     background: var(--shell-bg-surface);
     cursor: pointer;
@@ -47,7 +47,7 @@
   }
 
   .inventoryCardDivider {
-    height: 1px;
+    height: var(--ds-border-width);
     background: var(--shell-border-subtle);
     margin: 0 0 var(--ds-spacing-3) 0;
   }
@@ -70,7 +70,7 @@
     font-size: var(--ds-text-caption-size);
     color: var(--shell-action-primary);
     background: var(--shell-bg-primary-subtle);
-    padding: 2px 6px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
     border-radius: var(--ds-radius-sm);
     display: inline-block;
   }
@@ -86,7 +86,7 @@
   .tokenMapTable td {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     text-align: left;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .tokenMapTable th {
@@ -106,19 +106,19 @@
 
   /* Live Preview frame */
   .livePreviewFrame {
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-lg);
     overflow: hidden;
     background: var(--shell-bg-base);
     box-shadow: var(--shell-shadow-md);
-    height: 340px;
+    height: var(--ds-component-size-live-preview-height);
   }
 
   .livePreviewScale {
     transform: scale(0.5);
     transform-origin: top left;
     width: 200%;
-    height: 600px;
+    height: var(--ds-component-size-live-preview-scale-height);
     display: flex;
     flex-direction: column;
   }
@@ -138,9 +138,9 @@
   }
 
   .livePreviewSidebar {
-    width: 180px;
+    width: var(--ds-component-size-live-preview-sidebar-width);
     padding: var(--ds-spacing-3);
-    border-right: 1px solid var(--shell-border-subtle);
+    border-right: var(--ds-border-width) solid var(--shell-border-subtle);
     background: var(--shell-bg-base);
     display: flex;
     flex-direction: column;
@@ -171,6 +171,6 @@
     font-size: var(--ds-text-caption-size);
     color: var(--shell-text-tertiary);
     background: var(--shell-bg-subtle);
-    border-top: 1px solid var(--shell-border-subtle);
+    border-top: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 }

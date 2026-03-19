@@ -12,27 +12,27 @@
 
 .modal {
   width: 100%;
-  max-width: 420px;
+  max-width: var(--ds-component-size-palette-modal-max-width);
   max-height: 90vh;
   overflow: auto;
   background: var(--shell-bg-base);
   border-radius: var(--ds-radius-lg);
   box-shadow: var(--shell-shadow-lg);
-  border: 1px solid var(--shell-border-subtle);
+  border: var(--ds-border-width) solid var(--shell-border-subtle);
 }
 
 /* P04: scale-header - UI 깨짐 방지 */
 .scaleHeader {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 32px;
+  gap: var(--ds-spacing-2);
+  min-height: var(--ds-size-md);
 }
 
 .scaleIcon {
   flex-shrink: 0;
-  width: 16px;
-  height: 16px;
+  width: var(--ds-icon-size-sm);
+  height: var(--ds-icon-size-sm);
 }
 
 .header {
@@ -40,7 +40,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--ds-spacing-4);
-  border-bottom: 1px solid var(--shell-border-subtle);
+  border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
 }
 
 .title {
@@ -61,7 +61,7 @@
 }
 
 .closeBtn {
-  padding: 4px;
+  padding: var(--ds-spacing-1);
   background: none;
   border: none;
   cursor: pointer;
@@ -103,10 +103,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: var(--ds-spacing-1);
   padding: var(--ds-spacing-2);
   background: var(--shell-bg-surface);
-  border: 2px solid var(--shell-border-subtle);
+  border: var(--ds-focus-ring-width) solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-md);
   cursor: pointer;
   transition: border-color 150ms ease;
@@ -118,18 +118,18 @@
 
 .scaleBtn[data-active='true'] {
   border-color: var(--shell-action-primary);
-  box-shadow: 0 0 0 1px var(--shell-action-primary);
+  box-shadow: 0 0 0 var(--ds-border-width) var(--shell-action-primary);
 }
 
 .scaleSwatch {
-  width: 24px;
-  height: 24px;
+  width: var(--ds-size-sm);
+  height: var(--ds-size-sm);
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--shell-border-subtle);
+  border: var(--ds-border-width) solid var(--shell-border-subtle);
 }
 
 .scaleLabel {
-  font-size: 10px;
+  font-size: var(--ds-text-xs);
   color: var(--shell-text-secondary);
   text-transform: capitalize;
 }
@@ -144,10 +144,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--ds-spacing-0-5);
   padding: var(--ds-spacing-2);
   background: var(--shell-bg-surface);
-  border: 2px solid var(--shell-border-subtle);
+  border: var(--ds-focus-ring-width) solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
   cursor: pointer;
   transition: border-color 150ms ease;
@@ -162,14 +162,14 @@
 }
 
 .stepSwatch {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid var(--shell-border-subtle);
+  width: var(--ds-component-size-swatch-md);
+  height: var(--ds-component-size-swatch-md);
+  border-radius: var(--ds-radius-sm);
+  border: var(--ds-border-width) solid var(--shell-border-subtle);
 }
 
 .stepLabel {
-  font-size: 10px;
+  font-size: var(--ds-text-xs);
   color: var(--shell-text-secondary);
 }
 
@@ -195,28 +195,28 @@
 }
 
 .hexInput {
-  width: 100px;
+  width: var(--ds-component-size-palette-hex-input-width);
   padding: var(--ds-spacing-2) var(--ds-spacing-3);
   font-size: var(--ds-text-sm);
   font-family: ui-monospace, monospace;
   color: var(--shell-text-primary);
   background: var(--shell-bg-surface);
-  border: 1px solid var(--shell-border-subtle);
+  border: var(--ds-border-width) solid var(--shell-border-subtle);
   border-radius: var(--ds-radius-sm);
 }
 
 .hexPreview {
-  width: 28px;
-  height: 28px;
+  width: var(--ds-component-size-nav-item);
+  height: var(--ds-component-size-nav-item);
   border-radius: var(--ds-radius-sm);
-  border: 1px solid var(--shell-border-subtle);
+  border: var(--ds-border-width) solid var(--shell-border-subtle);
   flex-shrink: 0;
 }
 
 /* ─── Chrome (footer) ────────────────────────────── */
 .footer {
   padding: var(--ds-spacing-4);
-  border-top: 1px solid var(--shell-border-subtle);
+  border-top: var(--ds-border-width) solid var(--shell-border-subtle);
 }
 
 .applyBtn {

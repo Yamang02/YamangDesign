@@ -207,7 +207,7 @@ function SectionContent({ id }: { id: ShowcaseSectionId }) {
       );
     case 'card':
       return (
-        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))' }}>
+        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(var(--ds-component-size-showcase-card-min), 1fr))' }}>
           <div className={styles.showcaseVariantItem} style={{ alignItems: 'stretch' }}>
             <span className={styles.showcaseVariantItemLabel}>{cardShowcase.variantLabels.elevated}</span>
             <Card variant="elevated" hoverable>
@@ -240,7 +240,7 @@ function SectionContent({ id }: { id: ShowcaseSectionId }) {
         <>
           <div className={styles.showcaseModalGroup}>
             <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
-            <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+            <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(var(--ds-component-size-select-lg-min), 1fr))' }}>
               <VariantCell label={inputShowcase.variants.outline}>
                 <Input variant="outline" placeholder={showcaseContent.input} />
               </VariantCell>
@@ -254,7 +254,7 @@ function SectionContent({ id }: { id: ShowcaseSectionId }) {
           </div>
           <div className={styles.showcaseModalGroup}>
             <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
-            <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+            <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(var(--ds-component-size-select-lg-min), 1fr))' }}>
               <VariantCell label={inputShowcase.sizes.sm}>
                 <Input size="sm" placeholder={showcaseContent.input} />
               </VariantCell>
@@ -281,7 +281,7 @@ function SelectSectionBody() {
     <>
       <div className={styles.showcaseModalGroup}>
         <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.variants}</p>
-        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
+        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(var(--ds-component-size-dropdown-min), 1fr))' }}>
           <VariantCell label={selectShowcase.variants.outline}>
             <Select options={options} value={value} onChange={setValue} variant="outline" placeholder={showcaseContent.select} />
           </VariantCell>
@@ -295,7 +295,7 @@ function SelectSectionBody() {
       </div>
       <div className={styles.showcaseModalGroup}>
         <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
-        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))' }}>
+        <div className={styles.showcaseVariantGrid} style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(var(--ds-component-size-dropdown-min), 1fr))' }}>
           <VariantCell label={selectShowcase.sizes.sm}>
             <Select options={options} value="apple" onChange={() => {}} size="sm" placeholder={showcaseContent.select} />
           </VariantCell>

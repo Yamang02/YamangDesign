@@ -21,12 +21,12 @@
 
   /* ── underline variant (DesignSettingsLab 스타일) ── */
   .underline {
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .underline .tab {
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    border-bottom: var(--ds-focus-ring-width) solid transparent;
+    margin-bottom: calc(var(--ds-border-width) * -1);
   }
 
   .underline .tabActive {
@@ -38,7 +38,7 @@
   /* ── pill variant (LabLayout 탭 모드 스타일) ── */
   .pill {
     padding: var(--ds-spacing-2) var(--ds-spacing-6);
-    border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
     background: var(--shell-bg-muted);
   }
 
@@ -54,6 +54,6 @@
   .pill .tabActive {
     color: var(--shell-text-primary);
     background: var(--shell-bg-surface);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-default);
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-default);
   }
 }

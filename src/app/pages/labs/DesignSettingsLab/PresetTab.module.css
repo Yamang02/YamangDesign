@@ -2,7 +2,7 @@
   /* P07: 프리셋 탭 전용 — 2-column 레이아웃, 가용 너비/높이 100% */
   .content {
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-columns: var(--ds-component-size-preset-sidebar) minmax(0, 1fr);
     gap: var(--ds-spacing-6);
     min-height: 0;
     width: 100%;
@@ -49,7 +49,7 @@
   .flatCard {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     background: var(--shell-bg-subtle);
-    border: 1px solid transparent;
+    border: var(--ds-border-width) solid transparent;
     border-radius: var(--ds-radius-md);
     transition: border-color 0.15s, background 0.15s;
   }
@@ -66,7 +66,7 @@
   }
 
   .paletteLabel {
-    font-size: 10px;
+    font-size: var(--ds-text-xs);
     font-weight: 500;
     color: var(--shell-text-tertiary);
     text-transform: uppercase;
@@ -81,10 +81,10 @@
   }
 
   .colorSwatch {
-    width: 28px;
-    height: 28px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     border-radius: var(--ds-radius-sm);
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     flex-shrink: 0;
     cursor: pointer;
     position: relative;
@@ -104,13 +104,13 @@
   .hexInput {
     flex: 1;
     min-width: 0;
-    height: 28px;
+    height: var(--ds-size-sm);
     padding: 0 var(--ds-spacing-2);
     font-size: var(--ds-text-sm);
     font-family: ui-monospace, monospace;
     color: var(--shell-text-primary);
     background: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-sm);
     outline: none;
   }
@@ -120,8 +120,8 @@
   }
 
   .paletteDeleteSlot {
-    width: 24px;
-    height: 24px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -129,8 +129,8 @@
   }
 
   .paletteClearBtn {
-    width: 24px;
-    height: 24px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     padding: 0;
     display: flex;
     align-items: center;
@@ -159,7 +159,7 @@
     gap: var(--ds-spacing-3);
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     background: var(--shell-bg-subtle);
-    border: 1px solid transparent;
+    border: var(--ds-border-width) solid transparent;
     border-radius: var(--ds-radius-md);
   }
 
@@ -168,12 +168,12 @@
     font-weight: 500;
     color: var(--shell-text-primary);
     white-space: nowrap;
-    min-width: 70px;
+    min-width: var(--ds-component-size-setting-label-min);
   }
 
   .settingSelect {
     flex: 1;
-    min-width: 140px;
+    min-width: var(--ds-component-size-preset-input-min);
 
     /* E18 P01: DS Select 컴포넌트가 shell 색상을 사용하도록 스코프 오버라이드 */
     --ds-color-bg-surface: var(--shell-bg-surface);
@@ -214,7 +214,7 @@
 
   .presetList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-dropdown-sm-min), 1fr));
     gap: var(--ds-spacing-3);
   }
 
@@ -224,7 +224,7 @@
     gap: var(--ds-spacing-2);
     padding: var(--ds-spacing-3);
     background: var(--shell-bg-subtle);
-    border: 1px solid transparent;
+    border: var(--ds-border-width) solid transparent;
     border-radius: var(--ds-radius-md);
     cursor: pointer;
     transition: all 0.15s;
@@ -238,12 +238,12 @@
   }
 
   .presetBadge {
-    font-size: 9px;
+    font-size: var(--ds-text-caption-size);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    padding: 2px 6px;
-    border-radius: 3px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
+    border-radius: var(--ds-radius-sm);
     align-self: flex-start;
   }
 
@@ -260,21 +260,21 @@
   }
 
   .styleBadge {
-    font-size: 9px;
+    font-size: var(--ds-text-caption-size);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    padding: 2px 5px;
-    border-radius: 3px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1);
+    border-radius: var(--ds-radius-sm);
     background: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     color: var(--shell-text-secondary);
   }
 
   .semanticDot {
     color: var(--shell-text-tertiary);
     font-weight: bold;
-    font-size: 14px;
+    font-size: var(--ds-text-sm);
     line-height: 1;
   }
 
@@ -309,19 +309,19 @@
 
   .presetColors {
     display: flex;
-    gap: 3px;
+    gap: var(--ds-spacing-1);
   }
 
   .presetDot {
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
-    border: 1px solid var(--shell-border-subtle);
+    width: var(--ds-icon-size-sm);
+    height: var(--ds-icon-size-sm);
+    border-radius: var(--ds-radius-sm);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .presetDeleteSlot {
-    width: 24px;
-    height: 24px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -330,8 +330,8 @@
   }
 
   .deleteBtn {
-    width: 24px;
-    height: 24px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     padding: 0;
     display: flex;
     align-items: center;
@@ -369,7 +369,7 @@
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
     background: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-sm);
     cursor: pointer;
   }
@@ -391,7 +391,7 @@
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
     background: none;
-    border: 1px solid transparent;
+    border: var(--ds-border-width) solid transparent;
     border-radius: var(--ds-radius-sm);
     cursor: pointer;
   }
@@ -411,17 +411,17 @@
   .presetItemApplied {
     border-color: var(--shell-action-primary);
     background: var(--shell-bg-base);
-    box-shadow: 0 0 0 2px var(--shell-action-primary);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--shell-action-primary);
   }
 
   .saveInlineInput {
-    min-width: 140px;
-    height: 28px;
+    min-width: var(--ds-component-size-preset-input-min);
+    height: var(--ds-size-sm);
     padding: 0 var(--ds-spacing-2);
     font-size: var(--ds-text-sm);
     color: var(--shell-text-primary);
     background: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-sm);
     outline: none;
   }
@@ -434,8 +434,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     padding: 0;
     background: none;
     border: none;

@@ -21,25 +21,5 @@
   --app-max-width: min(100%, 80rem); /* 1280px @ 16px base, rem으로 접근성 확보 */
 }
 
-/* Theme Transition (토큰 기반) */
-:root {
-  transition: var(--ds-transition-theme);
-}
 
-/* Focus Ring (토큰 기반) */
-:root {
-  --ds-focus-ring-width: 2px;
-  --ds-focus-ring-offset: 2px;
-  --ds-focus-ring-color: var(--ds-color-border-focus, #6366F1);
-}
-
-:focus-visible {
-  outline: var(--ds-focus-ring-width) solid var(--ds-focus-ring-color);
-  outline-offset: var(--ds-focus-ring-offset);
-}
-
-/* focus ring 제거가 필요한 경우 (커스텀 focus 스타일 컴포넌트) */
-.no-focus-ring:focus-visible {
-  outline: none;
-}
 

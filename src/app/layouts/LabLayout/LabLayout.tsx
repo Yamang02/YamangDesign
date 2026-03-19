@@ -58,7 +58,7 @@ export function LabLayout({
         );
         setActiveSection(sorted[0].target.id);
       },
-      { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+      { rootMargin: '-20% 0% -60% 0%', threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
     idsToObserve.forEach((id) => {

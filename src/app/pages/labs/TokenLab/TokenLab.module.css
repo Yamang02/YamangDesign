@@ -3,7 +3,7 @@
   /* E18 P01: 정보 영역은 --shell-* (테마 독립), 프리뷰/스와치만 --ds-* 유지 */
   .tokenTableWrap {
     overflow-x: auto;
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
     margin-bottom: var(--ds-spacing-4);
   }
@@ -23,7 +23,7 @@
   .tokenTable td {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     text-align: left;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
     vertical-align: middle;
   }
 
@@ -36,15 +36,15 @@
   /* 테이블 카드마다 동일한 열 너비 */
   .tokenTable th:nth-child(1),
   .tokenTable .tokenNameCell {
-    width: 100px;
-    min-width: 100px;
+    width: var(--ds-component-size-token-name-col);
+    min-width: var(--ds-component-size-token-name-col);
   }
 
   .tokenTable th:nth-child(3),
   .tokenTable .tokenSwatchCell,
   .tokenTable .tokenSwatchTh {
-    width: 48px;
-    min-width: 48px;
+    width: var(--ds-component-size-token-swatch-col);
+    min-width: var(--ds-component-size-token-swatch-col);
   }
 
   .tokenTable .tokenValueCell {
@@ -84,12 +84,12 @@
   }
 
   .tokenTable .tokenSwatchCell {
-    width: 48px;
+    width: var(--ds-component-size-token-swatch-col);
   }
 
   .tokenTable .tokenSwatchTh {
-    width: 48px;
-    min-width: 48px;
+    width: var(--ds-component-size-token-swatch-col);
+    min-width: var(--ds-component-size-token-swatch-col);
     text-align: center;
     white-space: nowrap;
   }
@@ -103,10 +103,10 @@
 
   .tokenTable .tokenSwatch {
     display: inline-block;
-    width: 24px;
-    height: 24px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     border-radius: var(--ds-radius-sm);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     vertical-align: middle;
   }
 
@@ -128,7 +128,7 @@
   .previewCard {
     padding: var(--ds-spacing-4);
     border-radius: var(--ds-radius-lg);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-subtle);
     background-color: var(--ds-color-bg-base);
     display: flex;
     flex-direction: column;
@@ -151,18 +151,18 @@
   /* E08: 테이블들을 2~3열 그리드로 배치 */
   .tokenCategoryGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-token-grid-min), 1fr));
     gap: var(--ds-spacing-6);
     width: 100%;
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: var(--ds-breakpoint-lg)) {
     .tokenCategoryGrid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: var(--ds-breakpoint-xl)) {
     .tokenCategoryGrid {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -215,18 +215,18 @@
 
   .controlInput {
     background: var(--shell-bg-muted);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     color: var(--shell-text-primary);
     border-radius: var(--ds-radius-sm);
     padding: var(--ds-spacing-1) var(--ds-spacing-2);
     font-size: var(--ds-text-sm);
-    min-width: 260px;
+    min-width: var(--ds-component-size-token-input-min);
   }
 
   .controlSelect {
     appearance: none;
     background: var(--shell-bg-muted);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     color: var(--shell-text-primary);
     border-radius: var(--ds-radius-sm);
     padding: var(--ds-spacing-1) var(--ds-spacing-2);
@@ -239,8 +239,8 @@
   }
 
   .controlSelect:focus-visible {
-    outline: 2px solid var(--shell-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
     border-color: var(--shell-border-focus);
   }
 

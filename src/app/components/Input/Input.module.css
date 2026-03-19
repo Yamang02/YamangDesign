@@ -20,7 +20,7 @@
 
   .required {
     color: var(--ds-color-action-accent-default);
-    margin-left: 2px;
+    margin-left: var(--ds-spacing-0-5);
   }
 
   /* Input base */
@@ -61,7 +61,7 @@
 
   /* Variant: outline */
   .input[data-variant='outline'] {
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
+    border: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-default);
     background-color: var(--ds-color-bg-base);
     box-shadow: none;
   }
@@ -72,7 +72,7 @@
 
   .input[data-variant='outline']:focus-visible {
     border-color: var(--ds-color-border-focus);
-    box-shadow: 0 0 0 2px var(--ds-color-border-focus);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--ds-color-border-focus);
   }
 
   .input[data-variant='outline'][data-error='true'] {
@@ -80,12 +80,12 @@
   }
 
   .input[data-variant='outline'][data-error='true']:focus-visible {
-    box-shadow: 0 0 0 2px var(--sys-color-error);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--sys-color-error);
   }
 
   /* Variant: filled */
   .input[data-variant='filled'] {
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) transparent;
+    border: var(--ds-border-width) var(--ds-border-style) transparent;
     /* ThemeProvider 미주입 시에도 filled 느낌이 나도록 fallback */
     background-color: var(--ds-color-bg-muted);
     box-shadow: none;
@@ -98,7 +98,7 @@
   .input[data-variant='filled']:focus-visible {
     background-color: var(--ds-color-bg-base);
     border-color: var(--ds-color-border-focus);
-    box-shadow: 0 0 0 2px var(--ds-color-border-focus);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--ds-color-border-focus);
   }
 
   .input[data-variant='filled'][data-error='true'] {
@@ -106,13 +106,13 @@
   }
 
   .input[data-variant='filled'][data-error='true']:focus-visible {
-    box-shadow: 0 0 0 2px var(--sys-color-error);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--sys-color-error);
   }
 
   /* Variant: flushed */
   .input[data-variant='flushed'] {
     border: none;
-    border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
+    border-bottom: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-default);
     border-radius: 0;
     background-color: var(--ds-color-bg-base);
     padding-left: 0;
@@ -126,7 +126,7 @@
 
   .input[data-variant='flushed']:focus-visible {
     border-bottom-color: var(--ds-color-border-focus);
-    box-shadow: 0 1px 0 0 var(--ds-color-border-focus);
+    box-shadow: 0 var(--ds-border-width) 0 0 var(--ds-color-border-focus);
   }
 
   .input[data-variant='flushed'][data-error='true'] {
@@ -134,7 +134,7 @@
   }
 
   .input[data-variant='flushed'][data-error='true']:focus-visible {
-    box-shadow: 0 1px 0 0 var(--sys-color-error);
+    box-shadow: 0 var(--ds-border-width) 0 0 var(--sys-color-error);
   }
 
   /* Disabled */

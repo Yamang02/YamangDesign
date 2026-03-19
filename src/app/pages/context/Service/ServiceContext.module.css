@@ -10,7 +10,7 @@
   /* 컴포넌트 인벤토리 (ShellContext 패턴 동일) */
   .inventoryGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-service-inventory-card-min), 1fr));
     gap: var(--ds-spacing-4);
     width: 100%;
   }
@@ -21,7 +21,7 @@
     align-items: stretch;
     text-align: left;
     padding: var(--ds-spacing-4);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-lg);
     background: var(--shell-bg-surface);
   }
@@ -41,7 +41,7 @@
   }
 
   .inventoryCardDivider {
-    height: 1px;
+    height: var(--ds-border-width);
     background: var(--shell-border-subtle);
     margin: 0 0 var(--ds-spacing-3) 0;
   }
@@ -60,7 +60,7 @@
     font-size: var(--ds-text-xs);
     color: var(--shell-action-primary);
     background: var(--shell-bg-primary-subtle);
-    padding: 2px 6px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
     border-radius: var(--ds-radius-sm);
     display: inline-block;
   }
@@ -76,7 +76,7 @@
   .tokenMapTable td {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     text-align: left;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .tokenMapTable th {
@@ -110,7 +110,7 @@
   .tabBtn {
     padding: var(--ds-spacing-2) var(--ds-spacing-4);
     font-size: var(--ds-text-sm);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
     background: var(--shell-bg-base);
     color: var(--shell-text-primary);
@@ -125,14 +125,14 @@
   .pagePreview {
     padding: var(--ds-spacing-6);
     background: var(--shell-bg-surface);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-lg);
   }
 
   .pagePreviewInner {
     max-width: 56rem;
     margin: 0 auto;
-    min-height: 480px;
+    min-height: var(--ds-component-size-page-preview-min-height);
   }
 
   /* Page Preview 내부는 data-context="preview" + themeVars 적용됨 */
@@ -168,7 +168,7 @@
     padding: var(--ds-spacing-8) var(--ds-spacing-6);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: var(--ds-breakpoint-md)) {
     .cardGrid {
       grid-template-columns: 1fr;
     }
@@ -185,7 +185,7 @@
     text-align: center;
     font-size: var(--ds-text-sm);
     color: var(--ds-color-text-secondary);
-    border-top: 1px solid var(--ds-color-border-subtle);
+    border-top: var(--ds-border-width) solid var(--ds-color-border-subtle);
   }
 
   /* E08 P02: Dashboard 목업 */
@@ -209,7 +209,7 @@
   }
   .tableWrap {
     overflow-x: auto;
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-subtle);
     border-radius: var(--ds-radius-md);
   }
   .previewTable {
@@ -221,7 +221,7 @@
   .previewTable td {
     padding: var(--ds-spacing-3) var(--ds-spacing-4);
     text-align: left;
-    border-bottom: 1px solid var(--ds-color-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--ds-color-border-subtle);
     color: var(--ds-color-text-primary);
   }
   .previewTable th {

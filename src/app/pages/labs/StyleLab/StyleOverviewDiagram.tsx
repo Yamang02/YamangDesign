@@ -47,10 +47,10 @@ function StyleComparisonDiagram() {
 function ElevationScaleDiagram() {
   const shadowSizes = [
     { key: 'none', label: 'None', value: 'none' },
-    { key: 'sm', label: 'Small', value: '0 1px 2px rgba(0,0,0,0.05)' },
-    { key: 'md', label: 'Medium', value: '0 4px 6px rgba(0,0,0,0.1)' },
-    { key: 'lg', label: 'Large', value: '0 10px 15px rgba(0,0,0,0.1)' },
-    { key: 'xl', label: 'X-Large', value: '0 20px 25px rgba(0,0,0,0.1)' },
+    { key: 'sm', label: 'Small', value: 'var(--ds-shadow-sm)' },
+    { key: 'md', label: 'Medium', value: 'var(--ds-shadow-md)' },
+    { key: 'lg', label: 'Large', value: 'var(--ds-shadow-lg)' },
+    { key: 'xl', label: 'X-Large', value: 'var(--ds-shadow-xl)' },
   ];
 
   return (

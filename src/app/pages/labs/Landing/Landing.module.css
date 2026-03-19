@@ -54,7 +54,7 @@
   /* Features */
   .featuresGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
     gap: var(--ds-spacing-6);
   }
 
@@ -83,7 +83,7 @@
   /* Pricing */
   .pricingGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
     gap: var(--ds-spacing-6);
     align-items: stretch;
   }
@@ -105,7 +105,7 @@
 
   .badgeWrapper {
     position: absolute;
-    top: -12px;
+    top: -0.75rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
@@ -145,7 +145,7 @@
   /* Testimonials */
   .testimonialsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
     gap: var(--ds-spacing-6);
   }
 

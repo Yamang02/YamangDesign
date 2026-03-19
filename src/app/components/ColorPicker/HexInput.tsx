@@ -74,7 +74,7 @@ export function HexInput({
           onBlur={handleBlur}
           className={styles.hexInput}
           data-error={isError || undefined}
-          placeholder="#000000"
+          placeholder="000000"
           maxLength={7}
           disabled={disabled}
         />

@@ -102,8 +102,8 @@
     border-radius: var(--ds-radius-lg);
     box-shadow: var(--shell-shadow-lg);
     z-index: var(--ds-z-dropdown);
-    min-width: 280px;
-    border: 1px solid var(--shell-border-default);
+    min-width: var(--ds-component-size-settings-panel-min);
+    border: var(--ds-border-width) solid var(--shell-border-default);
   }
 
   .colorEditorHeader {
@@ -135,6 +135,6 @@
   }
 
   .colorEditorTriggerLabel {
-    margin-left: 4px;
+    margin-left: var(--ds-spacing-1);
   }
 }

@@ -11,6 +11,7 @@ import type { BgStrategy, ScaleReference } from '@domain/palettes/types';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import { Icon } from '../../../components';
 import styles from './ScaleStepGrid.module.css';
+import { RUNTIME_COLOR_FALLBACK } from '@domain/constants/runtime-fallbacks';
 
 const SCALES: ScaleReference['scale'][] = [
   'primary',
@@ -61,7 +62,7 @@ export function ScaleStepGrid({
               <span className={styles.scaleLabel}>{SCALE_LABEL[scale]}</span>
               <div className={styles.stepGrid}>
                 {STEPS.map((step) => {
-                  const color = scaleData[step] ?? '#CCC';
+                  const color = scaleData[step] ?? RUNTIME_COLOR_FALLBACK;
                   const ref: ScaleReference = { scale, step };
                   const rec = selectedToken
                     ? getScaleRecommendation(selectedToken, scale, step, bgStrategy)

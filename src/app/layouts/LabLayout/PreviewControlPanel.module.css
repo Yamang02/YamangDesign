@@ -26,8 +26,8 @@
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
     background: none;
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
-    border-radius: 9999px;
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
+    border-radius: var(--ds-radius-full);
     cursor: pointer;
     transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
     white-space: nowrap;
@@ -41,8 +41,8 @@
   }
 
   .controlOption:focus-visible {
-    outline: 2px solid var(--shell-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   .controlOptionActive {

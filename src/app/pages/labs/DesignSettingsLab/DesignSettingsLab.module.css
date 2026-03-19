@@ -4,12 +4,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: var(--ds-size-md);
+    height: var(--ds-size-md);
     padding: 0;
     color: var(--shell-text-secondary);
     background: none;
-    border: 1px solid transparent;
+    border: var(--ds-border-width) solid transparent;
     border-radius: var(--ds-radius-md);
     cursor: pointer;
   }
@@ -23,7 +23,7 @@
   /* 탭 패널 공통: 가용 너비/높이 꽉 채움 */
   .content {
     flex: 1;
-    min-height: 360px;
+    min-height: var(--ds-component-size-design-settings-content-min-height);
     min-width: 0;
     width: 100%;
     display: flex;
@@ -60,9 +60,9 @@
   /* P07: 컴포넌트 매핑 탭 2패널 — 가용 너비 100% */
   .componentMappingRoot {
     display: grid;
-    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-columns: var(--shell-size-sidebar-width) minmax(0, 1fr);
     gap: var(--ds-spacing-4);
-    min-height: 400px;
+    min-height: var(--ds-component-size-component-mapping-min-height);
     width: 100%;
     min-width: 0;
     align-items: start;
@@ -76,7 +76,7 @@
     padding: var(--ds-spacing-2);
     background: var(--shell-bg-muted);
     border-radius: var(--ds-radius-md);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .componentMappingListSection {
@@ -127,7 +127,7 @@
     padding: var(--ds-spacing-3);
     background: var(--shell-bg-base);
     border-radius: var(--ds-radius-md);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     overflow: auto;
   }
 
@@ -141,7 +141,7 @@
   .componentMappingTable td {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     text-align: left;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
     vertical-align: top;
   }
 
@@ -157,17 +157,17 @@
   .componentMappingTable code {
     font-size: 0.9em;
     background: var(--shell-bg-muted);
-    padding: 2px 6px;
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
     border-radius: var(--ds-radius-sm);
   }
 
   .componentMappingTable input {
     width: 100%;
-    min-width: 120px;
+    min-width: var(--ds-component-size-card-min-width);
     padding: var(--ds-spacing-1) var(--ds-spacing-2);
     font-size: var(--ds-text-sm);
     font-family: inherit;
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-sm);
     background: var(--shell-bg-base);
     color: var(--shell-text-primary);
@@ -176,15 +176,15 @@
   .componentMappingTable input:focus {
     outline: none;
     border-color: var(--shell-border-focus);
-    box-shadow: 0 0 0 2px var(--shell-border-focus);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--shell-border-focus);
   }
 
   .tokenSwatch {
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
-    border: 1px solid var(--shell-border-subtle);
+    width: var(--ds-icon-size-sm);
+    height: var(--ds-icon-size-sm);
+    border-radius: var(--ds-radius-sm);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     margin-right: var(--ds-spacing-1);
     vertical-align: middle;
   }
@@ -206,7 +206,7 @@
   .clearComponentRow {
     margin-top: var(--ds-spacing-3);
     padding-top: var(--ds-spacing-2);
-    border-top: 1px solid var(--shell-border-subtle);
+    border-top: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .clearComponentBtn {
@@ -217,7 +217,7 @@
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
     background: none;
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-md);
     cursor: pointer;
   }

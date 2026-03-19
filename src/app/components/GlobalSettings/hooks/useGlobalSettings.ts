@@ -15,6 +15,7 @@ import {
 import { resolveSelection } from '../../../hooks/usePaletteResolution';
 import type { CustomThemePreset } from '@domain/constants/semantic-presets';
 import type { SemanticMapping } from '@domain/palettes/types';
+import { palettePresets } from '@domain/themes/presets';
 import {
   GLOBAL_SETTINGS_STORAGE_KEY,
   GLOBAL_PRESETS_STORAGE_KEY,
@@ -39,12 +40,7 @@ import {
   saveComponentMappingOverrides,
 } from '@app/infra/storage';
 
-const DEFAULT_PALETTE: ColorInput = {
-  primary: '#6366F1',
-  secondary: '#8B5CF6',
-  accent: '#F59E0B',
-  neutral: '#E5E7EB',
-};
+const DEFAULT_PALETTE: ColorInput = { ...palettePresets.default.colors };
 
 const DEFAULT_SELECTION: PaletteSelection = createCustomSelection(DEFAULT_PALETTE);
 

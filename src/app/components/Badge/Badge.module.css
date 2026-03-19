@@ -39,7 +39,7 @@
   .badge[data-variant='outline'] {
     background-color: transparent;
     color: var(--ds-color-action-primary-default);
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-action-primary-default);
+    border: var(--ds-border-width) var(--ds-border-style) var(--ds-color-action-primary-default);
   }
 
   .badge[data-variant='subtle'] {

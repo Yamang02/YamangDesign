@@ -25,6 +25,7 @@
 - [P02: Surface 계층 타입 및 자동 파생](./P02-surface-hierarchy-derivation.md) — SemanticMapping bg 확장, colorMix 유틸, resolvePalette 통합
 - [P03: bgStrategy별 surface 기본 매핑](./P03-strategy-surface-defaults.md) — light/colored/dark 각각의 surface tint 비율 정의
 - [P04: Lab 프리뷰 surface 계층 시각화](./P04-lab-surface-preview.md) — PaletteLab/StyleLab에서 surface 계층을 시각적으로 확인할 수 있는 프리뷰
+- [P05: 런타임 literal 0건 및 팔레트/매핑 정비](./P05-runtime-literal-zero-and-palette-mapping-rework.md) — 하드코딩 즉시 제거, 토큰 스키마 보강, 스케일/시맨틱 매핑 단일화
 
 ## 상태
 
@@ -33,3 +34,4 @@
 - [x] P02 완료
 - [x] P03 완료
 - [ ] P04 완료
+- [ ] P05 완료

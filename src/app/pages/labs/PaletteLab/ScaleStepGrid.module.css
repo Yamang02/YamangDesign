@@ -28,40 +28,40 @@
   .column {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--ds-spacing-0-5);
     flex-shrink: 0;
   }
 
   .scaleLabel {
-    font-size: 10px;
+    font-size: var(--ds-text-xs);
     font-weight: var(--ds-font-weight-medium);
     color: var(--shell-text-secondary);
     text-transform: capitalize;
     text-align: center;
-    padding-bottom: 2px;
+    padding-bottom: var(--ds-spacing-0-5);
   }
 
   .stepGrid {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--ds-spacing-0-5);
   }
 
   .cell {
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
-    min-height: 20px;
+    width: var(--ds-component-size-swatch-md);
+    height: var(--ds-component-size-swatch-md);
+    min-width: var(--ds-component-size-swatch-md);
+    min-height: var(--ds-component-size-swatch-md);
     padding: 0;
-    border: 1px solid var(--shell-border-subtle);
-    border-radius: 4px;
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
+    border-radius: var(--ds-radius-sm);
     cursor: pointer;
     position: relative;
     transition: box-shadow 0.15s ease, transform 0.1s ease;
   }
 
   .cell:not(:disabled):hover {
-    box-shadow: 0 0 0 2px var(--shell-action-primary);
+    box-shadow: 0 0 0 var(--ds-focus-ring-width) var(--shell-action-primary);
     transform: scale(1.05);
   }
 
@@ -74,13 +74,13 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 10px;
-    height: 10px;
+    width: var(--ds-text-xs);
+    height: var(--ds-text-xs);
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--shell-overlay);
-    border-radius: 2px 0 4px 0;
+    border-radius: var(--ds-spacing-0-5) 0 var(--ds-spacing-1) 0;
     color: var(--shell-text-on-action);
   }
 

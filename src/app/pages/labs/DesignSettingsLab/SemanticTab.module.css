@@ -50,7 +50,7 @@
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
     background: none;
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-md);
     cursor: pointer;
   }
@@ -68,7 +68,7 @@
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
     background: none;
-    border: 1px solid var(--shell-border-default);
+    border: var(--ds-border-width) solid var(--shell-border-default);
     border-radius: var(--ds-radius-md);
     cursor: pointer;
   }
@@ -89,12 +89,12 @@
   }
 
   .leftSlot {
-    flex: 0 0 280px;
-    min-width: 280px;
+    flex: 0 0 var(--ds-component-size-settings-panel-min);
+    min-width: var(--ds-component-size-settings-panel-min);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: 1px solid var(--shell-border-subtle);
+    border-right: var(--ds-border-width) solid var(--shell-border-subtle);
     overflow: hidden;
   }
 

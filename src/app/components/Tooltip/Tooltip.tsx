@@ -12,7 +12,7 @@ export function Tooltip({
   content,
   position = 'top',
   delay = siteStyle.guidance.tooltipDelay,
-  maxWidth = '200px',
+  maxWidth = 'var(--ds-component-size-tooltip-max-width)',
   portal = false,
   open,
   children,

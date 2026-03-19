@@ -13,7 +13,7 @@
     color: var(--shell-text-primary);
     margin: 0;
     padding-bottom: var(--ds-spacing-2);
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .sectionHint {
@@ -34,7 +34,7 @@
     gap: var(--ds-spacing-3);
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     background-color: var(--shell-bg-base);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
     transition: border-color 150ms ease;
   }
@@ -45,10 +45,10 @@
 
   /* Color Swatch - ColorUsageDiagram과 동일 */
   .colorSwatch {
-    width: 40px;
-    height: 40px;
+    width: var(--ds-component-size-nav-item);
+    height: var(--ds-component-size-nav-item);
     border-radius: var(--ds-radius-md);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     flex-shrink: 0;
   }
 
@@ -57,13 +57,13 @@
     font-weight: var(--ds-font-weight-bold);
     color: var(--shell-text-primary);
     font-family: var(--ds-font-mono);
-    min-width: 32px;
+    min-width: var(--ds-size-md);
   }
 
   .stepInfo {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--ds-spacing-0-5);
     flex: 1;
     min-width: 0;
   }
@@ -88,8 +88,8 @@
   }
 
   .usageTag {
-    font-size: 10px;
-    padding: 2px 6px;
+    font-size: var(--ds-text-xs);
+    padding: var(--ds-spacing-0-5) var(--ds-spacing-1-5);
     background-color: var(--shell-bg-muted);
     border-radius: var(--ds-radius-sm);
     color: var(--shell-text-secondary);

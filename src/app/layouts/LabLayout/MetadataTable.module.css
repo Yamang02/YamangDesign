@@ -24,7 +24,7 @@
     align-items: baseline;
     gap: var(--ds-spacing-3);
     padding: var(--ds-spacing-1) 0;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .row:last-child {
@@ -33,7 +33,7 @@
 
   .key {
     flex: 0 0 auto;
-    min-width: 80px;
+    min-width: var(--ds-component-size-token-value-col);
     font-size: var(--ds-text-sm);
     color: var(--shell-text-secondary);
   }

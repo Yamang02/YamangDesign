@@ -7,7 +7,7 @@
   /* E02 P04/P05: 전시장 그리드 — 카드 동일 높이 */
   .showcaseGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-showcase-grid-min), 1fr));
     grid-auto-rows: 1fr;
     gap: var(--ds-spacing-6);
   }
@@ -20,7 +20,7 @@
   .showcaseExamples {
     margin-top: var(--ds-spacing-10);
     padding-top: var(--ds-spacing-8);
-    border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border-top: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-subtle);
   }
 
   .showcaseExamplesTitle {
@@ -49,8 +49,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: var(--ds-size-sm);
+    height: var(--ds-size-sm);
     padding: 0;
     border: none;
     border-radius: var(--ds-radius-md);
@@ -69,7 +69,7 @@
   .showcaseModalSection {
     margin-bottom: var(--ds-spacing-6);
     padding: var(--ds-spacing-4) 0;
-    border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
   }
 
   .showcaseModalSection:last-child {
@@ -105,7 +105,7 @@
 
   .showcaseVariantGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--ds-component-size-preset-input-min), 1fr));
     gap: var(--ds-spacing-4);
   }
 
@@ -168,7 +168,7 @@
     flex-direction: column;
     gap: var(--ds-spacing-1);
     padding: var(--ds-spacing-2) 0;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .tokenRow:last-child {
@@ -203,10 +203,10 @@
 
   .tokenSwatch {
     display: inline-block;
-    width: 14px;
-    height: 14px;
+    width: var(--ds-icon-size-sm);
+    height: var(--ds-icon-size-sm);
     border-radius: var(--ds-radius-sm);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     flex-shrink: 0;
   }
 

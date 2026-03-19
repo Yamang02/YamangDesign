@@ -4,10 +4,10 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-height: 180px;
+    min-height: var(--ds-component-size-card-min-height);
     padding: var(--ds-spacing-5);
     background-color: transparent;
-    border: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-default);
+    border: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-default);
     border-radius: var(--ds-radius-lg);
     box-shadow: none;
     transition: border-color 150ms ease, background-color 150ms ease;
@@ -17,12 +17,12 @@
 
   .card:hover {
     border-color: var(--ds-color-border-focus);
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: color-mix(in srgb, var(--ds-color-text-primary) 3%, transparent);
   }
 
   .card:focus-visible {
-    outline: 2px solid var(--ds-color-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--ds-color-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
   }
 
   .header {
@@ -32,7 +32,7 @@
     gap: var(--ds-spacing-2);
     margin-bottom: var(--ds-spacing-4);
     padding-bottom: var(--ds-spacing-3);
-    border-bottom: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border-bottom: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-subtle);
   }
 
   .title {
@@ -55,7 +55,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--ds-spacing-3);
-    min-height: 80px;
+    min-height: var(--ds-component-size-preview-min-height);
     pointer-events: none;
   }
 
@@ -63,7 +63,7 @@
   .usedIn {
     margin-top: var(--ds-spacing-3);
     padding-top: var(--ds-spacing-3);
-    border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border-top: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-subtle);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -86,7 +86,7 @@
   .composedOf {
     margin-top: var(--ds-spacing-3);
     padding-top: var(--ds-spacing-3);
-    border-top: var(--ds-border-width, 1px) var(--ds-border-style, solid) var(--ds-color-border-subtle);
+    border-top: var(--ds-border-width) var(--ds-border-style) var(--ds-color-border-subtle);
     display: flex;
     flex-wrap: wrap;
     align-items: center;

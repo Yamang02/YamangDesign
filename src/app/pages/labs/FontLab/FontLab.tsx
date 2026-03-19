@@ -138,7 +138,7 @@ export function FontLab() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(var(--ds-component-size-select-lg-min), 1fr))',
               gap: 'var(--ds-spacing-4)',
               width: '100%',
             }}

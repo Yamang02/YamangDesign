@@ -84,7 +84,7 @@
   .propertyMatrix td {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     text-align: left;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
   }
 
   .propertyMatrixDim {
@@ -106,7 +106,7 @@
     color: inherit;
     cursor: pointer;
     text-decoration: underline;
-    text-underline-offset: 2px;
+    text-underline-offset: var(--ds-spacing-0-5);
   }
 
   .propertyMatrixPresetBtn:hover {
@@ -123,7 +123,7 @@
 
   .propertyMatrixCell {
     font-family: ui-monospace, monospace;
-    font-size: clamp(9px, 1.4cqi, 11px);
+    font-size: var(--ds-text-code-size);
     color: var(--shell-text-secondary);
     white-space: nowrap;
   }
@@ -144,7 +144,12 @@
 
   .comparisonWrapperGlass {
     /* glassmorphism 블러 가시성 확인용 프리뷰 배경 */
-    background: linear-gradient(135deg, #E0E7FF 0%, #FCE7F3 50%, #DDD6FE 100%);
+    background: linear-gradient(
+      135deg,
+      var(--ds-color-demo-glass-start) 0%,
+      var(--ds-color-demo-glass-mid) 50%,
+      var(--ds-color-demo-glass-end) 100%
+    );
   }
 
   /* Comparison controls (P06) */
@@ -172,7 +177,7 @@
   .paletteSelect {
     appearance: none;
     background: var(--shell-bg-muted);
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     color: var(--shell-text-primary);
     border-radius: var(--ds-radius-sm);
     padding: var(--ds-spacing-1) var(--ds-spacing-2);
@@ -185,8 +190,8 @@
   }
 
   .paletteSelect:focus-visible {
-    outline: 2px solid var(--shell-border-focus);
-    outline-offset: 2px;
+    outline: var(--ds-focus-ring-width) solid var(--shell-border-focus);
+    outline-offset: var(--ds-focus-ring-offset);
     border-color: var(--shell-border-focus);
   }
 
@@ -214,7 +219,7 @@
     margin: var(--ds-spacing-3) 0 var(--ds-spacing-4);
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     border-radius: var(--ds-radius-sm);
-    border: 1px solid var(--shell-border-strong);
+    border: var(--ds-border-width) solid var(--shell-border-strong);
     background: var(--shell-bg-muted);
     color: var(--shell-text-secondary);
     font-size: var(--ds-text-xs);
@@ -224,7 +229,7 @@
   .tokenDiffEmpty {
     margin-top: var(--ds-spacing-3);
     padding: var(--ds-spacing-3);
-    border: 1px dashed var(--shell-border-subtle);
+    border: var(--ds-border-width) dashed var(--shell-border-subtle);
     border-radius: var(--ds-radius-sm);
     color: var(--shell-text-secondary);
     font-size: var(--ds-text-sm);
@@ -233,7 +238,7 @@
   /* Token Diff (style vars + surface vars with differences only) */
   .tokenDiffTableWrap {
     overflow-x: auto;
-    border: 1px solid var(--shell-border-subtle);
+    border: var(--ds-border-width) solid var(--shell-border-subtle);
     border-radius: var(--ds-radius-md);
     margin-top: var(--ds-spacing-4);
   }
@@ -249,7 +254,7 @@
   .tokenDiffTable td {
     padding: var(--ds-spacing-2) var(--ds-spacing-3);
     text-align: left;
-    border-bottom: 1px solid var(--shell-border-subtle);
+    border-bottom: var(--ds-border-width) solid var(--shell-border-subtle);
     vertical-align: middle;
   }
 
@@ -261,8 +266,8 @@
 
   .tokenDiffNameTh,
   .tokenDiffNameTd {
-    width: 140px;
-    min-width: 140px;
+    width: var(--ds-component-size-preset-input-min);
+    min-width: var(--ds-component-size-preset-input-min);
   }
 
   .tokenDiffNameCode {
@@ -279,7 +284,7 @@
   }
 
   .tokenDiffValueTh {
-    min-width: 160px;
+    min-width: var(--ds-component-size-dropdown-sm-min);
   }
 
   .tokenDiffValueCode {

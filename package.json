@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "node scripts/build-manifest.js && tsc -b && vite build",
     "lint": "eslint .",
+    "check:literals": "node scripts/check-runtime-literals.js",
+    "check:literals:with-size": "node scripts/check-runtime-literals.js --with-size",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

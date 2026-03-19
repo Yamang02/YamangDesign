@@ -32,7 +32,13 @@ function renderTocItems(
         <button
           type="button"
           className={`${styles.tocItem} ${isActive ? styles.tocItemActive : ''} ${depth > 0 ? styles.tocItemChild : ''}`}
-          style={depth > 0 ? { paddingLeft: `calc(var(--ds-spacing-3) + ${depth * 12}px)` } : undefined}
+          style={
+            depth > 0
+              ? {
+                  paddingLeft: `calc(var(--ds-spacing-3) + (${depth} * var(--shell-size-toc-indent-step)))`,
+                }
+              : undefined
+          }
           onClick={() => onItemClick(item.id)}
           aria-current={isActive ? 'location' : undefined}
         >

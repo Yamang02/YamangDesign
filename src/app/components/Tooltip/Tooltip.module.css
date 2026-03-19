@@ -37,28 +37,28 @@
   .tooltip.top {
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-4px);
-    margin-bottom: 4px;
+    transform: translateX(-50%) translateY(calc(var(--ds-blur-sm) * -1));
+    margin-bottom: var(--ds-blur-sm);
   }
 
   .tooltip.bottom {
     top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    margin-top: 4px;
+    transform: translateX(-50%) translateY(var(--ds-blur-sm));
+    margin-top: var(--ds-blur-sm);
   }
 
   .tooltip.left {
     right: 100%;
     top: 50%;
-    transform: translateY(-50%) translateX(-4px);
-    margin-right: 4px;
+    transform: translateY(-50%) translateX(calc(var(--ds-blur-sm) * -1));
+    margin-right: var(--ds-blur-sm);
   }
 
   .tooltip.right {
     left: 100%;
     top: 50%;
-    transform: translateY(-50%) translateX(4px);
-    margin-left: 4px;
+    transform: translateY(-50%) translateX(var(--ds-blur-sm));
+    margin-left: var(--ds-blur-sm);
   }
 }

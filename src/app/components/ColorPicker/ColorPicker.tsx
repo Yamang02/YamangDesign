@@ -5,6 +5,7 @@ import { PresetManager } from './PresetManager';
 import { Icon } from '../Icon';
 import type { ColorInput } from '@shared/@types/tokens';
 import { themePresets } from '@domain/constants/palette-definitions';
+import { RUNTIME_COLOR_FALLBACK } from '@domain/constants/runtime-fallbacks';
 
 const colorFields: {
   key: keyof ColorInput;
@@ -57,7 +58,7 @@ export function ColorPicker({
             <div key={field.key} className={styles.colorFieldItem}>
               <HexInput
                 label={`${field.label}${field.required ? ' *' : ''}`}
-                value={palette[field.key] || '#CCCCCC'}
+                value={palette[field.key] || RUNTIME_COLOR_FALLBACK}
                 onChange={(value) => handleColorChange(field.key, value)}
               />
               {!field.required && palette[field.key] && (
@@ -93,7 +94,7 @@ export function ColorPicker({
                 <span
                   className={styles.themePresetDot}
                   style={{
-                    backgroundColor: def.colors.primary || '#CCC',
+                    backgroundColor: def.colors.primary || RUNTIME_COLOR_FALLBACK,
                   }}
                 />
                 <span className={styles.themePresetLabel}>

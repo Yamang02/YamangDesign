@@ -19,6 +19,7 @@ import { getStylePresetNames } from '@domain/themes/presets';
 import type { StoredPreset } from '../../../components/GlobalSettings/types';
 import { useGlobalSettings } from '../../../components/GlobalSettings';
 import styles from './PresetTab.module.css';
+import { RUNTIME_COLOR_FALLBACK } from '@domain/constants/runtime-fallbacks';
 
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -54,11 +55,11 @@ const SYSTEM_OPTIONS: { value: SystemPresetName; label: string }[] = [
 
 function getPresetColorsFromPalette(p: ColorInput) {
   return [
-    p.primary || '#CCC',
-    p.secondary || '#CCC',
-    p.accent || '#CCC',
-    p.sub || '#CCC',
-    p.neutral || '#CCC',
+    p.primary || RUNTIME_COLOR_FALLBACK,
+    p.secondary || RUNTIME_COLOR_FALLBACK,
+    p.accent || RUNTIME_COLOR_FALLBACK,
+    p.sub || RUNTIME_COLOR_FALLBACK,
+    p.neutral || RUNTIME_COLOR_FALLBACK,
   ];
 }
 
@@ -297,11 +298,11 @@ export function PresetTab({ settings }: PresetTabProps) {
               <div className={styles.paletteInputRow}>
                 <div
                   className={styles.colorSwatch}
-                  style={{ backgroundColor: palette[field.key] || '#CCCCCC' }}
+                  style={{ backgroundColor: palette[field.key] || RUNTIME_COLOR_FALLBACK }}
                 >
                   <input
                     type="color"
-                    value={palette[field.key] || '#CCCCCC'}
+                    value={palette[field.key] || RUNTIME_COLOR_FALLBACK}
                     onChange={(e) =>
                       handleColorChange(field.key, e.target.value)
                     }

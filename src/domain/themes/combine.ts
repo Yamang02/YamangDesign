@@ -25,10 +25,7 @@ export function combineTheme(
       bg: palette.semantic.bg,
       text: {
         ...palette.semantic.text,
-        inverse:
-          palette.bgStrategy === 'dark'
-            ? palette.semantic.text.primary
-            : '#FFFFFF',
+        inverse: palette.semantic.text.onAction,
       },
       border: palette.semantic.border,
       action: palette.semantic.action,
