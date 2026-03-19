@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@domain/themes';
 import { componentTokenMap, getThemeVariables } from '@domain/constants';
-import { Button, Input, Card, Badge } from '@app/components';
+import { Button, Input, Card, Badge, Avatar, Select } from '@app/components';
 import { TabBar } from '@app/layouts/LabLayout';
 import { sampleText } from '@app/content/lab-content';
+import { selectShowcase } from '@app/content/showcase-content';
 import { useCssVar } from '@app/hooks/useCssVar';
 import { useInspector, type InspectorComponentKey } from '@app/context/InspectorContext';
 import styles from './ComponentInspectorPanel.module.css';
 
-const COMPONENT_ORDER: InspectorComponentKey[] = ['Button', 'Input', 'Card', 'Badge'];
+const COMPONENT_ORDER: InspectorComponentKey[] = ['Button', 'Input', 'Card', 'Badge', 'Avatar', 'Select'];
 
 function isColorValue(value: string): boolean {
   if (!value) return false;
@@ -82,8 +83,25 @@ function ComponentPreview({
       )}
       {activeComponent === 'Badge' && (
         <div className={styles.previewGroup}>
-          <Badge>Default</Badge>
+          <Badge variant="subtle">Subtle</Badge>
           <Badge variant="primary">Primary</Badge>
+          <Badge variant="secondary">Secondary</Badge>
+          <Badge variant="accent">Accent</Badge>
+        </div>
+      )}
+      {activeComponent === 'Avatar' && (
+        <div className={styles.previewGroup}>
+          <Avatar variant="primary" initials="AB" />
+          <Avatar variant="secondary" initials="CD" />
+          <Avatar variant="accent" initials="EF" />
+        </div>
+      )}
+      {activeComponent === 'Select' && (
+        <div className={styles.previewGroup}>
+          <Select
+            options={selectShowcase.fruitOptions}
+            placeholder="선택하세요"
+          />
         </div>
       )}
     </div>

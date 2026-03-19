@@ -169,6 +169,41 @@ export function getLightness(hex: string): number {
 }
 
 /**
+ * WCAG 2.1 상대 휘도 (relative luminance, 0~1)
+ * https://www.w3.org/TR/WCAG21/#dfn-relative-luminance
+ */
+export function getRelativeLuminance(hex: string): number {
+  const { r, g, b } = hexToRgb(hex);
+  const linearize = (c: number): number => {
+    const s = c / 255;
+    return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
+}
+
+/**
+ * WCAG 2.1 대비 비율 (contrast ratio, 1~21)
+ */
+export function getContrastRatio(fg: string, bg: string): number {
+  const l1 = getRelativeLuminance(fg);
+  const l2 = getRelativeLuminance(bg);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * action 배경색에 대해 WCAG AA(4.5:1)를 보장하는 텍스트 색 반환.
+ * hint가 주어지고 4.5:1 이상이면 hint 사용, 실패 시 흰/검 중 대비가 높은 쪽 반환.
+ */
+export function computeOnActionColor(bgColor: string, hint?: string): string {
+  if (hint && getContrastRatio(hint, bgColor) >= 4.5) return hint;
+  const whiteRatio = getContrastRatio('#FFFFFF', bgColor);
+  const blackRatio = getContrastRatio('#000000', bgColor);
+  return whiteRatio >= blackRatio ? '#FFFFFF' : '#000000';
+}
+
+/**
  * 두 hex 색상을 ratio(0~1) 비율로 혼합. ratio=0이면 base, ratio=1이면 mix
  */
 export function colorMix(base: string, mix: string, ratio: number): string {

@@ -23,10 +23,7 @@ export function combineTheme(
 
     colors: {
       bg: palette.semantic.bg,
-      text: {
-        ...palette.semantic.text,
-        inverse: palette.semantic.text.onAction,
-      },
+      text: palette.semantic.text,
       border: palette.semantic.border,
       action: palette.semantic.action,
       feedback: palette.semantic.feedback,

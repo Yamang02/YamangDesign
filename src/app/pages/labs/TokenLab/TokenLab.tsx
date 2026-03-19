@@ -268,7 +268,7 @@ function TokenTable({
 }
 
 // --- Shell Tokens ---
-function ShellTokensSection({
+export function ShellTokensSection({
   onSelectToken,
   search,
   sortMode,
@@ -300,11 +300,13 @@ function ShellTokensSection({
                 {collapsed[groupKey('shell', cat.title)] ? '+' : '-'}
               </span>
             </button>
-            <TokenTable
-              tokens={filterAndSortTokens(cat.tokens, search, sortMode)}
-              onSelectToken={onSelectToken}
-              formatDisplayValue={formatTokenDisplayValue}
-            />
+            {!collapsed[groupKey('shell', cat.title)] && (
+              <TokenTable
+                tokens={filterAndSortTokens(cat.tokens, search, sortMode)}
+                onSelectToken={onSelectToken}
+                formatDisplayValue={formatTokenDisplayValue}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -335,7 +337,7 @@ function ShellTokensSection({
 }
 
 // --- DS Global ---
-function GlobalSection({
+export function GlobalSection({
   onSelectToken,
   search,
   sortMode,
@@ -367,12 +369,14 @@ function GlobalSection({
                 {collapsed[groupKey('global', g.title)] ? '+' : '-'}
               </span>
             </button>
-            <TokenTable
-              tokens={filterAndSortTokens(g.tokens, search, sortMode)}
-              showSwatchColumn={g.showSwatch}
-              onSelectToken={onSelectToken}
-              formatDisplayValue={formatTokenDisplayValue}
-            />
+            {!collapsed[groupKey('global', g.title)] && (
+              <TokenTable
+                tokens={filterAndSortTokens(g.tokens, search, sortMode)}
+                showSwatchColumn={g.showSwatch}
+                onSelectToken={onSelectToken}
+                formatDisplayValue={formatTokenDisplayValue}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -404,7 +408,7 @@ function GlobalSection({
 }
 
 // --- DS Alias (역할별 세분화) ---
-function AliasSection({
+export function AliasSection({
   onSelectToken,
   search,
   sortMode,
@@ -448,7 +452,7 @@ function AliasSection({
 }
 
 // --- Sys Tokens ---
-function SysTokensSection({
+export function SysTokensSection({
   onSelectToken,
   search,
   sortMode,
@@ -509,32 +513,32 @@ export function TokenLab() {
         <LabSection title="Overview" id="overview" card={false}>
           <LabOverview>
             <TokenOverviewDiagram />
-            <div className={styles.tokenLabControls}>
-              <div className={styles.controlRow}>
-                <label className={styles.controlGroup}>
-                  <span className={styles.controlLabel}>검색</span>
-                  <input
-                    className={styles.controlInput}
-                    value={search}
-                    placeholder="토큰 이름/키워드 검색"
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </label>
-                <label className={styles.controlGroup}>
-                  <span className={styles.controlLabel}>정렬</span>
-                  <select
-                    className={styles.controlSelect}
-                    value={sortMode}
-                    onChange={(e) => setSortMode(e.target.value as SortMode)}
-                  >
-                    <option value="semantic">역할/시멘틱 그룹 순</option>
-                    <option value="name">이름순(보조)</option>
-                  </select>
-                </label>
-              </div>
-            </div>
           </LabOverview>
         </LabSection>
+        <div className={styles.tokenLabControls}>
+          <div className={styles.controlRow}>
+            <label className={styles.controlGroup}>
+              <span className={styles.controlLabel}>검색</span>
+              <input
+                className={styles.controlInput}
+                value={search}
+                placeholder="토큰 이름/키워드 검색"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </label>
+            <label className={styles.controlGroup}>
+              <span className={styles.controlLabel}>정렬</span>
+              <select
+                className={styles.controlSelect}
+                value={sortMode}
+                onChange={(e) => setSortMode(e.target.value as SortMode)}
+              >
+                <option value="semantic">역할/시멘틱 그룹 순</option>
+                <option value="name">이름순(보조)</option>
+              </select>
+            </label>
+          </div>
+        </div>
         <ShellTokensSection
           onSelectToken={setSelectedToken}
           search={normalizedSearch}

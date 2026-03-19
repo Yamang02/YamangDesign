@@ -191,7 +191,7 @@
 
   .option[data-selected='true'] {
     background-color: var(--ds-color-action-primary-default);
-    color: var(--ds-color-text-on-action);
+    color: var(--ds-color-text-on-action-primary);
     font-weight: var(--ds-text-body-md-weight);
   }
 

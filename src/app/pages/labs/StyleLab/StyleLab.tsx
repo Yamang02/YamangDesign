@@ -23,8 +23,8 @@ const shadowKeys = ['sm', 'md', 'lg'] as const;
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'property-matrix', label: 'Property Matrix' },
-  { id: 'shadow-comparison', label: sectionTitles.shadowComparison },
   { id: 'component-comparison', label: sectionTitles.componentComparison },
+  { id: 'shadow-comparison', label: sectionTitles.shadowComparison },
   { id: 'token-diff', label: 'Token Diff' },
 ];
 
@@ -317,44 +317,6 @@ export function StyleLab() {
           )}
         </LabSection>
 
-        <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
-          <ComparisonGrid
-            paletteVars={paletteVars}
-            className={`${styles.comparisonWrapper} ${
-              previewBackdrop === 'glass'
-                ? styles.comparisonWrapperGlass
-                : styles.comparisonWrapperNeutral
-            }`}
-          >
-            {activeStyles.map((styleName) => (
-              <ComparisonCard
-                key={styleName}
-                title={capitalize(styleName)}
-                styleVars={getStyleVariables(styleName, backgroundBaseColor)}
-                surfaceContent
-                onClick={() => setSelectedStyle(styleName)}
-                selected={selectedStyle === styleName}
-              >
-                <div className={styles.cardInner}>
-                  <div>
-                    {shadowKeys.map((size) => (
-                      <div
-                        key={size}
-                        className={styles.shadowDemo}
-                        style={{
-                          boxShadow: `var(--ds-shadow-${size})`,
-                        }}
-                      >
-                        shadow-{size}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </ComparisonCard>
-            ))}
-          </ComparisonGrid>
-        </LabSection>
-
         <LabSection
           title={sectionTitles.componentComparison}
           id="component-comparison"
@@ -400,6 +362,44 @@ export function StyleLab() {
                       {sampleText.pangram.en}
                     </p>
                   </Card>
+                </div>
+              </ComparisonCard>
+            ))}
+          </ComparisonGrid>
+        </LabSection>
+
+        <LabSection title={sectionTitles.shadowComparison} id="shadow-comparison">
+          <ComparisonGrid
+            paletteVars={paletteVars}
+            className={`${styles.comparisonWrapper} ${
+              previewBackdrop === 'glass'
+                ? styles.comparisonWrapperGlass
+                : styles.comparisonWrapperNeutral
+            }`}
+          >
+            {activeStyles.map((styleName) => (
+              <ComparisonCard
+                key={styleName}
+                title={capitalize(styleName)}
+                styleVars={getStyleVariables(styleName, backgroundBaseColor)}
+                surfaceContent
+                onClick={() => setSelectedStyle(styleName)}
+                selected={selectedStyle === styleName}
+              >
+                <div className={styles.cardInner}>
+                  <div>
+                    {shadowKeys.map((size) => (
+                      <div
+                        key={size}
+                        className={styles.shadowDemo}
+                        style={{
+                          boxShadow: `var(--ds-shadow-${size})`,
+                        }}
+                      >
+                        shadow-{size}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </ComparisonCard>
             ))}

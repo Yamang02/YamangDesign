@@ -108,10 +108,7 @@ export function buildTokenSet(
   const semanticVars = flattenToCSSVars({
     color: {
       bg: expanded.semantic.bg,
-      text: {
-        ...expanded.semantic.text,
-        inverse: expanded.semantic.text.onAction,
-      },
+      text: expanded.semantic.text,
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: feedbackColors,
@@ -200,10 +197,7 @@ export function buildThemeAndTokenSet(
   const semanticVars = flattenToCSSVars({
     color: {
       bg: expanded.semantic.bg,
-      text: {
-        ...expanded.semantic.text,
-        inverse: expanded.semantic.text.onAction,
-      },
+      text: expanded.semantic.text,
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: feedbackColors,
@@ -234,10 +228,7 @@ export function buildThemeAndTokenSet(
     style: resolved.name,
     colors: {
       bg: expanded.semantic.bg,
-      text: {
-        ...expanded.semantic.text,
-        inverse: expanded.semantic.text.onAction,
-      },
+      text: expanded.semantic.text,
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: expanded.semantic.feedback,

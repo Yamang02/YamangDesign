@@ -55,7 +55,10 @@ export interface SemanticMapping {
     primary: SemanticMappingValue;
     secondary: SemanticMappingValue;
     muted: SemanticMappingValue;
-    onAction: SemanticMappingValue;
+    /** action 버튼 텍스트 색 override (선택). 4.5:1 미만이면 자동 계산으로 폴백 */
+    onActionPrimary?: SemanticMappingValue;
+    onActionSecondary?: SemanticMappingValue;
+    onActionAccent?: SemanticMappingValue;
   };
   border: {
     default: SemanticMappingValue;
@@ -124,7 +127,9 @@ export interface SemanticColors {
     primary: string;
     secondary: string;
     muted: string;
-    onAction: string;
+    onActionPrimary: string;
+    onActionSecondary: string;
+    onActionAccent: string;
   };
   border: {
     default: string;

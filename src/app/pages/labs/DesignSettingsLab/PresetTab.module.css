@@ -182,7 +182,9 @@
     --ds-color-text-primary: var(--shell-text-primary);
     --ds-color-text-secondary: var(--shell-text-secondary);
     --ds-color-text-muted: var(--shell-text-muted);
-    --ds-color-text-on-action: var(--shell-text-on-action);
+    --ds-color-text-on-action-primary: var(--shell-text-on-action);
+    --ds-color-text-on-action-secondary: var(--shell-text-on-action);
+    --ds-color-text-on-action-accent: var(--shell-text-on-action);
     --ds-color-border-default: var(--shell-border-default);
     --ds-color-border-subtle: var(--shell-border-subtle);
     --ds-color-border-focus: var(--shell-border-focus);

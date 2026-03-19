@@ -97,8 +97,9 @@
         "--ds-color-text-primary",
         "--ds-color-text-secondary",
         "--ds-color-text-muted",
-        "--ds-color-text-inverse",
-        "--ds-color-text-on-action"
+        "--ds-color-text-on-action-primary",
+        "--ds-color-text-on-action-secondary",
+        "--ds-color-text-on-action-accent"
       ]
     },
     {

@@ -19,8 +19,7 @@ const lightMapping: SemanticMapping = {
   text: {
     primary: { scale: 'neutral', step: 900 },
     secondary: { scale: 'neutral', step: 700 },
-    muted: { scale: 'neutral', step: 500 },
-    onAction: '#FFFFFF',
+    muted: { scale: 'neutral', step: 700 },
   },
   border: {
     default: { scale: 'neutral', step: 300 },
@@ -84,8 +83,7 @@ const coloredMapping: SemanticMapping = {
   text: {
     primary: { scale: 'neutral', step: 900 },
     secondary: { scale: 'neutral', step: 700 },
-    muted: { scale: 'neutral', step: 600 },
-    onAction: '#FFFFFF',
+    muted: { scale: 'neutral', step: 700 },
   },
   border: {
     default: { scale: 'neutral', step: 300 },
@@ -149,8 +147,7 @@ const darkMapping: SemanticMapping = {
   text: {
     primary: { scale: 'neutral', step: 50 },
     secondary: { scale: 'neutral', step: 200 },
-    muted: { scale: 'neutral', step: 400 },
-    onAction: { scale: 'neutral', step: 900 },
+    muted: { scale: 'neutral', step: 300 },
   },
   border: {
     default: { scale: 'neutral', step: 600 },

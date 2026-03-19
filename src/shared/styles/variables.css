@@ -22,8 +22,9 @@
     --ds-color-text-primary: initial;
     --ds-color-text-secondary: initial;
     --ds-color-text-muted: initial;
-    --ds-color-text-inverse: initial;
-    --ds-color-text-on-action: initial;
+    --ds-color-text-on-action-primary: initial;
+    --ds-color-text-on-action-secondary: initial;
+    --ds-color-text-on-action-accent: initial;
 
     --ds-color-border-default: initial;
     --ds-color-border-subtle: initial;

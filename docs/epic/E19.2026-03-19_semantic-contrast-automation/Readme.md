@@ -29,10 +29,12 @@
 - [P02: 타입 + Resolution 레이어 변경](./P02-type-and-resolution.md)
 - [P03: Token emit + CSS 변수 변경](./P03-token-emit-css-vars.md)
 - [P04: 소비자 전수 업데이트 + text.muted 수정](./P04-consumers-and-muted.md)
+- [P05: TokenLab 커버리지 보완](./P05-tokenlab-coverage.md)
 
 ## 상태
 
-- [ ] P01 완료
-- [ ] P02 완료
-- [ ] P03 완료
-- [ ] P04 완료
+- [x] P01 완료
+- [x] P02 완료
+- [x] P03 완료
+- [x] P04 완료
+- [ ] P05 완료

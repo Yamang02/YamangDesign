@@ -35,7 +35,6 @@ function createTestMapping(): SemanticMapping {
       primary: { scale: 'neutral', step: 900 },
       secondary: { scale: 'neutral', step: 700 },
       muted: { scale: 'neutral', step: 500 },
-      onAction: '#FFFFFF',
     },
     border: {
       default: { scale: 'neutral', step: 300 },
@@ -109,7 +108,9 @@ describe('resolveSemanticMapping', () => {
 
     // text
     expect(typeof result.text.primary).toBe('string');
-    expect(typeof result.text.onAction).toBe('string');
+    expect(typeof result.text.onActionPrimary).toBe('string');
+    expect(typeof result.text.onActionSecondary).toBe('string');
+    expect(typeof result.text.onActionAccent).toBe('string');
 
     // border
     expect(typeof result.border.default).toBe('string');
@@ -127,7 +128,26 @@ describe('resolveSemanticMapping', () => {
     const result = resolveSemanticMapping(mapping, scales);
 
     expect(result.bg.base).toBe('#FFFFFF');
-    expect(result.text.onAction).toBe('#FFFFFF');
+    // onAction 토큰은 각 action 배경색 기준으로 자동 계산됨 (흰/검 중 하나)
+    expect(['#FFFFFF', '#000000']).toContain(result.text.onActionPrimary);
+    expect(['#FFFFFF', '#000000']).toContain(result.text.onActionSecondary);
+    expect(['#FFFFFF', '#000000']).toContain(result.text.onActionAccent);
+  });
+
+  it('어두운 action 배경에는 흰색 onAction 텍스트', () => {
+    const scales = createTestScales();
+    const mapping = createTestMapping();
+    // primary[500] = #3366FF (어두운 파랑) → 흰 텍스트
+    const result = resolveSemanticMapping(mapping, scales);
+    expect(result.text.onActionPrimary).toBe('#FFFFFF');
+  });
+
+  it('밝은 accent 배경에는 검정 onAction 텍스트', () => {
+    const scales = createTestScales();
+    // accent = #33FF66 (밝은 연두) → 검정 텍스트
+    const mapping = createTestMapping();
+    const result = resolveSemanticMapping(mapping, scales);
+    expect(result.text.onActionAccent).toBe('#000000');
   });
 
   it('ScaleReference는 실제 스케일 값으로 해석', () => {

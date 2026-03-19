@@ -12,7 +12,7 @@ import type { ComputedPalette } from '@domain/palettes/types';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import styles from './ColorUsageDiagram.module.css';
 
-/** 편집 가능한 토큰 → SemanticTokenPath 매핑 (text.inverse, action-* 제외) */
+/** 편집 가능한 토큰 → SemanticTokenPath 매핑 (onAction-* 제외: auto-computed) */
 const TOKEN_TO_PATH: Record<string, SemanticTokenPath> = {
   '--ds-color-bg-base': 'bg.base',
   '--ds-color-bg-surface': 'bg.surface',
@@ -22,7 +22,6 @@ const TOKEN_TO_PATH: Record<string, SemanticTokenPath> = {
   '--ds-color-text-primary': 'text.primary',
   '--ds-color-text-secondary': 'text.secondary',
   '--ds-color-text-muted': 'text.muted',
-  '--ds-color-text-on-action': 'text.onAction',
   '--ds-color-border-default': 'border.default',
   '--ds-color-border-subtle': 'border.subtle',
   '--ds-color-border-accent': 'border.accent',
@@ -99,9 +98,10 @@ const semanticMappings: Array<{ category: string; items: SemanticToken[] }> = [
     items: [
       { token: '--ds-color-text-primary', note: '본문', source: 'neutral-900' },
       { token: '--ds-color-text-secondary', note: '부제목', source: 'neutral-700' },
-      { token: '--ds-color-text-muted', note: '플레이스홀더, 힌트', source: 'neutral-500' },
-      { token: '--ds-color-text-inverse', note: '어두운 배경 위', source: null },
-      { token: '--ds-color-text-on-action', note: '버튼 위 텍스트', source: null },
+      { token: '--ds-color-text-muted', note: '플레이스홀더, 힌트', source: 'neutral-700' },
+      { token: '--ds-color-text-on-action-primary', note: 'Primary 버튼 텍스트 (자동)', source: null },
+      { token: '--ds-color-text-on-action-secondary', note: 'Secondary 버튼 텍스트 (자동)', source: null },
+      { token: '--ds-color-text-on-action-accent', note: 'Accent 버튼 텍스트 (자동)', source: null },
     ],
   },
   {
@@ -306,7 +306,7 @@ const COMPONENT_TOKENS: Array<{
   { path: 'text.muted', type: 'text' },
   { path: 'border.default', type: 'border' },
   { path: 'border.subtle', type: 'border' },
-  { path: 'text.onAction', type: 'button' },
+  { path: 'text.primary', type: 'button' },
 ];
 
 function ComponentDiagram({

@@ -33,8 +33,9 @@ export interface ThemeColors {
     primary: string;
     secondary: string;
     muted: string;
-    inverse: string;
-    onAction: string;
+    onActionPrimary: string;
+    onActionSecondary: string;
+    onActionAccent: string;
   };
   border: {
     default: string;

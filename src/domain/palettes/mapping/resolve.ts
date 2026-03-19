@@ -11,7 +11,7 @@ import type {
   SemanticMappingValue,
 } from '../types';
 import type { SemanticTokenPath } from './recommendations';
-import { colorMix } from '@shared/utils/color';
+import { colorMix, computeOnActionColor } from '@shared/utils/color';
 
 /** ScaleReference 여부 판별 */
 function isScaleReference(
@@ -87,6 +87,10 @@ export function resolveSemanticMapping(
 ): SemanticColors {
   const resolve = (v: SemanticMappingValue) => resolveColorValue(v, scales);
 
+  const actionPrimaryBg = resolve(mapping.action.primary.default);
+  const actionSecondaryBg = resolve(mapping.action.secondary.default);
+  const actionAccentBg = resolve(mapping.action.accent.default);
+
   return {
     bg: {
       base: resolve(mapping.bg.base),
@@ -102,7 +106,18 @@ export function resolveSemanticMapping(
       primary: resolve(mapping.text.primary),
       secondary: resolve(mapping.text.secondary),
       muted: resolve(mapping.text.muted),
-      onAction: resolve(mapping.text.onAction),
+      onActionPrimary: computeOnActionColor(
+        actionPrimaryBg,
+        mapping.text.onActionPrimary ? resolve(mapping.text.onActionPrimary) : undefined
+      ),
+      onActionSecondary: computeOnActionColor(
+        actionSecondaryBg,
+        mapping.text.onActionSecondary ? resolve(mapping.text.onActionSecondary) : undefined
+      ),
+      onActionAccent: computeOnActionColor(
+        actionAccentBg,
+        mapping.text.onActionAccent ? resolve(mapping.text.onActionAccent) : undefined
+      ),
     },
     border: {
       default: resolve(mapping.border.default),

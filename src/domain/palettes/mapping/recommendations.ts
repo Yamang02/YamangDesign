@@ -17,7 +17,6 @@ export type SemanticTokenPath =
   | 'text.primary'
   | 'text.secondary'
   | 'text.muted'
-  | 'text.onAction'
   | 'border.default'
   | 'border.subtle'
   | 'border.accent'

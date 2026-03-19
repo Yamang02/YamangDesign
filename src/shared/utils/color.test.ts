@@ -12,6 +12,9 @@ import {
   desaturate,
   getLightness,
   colorMix,
+  getRelativeLuminance,
+  getContrastRatio,
+  computeOnActionColor,
 } from './color';
 
 describe('normalizeHex', () => {
@@ -202,6 +205,58 @@ describe('getLightness', () => {
     const l = getLightness('#808080');
     expect(l).toBeGreaterThan(0.4);
     expect(l).toBeLessThan(0.6);
+  });
+});
+
+describe('getRelativeLuminance', () => {
+  it('흰색의 상대 휘도는 1', () => {
+    expect(getRelativeLuminance('#FFFFFF')).toBeCloseTo(1.0);
+  });
+
+  it('검정의 상대 휘도는 0', () => {
+    expect(getRelativeLuminance('#000000')).toBeCloseTo(0.0);
+  });
+
+  it('빨강은 0~1 사이', () => {
+    const l = getRelativeLuminance('#FF0000');
+    expect(l).toBeGreaterThan(0);
+    expect(l).toBeLessThan(1);
+  });
+});
+
+describe('getContrastRatio', () => {
+  it('흰색과 검정의 대비는 21', () => {
+    expect(getContrastRatio('#FFFFFF', '#000000')).toBeCloseTo(21, 0);
+  });
+
+  it('동일 색상의 대비는 1', () => {
+    expect(getContrastRatio('#FF0000', '#FF0000')).toBeCloseTo(1, 5);
+  });
+
+  it('순서를 바꿔도 동일한 결과', () => {
+    const r1 = getContrastRatio('#FFFFFF', '#123456');
+    const r2 = getContrastRatio('#123456', '#FFFFFF');
+    expect(r1).toBeCloseTo(r2, 5);
+  });
+});
+
+describe('computeOnActionColor', () => {
+  it('밝은 배경(노랑)에는 검정 반환', () => {
+    expect(computeOnActionColor('#FFD700')).toBe('#000000');
+  });
+
+  it('어두운 배경(네이비)에는 흰색 반환', () => {
+    expect(computeOnActionColor('#1A3C8F')).toBe('#FFFFFF');
+  });
+
+  it('hint가 4.5:1 이상이면 hint 반환', () => {
+    // #1A3C8F(네이비) 위에 흰색 → 7:1 이상 통과
+    expect(computeOnActionColor('#1A3C8F', '#FFFFFF')).toBe('#FFFFFF');
+  });
+
+  it('hint가 4.5:1 미만이면 자동 계산으로 폴백', () => {
+    // 노랑 위에 흰 hint → 대비 부족 → 검정으로 폴백
+    expect(computeOnActionColor('#FFD700', '#FFFFFF')).toBe('#000000');
   });
 });
 

@@ -93,7 +93,6 @@ export const orientalChineseRestaurant01Palette: PaletteDefinition = {
       primary: { scale: 'primary', step: 900 },
       secondary: { scale: 'primary', step: 800 },
       muted: { scale: 'primary', step: 700 },
-      onAction: { scale: 'primary', step: 50 },
     },
     border: {
       default: { scale: 'primary', step: 700 },
