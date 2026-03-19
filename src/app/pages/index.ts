@@ -12,3 +12,4 @@ export {
 // E06 P01/P04: Build (Atoms, Molecules, Organisms, Components) / Context
 export { Atoms, Molecules, Organisms, Components } from './build';
 export { Service, Shell } from './context';
+export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';

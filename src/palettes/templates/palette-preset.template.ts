@@ -8,19 +8,19 @@
  * ## 1. 프리셋 추가 절차
  *
  * ### 기존 카테고리에 추가하는 경우
- *   1. src/palettes/presets/<카테고리>/ 폴더에 새 파일 생성 (예: MyPreset.ts)
+ *   1. src/domain/palettes/presets/<카테고리>/ 폴더에 새 파일 생성 (예: MyPreset.ts)
  *   2. 아래 템플릿을 복사하고 값만 수정
- *   3. src/palettes/presets/<카테고리>/index.ts 에 export 추가
+ *   3. src/domain/palettes/presets/<카테고리>/index.ts 에 export 추가
  *      export { myPresetPalette } from './MyPreset';
  *
  * ### 새 카테고리를 만드는 경우
  *   탭/패널은 themeRegistry 기반으로 동적 생성됩니다. (Custom 선두, 이후 registry 순서)
- *   1. src/palettes/types.ts 의 ThemeCategory 타입에 새 카테고리 추가
+ *   1. src/domain/palettes/types.ts 의 ThemeCategory 타입에 새 카테고리 추가
  *      export type ThemeCategory = 'default' | 'custom' | 'natural' | 'mycategory';
- *   2. src/palettes/presets/mycategory/ 폴더 생성
- *   3. src/palettes/presets/mycategory/MyPreset.ts 파일 생성
- *   4. src/palettes/presets/mycategory/index.ts 생성하여 export
- *   5. src/palettes/presets/registry.ts 에 새 카테고리 등록
+ *   2. src/domain/palettes/presets/mycategory/ 폴더 생성
+ *   3. src/domain/palettes/presets/mycategory/MyPreset.ts 파일 생성
+ *   4. src/domain/palettes/presets/mycategory/index.ts 생성하여 export
+ *   5. src/domain/palettes/presets/registry.ts 에 새 카테고리 등록
  *      import * as mycategoryThemes from './mycategory/index';
  *      ...
  *      {
@@ -45,12 +45,14 @@
  *   - ScaleReference: { scale: 'primary'|'secondary'|'accent'|'neutral'|'sub', step: 50|100|200|300|400|500|600|700|800|900 }
  *     예: { scale: 'primary', step: 500 } → primary 스케일의 500 단계 색상 사용
  *   - 직접 색상: '#FFFFFF', 'rgb(255,255,255)' 등 hex/rgb 문자열
- *     예: 'onAction' 텍스트를 항상 흰색으로 고정할 때 사용
+ *     예: 'onActionPrimary' 텍스트를 항상 흰색으로 고정할 때 사용
  *
  * ### 2-3. 시맨틱 토큰 경로 (SemanticTokenPath)
- *   bg:   base, surface, surfaceBrand, elevated, muted
- *   text: primary, secondary, muted, onAction
+ *   bg:   base, subtle, surfaceLow, surface, surfaceHigh, surfaceBrand, elevated, muted
+ *   text: primary, secondary, muted, onActionPrimary, onActionSecondary, onActionAccent
  *   border: default, subtle, accent, focus
+ *   action: primary|secondary|accent 각각 default|hover|active
+ *   feedback: error|warning|success|info 각각 bg|text|border
  *
  * ### 2-4. 사용자 편집 오버라이드 (런타임)
  *   Lab UI에서 "시맨틱 매핑" 모달을 통해 사용자가 변경한 값은 semanticOverrides로
@@ -63,7 +65,7 @@
 import type { PaletteDefinition } from '@domain/palettes/types';
 
 export const myPresetPalette: PaletteDefinition = {
-  id: 'myPreset', // camelCase, 고유 식별자. theme-presets 키로 사용됨. 고유해야 함
+  id: 'my-preset', // kebab-case 권장, 고유 식별자. theme-presets 키로 사용됨
   displayName: '내 프리셋 이름',
   category: 'natural', // 'default' | 'natural' | (ThemeCategory에 정의된 값)
   description: '프리셋 설명',
@@ -87,7 +89,7 @@ export const myPresetPalette: PaletteDefinition = {
   //     surfaceBrand: { scale: 'accent', step: 100 }, // primary 대신 accent 사용
   //   },
   //   text: {
-  //     onAction: '#FFFFFF', // 버튼 위 텍스트를 항상 흰색으로
+  //     onActionPrimary: '#FFFFFF', // primary 버튼 위 텍스트를 항상 흰색으로
   //   },
   //   border: {
   //     accent: { scale: 'secondary', step: 400 },

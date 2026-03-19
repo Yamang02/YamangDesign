@@ -24,6 +24,9 @@ import {
   Organisms,
   Service,
   Shell,
+  LayoutLanding,
+  LayoutDashboard,
+  LayoutArticle,
 } from '@app/pages';
 import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
 import { DesignSettingsNavContext } from '@app/context/DesignSettingsNavContext';
@@ -45,6 +48,9 @@ export type PageName =
   | 'organisms'
   | 'service'
   | 'shell'
+  | 'layout-landing'
+  | 'layout-dashboard'
+  | 'layout-article'
   | 'playground';
 
 /** P08: design-settings 블롭에서 componentMapping 동기화 후 설정만 반환 */
@@ -162,6 +168,12 @@ function App() {
         return <Service />;
       case 'shell':
         return <Shell />;
+      case 'layout-landing':
+        return <LayoutLanding />;
+      case 'layout-dashboard':
+        return <LayoutDashboard />;
+      case 'layout-article':
+        return <LayoutArticle />;
       case 'dashboard':
       case 'card-grid':
         return <PlaceholderPage title={page === 'dashboard' ? 'Dashboard' : 'Card Grid'} />;

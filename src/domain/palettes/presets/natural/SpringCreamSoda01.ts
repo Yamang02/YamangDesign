@@ -1,7 +1,7 @@
 import type { PaletteDefinition } from '../../types';
 
 export const springCreamSoda01Palette: PaletteDefinition = {
-  id: 'springCreamSoda01',
+  id: 'spring-cream-soda-01',
   displayName: '봄빛 크림소다',
   category: 'natural',
   description: '요비요헤이_팔레트 봄빛 크림소다',

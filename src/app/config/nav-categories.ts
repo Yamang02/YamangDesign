@@ -20,6 +20,17 @@ export interface NavCategory {
 
 export const navCategories: NavCategory[] = [
   {
+    id: 'layouts',
+    icon: 'grid-view',
+    iconLibrary: 'material',
+    tooltip: 'Layouts',
+    items: [
+      { id: 'layout-landing', label: 'Landing', icon: 'home' },
+      { id: 'layout-dashboard', label: 'Dashboard', icon: 'dashboard' },
+      { id: 'layout-article', label: 'Article', icon: 'description' },
+    ],
+  },
+  {
     id: 'labs',
     icon: 'science',
     iconLibrary: 'material',
