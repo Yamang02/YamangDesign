@@ -27,7 +27,7 @@
 
 ## 2. 시맨틱 매핑 — bgStrategy별 기본값
 
-**위치**: `src/palettes/strategies/default-mappings.ts`
+**위치**: `src/domain/palettes/strategies/default-mappings.ts`
 
 `PaletteDefinition`에 `semanticMapping`이 없거나 **일부만** 있을 때, **베이스**로 쓰이는 매핑.
 
@@ -39,7 +39,7 @@
 
 - **병합**: `getMergedMapping(defaultSemanticMappings[definition.bgStrategy], definition.semanticMapping)`  
   → 프리셋에 `semanticMapping`이 없으면 **전부 bgStrategy 기본값**; 일부만 오버라이드하면 해당 경로만 덮어쓰고 나머지는 기본값 유지.
-- **사용처**: `palettes/index.ts` `createPalette()`, `ThemeProvider`, `PaletteLab`, `SemanticTab` 등.
+- **사용처**: `domain/palettes/index.ts` `createPalette()`, `ThemeProvider`, `PaletteLab`, `SemanticTab` 등.
 
 ---
 
@@ -79,7 +79,7 @@ const defaultPalette = {
 
 - **StyleName**: `'minimal' | 'neumorphism' | 'brutalism' | 'glassmorphism'` (`@types/theme.d.ts`, `types.ts` VALID_STYLE_NAMES).
 - **SystemPresetName**: `'default' | 'muted'`.
-- **BgStrategy**: `'light' | 'colored' | 'dark'` (`palettes/types.ts`).
+- **BgStrategy**: `'light' | 'colored' | 'dark'` (`domain/palettes/types.ts`).
 
 ---
 
@@ -88,7 +88,7 @@ const defaultPalette = {
 | 목적 | 파일 |
 |------|------|
 | 팔레트 파생 규칙 | `src/utils/palette.ts` — `resolvePalette`, `derive*` |
-| bgStrategy 기본 시맨틱 | `src/palettes/strategies/default-mappings.ts` — `defaultSemanticMappings` |
+| bgStrategy 기본 시맨틱 | `src/domain/palettes/strategies/default-mappings.ts` — `defaultSemanticMappings` |
 | StoredSettings 타입·마이그레이션·보정 | `src/components/GlobalSettings/types.ts` — `migrateV1ToV2`, `normalizeStoredSettings` |
 | App/테마 초기값 | `src/App.tsx` — `defaultPalette`, `initialSettings` / ThemeProvider props |
 | 초기화 시 로컬 기본값 | `src/components/GlobalSettings/hooks/useGlobalSettings.ts` — reset 시 styleName/systemPreset 등 |

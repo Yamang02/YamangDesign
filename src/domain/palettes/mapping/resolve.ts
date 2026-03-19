@@ -9,6 +9,7 @@ import type {
   SemanticMapping,
   SemanticColors,
   SemanticMappingValue,
+  OnActionTextPolicy,
 } from '../types';
 import type { SemanticTokenPath } from './recommendations';
 import { colorMix, computeOnActionColor } from '@shared/utils/color';
@@ -86,6 +87,7 @@ export function resolveSemanticMapping(
   scales: GeneratedScales
 ): SemanticColors {
   const resolve = (v: SemanticMappingValue) => resolveColorValue(v, scales);
+  const onActionPolicy: OnActionTextPolicy = mapping.text.onActionPolicy ?? 'auto';
 
   const actionPrimaryBg = resolve(mapping.action.primary.default);
   const actionSecondaryBg = resolve(mapping.action.secondary.default);
@@ -108,15 +110,18 @@ export function resolveSemanticMapping(
       muted: resolve(mapping.text.muted),
       onActionPrimary: computeOnActionColor(
         actionPrimaryBg,
-        mapping.text.onActionPrimary ? resolve(mapping.text.onActionPrimary) : undefined
+        mapping.text.onActionPrimary ? resolve(mapping.text.onActionPrimary) : undefined,
+        onActionPolicy
       ),
       onActionSecondary: computeOnActionColor(
         actionSecondaryBg,
-        mapping.text.onActionSecondary ? resolve(mapping.text.onActionSecondary) : undefined
+        mapping.text.onActionSecondary ? resolve(mapping.text.onActionSecondary) : undefined,
+        onActionPolicy
       ),
       onActionAccent: computeOnActionColor(
         actionAccentBg,
-        mapping.text.onActionAccent ? resolve(mapping.text.onActionAccent) : undefined
+        mapping.text.onActionAccent ? resolve(mapping.text.onActionAccent) : undefined,
+        onActionPolicy
       ),
     },
     border: {

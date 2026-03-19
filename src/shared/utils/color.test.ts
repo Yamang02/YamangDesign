@@ -258,6 +258,10 @@ describe('computeOnActionColor', () => {
     // 노랑 위에 흰 hint → 대비 부족 → 검정으로 폴백
     expect(computeOnActionColor('#FFD700', '#FFFFFF')).toBe('#000000');
   });
+
+  it('forceHint 정책이면 대비와 무관하게 hint 우선', () => {
+    expect(computeOnActionColor('#FFD700', '#FFFFFF', 'forceHint')).toBe('#FFFFFF');
+  });
 });
 
 describe('colorMix', () => {

@@ -42,8 +42,8 @@
 
 | 영역 | 토큰 | 자동 매핑 |
 |------|------|----------|
-| **배경(bg)** | base, surface, elevated, muted | 밝기/채도 자동 조절 |
-| **텍스트(text)** | primary, secondary, muted, onAction | 대비 보장 |
+| **배경(bg)** | base, subtle, surfaceLow, surface, surfaceHigh, surfaceBrand, elevated, muted | 밝기/채도 자동 조절 |
+| **텍스트(text)** | primary, secondary, muted, onActionPrimary/Secondary/Accent | 대비 보장 |
 | **테두리(border)** | default, subtle, accent, focus | 강조도별 차등 |
 
 #### bgStrategy 지원
@@ -130,7 +130,7 @@ border.accent→ #EF4444 (primary-500)
 {
   "version": "1.0",
   "settings": {
-    "paletteName": "orientalChineseRestaurant01",
+    "paletteName": "oriental-chinese-restaurant-01",
     "styleName": "minimal",
     "systemPreset": "default"
   },
@@ -186,7 +186,7 @@ border.accent→ #EF4444 (primary-500)
 #### 프리셋 추가 절차
 
 ```
-1. src/palettes/presets/<category>/MyPalette.ts 생성
+1. src/domain/palettes/presets/<category>/MyPalette.ts 생성
 2. index.ts에 export 추가
 3. (새 카테고리인 경우) registry.ts에 등록
 ```
@@ -195,18 +195,16 @@ border.accent→ #EF4444 (primary-500)
 
 ```typescript
 export const myPalette: PaletteDefinition = {
-  name: 'myPalette',
-  subname: '표시 이름',
+  id: 'my-palette',
+  displayName: '표시 이름',
   colors: {
     primary: '#FF6B6B',
     secondary: '#4ECDC4',
     accent: '#FFE66D',
   },
   bgStrategy: 'light',
-  metadata: {
-    category: 'pop',
-    description: '설명',
-  },
+  category: 'pop',
+  description: '설명',
 };
 ```
 

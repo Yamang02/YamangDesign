@@ -38,6 +38,7 @@ export interface MixReference {
 }
 
 export type SemanticMappingValue = string | ScaleReference | MixReference;
+export type OnActionTextPolicy = 'auto' | 'forceHint';
 
 /** 시맨틱 토큰 매핑 정의 (ScaleReference 또는 직접 색상) */
 export interface SemanticMapping {
@@ -55,10 +56,12 @@ export interface SemanticMapping {
     primary: SemanticMappingValue;
     secondary: SemanticMappingValue;
     muted: SemanticMappingValue;
-    /** action 버튼 텍스트 색 override (선택). 4.5:1 미만이면 자동 계산으로 폴백 */
+    /** action 버튼 텍스트 색 override (선택). 기본 정책(auto)에서 4.5:1 미만이면 자동 폴백 */
     onActionPrimary?: SemanticMappingValue;
     onActionSecondary?: SemanticMappingValue;
     onActionAccent?: SemanticMappingValue;
+    /** onAction* 힌트 적용 정책. forceHint면 힌트가 존재할 때 대비 검증 없이 우선 적용 */
+    onActionPolicy?: OnActionTextPolicy;
   };
   border: {
     default: SemanticMappingValue;

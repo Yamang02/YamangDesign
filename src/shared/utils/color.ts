@@ -196,7 +196,12 @@ export function getContrastRatio(fg: string, bg: string): number {
  * action 배경색에 대해 WCAG AA(4.5:1)를 보장하는 텍스트 색 반환.
  * hint가 주어지고 4.5:1 이상이면 hint 사용, 실패 시 흰/검 중 대비가 높은 쪽 반환.
  */
-export function computeOnActionColor(bgColor: string, hint?: string): string {
+export function computeOnActionColor(
+  bgColor: string,
+  hint?: string,
+  policy: 'auto' | 'forceHint' = 'auto'
+): string {
+  if (hint && policy === 'forceHint') return hint;
   if (hint && getContrastRatio(hint, bgColor) >= 4.5) return hint;
   const whiteRatio = getContrastRatio('#FFFFFF', bgColor);
   const blackRatio = getContrastRatio('#000000', bgColor);

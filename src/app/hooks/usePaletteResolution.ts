@@ -17,6 +17,26 @@ export interface PaletteResolution {
   colors: ColorInput;
 }
 
+function normalizeHex(value: string | undefined): string {
+  return (value ?? '').trim().toLowerCase();
+}
+
+function isSameColors(a: ColorInput, b: ColorInput): boolean {
+  return (
+    normalizeHex(a.primary) === normalizeHex(b.primary) &&
+    normalizeHex(a.secondary) === normalizeHex(b.secondary) &&
+    normalizeHex(a.accent) === normalizeHex(b.accent) &&
+    normalizeHex(a.neutral) === normalizeHex(b.neutral) &&
+    normalizeHex(a.sub) === normalizeHex(b.sub)
+  );
+}
+
+function findMatchingPresetByColors(colors: ColorInput): PaletteDefinition | null {
+  const presetList = Object.values(palettePresets) as PaletteDefinition[];
+  const matched = presetList.find((preset) => isSameColors(preset.colors as ColorInput, colors));
+  return matched ?? null;
+}
+
 /**
  * PaletteSelection을 PaletteDefinition으로 해석 (순수 함수)
  *
@@ -40,6 +60,13 @@ export function resolveSelection(
     }
 
     case 'custom': {
+      const matchedPreset = findMatchingPresetByColors(selection.colors);
+      if (matchedPreset) {
+        return {
+          definition: matchedPreset,
+          colors: matchedPreset.colors as ColorInput,
+        };
+      }
       return {
         definition: toCustomPaletteDefinition(selection.colors),
         colors: selection.colors,

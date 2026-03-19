@@ -74,7 +74,7 @@ Palette Lab은 다양한 컬러 팔레트를 비교하고 편집하는 공간입
 - **Natural**: 자연에서 영감받은 테마
 - **Pop**: 팝 문화 영감 테마
 
-탭은 `src/palettes/presets/registry.ts`에 등록된 카테고리로 동적 생성됩니다.
+탭은 `src/domain/palettes/presets/registry.ts`에 등록된 카테고리로 동적 생성됩니다.
 
 ### 2.3 팔레트 탐색
 
@@ -122,7 +122,7 @@ Primary Color (#E72D29)
 | **text** | primary | 주요 텍스트 |
 | | secondary | 보조 텍스트 |
 | | muted | 흐린 텍스트 |
-| | onAction | 버튼 위 텍스트 |
+| | onActionPrimary/Secondary/Accent | 버튼 위 텍스트(액션별) |
 | **border** | default | 기본 테두리 |
 | | subtle | 미세한 테두리 |
 | | accent | 강조 테두리 |
@@ -222,13 +222,13 @@ semanticMapping: {
 ### 7.1 기존 카테고리에 추가
 
 ```typescript
-// src/palettes/presets/pop/MyNewPalette.ts
+// src/domain/palettes/presets/pop/MyNewPalette.ts
 
 import type { PaletteDefinition } from '../../types';
 
 export const myNewPalette: PaletteDefinition = {
-  name: 'myNewPalette',           // camelCase 고유 식별자
-  subname: '나의 새 팔레트',        // 표시 이름
+  id: 'my-new-palette',            // kebab-case 고유 식별자
+  displayName: '나의 새 팔레트',     // 표시 이름
 
   colors: {
     primary: '#FF6B6B',           // 필수
@@ -240,13 +240,8 @@ export const myNewPalette: PaletteDefinition = {
 
   bgStrategy: 'light',            // 'light' | 'colored' | 'dark'
   contrast: 'normal',             // 'normal' | 'high'
-
-  metadata: {
-    id: 'myNewPalette',           // 필수. theme-presets 키로 사용됨. 고유해야 함
-    displayName: '나의 새 팔레트',
-    category: 'pop',              // 'default' | 'natural' | 'pop'
-    description: '설명을 입력하세요',
-  },
+  category: 'pop',                // 'default' | 'natural' | 'pop'
+  description: '설명을 입력하세요',
 
   // 선택: 시맨틱 매핑 오버라이드
   semanticMapping: {
@@ -260,15 +255,15 @@ export const myNewPalette: PaletteDefinition = {
 ### 7.2 export 등록
 
 ```typescript
-// src/palettes/presets/pop/index.ts
+// src/domain/palettes/presets/pop/index.ts
 export { myNewPalette } from './MyNewPalette';
 ```
 
-`theme-presets.ts`는 `registry`의 모든 테마를 `metadata.id` 기준으로 자동 수집하므로 별도 등록 불필요합니다.
+`theme-presets.ts`는 `registry`의 모든 테마를 `id` 기준으로 자동 수집하므로 별도 등록 불필요합니다.
 
 ### 7.3 새 카테고리 추가
 
-1. **타입 추가**: `src/palettes/types.ts`
+1. **타입 추가**: `src/domain/palettes/types.ts`
    ```typescript
    export type ThemeCategory =
      | 'default'
@@ -278,9 +273,9 @@ export { myNewPalette } from './MyNewPalette';
      | 'myCategory';
    ```
 
-2. **폴더 생성**: `src/palettes/presets/myCategory/`
+2. **폴더 생성**: `src/domain/palettes/presets/myCategory/`
 
-3. **프리셋 파일 및 index.ts 생성** 후 **레지스트리 등록**: `src/palettes/presets/registry.ts`
+3. **프리셋 파일 및 index.ts 생성** 후 **레지스트리 등록**: `src/domain/palettes/presets/registry.ts`
    ```typescript
    import * as myCategoryThemes from './myCategory/index';
 
@@ -297,7 +292,7 @@ export { myNewPalette } from './MyNewPalette';
 
 `PaletteCategoryTabs`와 `ThemeTabNavigation`(Global Settings)은 `themeRegistry`를 기반으로 탭을 동적 생성하므로, registry에만 추가하면 자동으로 반영됩니다.
 
-> 참고: `src/palettes/presets/pop/OrientalChineseRestaurant01.ts`에 상세 템플릿과 시맨틱 매핑 오버라이드 예시가 있습니다.
+> 참고: `src/palettes/templates/palette-preset.template.ts`에서 최신 템플릿과 시맨틱 매핑 오버라이드 예시를 확인할 수 있습니다.
 
 ---
 
@@ -322,7 +317,7 @@ export { myNewPalette } from './MyNewPalette';
   "version": "1.0",
   "exportedAt": "2024-01-15T10:30:00Z",
   "settings": {
-    "paletteName": "orientalChineseRestaurant01",
+    "paletteName": "oriental-chinese-restaurant-01",
     "styleName": "minimal",
     "systemPreset": "default"
   },
