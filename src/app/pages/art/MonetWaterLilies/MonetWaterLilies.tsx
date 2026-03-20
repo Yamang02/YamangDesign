@@ -2,7 +2,7 @@
  * E22: Art Reference Gallery — Water Lilies, Claude Monet (1906)
  * Style: Glassmorphism
  *
- * Chapter 1 — The Painting: 원화 직접 참조, sticky hero, glass panels
+ * Chapter 1 — The Painting: 원화 직접 참조, glass panels
  * Chapter 2 — The Impression: 심상 차용 인터랙티브 (animated gradient + ripple + color DNA)
  */
 import { HeroStage } from './components/HeroStage';
@@ -15,21 +15,23 @@ import styles from './MonetWaterLilies.module.css';
 export function MonetWaterLilies() {
   return (
     <div className={styles.page}>
-      {/* Chapter 1 */}
-      <HeroStage />
+      <div className={styles.container}>
+        {/* Chapter 1 */}
+        <HeroStage />
 
-      <div className={styles.chapterTransition} />
+        <div className={styles.chapterTransition} />
 
-      {/* Chapter 2 */}
-      <section className={styles.chapter2}>
-        <ImpressionBackground />
-        <RippleCanvas />
-        <span className={styles.chapter2Label}>Chapter 2 — The Impression</span>
-        <div className={styles.chapter2Content}>
-          <ImpressionistQuote />
-          <ColorDNAMap />
-        </div>
-      </section>
+        {/* Chapter 2 */}
+        <section className={styles.chapter2}>
+          <ImpressionBackground />
+          <RippleCanvas />
+          <span className={styles.chapter2Label}>Chapter 2 — The Impression</span>
+          <div className={styles.chapter2Content}>
+            <ImpressionistQuote />
+            <ColorDNAMap />
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

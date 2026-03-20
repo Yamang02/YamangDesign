@@ -1,13 +1,9 @@
 .stage {
   position: relative;
-  height: 200vh;
-}
-
-.stickyBg {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  height: 65vh;
+  min-height: 480px;
   overflow: hidden;
+  border-radius: 16px;
 }
 
 .image {
@@ -15,7 +11,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: filter 0.1s linear;
   display: block;
 }
 
@@ -24,9 +19,9 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.25) 60%,
-    rgba(10, 15, 10, 0.7) 100%
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.2) 55%,
+    rgba(10, 15, 10, 0.65) 100%
   );
 }
 
@@ -42,7 +37,7 @@
 
 .chapterLabel {
   position: absolute;
-  top: var(--ds-spacing-8);
+  top: var(--ds-spacing-6);
   left: 50%;
   transform: translateX(-50%);
   font-size: var(--ds-text-xs);
