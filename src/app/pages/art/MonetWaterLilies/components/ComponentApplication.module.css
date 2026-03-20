@@ -1,0 +1,24 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: var(--ds-spacing-10) var(--ds-spacing-8);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chapterLabel {
+  display: block;
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--ds-spacing-8);
+}
+
+.placeholder {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: var(--ds-text-sm);
+  padding: var(--ds-spacing-12) 0;
+}

@@ -1,0 +1,72 @@
+.layout {
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--ds-spacing-6);
+  padding: var(--ds-spacing-8);
+  min-height: 100vh;
+  align-items: start;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: var(--ds-spacing-8);
+}
+
+.chapterList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chapterItem {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-spacing-2);
+  cursor: pointer;
+  padding: var(--ds-spacing-1) 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: var(--ds-text-xs);
+  text-align: left;
+  transition: color 0.2s ease;
+  width: 100%;
+}
+
+.chapterItem:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.chapterItem.active {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chapterItem.active .dot {
+  transform: scale(1.5);
+}
+
+.chapterLabel {
+  line-height: 1.3;
+}
+
+/* Main content */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-6);
+}

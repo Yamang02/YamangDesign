@@ -1,4 +1,4 @@
-import { ArtworkInfoCard } from './ArtworkInfoCard';
+import { MuseumLabel } from './MuseumLabel';
 import { PaletteSwatchBar } from './PaletteSwatchBar';
 import styles from './HeroStage.module.css';
 
@@ -10,13 +10,12 @@ export function HeroStage() {
     <section className={styles.stage}>
       <img
         src={IMAGE_URL}
-        alt="Claude Monet — Water Lilies, 1906"
+        alt="Claude Monet — Water Lilies: Green Reflections, central section, 1914–18"
         className={styles.image}
       />
       <div className={styles.overlay} />
       <div className={styles.panels}>
-        <span className={styles.chapterLabel}>Chapter 1 — The Painting</span>
-        <ArtworkInfoCard />
+        <MuseumLabel />
         <PaletteSwatchBar />
       </div>
     </section>
