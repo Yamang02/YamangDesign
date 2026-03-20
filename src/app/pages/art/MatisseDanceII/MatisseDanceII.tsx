@@ -9,6 +9,8 @@
 import { ArtShell, type ArtChapter } from '../_shared/ArtShell';
 import { ArtHeroStage } from '../_shared/ArtHeroStage';
 import type { LabelInfo } from '../_shared/ArtHeroStage';
+import { ArtApplicationSection } from '../_shared/ArtApplicationSection';
+import type { ArtPaletteItem, ArtButtonItem, ArtTypographyItem, ArtCardMeta } from '../_shared/ArtApplicationSection';
 import { MATISSE_PALETTE } from './matisse-palette';
 import { BrutalBackground } from './components/BrutalBackground';
 import { BrutalTypographyQuote } from './components/BrutalTypographyQuote';
@@ -21,6 +23,37 @@ const CHAPTERS: ArtChapter[] = [
 ];
 
 const IMAGE_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Matissedance.jpg';
+
+const MATISSE_PALETTE_ITEMS: ArtPaletteItem[] = [
+  { name: 'Matisse Red',  hex: '#C8361A', role: 'Primary' },
+  { name: 'Dance Green',  hex: '#2E6B35', role: 'Secondary' },
+  { name: 'Sky Blue',     hex: '#1A4F8C', role: 'Accent' },
+  { name: 'Cement',       hex: '#B0A89A', role: 'Neutral' },
+  { name: 'Raw White',    hex: '#F2EFE8', role: 'Surface' },
+  { name: 'Charcoal',     hex: '#1C1C1C', role: 'Dark' },
+]
+
+const MATISSE_BUTTONS: ArtButtonItem[] = [
+  { label: 'Primary',   hex: '#C8361A', textHex: '#F2EFE8' },
+  { label: 'Secondary', hex: '#2E6B35', textHex: '#F2EFE8' },
+  { label: 'Accent',    hex: '#1A4F8C', textHex: '#F2EFE8' },
+  { label: 'Ghost',     hex: 'transparent', textHex: '#1C1C1C' },
+]
+
+const MATISSE_TYPOGRAPHY: ArtTypographyItem[] = [
+  { level: 'Display', text: 'La Danse',              hex: '#C8361A' },
+  { level: 'Body',    text: 'Creativity takes courage.', hex: '#1C1C1C' },
+  { level: 'Caption', text: 'Henri Matisse, 1910',   hex: '#B0A89A' },
+]
+
+const MATISSE_ART_CARD: ArtCardMeta = {
+  imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Matissedance.jpg',
+  title: 'La Danse (II)',
+  artist: 'Henri Matisse',
+  year: 1910,
+  movement: 'Post-Impressionism',
+  styleTag: 'Brutalism',
+}
 
 const MATISSE_LABEL: LabelInfo = {
   title: 'La Danse (II)',
@@ -57,10 +90,15 @@ export function MatisseDanceII() {
 
         <div className={styles.chapterTransition} />
 
-        {/* Chapter 3 — placeholder */}
-        <section id="chapter-3" className={styles.chapter3Placeholder}>
-          <span className={styles.placeholderLabel}>Chapter 3 — The Application (coming soon)</span>
-        </section>
+        {/* Chapter 3 */}
+        <ArtApplicationSection
+          palette={MATISSE_PALETTE_ITEMS}
+          buttons={MATISSE_BUTTONS}
+          typography={MATISSE_TYPOGRAPHY}
+          artCard={MATISSE_ART_CARD}
+          variant="brutal"
+          sectionId="chapter-3"
+        />
       </ArtShell>
     </div>
   );

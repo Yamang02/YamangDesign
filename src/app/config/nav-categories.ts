@@ -75,6 +75,7 @@ export const navCategories: NavCategory[] = [
     tooltip: 'Art',
     items: [
       { id: 'monet-water-lilies', label: 'Water Lilies', icon: 'image' },
+      { id: 'matisse-dance-ii', label: 'La Danse II', icon: 'image' },
     ],
   },
   {

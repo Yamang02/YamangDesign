@@ -20,3 +20,6 @@ export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';
 
 // E22: Art Reference Gallery
 export { MonetWaterLilies } from './art/MonetWaterLilies';
+
+// E23: Art Reference Gallery — La Danse II
+export { MatisseDanceII } from './art/MatisseDanceII';

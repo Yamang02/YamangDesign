@@ -32,6 +32,7 @@ import {
   LayoutDashboard,
   LayoutArticle,
   MonetWaterLilies,
+  MatisseDanceII,
 } from '@app/pages';
 import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
 import { DesignSettingsNavContext } from '@app/context/DesignSettingsNavContext';
@@ -62,7 +63,8 @@ export type PageName =
   | 'grid'
   | 'motion'
   | 'responsive'
-  | 'monet-water-lilies';
+  | 'monet-water-lilies'
+  | 'matisse-dance-ii';
 
 /** P08: design-settings 블롭에서 componentMapping 동기화 후 설정만 반환 */
 function parseDesignSystemBlob(raw: string): StoredSettings | null {
@@ -195,6 +197,8 @@ function App() {
         return <LayoutArticle />;
       case 'monet-water-lilies':
         return <MonetWaterLilies />;
+      case 'matisse-dance-ii':
+        return <MatisseDanceII />;
       case 'dashboard':
       case 'card-grid':
         return <PlaceholderPage title={page === 'dashboard' ? 'Dashboard' : 'Card Grid'} />;
