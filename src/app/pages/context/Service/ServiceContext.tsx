@@ -3,16 +3,8 @@
  * E08 P02: 실제 서비스 페이지 목업 (Landing / Dashboard / Article). Component Set 제거.
  * P03: Overview + Token Map 섹션 추가. ShellContext 패턴과 통일.
  */
-import { useState } from 'react';
-import { LabSection, PreviewControlPanel } from '../../../layouts';
-import { comparisonPresets } from '@domain/constants';
-import type { PaletteName, StyleName, SystemPresetName } from '@shared/@types/theme';
-import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
+import { LabSection } from '../../../layouts';
 import styles from './ServiceContext.module.css';
-
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /** 서비스 컴포넌트 인벤토리 */
 const SERVICE_INVENTORY: { component: string; path: string; tokens: string[] }[] = [
@@ -35,21 +27,7 @@ const SERVICE_TOKEN_MAP: { area: string; token: string }[] = [
   { area: '그림자', token: '--ds-shadow-sm' },
 ];
 
-const paletteOptions = comparisonPresets.palettes.map((p) => ({ value: p, label: capitalize(p) }));
-const systemPresetOptions = comparisonPresets.systemPresets.map((s) => ({ value: s, label: capitalize(s) }));
-const neutralPresetOptions = comparisonPresets.neutralPresets.map((n) => ({ value: n, label: capitalize(n) }));
-const styleOptions = comparisonPresets.styles.map((s) => ({ value: s, label: capitalize(s) }));
-
 export function ServiceContext() {
-  const [palette, setPalette] = useState<PaletteName>(comparisonPresets.palettes[0]);
-  const [systemPreset, setSystemPreset] = useState<SystemPresetName>(
-    comparisonPresets.systemPresets[0]
-  );
-  const [neutralPreset, setNeutralPreset] = useState<NeutralPresetName>(
-    comparisonPresets.neutralPresets[0]
-  );
-  const [style, setStyle] = useState<StyleName>(comparisonPresets.styles[0]);
-
   return (
     <div className={styles.wrapper}>
       <LabSection title="Overview" id="overview" card>
@@ -88,34 +66,6 @@ export function ServiceContext() {
         </table>
       </LabSection>
 
-      <LabSection title="Controls" id="controls" card>
-        <div className={styles.controlsStack}>
-          <PreviewControlPanel
-            label="Palette (Brand)"
-            value={palette}
-            options={paletteOptions}
-            onChange={(v) => setPalette(v as PaletteName)}
-          />
-          <PreviewControlPanel
-            label="System"
-            value={systemPreset}
-            options={systemPresetOptions}
-            onChange={(v) => setSystemPreset(v as SystemPresetName)}
-          />
-          <PreviewControlPanel
-            label="Neutral"
-            value={neutralPreset}
-            options={neutralPresetOptions}
-            onChange={(v) => setNeutralPreset(v as NeutralPresetName)}
-          />
-          <PreviewControlPanel
-            label="Style"
-            value={style}
-            options={styleOptions}
-            onChange={(v) => setStyle(v as StyleName)}
-          />
-        </div>
-      </LabSection>
     </div>
   );
 }

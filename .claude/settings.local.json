@@ -37,7 +37,9 @@
       "Bash(grep -E \"\\\\.\\(ts|tsx|css\\)$\")",
       "Bash(xargs grep -l \"ds-color-action-primary-default\")",
       "Bash(npx vitest run src/shared/utils/color.test.ts)",
-      "Bash(npx vitest run src/domain/palettes)"
+      "Bash(npx vitest run src/domain/palettes)",
+      "Bash(echo \"export * from ''./grid'';\")",
+      "Bash(\"c:/Users/ljj02/Desktop/dev/YamangDesign/src/domain/tokens/global/index.ts\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic",

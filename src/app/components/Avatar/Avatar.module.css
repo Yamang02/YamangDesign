@@ -8,6 +8,7 @@
     overflow: hidden;
     font-family: var(--ds-font-sans);
     font-weight: var(--ds-font-weight-semibold);
+    /* 이미지 전용(data-variant 없음) 시 폴백 */
     color: var(--ds-color-text-on-action-primary);
   }
 
@@ -33,14 +34,17 @@
   /* Variants - initials background */
   .avatar[data-variant='primary'] {
     background-color: var(--ds-color-action-primary-default);
+    color: var(--ds-color-text-on-action-primary);
   }
 
   .avatar[data-variant='secondary'] {
     background-color: var(--ds-color-action-secondary-default);
+    color: var(--ds-color-text-on-action-secondary);
   }
 
   .avatar[data-variant='accent'] {
     background-color: var(--ds-color-action-accent-default);
+    color: var(--ds-color-text-on-action-accent);
   }
 
   /* Image */

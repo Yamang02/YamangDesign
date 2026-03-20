@@ -5,3 +5,6 @@ export { FontLab } from './FontLab';
 export { TokenLab } from './TokenLab';
 export { Playground } from './Playground';
 export { DesignSettingsLab } from './DesignSettingsLab';
+export { SpacingLab } from './SpacingLab';
+export { GridLab } from './GridLab';
+export { MotionLab } from './MotionLab';

@@ -6,3 +6,4 @@ export * from './sizes';
 export * from './motion';
 export * from './transition';
 export * from './elevation';
+export * from './grid';

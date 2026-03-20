@@ -6,7 +6,7 @@
     flex-shrink: 0;
   }
 
-  .sizeSm { width: var(--ds-icon-size-sm); height: var(--ds-icon-size-sm); }
-  .sizeMd { width: var(--ds-icon-size-md); height: var(--ds-icon-size-md); }
-  .sizeLg { width: var(--ds-icon-size-lg); height: var(--ds-icon-size-lg); }
+  .sizeSm { width: var(--ds-icon-size-sm, 16px); height: var(--ds-icon-size-sm, 16px); }
+  .sizeMd { width: var(--ds-icon-size-md, 20px); height: var(--ds-icon-size-md, 20px); }
+  .sizeLg { width: var(--ds-icon-size-lg, 24px); height: var(--ds-icon-size-lg, 24px); }
 }

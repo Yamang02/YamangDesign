@@ -41,9 +41,11 @@ export const componentTokenMap = {
   },
   Avatar: {
     'primary bg': '--ds-color-action-primary-default',
+    'primary initials text': '--ds-color-text-on-action-primary',
     'secondary bg': '--ds-color-action-secondary-default',
+    'secondary initials text': '--ds-color-text-on-action-secondary',
     'accent bg': '--ds-color-action-accent-default',
-    'initials text': '--ds-color-text-on-action-primary',
+    'accent initials text': '--ds-color-text-on-action-accent',
   },
   Select: {
     'trigger bg': '--ds-color-bg-surface',

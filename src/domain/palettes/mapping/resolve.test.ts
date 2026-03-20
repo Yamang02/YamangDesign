@@ -5,6 +5,7 @@ import {
   getMergedMapping,
   updateMappingAtPath,
 } from './resolve';
+import { getContrastRatio } from '@shared/utils/color';
 import { generateColorScale } from '../palette';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import type { SemanticMapping } from '../types';
@@ -35,6 +36,9 @@ function createTestMapping(): SemanticMapping {
       primary: { scale: 'neutral', step: 900 },
       secondary: { scale: 'neutral', step: 700 },
       muted: { scale: 'neutral', step: 500 },
+      onActionPrimary: { scale: 'neutral', step: 50 },
+      onActionSecondary: { scale: 'neutral', step: 50 },
+      onActionAccent: { scale: 'neutral', step: 50 },
     },
     border: {
       default: { scale: 'neutral', step: 300 },
@@ -128,18 +132,23 @@ describe('resolveSemanticMapping', () => {
     const result = resolveSemanticMapping(mapping, scales);
 
     expect(result.bg.base).toBe('#FFFFFF');
-    // onAction 토큰은 각 action 배경색 기준으로 자동 계산됨 (흰/검 중 하나)
-    expect(['#FFFFFF', '#000000']).toContain(result.text.onActionPrimary);
-    expect(['#FFFFFF', '#000000']).toContain(result.text.onActionSecondary);
-    expect(['#FFFFFF', '#000000']).toContain(result.text.onActionAccent);
+    // onAction: neutral-50 힌트가 통과하면 그 색, 아니면 흰/검 폴백
+    for (const [fg, bg] of [
+      [result.text.onActionPrimary, result.action.primary.default],
+      [result.text.onActionSecondary, result.action.secondary.default],
+      [result.text.onActionAccent, result.action.accent.default],
+    ] as const) {
+      expect(getContrastRatio(fg, bg)).toBeGreaterThanOrEqual(4.5);
+    }
   });
 
-  it('어두운 action 배경에는 흰색 onAction 텍스트', () => {
+  it('어두운 primary 액션 배경에 onAction이 WCAG AA 이상', () => {
     const scales = createTestScales();
     const mapping = createTestMapping();
-    // primary[500] = #3366FF (어두운 파랑) → 흰 텍스트
     const result = resolveSemanticMapping(mapping, scales);
-    expect(result.text.onActionPrimary).toBe('#FFFFFF');
+    expect(
+      getContrastRatio(result.text.onActionPrimary, result.action.primary.default)
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it('밝은 accent 배경에는 검정 onAction 텍스트', () => {

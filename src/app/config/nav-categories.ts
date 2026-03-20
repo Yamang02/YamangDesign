@@ -40,6 +40,9 @@ export const navCategories: NavCategory[] = [
       { id: 'style', label: 'Style', icon: 'auto-awesome' },
       { id: 'font', label: 'Font', icon: 'text-fields' },
       { id: 'tokens', label: 'Tokens', icon: 'category' },
+      { id: 'spacing', label: 'Spacing', icon: 'space-bar' },
+      { id: 'grid', label: 'Grid', icon: 'grid-on' },
+      { id: 'motion', label: 'Motion', icon: 'animation' },
     ],
   },
   {

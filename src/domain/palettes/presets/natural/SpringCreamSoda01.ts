@@ -15,10 +15,4 @@ export const springCreamSoda01Palette: PaletteDefinition = {
   },
   bgStrategy: 'light',
   contrast: 'normal',
-  semanticMapping: {
-    text: {
-      onActionPrimary: '#FFFFFF',
-      onActionPolicy: 'forceHint',
-    },
-  },
 };

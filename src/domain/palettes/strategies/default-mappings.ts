@@ -20,6 +20,10 @@ const lightMapping: SemanticMapping = {
     primary: { scale: 'neutral', step: 900 },
     secondary: { scale: 'neutral', step: 700 },
     muted: { scale: 'neutral', step: 700 },
+    /** 액션 배경 위: 밝은 neutral 우선, WCAG 미달 시 흰/검 폴백 */
+    onActionPrimary: { scale: 'neutral', step: 50 },
+    onActionSecondary: { scale: 'neutral', step: 50 },
+    onActionAccent: { scale: 'neutral', step: 50 },
   },
   border: {
     default: { scale: 'neutral', step: 300 },
@@ -84,6 +88,9 @@ const coloredMapping: SemanticMapping = {
     primary: { scale: 'neutral', step: 900 },
     secondary: { scale: 'neutral', step: 700 },
     muted: { scale: 'neutral', step: 700 },
+    onActionPrimary: { scale: 'neutral', step: 50 },
+    onActionSecondary: { scale: 'neutral', step: 50 },
+    onActionAccent: { scale: 'neutral', step: 50 },
   },
   border: {
     default: { scale: 'neutral', step: 300 },
@@ -148,6 +155,10 @@ const darkMapping: SemanticMapping = {
     primary: { scale: 'neutral', step: 50 },
     secondary: { scale: 'neutral', step: 200 },
     muted: { scale: 'neutral', step: 300 },
+    /** 다크: 액션 면이 상대적으로 밝은 스텝 → 어두운 neutral 톤 우선 */
+    onActionPrimary: { scale: 'neutral', step: 900 },
+    onActionSecondary: { scale: 'neutral', step: 900 },
+    onActionAccent: { scale: 'neutral', step: 900 },
   },
   border: {
     default: { scale: 'neutral', step: 600 },

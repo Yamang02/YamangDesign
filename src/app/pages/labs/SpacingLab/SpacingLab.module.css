@@ -1,0 +1,268 @@
+@layer shell {
+  /* ── Scale ── */
+  .scaleList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-1);
+    width: 100%;
+  }
+
+  .scaleRow {
+    display: grid;
+    grid-template-columns: 3rem 14rem 4rem 1fr;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+    padding: var(--ds-spacing-1) 0;
+  }
+
+  .scaleKey {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-primary);
+    text-align: right;
+  }
+
+  .scaleVar {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+    font-family: var(--ds-font-mono);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .scaleValue {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .barTrack {
+    height: 12px;
+    background: var(--shell-color-bg-subtle, color-mix(in srgb, var(--shell-border-default) 40%, transparent));
+    border-radius: var(--ds-radius-full);
+    overflow: hidden;
+  }
+
+  .bar {
+    height: 100%;
+    background: var(--ds-color-primary-500);
+    border-radius: var(--ds-radius-full);
+    min-width: 2px;
+  }
+
+  /* ── Diff ── */
+  .diffLayout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ds-spacing-6);
+    width: 100%;
+  }
+
+  .diffControls {
+    display: flex;
+    gap: var(--ds-spacing-6);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .diffLabel {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+  }
+
+  .diffLabelText {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--shell-text-primary);
+    min-width: 1rem;
+  }
+
+  .diffSelect {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-primary);
+    background: var(--shell-color-bg-base, transparent);
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    padding: var(--ds-spacing-1) var(--ds-spacing-2);
+    cursor: pointer;
+  }
+
+  .diffVisual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 실제 px 크기 블록 — 바닥 정렬로 높이 차이를 직접 체감 */
+  .diffBlocks {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: var(--ds-spacing-6);
+    height: 96px; /* maxPx — 고정값 */
+    border-bottom: 1px solid var(--shell-border-default);
+    width: 100%;
+  }
+
+  .diffLabels {
+    display: flex;
+    justify-content: center;
+    gap: var(--ds-spacing-6);
+    padding-top: var(--ds-spacing-2);
+  }
+
+  .diffBlockA {
+    width: 48px;
+    flex-shrink: 0;
+    background: var(--ds-color-primary-500);
+    border-radius: var(--ds-radius-sm) var(--ds-radius-sm) 0 0;
+    min-height: 2px;
+  }
+
+  .diffBlockB {
+    width: 48px;
+    flex-shrink: 0;
+    background: var(--ds-color-secondary-500, var(--ds-color-accent-500));
+    border-radius: var(--ds-radius-sm) var(--ds-radius-sm) 0 0;
+    min-height: 2px;
+  }
+
+  .diffBlockDelta {
+    width: 48px;
+    flex-shrink: 0;
+    background: color-mix(in srgb, var(--ds-color-primary-500) 30%, transparent);
+    border: 1px dashed var(--ds-color-primary-500);
+    border-radius: var(--ds-radius-sm) var(--ds-radius-sm) 0 0;
+    min-height: 2px;
+    box-sizing: border-box;
+  }
+
+  .diffBlockLabel {
+    width: 48px;
+    flex-shrink: 0;
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+    font-family: var(--ds-font-mono);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .diffEqual {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    font-style: italic;
+    align-self: center;
+  }
+
+  /* ── Context ── */
+  .contextTabs {
+    display: flex;
+    gap: var(--ds-spacing-2);
+    margin-bottom: var(--ds-spacing-5);
+  }
+
+  .contextTab {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background: transparent;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-full);
+    padding: var(--ds-spacing-1) var(--ds-spacing-3);
+    cursor: pointer;
+    transition: background 150ms, color 150ms, border-color 150ms;
+  }
+
+  .contextTab:hover {
+    color: var(--shell-text-primary);
+    border-color: var(--shell-text-secondary);
+  }
+
+  .contextTabActive {
+    background: var(--ds-color-primary-500);
+    border-color: var(--ds-color-primary-500);
+    color: #fff;
+  }
+
+  .contextGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--ds-spacing-4);
+    width: 100%;
+  }
+
+  .contextCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-2);
+    align-items: center;
+  }
+
+  .contextLabel {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+    font-family: var(--ds-font-mono);
+    white-space: nowrap;
+  }
+
+  /* padding mode */
+  .contextPaddingOuter {
+    width: 100%;
+    border: 1px dashed var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    overflow: hidden;
+  }
+
+  .contextPaddingInner {
+    background: color-mix(in srgb, var(--ds-color-primary-500) 15%, transparent);
+  }
+
+  .contextContent {
+    height: 24px;
+    background: var(--ds-color-primary-500);
+    border-radius: var(--ds-radius-sm);
+  }
+
+  /* gap mode */
+  .contextGapRow {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 24px;
+  }
+
+  .contextBlock {
+    flex: 1;
+    min-width: 0;
+    background: var(--ds-color-primary-500);
+    border-radius: var(--ds-radius-sm);
+  }
+
+  .contextGap {
+    background: color-mix(in srgb, var(--ds-color-accent-500, #f59e0b) 35%, transparent);
+    border-left: 1px dashed color-mix(in srgb, var(--ds-color-accent-500, #f59e0b) 80%, transparent);
+    border-right: 1px dashed color-mix(in srgb, var(--ds-color-accent-500, #f59e0b) 80%, transparent);
+    min-width: 1px;
+  }
+
+  /* margin mode */
+  .contextMarginOuter {
+    width: 100%;
+    min-height: 64px;
+    border: 1px dashed var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .contextMarginBox {
+    flex: 1;
+    background: var(--ds-color-primary-500);
+    border-radius: var(--ds-radius-sm);
+    min-height: 24px;
+  }
+}

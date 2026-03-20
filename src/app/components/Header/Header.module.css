@@ -31,7 +31,7 @@
     border: none;
     cursor: pointer;
     padding: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
   }
 
   .logo:hover {

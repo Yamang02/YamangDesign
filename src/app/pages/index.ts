@@ -7,6 +7,9 @@ export {
   TokenLab,
   Playground,
   DesignSettingsLab,
+  SpacingLab,
+  GridLab,
+  MotionLab,
 } from './labs';
 
 // E06 P01/P04: Build (Atoms, Molecules, Organisms, Components) / Context

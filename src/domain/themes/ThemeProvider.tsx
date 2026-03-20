@@ -2,7 +2,7 @@
  * E03: Palette × Style 조합 기반 ThemeProvider
  * PaletteSelection 기반 단일 상태 모델
  */
-import { useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
+import { useState, useLayoutEffect, useMemo, useCallback, type ReactNode } from 'react';
 import type {
   StyleName,
   SystemPresetName,
@@ -151,7 +151,7 @@ export function ThemeProvider({
     [selection, removeCustomSemanticPresetInternal, setPaletteSelection]
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const paletteStyleVars = flattenTokenSet(tokenSet);
 
     // Global alias vars: each palette+style var also exposed as {var}-global

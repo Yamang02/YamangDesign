@@ -19,6 +19,9 @@ import {
   FontLab,
   TokenLab,
   DesignSettingsLab,
+  SpacingLab,
+  GridLab,
+  MotionLab,
   Atoms,
   Molecules,
   Organisms,
@@ -31,6 +34,7 @@ import {
 import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
 import { DesignSettingsNavContext } from '@app/context/DesignSettingsNavContext';
 import { InspectorProvider } from '@app/context/InspectorContext';
+import { LayoutPreviewControlsProvider } from '@app/context/LayoutPreviewControlsContext';
 import { ComponentInspectorPanel } from '@app/components/ComponentInspector/ComponentInspectorPanel';
 
 /** E06 P01 + P05: Labs / Build / Context / Playground / Design Settings */
@@ -51,7 +55,10 @@ export type PageName =
   | 'layout-landing'
   | 'layout-dashboard'
   | 'layout-article'
-  | 'playground';
+  | 'playground'
+  | 'spacing'
+  | 'grid'
+  | 'motion';
 
 /** P08: design-settings 블롭에서 componentMapping 동기화 후 설정만 반환 */
 function parseDesignSystemBlob(raw: string): StoredSettings | null {
@@ -156,6 +163,12 @@ function App() {
         return <FontLab />;
       case 'tokens':
         return <TokenLab />;
+      case 'spacing':
+        return <SpacingLab />;
+      case 'grid':
+        return <GridLab />;
+      case 'motion':
+        return <MotionLab />;
       case 'playground':
         return <Playground />;
       case 'atoms':
@@ -208,7 +221,7 @@ function App() {
               transition: 'background-color 300ms ease-in-out',
             }}
           >
-            {renderPage()}
+            <LayoutPreviewControlsProvider>{renderPage()}</LayoutPreviewControlsProvider>
           </main>
           <Footer />
         </div>

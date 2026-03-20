@@ -9,7 +9,6 @@ import type { TocItem } from '../../layouts';
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'token-map', label: 'Token Map' },
-  { id: 'controls', label: 'Controls' },
 ];
 
 export function Service() {

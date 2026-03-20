@@ -49,7 +49,7 @@
  *
  * ### 2-3. 시맨틱 토큰 경로 (SemanticTokenPath)
  *   bg:   base, subtle, surfaceLow, surface, surfaceHigh, surfaceBrand, elevated, muted
- *   text: primary, secondary, muted, onActionPrimary, onActionSecondary, onActionAccent, onActionPolicy
+ *   text: primary, secondary, muted, onActionPrimary, onActionSecondary, onActionAccent
  *   border: default, subtle, accent, focus
  *   action: primary|secondary|accent 각각 default|hover|active
  *   feedback: error|warning|success|info 각각 bg|text|border
@@ -89,8 +89,8 @@ export const myPresetPalette: PaletteDefinition = {
   //     surfaceBrand: { scale: 'accent', step: 100 }, // primary 대신 accent 사용
   //   },
   //   text: {
-  //     onActionPrimary: '#FFFFFF', // primary 버튼 위 텍스트를 항상 흰색으로
-  //     onActionPolicy: 'forceHint', // 힌트 색상을 대비 검증보다 우선 적용
+  //     // 기본은 bgStrategy 매핑의 neutral-50 등. 필요 시 스케일/hex로 덮어쓰기
+  //     onActionPrimary: { scale: 'neutral', step: 50 },
   //   },
   //   border: {
   //     accent: { scale: 'secondary', step: 400 },
