@@ -9,7 +9,6 @@ function createDefinition(bgStrategy: PaletteDefinition['bgStrategy']): PaletteD
     bgStrategy,
     colors: {
       primary: '#3B82F6',
-      neutral: '#9CA3AF',
     },
   };
 }
