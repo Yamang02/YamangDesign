@@ -1,0 +1,75 @@
+.bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.blob1 {
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(45, 80, 22, 0.7), transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation-name: drift1;
+  animation-duration: 12s;
+}
+
+.blob2 {
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(155, 139, 180, 0.5), transparent 70%);
+  top: 20%;
+  right: -5%;
+  animation-name: drift2;
+  animation-duration: 10s;
+}
+
+.blob3 {
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(91, 143, 168, 0.45), transparent 70%);
+  bottom: 10%;
+  left: 30%;
+  animation-name: drift3;
+  animation-duration: 14s;
+}
+
+.blob4 {
+  width: 35vw;
+  height: 35vw;
+  background: radial-gradient(circle, rgba(61, 122, 110, 0.4), transparent 70%);
+  bottom: -5%;
+  right: 20%;
+  animation-name: drift4;
+  animation-duration: 9s;
+}
+
+@keyframes drift1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(5vw, 8vh) scale(1.1); }
+}
+
+@keyframes drift2 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-6vw, 5vh) scale(0.95); }
+}
+
+@keyframes drift3 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(4vw, -6vh) scale(1.08); }
+}
+
+@keyframes drift4 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-4vw, -4vh) scale(1.05); }
+}

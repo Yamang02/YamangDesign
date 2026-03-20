@@ -1,0 +1,59 @@
+.card {
+  position: absolute;
+  bottom: var(--ds-spacing-8);
+  right: var(--ds-spacing-8);
+  width: 280px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: var(--ds-spacing-6);
+
+  color: #fff;
+}
+
+.title {
+  font-size: var(--ds-text-xl);
+  font-weight: var(--ds-font-weight-bold);
+  margin: 0 0 var(--ds-spacing-1);
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.artist {
+  font-size: var(--ds-text-md);
+  font-weight: var(--ds-font-weight-medium);
+  margin: 0 0 var(--ds-spacing-4);
+  opacity: 0.85;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: var(--ds-spacing-4);
+  border: none;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-2);
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--ds-text-sm);
+}
+
+.metaLabel {
+  opacity: 0.6;
+}
+
+.metaValue {
+  text-align: right;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}

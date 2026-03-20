@@ -1,0 +1,96 @@
+.container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: var(--ds-spacing-6);
+}
+
+.heading {
+  font-size: var(--ds-text-sm);
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--ds-spacing-2);
+}
+
+.subheading {
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0 var(--ds-spacing-5);
+}
+
+.axisLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--ds-spacing-2);
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.mapArea {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dot {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  cursor: default;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dot:hover {
+  transform: translate(-50%, 50%) scale(1.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.dotTooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: var(--ds-text-xs);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 20;
+}
+
+.dot:hover .dotTooltip {
+  opacity: 1;
+}
+
+.yLabel {
+  position: absolute;
+  left: -32px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+}
+
+.xLabel {
+  text-align: center;
+  margin-top: var(--ds-spacing-2);
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.3);
+}

@@ -1,0 +1,53 @@
+.stage {
+  position: relative;
+  height: 200vh;
+}
+
+.stickyBg {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: filter 0.1s linear;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.25) 60%,
+    rgba(10, 15, 10, 0.7) 100%
+  );
+}
+
+.panels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.panels > * {
+  pointer-events: auto;
+}
+
+.chapterLabel {
+  position: absolute;
+  top: var(--ds-spacing-8);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+}

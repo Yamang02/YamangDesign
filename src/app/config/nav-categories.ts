@@ -1,5 +1,6 @@
 /**
  * E06 P01: Navigation 카테고리 — 3축 구조 (Labs / Build / Context / Playground)
+ * E22 P01: Art 카테고리 추가
  */
 import type { IconLibrary } from '../components/Icon';
 
@@ -65,6 +66,15 @@ export const navCategories: NavCategory[] = [
     items: [
       { id: 'service', label: 'Service', icon: 'browser', iconLibrary: 'nucleo' },
       { id: 'shell', label: 'Shell', icon: 'shell', iconLibrary: 'nucleo' },
+    ],
+  },
+  {
+    id: 'art',
+    icon: 'image',
+    iconLibrary: 'material',
+    tooltip: 'Art',
+    items: [
+      { id: 'monet-water-lilies', label: 'Water Lilies', icon: 'image' },
     ],
   },
   {

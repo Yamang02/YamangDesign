@@ -1,0 +1,47 @@
+.page {
+  background: #0a0f0a;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Chapter 1 → 2 fade transition */
+.chapterTransition {
+  height: 2px;
+  background: linear-gradient(to right, rgba(61, 122, 110, 0), rgba(91, 143, 168, 0.5), rgba(155, 139, 180, 0), rgba(61, 122, 110, 0));
+}
+
+/* Chapter 2 */
+.chapter2 {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--ds-spacing-16) var(--ds-spacing-8);
+  gap: var(--ds-spacing-12);
+}
+
+.chapter2Label {
+  position: absolute;
+  top: var(--ds-spacing-8);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+}
+
+.chapter2Content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-spacing-10);
+}

@@ -17,3 +17,6 @@ export {
 export { Atoms, Molecules, Organisms, Components } from './build';
 export { Service, Shell } from './context';
 export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';
+
+// E22: Art Reference Gallery
+export { MonetWaterLilies } from './art/MonetWaterLilies';
