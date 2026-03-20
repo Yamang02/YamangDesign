@@ -14,30 +14,34 @@
   position: relative;
   overflow: hidden;
   border-radius: 16px;
-  padding: var(--ds-spacing-12) var(--ds-spacing-8);
+  min-height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--ds-spacing-10);
+  justify-content: center;
+  gap: var(--ds-spacing-6);
   scroll-margin-top: var(--ds-spacing-8);
+  padding: var(--ds-spacing-16) var(--ds-spacing-8);
 }
 
 .chapter2Label {
+  position: absolute;
+  top: var(--ds-spacing-6);
+  left: 50%;
+  transform: translateX(-50%);
   font-size: var(--ds-text-xs);
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  text-align: center;
+  white-space: nowrap;
 }
 
 .chapter2Content {
   position: relative;
   z-index: 1;
-  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--ds-spacing-10);
+  justify-content: center;
 }
 
 /* scroll-margin for anchor jump */

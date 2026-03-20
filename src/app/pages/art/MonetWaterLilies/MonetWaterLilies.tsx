@@ -3,14 +3,13 @@
  * Style: Glassmorphism
  *
  * Chapter 1 — The Painting: 원화 직접 참조, museum label, palette swatches
- * Chapter 2 — The Impression: 심상 차용 인터랙티브 (animated gradient + ripple + color DNA)
+ * Chapter 2 — The Impression: 심상 차용 인터랙티브 (animated gradient + ripple + glass quote card)
  * Chapter 3 — The Application: 모네 팔레트 × DS 토큰 컴포넌트 적용
  */
 import { ArtShell, type ArtChapter } from '../_shared/ArtShell';
 import { HeroStage } from './components/HeroStage';
 import { ImpressionBackground } from './components/ImpressionBackground';
 import { RippleCanvas } from './components/RippleCanvas';
-import { ColorDNAMap } from './components/ColorDNAMap';
 import { ImpressionistQuote } from './components/ImpressionistQuote';
 import { ComponentApplication } from './components/ComponentApplication';
 import styles from './MonetWaterLilies.module.css';
@@ -39,7 +38,6 @@ export function MonetWaterLilies() {
           <span className={styles.chapter2Label}>Chapter 2 — The Impression</span>
           <div className={styles.chapter2Content}>
             <ImpressionistQuote />
-            <ColorDNAMap />
           </div>
         </section>
 

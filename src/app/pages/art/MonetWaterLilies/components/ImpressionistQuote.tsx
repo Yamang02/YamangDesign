@@ -8,18 +8,21 @@ export function ImpressionistQuote() {
   const totalDelay = words.length * 0.08;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.card}>
       <blockquote className={styles.quote}>
         {words.map((word, i) => (
-          <span
-            key={i}
-            className={styles.word}
-            style={{ animationDelay: `${i * 0.08}s` }}
-          >
-            {word}
+          <span key={i}>
+            <span
+              className={styles.word}
+              style={{ animationDelay: `${i * 0.08}s` }}
+            >
+              {word}
+            </span>
+            {' '}
           </span>
         ))}
       </blockquote>
+      <div className={styles.divider} />
       <cite
         className={styles.attribution}
         style={{ animationDelay: `${totalDelay + 0.3}s` }}

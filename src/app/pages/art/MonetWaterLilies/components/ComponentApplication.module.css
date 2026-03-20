@@ -3,22 +3,203 @@
   overflow: hidden;
   border-radius: 16px;
   padding: var(--ds-spacing-10) var(--ds-spacing-8);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  scroll-margin-top: var(--ds-spacing-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-10);
 }
 
 .chapterLabel {
   display: block;
   font-size: var(--ds-text-xs);
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  margin-bottom: var(--ds-spacing-8);
 }
 
-.placeholder {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.3);
+/* ── Block headings ── */
+.blockTitle {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--ds-spacing-4);
+}
+
+/* ── Block: Color Tokens ── */
+.tokenGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--ds-spacing-3);
+}
+
+.tokenChip {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tokenSwatch {
+  height: 52px;
+}
+
+.tokenMeta {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.tokenRole {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.tokenName {
+  display: block;
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tokenHex {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: monospace;
+}
+
+/* ── Block: Buttons ── */
+.buttonRow {
+  display: flex;
+  gap: var(--ds-spacing-3);
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: var(--ds-spacing-2) var(--ds-spacing-5);
+  border-radius: 8px;
   font-size: var(--ds-text-sm);
-  padding: var(--ds-spacing-12) 0;
+  font-weight: var(--ds-font-weight-medium);
+  border: none;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+  letter-spacing: 0.01em;
+}
+
+.btn:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.btnPrimary {
+  background: #2D5016;
+  color: #E8E4D5;
+}
+
+.btnSecondary {
+  background: #3D7A6E;
+  color: #E8E4D5;
+}
+
+.btnAccent {
+  background: #C4A84F;
+  color: #1a1a10;
+}
+
+.btnGhost {
+  background: transparent;
+  color: rgba(232, 228, 213, 0.8);
+  border: 1px solid rgba(232, 228, 213, 0.25);
+}
+
+/* ── Block: Typography ── */
+.typeStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+.typeDisplay {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: #E8E4D5;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.typeBody {
+  font-size: var(--ds-text-md);
+  color: #9B8BB4;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.typeCaption {
+  font-size: var(--ds-text-xs);
+  color: #C4A84F;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* ── Block: Art Card ── */
+.artCard {
+  display: flex;
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(91, 143, 168, 0.3);
+  max-width: 420px;
+  background: rgba(10, 15, 10, 0.6);
+}
+
+.artCardThumb {
+  width: 120px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.artCardBody {
+  padding: var(--ds-spacing-5) var(--ds-spacing-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--ds-spacing-2);
+}
+
+.artCardCategory {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5B8FA8;
+}
+
+.artCardTitle {
+  font-size: var(--ds-text-md);
+  font-weight: var(--ds-font-weight-medium);
+  color: #E8E4D5;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.artCardSub {
+  font-size: var(--ds-text-xs);
+  color: rgba(155, 139, 180, 0.7);
+}
+
+.artCardTag {
+  display: inline-block;
+  margin-top: var(--ds-spacing-1);
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: rgba(155, 139, 180, 0.15);
+  border: 1px solid rgba(155, 139, 180, 0.3);
+  font-size: 10px;
+  color: #9B8BB4;
 }
