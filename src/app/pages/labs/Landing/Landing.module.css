@@ -189,5 +189,11 @@
     .pricingHighlight {
       transform: none;
     }
+
+    .featuresGrid,
+    .pricingGrid,
+    .testimonialsGrid {
+      grid-template-columns: 1fr;
+    }
   }
 }
