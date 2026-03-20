@@ -6,9 +6,10 @@ interface MuseumLabelProps {
   artist: string
   medium: string
   year: number
+  yearEnd?: number
 }
 
-export function MuseumLabel({ title, subtitle, artist, medium, year }: MuseumLabelProps) {
+export function MuseumLabel({ title, subtitle, artist, medium, year, yearEnd }: MuseumLabelProps) {
   return (
     <div className={styles.label} aria-label="작품 정보">
       <span className={styles.title}>{title}</span>
@@ -16,7 +17,7 @@ export function MuseumLabel({ title, subtitle, artist, medium, year }: MuseumLab
       <span className={styles.divider} />
       <span className={styles.meta}>
         {artist}<br />
-        {medium}, {year}
+        {medium}, {year}{yearEnd ? `–${String(yearEnd).slice(-2)}` : ''}
       </span>
     </div>
   );

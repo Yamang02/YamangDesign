@@ -31,6 +31,7 @@ export function HeroStage() {
           artist="Claude Monet"
           medium="Oil on Canvas"
           year={1914}
+          yearEnd={1918}
         />
         <PaletteSwatchBar palette={MONET_PALETTE} />
       </div>

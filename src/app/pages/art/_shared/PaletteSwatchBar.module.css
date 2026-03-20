@@ -17,6 +17,7 @@
   left: var(--ds-spacing-8);
 
   background: #1C1C1C;
+  backdrop-filter: none;
   border: 2px solid #F2EFE8;
   border-radius: 0;
   padding: var(--ds-spacing-4) var(--ds-spacing-5);
