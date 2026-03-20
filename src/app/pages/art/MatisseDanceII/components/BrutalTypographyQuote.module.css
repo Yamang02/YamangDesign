@@ -1,0 +1,56 @@
+.wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-spacing-12, 48px);
+  padding: var(--ds-spacing-16, 64px) var(--ds-spacing-8, 32px);
+  min-height: inherit;
+  cursor: crosshair;
+}
+
+/* 거대 타이포 */
+.wordRow {
+  display: flex;
+  gap: 0.05em;
+}
+
+.letter {
+  font-size: clamp(80px, 16vw, 180px);
+  font-weight: 900;
+  line-height: 1;
+  color: #F2EFE8;
+  transition: color 0.1s ease;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+
+/* 인용구 카드 — 브루탈리즘 */
+.card {
+  background: #C8361A;
+  border: 3px solid #1C1C1C;
+  box-shadow: 6px 6px 0 #1C1C1C;
+  border-radius: 0;
+  padding: var(--ds-spacing-8, 32px) var(--ds-spacing-10, 40px);
+  margin: 0;
+  max-width: 480px;
+  text-align: center;
+}
+
+.quote {
+  font-size: var(--ds-text-xl, 1.25rem);
+  font-weight: var(--ds-font-weight-medium, 500);
+  color: #F2EFE8;
+  margin: 0 0 var(--ds-spacing-3, 12px);
+  line-height: 1.4;
+}
+
+.cite {
+  font-size: var(--ds-text-sm, 0.875rem);
+  color: rgba(242, 239, 232, 0.7);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

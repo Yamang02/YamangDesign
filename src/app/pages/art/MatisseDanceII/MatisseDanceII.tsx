@@ -10,6 +10,8 @@ import { ArtShell, type ArtChapter } from '../_shared/ArtShell';
 import { ArtHeroStage } from '../_shared/ArtHeroStage';
 import type { LabelInfo } from '../_shared/ArtHeroStage';
 import { MATISSE_PALETTE } from './matisse-palette';
+import { BrutalBackground } from './components/BrutalBackground';
+import { BrutalTypographyQuote } from './components/BrutalTypographyQuote';
 import styles from './MatisseDanceII.module.css';
 
 const CHAPTERS: ArtChapter[] = [
@@ -44,9 +46,13 @@ export function MatisseDanceII() {
 
         <div className={styles.chapterTransition} />
 
-        {/* Chapter 2 — placeholder */}
-        <section id="chapter-2" className={styles.chapter2Placeholder}>
-          <span className={styles.placeholderLabel}>Chapter 2 — The Impression (coming soon)</span>
+        {/* Chapter 2 — The Impression */}
+        <section id="chapter-2" className={styles.chapter2}>
+          <BrutalBackground />
+          <span className={styles.chapter2Label}>Chapter 2 — The Impression</span>
+          <div className={styles.chapter2Content}>
+            <BrutalTypographyQuote />
+          </div>
         </section>
 
         <div className={styles.chapterTransition} />

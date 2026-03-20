@@ -12,6 +12,38 @@
   height: var(--ds-spacing-16, 64px);
 }
 
+/* Chapter 2 — The Impression */
+.chapter2 {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.chapter2Label {
+  position: absolute;
+  top: var(--ds-spacing-6, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--ds-text-xs);
+  color: rgba(242, 239, 232, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.chapter2Content {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Placeholder sections */
 .chapter2Placeholder,
 .chapter3Placeholder {

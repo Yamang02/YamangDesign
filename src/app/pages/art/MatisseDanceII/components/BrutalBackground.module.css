@@ -1,0 +1,32 @@
+.bg {
+  position: absolute;
+  inset: 0;
+  background: #1C1C1C;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* 3개의 솔리드 컬러 블록 — 격자 기반 고정 위치 */
+.block {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+}
+
+.blockRed {
+  background: #C8361A;
+  top: 12%;
+  right: 8%;
+}
+
+.blockGreen {
+  background: #2E6B35;
+  bottom: 15%;
+  left: 6%;
+}
+
+.blockBlue {
+  background: #1A4F8C;
+  top: 45%;
+  left: 42%;
+}
