@@ -89,8 +89,8 @@ export const myPresetPalette: PaletteDefinition = {
   //     surfaceBrand: { scale: 'accent', step: 100 }, // primary 대신 accent 사용
   //   },
   //   text: {
-  //     // 기본은 bgStrategy 매핑의 neutral-50 등. 필요 시 스케일/hex로 덮어쓰기
-  //     onActionPrimary: { scale: 'neutral', step: 50 },
+  //     // 기본은 light/colored에서 #FFFFFF 힌트(+3:1 채택). 필요 시만 스케일/hex로 덮어쓰기
+  //     onActionPrimary: { scale: 'primary', step: 100 },
   //   },
   //   border: {
   //     accent: { scale: 'secondary', step: 400 },

@@ -56,8 +56,8 @@ export interface SemanticMapping {
     secondary: SemanticMappingValue;
     muted: SemanticMappingValue;
     /**
-     * 액션 배경 위 텍스트 (선택). 미지정 시 bgStrategy 기본 매핑(보통 neutral-50/900).
-     * resolve 시 해당 색이 배경과 4.5:1 미만이면 흰/검 자동 폴백.
+     * 액션 배경 위 텍스트 (선택). 미지정 시 bgStrategy 기본 매핑(light·colored는 #FFFFFF, dark는 neutral-900).
+     * resolve 시 힌트 대비가 WCAG21 AA 대형 기준 미만이면 흰/검 자동 폴백 (`ON_ACTION_HINT_MIN_CONTRAST` / `WCAG21_CONTRAST.AA_LARGE_TEXT`).
      */
     onActionPrimary?: SemanticMappingValue;
     onActionSecondary?: SemanticMappingValue;
