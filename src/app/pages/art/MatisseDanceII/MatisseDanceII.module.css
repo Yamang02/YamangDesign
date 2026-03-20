@@ -1,0 +1,31 @@
+.page {
+  min-height: 100vh;
+  background: #1C1C1C;   /* Charcoal — 브루탈 배경 */
+  color: #F2EFE8;         /* Raw White */
+}
+
+.anchorTarget {
+  scroll-margin-top: calc(var(--nav-height, 48px) + var(--ds-spacing-8));
+}
+
+.chapterTransition {
+  height: var(--ds-spacing-16, 64px);
+}
+
+/* Placeholder sections */
+.chapter2Placeholder,
+.chapter3Placeholder {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(242, 239, 232, 0.2);
+  border-radius: 0;
+}
+
+.placeholderLabel {
+  font-size: var(--ds-text-sm);
+  color: rgba(242, 239, 232, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
