@@ -1,6 +1,7 @@
 /**
  * E02: 아이콘 기반 네비게이션 - 아이콘 + 메뉴명 통일
  * [layout▾] [component] [lab▾] | [playground] | [settings]
+ * E21/P02: mobile hamburger toggle
  */
 import { useState } from 'react';
 import { Icon } from '../Icon';
@@ -18,58 +19,82 @@ export function HeaderNav({
   onOpenSettings,
 }: HeaderNavProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleSelect = (id: string) => {
+    onSelect(id);
+    setMobileOpen(false);
+    setOpenDropdown(null);
+  };
 
   return (
     <nav className={styles.nav} aria-label="주 메뉴" data-shell>
-      {navCategories.map((category) => {
-        const label = category.tooltip;
-        const icon = (
-          <Icon
-            name={category.icon}
-            library={(category.iconLibrary as IconLibrary) ?? 'material'}
-            size="md"
-          />
-        );
+      {/* Mobile hamburger button — hidden on desktop via CSS */}
+      <button
+        type="button"
+        className={styles.hamburger}
+        onClick={() => setMobileOpen((prev) => !prev)}
+        aria-label={mobileOpen ? '메뉴 닫기' : '메뉴 열기'}
+        aria-expanded={mobileOpen}
+        aria-controls="mobile-nav-menu"
+      >
+        <Icon name={mobileOpen ? 'close' : 'menu'} size="md" />
+      </button>
 
-        if (category.items) {
-          return (
-            <HeaderNavDropdown
-              key={category.id}
-              icon={icon}
-              label={label}
-              items={category.items.map((item) => ({
-                id: item.id,
-                label: item.label,
-                icon: item.icon,
-                iconLibrary: item.iconLibrary,
-              }))}
-              active={category.items.some((item) => item.id === activePage)}
-              activeItemId={activePage}
-              isOpen={openDropdown === category.id}
-              onToggle={() => setOpenDropdown((prev) => (prev === category.id ? null : category.id))}
-              onSelect={(id) => {
-                onSelect(id);
-                setOpenDropdown(null);
-              }}
+      {/* Nav items — on mobile shown as overlay drawer when mobileOpen */}
+      <div
+        id="mobile-nav-menu"
+        className={`${styles.navItems} ${mobileOpen ? styles.navItemsOpen : ''}`}
+      >
+        {navCategories.map((category) => {
+          const label = category.tooltip;
+          const icon = (
+            <Icon
+              name={category.icon}
+              library={(category.iconLibrary as IconLibrary) ?? 'material'}
+              size="md"
             />
           );
-        }
 
-        return (
-          <span key={category.id} style={{ display: 'contents' }}>
-            {category.id === 'playground' && <span className={styles.divider} aria-hidden />}
-            <HeaderNavItem
-              icon={icon}
-              label={label}
-              active={category.id === activePage}
-              onClick={() => onSelect(category.id)}
-            />
-          </span>
-        );
-      })}
+          if (category.items) {
+            return (
+              <HeaderNavDropdown
+                key={category.id}
+                icon={icon}
+                label={label}
+                items={category.items.map((item) => ({
+                  id: item.id,
+                  label: item.label,
+                  icon: item.icon,
+                  iconLibrary: item.iconLibrary,
+                }))}
+                active={category.items.some((item) => item.id === activePage)}
+                activeItemId={activePage}
+                isOpen={openDropdown === category.id}
+                onToggle={() => setOpenDropdown((prev) => (prev === category.id ? null : category.id))}
+                onSelect={(id) => {
+                  handleSelect(id);
+                }}
+              />
+            );
+          }
 
-      <span className={styles.divider} aria-hidden />
-      <HeaderSettingsButton onOpenSettings={onOpenSettings} />
+          return (
+            <span key={category.id} style={{ display: 'contents' }}>
+              {category.id === 'playground' && <span className={styles.divider} aria-hidden />}
+              <HeaderNavItem
+                icon={icon}
+                label={label}
+                active={category.id === activePage}
+                onClick={() => handleSelect(category.id)}
+              />
+            </span>
+          );
+        })}
+
+        <span className={styles.divider} aria-hidden />
+        <HeaderSettingsButton onOpenSettings={onOpenSettings} />
+      </div>
     </nav>
   );
 }

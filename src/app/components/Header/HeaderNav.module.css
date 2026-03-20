@@ -3,6 +3,7 @@
               --shell-text-secondary, --shell-bg-elevated, --shell-border-default,
               --shell-shadow-lg, --shell-bg-primary-subtle */
   /* E02: 아이콘 기반 네비게이션 */
+  /* E21/P02: responsive mobile nav */
 
   .nav {
     display: flex;
@@ -10,6 +11,15 @@
     justify-content: flex-end;
     gap: var(--ds-spacing-2);
     flex: 1;
+  }
+
+  /* Desktop: navItems is inline flex group, hamburger hidden */
+  .navItems {
+    display: contents;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   .divider {
@@ -222,5 +232,77 @@
     gap: var(--ds-spacing-2);
     margin-top: var(--ds-spacing-4);
     justify-content: flex-end;
+  }
+
+  /* E21/P02: Mobile breakpoint — max-width 767px (below md: 768px) */
+  @media (max-width: 767px) {
+    /* Show hamburger button on mobile */
+    .hamburger {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      border-radius: var(--ds-radius-md);
+      background: transparent;
+      color: var(--shell-text-primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .hamburger:hover {
+      background: var(--shell-bg-hover);
+    }
+
+    /* Hide nav items by default on mobile; show as vertical stack when open */
+    .navItems {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--shell-bg-elevated);
+      border-bottom: var(--ds-border-width) solid var(--shell-border-default);
+      box-shadow: var(--shell-shadow-lg);
+      padding: var(--ds-spacing-2) var(--ds-spacing-3);
+      z-index: var(--ds-z-dropdown);
+    }
+
+    .navItems.navItemsOpen {
+      display: flex;
+    }
+
+    /* Dividers become horizontal lines on mobile */
+    .navItems .divider {
+      width: 100%;
+      height: var(--ds-border-width);
+      margin: var(--ds-spacing-1) 0;
+    }
+
+    /* Nav items take full width */
+    .navItems .navItem,
+    .navItems .dropdownTrigger {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    /* Dropdown menus on mobile: position relative, full width */
+    .navItems .dropdown {
+      position: static;
+    }
+
+    .navItems .dropdownMenu {
+      position: static;
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      margin-top: 0;
+      padding-left: var(--ds-spacing-6);
+    }
   }
 }

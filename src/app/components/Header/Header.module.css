@@ -44,4 +44,15 @@
     gap: var(--ds-spacing-2);
     flex: 1;
   }
+
+  /* E21/P02: Mobile — make header container the positioning parent for mobile menu */
+  @media (max-width: 767px) {
+    .container {
+      position: relative;
+    }
+
+    .logo {
+      font-size: var(--ds-text-lg);
+    }
+  }
 }
