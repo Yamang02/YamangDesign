@@ -13,7 +13,7 @@ export interface ArtButtonItem {
 }
 
 export interface ArtTypographyItem {
-  level: string   // 'Display' | 'Body' | 'Caption'
+  level: 'Display' | 'Body' | 'Caption'
   text: string
   hex: string
 }
