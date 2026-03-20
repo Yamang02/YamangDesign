@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import styles from './PaletteSwatchBar.module.css';
 
-export const MONET_PALETTE = [
-  { name: 'Deep Green',  hex: '#2D5016' },
-  { name: 'Sage',        hex: '#7A9E5F' },
-  { name: 'Lavender',    hex: '#9B8BB4' },
-  { name: 'Smoke White', hex: '#E8E4D5' },
-  { name: 'Teal',        hex: '#3D7A6E' },
-  { name: 'Mustard',     hex: '#C4A84F' },
-  { name: 'Deep Purple', hex: '#4A3560' },
-  { name: 'Water Blue',  hex: '#5B8FA8' },
-];
+export interface PaletteItem {
+  name: string
+  hex: string
+}
 
-export function PaletteSwatchBar() {
+interface PaletteSwatchBarProps {
+  palette: PaletteItem[]
+  variant?: 'glass' | 'brutal'
+}
+
+export function PaletteSwatchBar({ palette, variant = 'glass' }: PaletteSwatchBarProps) {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
 
   const handleCopy = (hex: string) => {
@@ -22,11 +21,13 @@ export function PaletteSwatchBar() {
     });
   };
 
+  const barClass = variant === 'brutal' ? styles.barBrutal : styles.bar;
+
   return (
-    <div className={styles.bar}>
+    <div className={barClass}>
       <p className={styles.label}>Color Palette</p>
       <div className={styles.swatches}>
-        {MONET_PALETTE.map(({ name, hex }) => (
+        {palette.map(({ name, hex }) => (
           <button
             key={hex}
             className={styles.swatch}

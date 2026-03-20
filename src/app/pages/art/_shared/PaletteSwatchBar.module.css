@@ -11,6 +11,17 @@
   padding: var(--ds-spacing-4) var(--ds-spacing-5);
 }
 
+.barBrutal {
+  position: absolute;
+  bottom: var(--ds-spacing-8);
+  left: var(--ds-spacing-8);
+
+  background: #1C1C1C;
+  border: 2px solid #F2EFE8;
+  border-radius: 0;
+  padding: var(--ds-spacing-4) var(--ds-spacing-5);
+}
+
 .label {
   font-size: var(--ds-text-xs);
   color: rgba(255, 255, 255, 0.6);
