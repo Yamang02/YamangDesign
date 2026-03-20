@@ -8,3 +8,4 @@ export { DesignSettingsLab } from './DesignSettingsLab';
 export { SpacingLab } from './SpacingLab';
 export { GridLab } from './GridLab';
 export { MotionLab } from './MotionLab';
+export { ResponsiveLab } from './ResponsiveLab';

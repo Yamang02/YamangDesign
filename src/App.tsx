@@ -22,6 +22,7 @@ import {
   SpacingLab,
   GridLab,
   MotionLab,
+  ResponsiveLab,
   Atoms,
   Molecules,
   Organisms,
@@ -58,7 +59,8 @@ export type PageName =
   | 'playground'
   | 'spacing'
   | 'grid'
-  | 'motion';
+  | 'motion'
+  | 'responsive';
 
 /** P08: design-settings 블롭에서 componentMapping 동기화 후 설정만 반환 */
 function parseDesignSystemBlob(raw: string): StoredSettings | null {
@@ -169,6 +171,8 @@ function App() {
         return <GridLab />;
       case 'motion':
         return <MotionLab />;
+      case 'responsive':
+        return <ResponsiveLab />;
       case 'playground':
         return <Playground />;
       case 'atoms':

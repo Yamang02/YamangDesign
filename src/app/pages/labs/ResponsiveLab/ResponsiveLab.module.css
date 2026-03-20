@@ -1,0 +1,92 @@
+@layer shell {
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: var(--ds-spacing-6);
+    margin-bottom: var(--ds-spacing-5);
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .controlGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-2);
+  }
+
+  .controlLabel {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+    font-weight: var(--ds-font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .buttonRow {
+    display: flex;
+    gap: var(--ds-spacing-2);
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+    background: transparent;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-full);
+    padding: var(--ds-spacing-1) var(--ds-spacing-3);
+    cursor: pointer;
+    transition: background 150ms, color 150ms, border-color 150ms;
+    white-space: nowrap;
+  }
+
+  .tab:hover {
+    color: var(--shell-text-primary);
+    border-color: var(--shell-text-secondary);
+  }
+
+  .tabActive {
+    background: var(--ds-color-primary-500);
+    border-color: var(--ds-color-primary-500);
+    color: #fff;
+  }
+
+  /* ── Viewport Label ── */
+  .viewportLabel {
+    display: flex;
+    align-items: baseline;
+    gap: var(--ds-spacing-2);
+    margin-bottom: var(--ds-spacing-3);
+  }
+
+  .viewportPx {
+    font-size: var(--ds-text-sm);
+    font-family: var(--ds-font-mono);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--shell-text-primary);
+  }
+
+  .viewportName {
+    font-size: var(--ds-text-sm);
+    color: var(--shell-text-secondary);
+  }
+
+  /* ── Preview ── */
+  .previewOuter {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-md);
+    background: color-mix(in srgb, var(--shell-border-default) 15%, transparent);
+    padding: var(--ds-spacing-4);
+  }
+
+  .previewContainer {
+    overflow: hidden;
+    border: 1px solid var(--shell-border-default);
+    border-radius: var(--ds-radius-sm);
+    background: var(--ds-color-bg-base);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--shell-border-default) 40%, transparent);
+    min-height: 400px;
+  }
+}
