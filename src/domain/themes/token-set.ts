@@ -104,7 +104,7 @@ export function buildTokenSet(
       }
     : expanded.semantic.feedback;
 
-  // 2. Semantic vars — --ds-color-{bg|text|border|action|feedback}-*
+  // 2. Semantic vars — --ds-color-{bg|text|border|action|feedback|badge}-*
   const semanticVars = flattenToCSSVars({
     color: {
       bg: expanded.semantic.bg,
@@ -112,6 +112,11 @@ export function buildTokenSet(
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: feedbackColors,
+      badge: {
+        custom: expanded.scales.accent[500],
+        semantic: expanded.scales.secondary[500],
+        natural: expanded.scales.sub[500],
+      },
       demo: {
         glass: {
           start: expanded.scales.primary[100],
@@ -201,6 +206,11 @@ export function buildThemeAndTokenSet(
       border: expanded.semantic.border,
       action: expanded.semantic.action,
       feedback: feedbackColors,
+      badge: {
+        custom: expanded.scales.accent[500],
+        semantic: expanded.scales.secondary[500],
+        natural: expanded.scales.sub[500],
+      },
       demo: {
         glass: {
           start: expanded.scales.primary[100],

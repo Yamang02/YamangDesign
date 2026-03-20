@@ -5,7 +5,8 @@ import {
   getMergedMapping,
   updateMappingAtPath,
 } from './resolve';
-import { getContrastRatio } from '@shared/utils/color';
+import { getContrastRatio, ON_ACTION_HINT_MIN_CONTRAST } from '@shared/utils/color';
+import { WCAG21_CONTRAST } from '@shared/utils/wcag-contrast';
 import { generateColorScale } from '../palette';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import type { SemanticMapping } from '../types';
@@ -36,9 +37,9 @@ function createTestMapping(): SemanticMapping {
       primary: { scale: 'neutral', step: 900 },
       secondary: { scale: 'neutral', step: 700 },
       muted: { scale: 'neutral', step: 500 },
-      onActionPrimary: { scale: 'neutral', step: 50 },
-      onActionSecondary: { scale: 'neutral', step: 50 },
-      onActionAccent: { scale: 'neutral', step: 50 },
+      onActionPrimary: '#FFFFFF',
+      onActionSecondary: '#FFFFFF',
+      onActionAccent: '#FFFFFF',
     },
     border: {
       default: { scale: 'neutral', step: 300 },
@@ -132,23 +133,26 @@ describe('resolveSemanticMapping', () => {
     const result = resolveSemanticMapping(mapping, scales);
 
     expect(result.bg.base).toBe('#FFFFFF');
-    // onAction: neutral-50 힌트가 통과하면 그 색, 아니면 흰/검 폴백
+    expect(ON_ACTION_HINT_MIN_CONTRAST).toBe(WCAG21_CONTRAST.AA_LARGE_TEXT);
+    // onAction: #FFFFFF 힌트가 AA_LARGE 기준 통과하면 흰색, 아니면 흰/검 폴백
     for (const [fg, bg] of [
       [result.text.onActionPrimary, result.action.primary.default],
       [result.text.onActionSecondary, result.action.secondary.default],
       [result.text.onActionAccent, result.action.accent.default],
     ] as const) {
-      expect(getContrastRatio(fg, bg)).toBeGreaterThanOrEqual(4.5);
+      expect(getContrastRatio(fg, bg)).toBeGreaterThanOrEqual(
+        WCAG21_CONTRAST.AA_LARGE_TEXT
+      );
     }
   });
 
-  it('어두운 primary 액션 배경에 onAction이 WCAG AA 이상', () => {
+  it('primary 액션 onAction이 힌트 기준 대비 이상', () => {
     const scales = createTestScales();
     const mapping = createTestMapping();
     const result = resolveSemanticMapping(mapping, scales);
     expect(
       getContrastRatio(result.text.onActionPrimary, result.action.primary.default)
-    ).toBeGreaterThanOrEqual(4.5);
+    ).toBeGreaterThanOrEqual(WCAG21_CONTRAST.AA_LARGE_TEXT);
   });
 
   it('밝은 accent 배경에는 검정 onAction 텍스트', () => {

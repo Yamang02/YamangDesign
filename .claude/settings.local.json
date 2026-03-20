@@ -39,7 +39,10 @@
       "Bash(npx vitest run src/shared/utils/color.test.ts)",
       "Bash(npx vitest run src/domain/palettes)",
       "Bash(echo \"export * from ''./grid'';\")",
-      "Bash(\"c:/Users/ljj02/Desktop/dev/YamangDesign/src/domain/tokens/global/index.ts\")"
+      "Bash(\"c:/Users/ljj02/Desktop/dev/YamangDesign/src/domain/tokens/global/index.ts\")",
+      "Bash(npm test -- --run)",
+      "Bash(npm test -- --watchAll=false)",
+      "Bash(echo \"EXIT: $?\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic",

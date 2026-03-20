@@ -101,7 +101,7 @@
     --shell-tooltip-font-size: 13px;
     --shell-tooltip-radius: 6px;
 
-    /* 프리셋 배지 고정 색 (Yamang/custom/semantic/natural/category) */
+    /* 프리셋 카테고리 배지 색 (고정값) */
     --shell-badge-custom: #10B981;
     --shell-badge-semantic: #F59E0B;
     --shell-badge-natural: #8B5CF6;

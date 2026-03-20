@@ -20,10 +20,10 @@ const lightMapping: SemanticMapping = {
     primary: { scale: 'neutral', step: 900 },
     secondary: { scale: 'neutral', step: 700 },
     muted: { scale: 'neutral', step: 700 },
-    /** 액션 배경 위: 밝은 neutral 우선, WCAG 미달 시 흰/검 폴백 */
-    onActionPrimary: { scale: 'neutral', step: 50 },
-    onActionSecondary: { scale: 'neutral', step: 50 },
-    onActionAccent: { scale: 'neutral', step: 50 },
+    /** 액션 위 글자: 흰 힌트. 채택 기준은 WCAG21 AA_LARGE_TEXT (computeOnActionColor) */
+    onActionPrimary: '#FFFFFF',
+    onActionSecondary: '#FFFFFF',
+    onActionAccent: '#FFFFFF',
   },
   border: {
     default: { scale: 'neutral', step: 300 },
@@ -88,9 +88,9 @@ const coloredMapping: SemanticMapping = {
     primary: { scale: 'neutral', step: 900 },
     secondary: { scale: 'neutral', step: 700 },
     muted: { scale: 'neutral', step: 700 },
-    onActionPrimary: { scale: 'neutral', step: 50 },
-    onActionSecondary: { scale: 'neutral', step: 50 },
-    onActionAccent: { scale: 'neutral', step: 50 },
+    onActionPrimary: '#FFFFFF',
+    onActionSecondary: '#FFFFFF',
+    onActionAccent: '#FFFFFF',
   },
   border: {
     default: { scale: 'neutral', step: 300 },

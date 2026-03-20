@@ -1,3 +1,5 @@
+import { WCAG21_CONTRAST } from './wcag-contrast';
+
 /**
  * HEX 값을 6자리 대문자로 정규화 (#abc → #AABBCC)
  */
@@ -193,11 +195,19 @@ export function getContrastRatio(fg: string, bg: string): number {
 }
 
 /**
- * action 배경색에 대해 WCAG AA(4.5:1)를 보장하는 텍스트 색 반환.
- * hint가 주어지고 4.5:1 이상이면 hint 사용, 실패 시 흰/검 중 대비가 높은 쪽 반환.
+ * 액션 힌트 채택 최소 대비 (= `WCAG21_CONTRAST.AA_LARGE_TEXT`).
+ * 본문 등에는 `WCAG21_CONTRAST.AA_NORMAL_TEXT`(4.5) 사용.
+ */
+export const ON_ACTION_HINT_MIN_CONTRAST = WCAG21_CONTRAST.AA_LARGE_TEXT;
+
+/**
+ * 액션(버튼 등) 배경 위 텍스트 색.
+ * - hint 없음: 흰/검 중 대비가 더 큰 쪽.
+ * - hint 있음: 대비가 {@link ON_ACTION_HINT_MIN_CONTRAST} 이상이면 hint 사용, 아니면 흰/검 자동.
  */
 export function computeOnActionColor(bgColor: string, hint?: string): string {
-  if (hint && getContrastRatio(hint, bgColor) >= 4.5) return hint;
+  if (hint && getContrastRatio(hint, bgColor) >= ON_ACTION_HINT_MIN_CONTRAST)
+    return hint;
   const whiteRatio = getContrastRatio('#FFFFFF', bgColor);
   const blackRatio = getContrastRatio('#000000', bgColor);
   return whiteRatio >= blackRatio ? '#FFFFFF' : '#000000';

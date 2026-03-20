@@ -62,6 +62,11 @@
       "showSwatch": true
     },
     {
+      "title": "Badge",
+      "tokens": ["--ds-color-badge-custom", "--ds-color-badge-semantic", "--ds-color-badge-natural"],
+      "showSwatch": true
+    },
+    {
       "title": "Spacing",
       "tokens": ["--ds-spacing-1", "--ds-spacing-2", "--ds-spacing-3", "--ds-spacing-4", "--ds-spacing-5", "--ds-spacing-6"],
       "showSwatch": false

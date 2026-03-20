@@ -15,7 +15,9 @@ import {
   getRelativeLuminance,
   getContrastRatio,
   computeOnActionColor,
+  ON_ACTION_HINT_MIN_CONTRAST,
 } from './color';
+import { WCAG21_CONTRAST } from './wcag-contrast';
 
 describe('normalizeHex', () => {
   it('3자리 HEX를 6자리 대문자로 확장', () => {
@@ -241,6 +243,10 @@ describe('getContrastRatio', () => {
 });
 
 describe('computeOnActionColor', () => {
+  it('액션 힌트 기준은 WCAG21 AA_LARGE_TEXT와 동일', () => {
+    expect(ON_ACTION_HINT_MIN_CONTRAST).toBe(WCAG21_CONTRAST.AA_LARGE_TEXT);
+  });
+
   it('밝은 배경(노랑)에는 검정 반환', () => {
     expect(computeOnActionColor('#FFD700')).toBe('#000000');
   });
@@ -249,12 +255,13 @@ describe('computeOnActionColor', () => {
     expect(computeOnActionColor('#1A3C8F')).toBe('#FFFFFF');
   });
 
-  it('hint가 4.5:1 이상이면 hint 반환', () => {
-    // #1A3C8F(네이비) 위에 흰색 → 7:1 이상 통과
+  it('hint가 AA_LARGE_TEXT 이상이면 hint 반환', () => {
     expect(computeOnActionColor('#1A3C8F', '#FFFFFF')).toBe('#FFFFFF');
+    // 중간 채도 프라이머리: AA_NORMAL 미달이지만 AA_LARGE 이상 → 흰 유지
+    expect(computeOnActionColor('#E94E70', '#FFFFFF')).toBe('#FFFFFF');
   });
 
-  it('hint가 4.5:1 미만이면 자동 계산으로 폴백', () => {
+  it('hint가 AA_LARGE_TEXT 미만이면 자동 계산으로 폴백', () => {
     // 노랑 위에 흰 hint → 대비 부족 → 검정으로 폴백
     expect(computeOnActionColor('#FFD700', '#FFFFFF')).toBe('#000000');
   });
