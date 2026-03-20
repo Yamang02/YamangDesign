@@ -1,0 +1,237 @@
+/* ── Section ── */
+.section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: var(--ds-spacing-10) var(--ds-spacing-8);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  scroll-margin-top: var(--ds-spacing-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-10);
+}
+
+.sectionBrutal {
+  background: #F2EFE8;
+  border: 3px solid #1C1C1C;
+  border-radius: 0;
+}
+
+/* ── Chapter label ── */
+.chapterLabel {
+  display: block;
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.sectionBrutal .chapterLabel {
+  color: rgba(28, 28, 28, 0.45);
+}
+
+/* ── Block headings ── */
+.blockTitle {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-font-weight-medium);
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--ds-spacing-4);
+}
+
+.sectionBrutal .blockTitle {
+  color: rgba(28, 28, 28, 0.5);
+}
+
+/* ── Block: Color Tokens ── */
+.tokenGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--ds-spacing-3);
+}
+
+.tokenChip {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tokenChipBrutal {
+  border: 2px solid #1C1C1C;
+  border-radius: 0;
+}
+
+.tokenSwatch {
+  height: 52px;
+}
+
+.tokenMeta {
+  padding: var(--ds-spacing-2) var(--ds-spacing-3);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.tokenMetaBrutal {
+  background: #1C1C1C;
+}
+
+.tokenRole {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.tokenName {
+  display: block;
+  font-size: var(--ds-text-xs);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tokenHex {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: monospace;
+}
+
+/* ── Block: Buttons ── */
+.buttonRow {
+  display: flex;
+  gap: var(--ds-spacing-3);
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: var(--ds-spacing-2) var(--ds-spacing-5);
+  border-radius: 0;
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+  border: 2px solid #1C1C1C;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btnBrutal {
+  /* identical base; variant distinction handled via inline color styles */
+}
+
+/* ── Block: Typography ── */
+.typeStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-spacing-3);
+}
+
+.typeDisplay {
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  line-height: 1.1;
+}
+
+.typeBody {
+  font-size: var(--ds-text-md);
+  line-height: 1.6;
+}
+
+.typeCaption {
+  font-size: var(--ds-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Block: Art Card ── */
+.artCard {
+  display: flex;
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(91, 143, 168, 0.3);
+  max-width: 420px;
+  background: rgba(10, 15, 10, 0.6);
+  margin: 0 auto;
+  align-self: center;
+}
+
+.artCardBrutal {
+  border: 3px solid #1C1C1C;
+  border-radius: 0;
+  background: #F2EFE8;
+  box-shadow: 4px 4px 0 #1C1C1C;
+}
+
+.artCardThumb {
+  width: 140px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.artCardBody {
+  padding: var(--ds-spacing-5) var(--ds-spacing-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--ds-spacing-2);
+}
+
+.artCardCategory {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5B8FA8;
+}
+
+.artCardTitle {
+  font-size: var(--ds-text-md);
+  font-weight: var(--ds-font-weight-medium);
+  color: #E8E4D5;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.artCardSub {
+  font-size: var(--ds-text-xs);
+  color: rgba(232, 228, 213, 0.78);
+}
+
+.artCardTag {
+  display: inline-block;
+  align-self: flex-start;
+  white-space: nowrap;
+  margin-top: var(--ds-spacing-1);
+  padding: 1px 6px;
+  border-radius: 20px;
+  background: rgba(91, 143, 168, 0.16);
+  border: 1px solid rgba(91, 143, 168, 0.38);
+  font-size: 9px;
+  color: #5B8FA8;
+}
+
+.artCardTagBrutal {
+  background: #1C1C1C;
+  border: 2px solid #1C1C1C;
+  color: #F2EFE8;
+  border-radius: 0;
+}
+
+/* brutal variant overrides for artCard text colors */
+.artCardBrutal .artCardTitle {
+  color: #1C1C1C;
+}
+
+.artCardBrutal .artCardSub {
+  color: rgba(28, 28, 28, 0.7);
+}
+
+.artCardBrutal .artCardCategory {
+  color: #1C1C1C;
+}
