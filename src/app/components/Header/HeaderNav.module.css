@@ -241,8 +241,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: var(--ds-component-size-nav-item);
+      height: var(--ds-component-size-nav-item);
       padding: 0;
       border: none;
       border-radius: var(--ds-radius-md);

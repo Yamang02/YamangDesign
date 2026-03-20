@@ -27,7 +27,7 @@ export function Header({ children, onLogoClick }: HeaderProps) {
         >
           야망디자인
         </button>
-        <nav className={styles.nav} aria-label="주 메뉴">
+        <nav className={styles.nav}>
           {children}
         </nav>
       </div>

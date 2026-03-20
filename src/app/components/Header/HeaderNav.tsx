@@ -3,7 +3,7 @@
  * [layout▾] [component] [lab▾] | [playground] | [settings]
  * E21/P02: mobile hamburger toggle
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from '../Icon';
 import { HeaderNavItem } from './HeaderNavItem';
 import { HeaderNavDropdown } from './HeaderNavDropdown';
@@ -20,6 +20,17 @@ export function HeaderNav({
 }: HeaderNavProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [mobileOpen]);
 
   const handleSelect = (id: string) => {
     onSelect(id);
@@ -72,9 +83,7 @@ export function HeaderNav({
                 activeItemId={activePage}
                 isOpen={openDropdown === category.id}
                 onToggle={() => setOpenDropdown((prev) => (prev === category.id ? null : category.id))}
-                onSelect={(id) => {
-                  handleSelect(id);
-                }}
+                onSelect={handleSelect}
               />
             );
           }
