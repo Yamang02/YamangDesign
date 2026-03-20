@@ -1,0 +1,25 @@
+.card {
+  position: relative;
+  z-index: 2;
+  background: rgba(245, 242, 236, 0.88);
+  border: 1px solid #1C1C1C;
+  padding: var(--ds-spacing-8, 32px) var(--ds-spacing-10, 40px);
+  max-width: 480px;
+  text-align: center;
+}
+
+.quote {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: var(--ds-text-lg, 1.125rem);
+  line-height: 1.65;
+  color: #1C1C1C;
+  margin: 0 0 var(--ds-spacing-5, 20px);
+  font-style: italic;
+}
+
+.source {
+  font-size: var(--ds-text-xs, 0.75rem);
+  color: #B0ADA8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

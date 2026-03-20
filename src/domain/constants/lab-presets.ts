@@ -79,7 +79,8 @@ export function getPaletteVariablesFromDefinition(
  */
 export function getThemeVariables(
   paletteName: PaletteName,
-  styleName: StyleName
+  styleName: StyleName,
+  neutralPreset?: NeutralPresetName
 ): CSSVariables {
   if (paletteName === 'custom') return {};
 
@@ -87,7 +88,7 @@ export function getThemeVariables(
   const styleDef = stylePresets[styleName];
   if (!paletteDef || !styleDef) return {};
 
-  return flattenTokenSet(buildTokenSet(paletteDef, styleDef));
+  return flattenTokenSet(buildTokenSet(paletteDef, styleDef, { neutralPreset }));
 }
 
 /**

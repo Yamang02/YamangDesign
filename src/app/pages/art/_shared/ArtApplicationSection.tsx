@@ -32,7 +32,7 @@ interface ArtApplicationSectionProps {
   buttons: ArtButtonItem[]
   typography: ArtTypographyItem[]
   artCard: ArtCardMeta
-  variant?: 'glass' | 'brutal'
+  variant?: 'glass' | 'brutal' | 'minimal'
   sectionId?: string  // 추가 — 기본값: 'chapter-3'
 }
 
@@ -45,30 +45,32 @@ export function ArtApplicationSection({
   sectionId,
 }: ArtApplicationSectionProps) {
   const sectionClass =
-    variant === 'brutal' ? `${styles.section} ${styles.sectionBrutal}` : styles.section;
+    variant === 'brutal' ? `${styles.section} ${styles.sectionBrutal}` :
+    variant === 'minimal' ? `${styles.section} ${styles.sectionMinimal}` :
+    styles.section;
 
   const tokenChipClass =
-    variant === 'brutal'
-      ? `${styles.tokenChip} ${styles.tokenChipBrutal}`
-      : styles.tokenChip;
+    variant === 'brutal' ? `${styles.tokenChip} ${styles.tokenChipBrutal}` :
+    variant === 'minimal' ? `${styles.tokenChip} ${styles.tokenChipMinimal}` :
+    styles.tokenChip;
 
   const tokenMetaClass =
-    variant === 'brutal'
-      ? `${styles.tokenMeta} ${styles.tokenMetaBrutal}`
-      : styles.tokenMeta;
+    variant === 'brutal' ? `${styles.tokenMeta} ${styles.tokenMetaBrutal}` :
+    variant === 'minimal' ? `${styles.tokenMeta} ${styles.tokenMetaMinimal}` :
+    styles.tokenMeta;
 
   const btnClass =
     variant === 'brutal' ? `${styles.btn} ${styles.btnBrutal}` : styles.btn;
 
   const artCardClass =
-    variant === 'brutal'
-      ? `${styles.artCard} ${styles.artCardBrutal}`
-      : styles.artCard;
+    variant === 'brutal' ? `${styles.artCard} ${styles.artCardBrutal}` :
+    variant === 'minimal' ? `${styles.artCard} ${styles.artCardMinimal}` :
+    styles.artCard;
 
   const artCardTagClass =
-    variant === 'brutal'
-      ? `${styles.artCardTag} ${styles.artCardTagBrutal}`
-      : styles.artCardTag;
+    variant === 'brutal' ? `${styles.artCardTag} ${styles.artCardTagBrutal}` :
+    variant === 'minimal' ? `${styles.artCardTag} ${styles.artCardTagMinimal}` :
+    styles.artCardTag;
 
   return (
     <section id={sectionId ?? 'chapter-3'} className={sectionClass}>

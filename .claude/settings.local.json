@@ -42,11 +42,23 @@
       "Bash(\"c:/Users/ljj02/Desktop/dev/YamangDesign/src/domain/tokens/global/index.ts\")",
       "Bash(npm test -- --run)",
       "Bash(npm test -- --watchAll=false)",
-      "Bash(echo \"EXIT: $?\")"
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(xargs grep -l \"getNeutralPresetVariables\")",
+      "Bash(cat /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/infra/*.ts)",
+      "Bash(cat /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/state/*.ts)",
+      "Bash(git add docs/epic/E22.2026-03-20_art-reference-gallery/)",
+      "Bash(git add src/app/config/nav-categories.ts src/app/pages/index.ts src/app/pages/art/ src/App.tsx docs/epic/E22.2026-03-20_art-reference-gallery/Readme.md)",
+      "Bash(git add src/app/pages/art/MonetWaterLilies/)",
+      "Bash(git add src/app/pages/art/ docs/epic/E22.2026-03-20_art-reference-gallery/)",
+      "Bash(git add src/app/pages/art/)",
+      "Read(//c/Users/ljj02/.claude/skills//**)",
+      "Bash(git add src/templates/art-page-prompt.md)"
     ],
     "additionalDirectories": [
       "c:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic",
-      "C:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic"
+      "C:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\epic",
+      "C:\\Users\\ljj02\\Desktop\\dev\\YamangDesign\\docs\\superpowers",
+      "C:\\Users\\ljj02\\.claude\\skills"
     ]
   }
 }

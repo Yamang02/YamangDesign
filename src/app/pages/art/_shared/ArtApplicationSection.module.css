@@ -18,6 +18,12 @@
   border-radius: 0;
 }
 
+.sectionMinimal {
+  background: #F5F2EC;
+  border: 1px solid #1C1C1C;
+  border-radius: 0;
+}
+
 /* ── Chapter label ── */
 .chapterLabel {
   display: block;
@@ -29,6 +35,10 @@
 
 .sectionBrutal .chapterLabel {
   color: rgba(28, 28, 28, 0.45);
+}
+
+.sectionMinimal .chapterLabel {
+  color: rgba(28, 28, 28, 0.35);
 }
 
 /* ── Block headings ── */
@@ -43,6 +53,10 @@
 
 .sectionBrutal .blockTitle {
   color: rgba(28, 28, 28, 0.5);
+}
+
+.sectionMinimal .blockTitle {
+  color: rgba(28, 28, 28, 0.45);
 }
 
 /* ── Block: Color Tokens ── */
@@ -63,6 +77,11 @@
   border-radius: 0;
 }
 
+.tokenChipMinimal {
+  border: 1px solid #1C1C1C;
+  border-radius: 2px;
+}
+
 .tokenSwatch {
   height: 52px;
 }
@@ -74,6 +93,16 @@
 
 .tokenMetaBrutal {
   background: #1C1C1C;
+}
+
+.tokenMetaMinimal {
+  background: #E0DDD8;
+}
+
+.tokenMetaMinimal .tokenRole,
+.tokenMetaMinimal .tokenName,
+.tokenMetaMinimal .tokenHex {
+  color: rgba(28, 28, 28, 0.7);
 }
 
 .tokenRole {
@@ -168,6 +197,12 @@
   box-shadow: 4px 4px 0 #1C1C1C;
 }
 
+.artCardMinimal {
+  border: 1px solid #1C1C1C;
+  border-radius: 2px;
+  background: #E0DDD8;
+}
+
 .artCardThumb {
   width: 140px;
   flex-shrink: 0;
@@ -223,6 +258,13 @@
   border-radius: 0;
 }
 
+.artCardTagMinimal {
+  background: transparent;
+  border: 1px solid #1C1C1C;
+  color: #1C1C1C;
+  border-radius: 2px;
+}
+
 /* brutal variant overrides for artCard text colors */
 .artCardBrutal .artCardTitle {
   color: #1C1C1C;
@@ -234,4 +276,17 @@
 
 .artCardBrutal .artCardCategory {
   color: #1C1C1C;
+}
+
+/* minimal variant overrides for artCard text colors */
+.artCardMinimal .artCardTitle {
+  color: #1C1C1C;
+}
+
+.artCardMinimal .artCardSub {
+  color: rgba(28, 28, 28, 0.65);
+}
+
+.artCardMinimal .artCardCategory {
+  color: #7A9BBF;
 }

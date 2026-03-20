@@ -77,7 +77,6 @@ export const myPresetPalette: PaletteDefinition = {
     sub: '#F7C9DD', // 선택, 컬러풀 보조색
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
-  // recommendedNeutral: 'gray', // 선택: 'gray' | 'slate' | 'zinc' | 'stone'. 미지정 시 'gray' 기본값.
   contrast: 'normal', // 'normal' | 'high'
 
   // ---------------------------------------------------------------------------

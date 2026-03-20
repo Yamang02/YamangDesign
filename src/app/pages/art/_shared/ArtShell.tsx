@@ -14,9 +14,10 @@ export interface ArtChapter {
 interface ArtShellProps {
   chapters: ArtChapter[];
   children: ReactNode;
+  theme?: 'light' | 'dark';  // light: 흰 텍스트 (기본), dark: 검은 텍스트 (밝은 배경 페이지)
 }
 
-export function ArtShell({ chapters, children }: ArtShellProps) {
+export function ArtShell({ chapters, children, theme = 'light' }: ArtShellProps) {
   const [activeId, setActiveId] = useState(chapters[0]?.id ?? '');
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -47,7 +48,7 @@ export function ArtShell({ chapters, children }: ArtShellProps) {
 
   return (
     <div className={styles.layout}>
-      <aside className={styles.sidebar}>
+      <aside className={`${styles.sidebar} ${theme === 'dark' ? styles.sidebarDark : ''}`}>
         <ul className={styles.chapterList}>
           {chapters.map((ch) => (
             <li key={ch.id}>

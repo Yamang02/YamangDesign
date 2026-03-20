@@ -23,6 +23,8 @@
     rgba(0, 0, 0, 0.2) 55%,
     rgba(10, 15, 10, 0.65) 100%
   );
+  /* 모달 트리거는 아래 img의 클릭이므로 overlay는 클릭을 막으면 안 됨 */
+  pointer-events: none;
 }
 
 .panels {

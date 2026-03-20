@@ -6,6 +6,7 @@
 import type { ColorInput } from '@shared/@types/tokens';
 import type { StyleName, SystemPresetName } from '@shared/@types/theme';
 import type { SemanticMapping } from '@domain/palettes/types';
+import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 
 const VALID_STYLE_NAMES: StyleName[] = ['minimal', 'neumorphism', 'brutalism', 'glassmorphism'];
 function normalizeStyleName(v: unknown): StyleName {
@@ -32,6 +33,7 @@ export interface StoredSettings {
   semanticMapping: Partial<SemanticMapping> | null;
   styleName: StyleName;
   systemPreset: SystemPresetName;
+  neutralPreset?: NeutralPresetName;
   updatedAt: string;
 }
 

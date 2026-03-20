@@ -237,12 +237,10 @@ function NeutralPresetCard({
   presetName,
   onClick,
   selected,
-  recommended,
 }: {
   presetName: NeutralPresetName;
   onClick: () => void;
   selected: boolean;
-  recommended?: boolean;
 }) {
   return (
     <ComparisonCard
@@ -250,11 +248,6 @@ function NeutralPresetCard({
       styleVars={getNeutralPresetVariables(presetName)}
       onClick={onClick}
       selected={selected}
-      headerAction={
-        recommended ? (
-          <span className={styles.recommendedBadge}>(추천)</span>
-        ) : undefined
-      }
     >
       <div className={styles.colorColumn}>
         <p className={styles.colorKeyLabel}>Neutral</p>
@@ -485,9 +478,6 @@ export function PaletteLab() {
     return { expanded, mapping };
   }, [currentPaletteDefinition]);
 
-  /** P07: 선택된 브랜드 팔레트의 추천 중립 프리셋 */
-  const recommendedNeutral = selectedBrandDef?.recommendedNeutral ?? null;
-
   const handlePaletteSelect = (def: PaletteDefinition) => {
     setSelectedBrandDef(def);
     setDetailSelection({ type: 'palette', definition: def });
@@ -638,10 +628,6 @@ export function PaletteLab() {
                 presetName={presetName}
                 onClick={() => handleNeutralSelect(presetName)}
                 selected={selectedNeutral === presetName}
-                recommended={
-                  recommendedNeutral !== null &&
-                  recommendedNeutral === presetName
-                }
               />
             ))}
           </ComparisonGrid>

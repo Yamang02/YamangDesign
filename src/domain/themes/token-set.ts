@@ -13,6 +13,8 @@ import { PALETTE_SCALES } from '../constants/palette-scales';
 import type { SystemColorPreset } from '../tokens/global/system-colors';
 import { systemColorPresets } from '../tokens/global/system-colors';
 import type { SystemPresetName } from '@shared/@types/theme';
+import { neutralPresets } from '../tokens/global/neutral-presets';
+import type { NeutralPresetName } from '../tokens/global/neutral-presets';
 
 /**
  * 특정 Palette+Style 조합이 내보내는 테마 반응형 CSS 변수 전체.
@@ -53,9 +55,10 @@ export function flattenTokenSet(set: ThemeTokenSet): Record<string, string> {
 export function buildTokenSet(
   palette: PaletteDefinition,
   style: StyleDefinition,
-  options?: { systemPreset?: SystemColorPreset | SystemPresetName }
+  options?: { systemPreset?: SystemColorPreset | SystemPresetName; neutralPreset?: NeutralPresetName }
 ): ThemeTokenSet {
-  const expanded = createPalette(palette);
+  const neutralScale = options?.neutralPreset ? neutralPresets[options.neutralPreset]?.scale : undefined;
+  const expanded = createPalette(palette, { neutralScale });
   const resolved = createStyle(style, expanded.semantic.bg.base);
 
   // Resolve systemPreset: accept name string or object
@@ -148,9 +151,10 @@ export function buildTokenSet(
 export function buildThemeAndTokenSet(
   palette: PaletteDefinition,
   style: StyleDefinition,
-  options?: { systemPreset?: SystemColorPreset | SystemPresetName }
+  options?: { systemPreset?: SystemColorPreset | SystemPresetName; neutralPreset?: NeutralPresetName }
 ): { theme: Theme; tokenSet: ThemeTokenSet } {
-  const expanded = createPalette(palette);
+  const neutralScale = options?.neutralPreset ? neutralPresets[options.neutralPreset]?.scale : undefined;
+  const expanded = createPalette(palette, { neutralScale });
   const resolved = createStyle(style, expanded.semantic.bg.base);
 
   // Resolve systemPreset

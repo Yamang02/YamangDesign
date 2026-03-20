@@ -17,6 +17,5 @@ export const defaultPalette: PaletteDefinition = {
     sub: '#A8E6C7',
   },
   bgStrategy: 'light',
-  recommendedNeutral: 'gray',
   contrast: 'normal',
 };

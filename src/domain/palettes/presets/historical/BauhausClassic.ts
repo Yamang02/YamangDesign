@@ -12,8 +12,6 @@ export const bauhausClassicPalette: PaletteDefinition = {
     accent: '#1A3C8F',
   },
   bgStrategy: 'light',
-  // Original neutral #1A1A1A is near-black; zinc-900 (#18181B) is the closest match.
-  recommendedNeutral: 'zinc',
   contrast: 'normal',
   recommendedForStyles: ['minimal', 'brutalism'],
 };

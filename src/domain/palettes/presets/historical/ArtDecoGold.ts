@@ -12,8 +12,6 @@ export const artDecoGoldPalette: PaletteDefinition = {
     accent: '#2A6B5E',
   },
   bgStrategy: 'light',
-  // Original neutral #F5F0E1 was a warm cream/off-white; 'stone' (warm beige tone) is the closest match.
-  recommendedNeutral: 'stone',
   contrast: 'normal',
   recommendedForStyles: ['minimal'],
 };

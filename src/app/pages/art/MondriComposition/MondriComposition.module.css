@@ -1,0 +1,49 @@
+.page {
+  min-height: 100vh;
+  background: #F5F2EC; /* Canvas White */
+  color: #1C1C1C;       /* Grid Black */
+}
+
+.anchorTarget {
+  scroll-margin-top: calc(var(--nav-height, 48px) + var(--ds-spacing-8));
+}
+
+.chapterTransition {
+  height: var(--ds-spacing-16, 64px);
+}
+
+/* Chapter 2 — The Impression */
+.chapter2 {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #F5F2EC;
+}
+
+.chapter2Label {
+  position: absolute;
+  top: var(--ds-spacing-6, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--ds-text-xs);
+  color: rgba(28, 28, 28, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.chapter2Content {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* MondriGrid 마우스 이벤트 통과 */
+}

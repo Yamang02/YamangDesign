@@ -185,13 +185,7 @@
     gap: var(--ds-spacing-0-5);
   }
 
-  /* P07: 중립 추천 배지 */
-  .recommendedBadge {
-    font-size: var(--ds-text-xs);
-    font-weight: var(--ds-font-weight-medium);
-    color: var(--sys-color-success);
-    white-space: nowrap;
-  }
+
 
   /* P05: 시맨틱 매핑 아이콘 (테마 카드 우측 상단) */
   .mappingIconBtn {

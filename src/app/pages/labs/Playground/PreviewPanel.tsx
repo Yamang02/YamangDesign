@@ -3,16 +3,15 @@
  */
 import { Button, Card, Input } from '../../../components';
 import { sampleText, buttonLabels, inputPlaceholders, semanticPreviews } from '@app/content/lab-content';
-import { getThemeVariables, getSystemColorVariables, getNeutralPresetVariables } from '@domain/constants';
+import { getThemeVariables, getSystemColorVariables } from '@domain/constants';
 import { fontFamily } from '@domain/tokens/global/typography';
 import type { PlaygroundPanel } from './types';
 import styles from './Playground.module.css';
 
 function getThemeVarsForPanel(panel: PlaygroundPanel): React.CSSProperties {
   return {
-    ...getThemeVariables(panel.palette, panel.style),
+    ...getThemeVariables(panel.palette, panel.style, panel.neutralPreset),
     ...getSystemColorVariables(panel.systemPreset),
-    ...getNeutralPresetVariables(panel.neutralPreset),
   } as React.CSSProperties;
 }
 

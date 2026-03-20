@@ -2,7 +2,6 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from 're
 import {
   getThemeVariables,
   getSystemColorVariables,
-  getNeutralPresetVariables,
   comparisonPresets,
 } from '@domain/constants';
 import { fontFamily } from '@domain/tokens/global/typography';
@@ -37,9 +36,8 @@ export function LayoutPreviewControlsProvider({ children }: { children: ReactNod
 
   const themeVars = useMemo(
     () => ({
-      ...getThemeVariables(palette, style),
+      ...getThemeVariables(palette, style, neutralPreset),
       ...getSystemColorVariables(systemPreset),
-      ...getNeutralPresetVariables(neutralPreset),
     }),
     [palette, style, systemPreset, neutralPreset]
   );

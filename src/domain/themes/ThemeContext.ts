@@ -12,6 +12,7 @@ import type { ColorInput } from '@shared/@types/tokens';
 import type { CustomThemePreset } from '../constants/semantic-presets';
 import type { PaletteDefinition, SemanticMapping } from '../palettes/types';
 import type { PaletteSelection } from '@app/state/types';
+import type { NeutralPresetName } from '../tokens/global/neutral-presets';
 
 export interface ThemeContextValue {
   theme: Theme;
@@ -32,6 +33,9 @@ export interface ThemeContextValue {
 
   systemPreset: SystemPresetName;
   setSystemPreset: (name: SystemPresetName) => void;
+
+  neutralPreset: NeutralPresetName;
+  setNeutralPreset: (name: NeutralPresetName) => void;
 
   /** 커스텀 테마 프리셋 (localStorage) */
   customSemanticPresets: CustomThemePreset[];

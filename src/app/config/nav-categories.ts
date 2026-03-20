@@ -76,6 +76,7 @@ export const navCategories: NavCategory[] = [
     items: [
       { id: 'monet-water-lilies', label: 'Water Lilies', icon: 'image' },
       { id: 'matisse-dance-ii', label: 'La Danse II', icon: 'image' },
+      { id: 'mondri-composition', label: 'Composition', icon: 'image' },
     ],
   },
   {

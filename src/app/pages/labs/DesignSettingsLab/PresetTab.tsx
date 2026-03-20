@@ -13,6 +13,7 @@ import {
 import type { ThemeCategory } from '@domain/palettes/types';
 import type { ColorInput } from '@shared/@types/tokens';
 import type { StyleName, SystemPresetName } from '@shared/@types/theme';
+import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 import { ThemeSearchBar } from '../PaletteLab/ThemeSearchBar';
 import { EmptyCategory } from '../PaletteLab/EmptyCategory';
 import { getStylePresetNames } from '@domain/themes/presets';
@@ -42,7 +43,13 @@ const COLOR_FIELDS: {
   { key: 'secondary', label: 'Secondary', required: false },
   { key: 'accent', label: 'Accent', required: false },
   { key: 'sub', label: 'Sub', required: false },
-  { key: 'neutral', label: 'Neutral', required: false },
+];
+
+const NEUTRAL_OPTIONS: { value: NeutralPresetName; label: string }[] = [
+  { value: 'gray', label: 'Gray' },
+  { value: 'slate', label: 'Slate' },
+  { value: 'zinc', label: 'Zinc' },
+  { value: 'stone', label: 'Stone' },
 ];
 
 const STYLE_OPTIONS: { value: StyleName; label: string }[] =
@@ -59,7 +66,6 @@ function getPresetColorsFromPalette(p: ColorInput) {
     p.secondary || RUNTIME_COLOR_FALLBACK,
     p.accent || RUNTIME_COLOR_FALLBACK,
     p.sub || RUNTIME_COLOR_FALLBACK,
-    p.neutral || RUNTIME_COLOR_FALLBACK,
   ];
 }
 
@@ -82,7 +88,7 @@ function isPaletteEqual(
 ): boolean {
   if (!current && !preset) return true;
   if (!current || !preset) return false;
-  const keys: (keyof ColorInput)[] = ['primary', 'secondary', 'accent', 'sub', 'neutral'];
+  const keys: (keyof ColorInput)[] = ['primary', 'secondary', 'accent', 'sub'];
   return keys.every((k) => (current[k] ?? '') === (preset[k] ?? ''));
 }
 
@@ -155,9 +161,11 @@ export function PresetTab({ settings }: PresetTabProps) {
     palette,
     styleName,
     systemPreset,
+    neutralPreset,
     setPalette,
     setStyleName,
     setSystemPreset,
+    setNeutralPreset,
     selectPreset,
     userPresets,
     saveAsPreset,
@@ -345,6 +353,17 @@ export function PresetTab({ settings }: PresetTabProps) {
                 options={STYLE_OPTIONS}
                 value={styleName}
                 onChange={(v) => setStyleName(v as StyleName)}
+                size="sm"
+              />
+            </div>
+          </div>
+          <div className={styles.settingRow}>
+            <span className={styles.settingLabel}>중립 색상</span>
+            <div className={styles.settingSelect}>
+              <Select
+                options={NEUTRAL_OPTIONS}
+                value={neutralPreset}
+                onChange={(v) => setNeutralPreset(v as NeutralPresetName)}
                 size="sm"
               />
             </div>

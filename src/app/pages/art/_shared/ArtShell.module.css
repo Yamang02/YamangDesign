@@ -12,7 +12,8 @@
 /* Sidebar */
 .sidebar {
   position: sticky;
-  top: var(--ds-spacing-8);
+  /* 상단 고정 nav 아래로 내려서, 스크롤 이동 시 사이드바가 nav에 의해 가려지지 않게 */
+  top: calc(var(--nav-height) + var(--ds-spacing-8));
 }
 
 .chapterList {
@@ -47,6 +48,19 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+/* dark theme (light background 페이지용) */
+.sidebarDark .chapterItem {
+  color: rgba(28, 28, 28, 0.35);
+}
+
+.sidebarDark .chapterItem:hover {
+  color: rgba(28, 28, 28, 0.7);
+}
+
+.sidebarDark .chapterItem.active {
+  color: rgba(28, 28, 28, 0.9);
+}
+
 .dot {
   width: 6px;
   height: 6px;
@@ -69,4 +83,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--ds-spacing-6);
+}
+
+/* TOC(챕터 네비) 클릭 시 scrollIntoView 보정
+   - 상단 고정 nav 높이 + 쉘 내부 여백을 반영해, 타겟 섹션이 nav 아래로 숨지지 않게 */
+.main [id] {
+  scroll-margin-top: calc(var(--nav-height) + var(--ds-spacing-8));
 }

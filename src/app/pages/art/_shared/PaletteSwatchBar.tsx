@@ -8,7 +8,7 @@ export interface PaletteItem {
 
 interface PaletteSwatchBarProps {
   palette: PaletteItem[]
-  variant?: 'glass' | 'brutal'
+  variant?: 'glass' | 'brutal' | 'minimal'
 }
 
 export function PaletteSwatchBar({ palette, variant = 'glass' }: PaletteSwatchBarProps) {
@@ -21,7 +21,10 @@ export function PaletteSwatchBar({ palette, variant = 'glass' }: PaletteSwatchBa
     });
   };
 
-  const barClass = variant === 'brutal' ? styles.barBrutal : styles.bar;
+  const barClass =
+    variant === 'brutal' ? styles.barBrutal :
+    variant === 'minimal' ? styles.barMinimal :
+    styles.bar;
 
   return (
     <div className={barClass}>

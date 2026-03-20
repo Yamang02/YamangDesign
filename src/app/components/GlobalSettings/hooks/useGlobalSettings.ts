@@ -6,6 +6,7 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTheme } from '@domain/themes';
 import type { ColorInput } from '@shared/@types/tokens';
 import type { StyleName, SystemPresetName } from '@shared/@types/theme';
+import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 import type { PaletteSelection } from '../../../state/types';
 import {
   createPresetSelection,
@@ -118,6 +119,8 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     systemPreset,
     setStyleName,
     setSystemPreset,
+    neutralPreset,
+    setNeutralPreset,
     semanticMapping: themeSemanticMapping,
     customSemanticPresets,
   } = useTheme();
@@ -127,6 +130,7 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
   const [localStyleName, setLocalStyleName] = useState<StyleName>(styleName);
   const [localSystemPreset, setLocalSystemPreset] =
     useState<SystemPresetName>(systemPreset);
+  const [localNeutralPreset, setLocalNeutralPreset] = useState<NeutralPresetName>(neutralPreset);
   const [localSemanticMapping, setLocalSemanticMapping] = useState<Partial<SemanticMapping> | null>(
     themeSemanticMapping ?? null
   );
@@ -139,9 +143,10 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
       setLocalSelection(selection);
       setLocalStyleName(styleName);
       setLocalSystemPreset(systemPreset);
+      setLocalNeutralPreset(neutralPreset);
       setLocalSemanticMapping(themeSemanticMapping ?? null);
     });
-  }, [selection, styleName, systemPreset, themeSemanticMapping]);
+  }, [selection, styleName, systemPreset, neutralPreset, themeSemanticMapping]);
 
   // 변경 여부 확인
   const hasChanges = useMemo(() => {
@@ -152,9 +157,10 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
       !isPaletteSelectionEqual(localSelection, selection) ||
       localStyleName !== styleName ||
       localSystemPreset !== systemPreset ||
+      localNeutralPreset !== neutralPreset ||
       !mappingEqual
     );
-  }, [localSelection, localStyleName, localSystemPreset, localSemanticMapping, selection, styleName, systemPreset, themeSemanticMapping]);
+  }, [localSelection, localStyleName, localSystemPreset, localNeutralPreset, localSemanticMapping, selection, styleName, systemPreset, neutralPreset, themeSemanticMapping]);
 
   /** 현재 draft를 StoredSettings v2로 반환 (P08: 저장 시 palette만 사용, palettePresetId 미저장) */
   const getDraft = useCallback((): StoredSettings => {
@@ -166,9 +172,10 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
       semanticMapping: localSemanticMapping ?? null,
       styleName: localStyleName,
       systemPreset: localSystemPreset,
+      neutralPreset: localNeutralPreset,
       updatedAt: new Date().toISOString(),
     };
-  }, [localSelection, localSemanticMapping, localStyleName, localSystemPreset, semanticPresets]);
+  }, [localSelection, localSemanticMapping, localStyleName, localSystemPreset, localNeutralPreset, semanticPresets]);
 
   // 적용: 전역 상태 + storage 반영 후 onApply 콜백
   const apply = useCallback(() => {
@@ -181,6 +188,9 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     if (localSystemPreset !== systemPreset) {
       setSystemPreset(localSystemPreset);
     }
+    if (localNeutralPreset !== neutralPreset) {
+      setNeutralPreset(localNeutralPreset);
+    }
     const draft = getDraft();
     const componentMapping = loadComponentMappingOverrides();
     saveDesignSystemBlob(
@@ -191,17 +201,19 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
         semanticMapping: draft.semanticMapping,
         styleName: draft.styleName,
         systemPreset: draft.systemPreset,
+        neutralPreset: draft.neutralPreset,
       },
       componentMapping
     );
     options?.onApply?.(draft);
-  }, [localSelection, localStyleName, localSystemPreset, selection, styleName, systemPreset, setPaletteSelection, setStyleName, setSystemPreset, getDraft, options]);
+  }, [localSelection, localStyleName, localSystemPreset, localNeutralPreset, selection, styleName, systemPreset, neutralPreset, setPaletteSelection, setStyleName, setSystemPreset, setNeutralPreset, getDraft, options]);
 
   // 초기화
   const reset = useCallback(() => {
     setLocalSelection(DEFAULT_SELECTION);
     setLocalStyleName('minimal');
     setLocalSystemPreset('default');
+    setLocalNeutralPreset('gray');
     setLocalSemanticMapping(null);
   }, []);
 
@@ -240,6 +252,7 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     }
     if (data.styleName) setLocalStyleName(data.styleName as StyleName);
     if (data.systemPreset) setLocalSystemPreset(data.systemPreset as SystemPresetName);
+    if (data.neutralPreset) setLocalNeutralPreset(data.neutralPreset as NeutralPresetName);
     if (data.semanticMapping !== undefined) {
       setLocalSemanticMapping(data.semanticMapping ?? null);
     }
@@ -288,6 +301,7 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     }
     if (s.styleName) setLocalStyleName(s.styleName);
     if (s.systemPreset) setLocalSystemPreset(s.systemPreset);
+    if (s.neutralPreset) setLocalNeutralPreset(s.neutralPreset);
     if (s.semanticMapping !== undefined) {
       setLocalSemanticMapping(s.semanticMapping ?? null);
     }
@@ -334,6 +348,8 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     setPalette: setLocalPalette,
     setStyleName: setLocalStyleName,
     setSystemPreset: setLocalSystemPreset,
+    neutralPreset: localNeutralPreset,
+    setNeutralPreset: setLocalNeutralPreset,
     hasChanges,
     apply,
     reset,

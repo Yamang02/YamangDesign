@@ -8,6 +8,8 @@ import type {
   SystemPresetName,
 } from '@shared/@types/theme';
 import type { ColorInput } from '@shared/@types/tokens';
+import { neutralPresets } from '../tokens/global/neutral-presets';
+import type { NeutralPresetName } from '../tokens/global/neutral-presets';
 import type { PaletteSelection } from '@app/state/types';
 import {
   savePaletteSelection,
@@ -77,6 +79,8 @@ export function ThemeProvider({
   const [styleName, setStyleName] = useState<StyleName>(initialStyleName);
   const [systemPreset, setSystemPresetState] =
     useState<SystemPresetName>(initialSystemPreset);
+  const [neutralPreset, setNeutralPresetState] =
+    useState<NeutralPresetName>(appliedSettings?.neutralPreset ?? 'gray');
 
   // PaletteSelection 기반 단일 상태
   const [selection, setSelectionState] = useState<PaletteSelection>(() => {
@@ -116,6 +120,9 @@ export function ThemeProvider({
     if (appliedSettings?.palette) {
       setSelectionState(createCustomSelection(appliedSettings.palette));
     }
+    if (appliedSettings?.neutralPreset) {
+      setNeutralPresetState(appliedSettings.neutralPreset);
+    }
   }
 
   // ============================================================================
@@ -129,8 +136,9 @@ export function ThemeProvider({
   // P05: theme + tokenSet을 buildThemeAndTokenSet으로 한 번에 계산 (createPalette 중복 호출 제거)
   const { theme, tokenSet } = useMemo(() => {
     const styleDef = stylePresets[styleName] ?? stylePresets.minimal;
-    return buildThemeAndTokenSet(definitionForTheme, styleDef, { systemPreset });
-  }, [definitionForTheme, styleName, systemPreset]);
+    const neutralScale = neutralPresets[neutralPreset]?.scale;
+    return buildThemeAndTokenSet(definitionForTheme, styleDef, { systemPreset, neutralPreset: neutralScale ? neutralPreset : undefined });
+  }, [definitionForTheme, styleName, systemPreset, neutralPreset]);
 
   // 커스텀 프리셋 CRUD 래퍼 (삭제 시 현재 팔레트 초기화 포함)
   const addCustomSemanticPreset = useCallback(
@@ -206,6 +214,10 @@ export function ThemeProvider({
     setSystemPresetState(name);
   };
 
+  const setNeutralPreset = (name: NeutralPresetName) => {
+    setNeutralPresetState(name);
+  };
+
   const value = {
     theme,
     selection,
@@ -215,6 +227,8 @@ export function ThemeProvider({
     palette,
     systemPreset,
     setSystemPreset,
+    neutralPreset,
+    setNeutralPreset,
     customSemanticPresets,
     addCustomSemanticPreset,
     updateCustomSemanticPreset,

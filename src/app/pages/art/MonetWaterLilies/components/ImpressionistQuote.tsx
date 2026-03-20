@@ -1,7 +1,7 @@
 import styles from './ImpressionistQuote.module.css';
 
 const QUOTE = 'I perhaps owe having become a painter to flowers.';
-const ATTRIBUTION = '— Claude Monet';
+const ATTRIBUTION = 'Claude Monet';
 
 export function ImpressionistQuote() {
   const words = QUOTE.split(' ');

@@ -19,7 +19,7 @@ interface ArtHeroStageProps {
   imageAlt: string
   label: LabelInfo
   palette: PaletteItem[]
-  variant?: 'glass' | 'brutal'
+  variant?: 'glass' | 'brutal' | 'minimal'
 }
 
 export function ArtHeroStage({

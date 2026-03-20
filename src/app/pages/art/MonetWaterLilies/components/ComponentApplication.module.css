@@ -156,10 +156,13 @@
   border: 1px solid rgba(91, 143, 168, 0.3);
   max-width: 420px;
   background: rgba(10, 15, 10, 0.6);
+  /* section의 flex-col 레이아웃에서 카드가 가운데로 오도록 */
+  margin: 0 auto;
+  align-self: center;
 }
 
 .artCardThumb {
-  width: 120px;
+  width: 140px;
   flex-shrink: 0;
   background-size: cover;
   background-position: center;
@@ -190,16 +193,21 @@
 
 .artCardSub {
   font-size: var(--ds-text-xs);
-  color: rgba(155, 139, 180, 0.7);
+  /* 모네 정보 라인을 더 가독성 좋게 */
+  color: rgba(232, 228, 213, 0.78);
 }
 
 .artCardTag {
   display: inline-block;
+  /* flex-item 기본 stretch를 막아서 배지가 내용 너비만 차지하게 함 */
+  align-self: flex-start;
+  white-space: nowrap;
   margin-top: var(--ds-spacing-1);
-  padding: 2px 8px;
+  /* 배지가 텍스트 크기에 맞게 더 컴팩트하게 */
+  padding: 1px 6px;
   border-radius: 20px;
-  background: rgba(155, 139, 180, 0.15);
-  border: 1px solid rgba(155, 139, 180, 0.3);
-  font-size: 10px;
-  color: #9B8BB4;
+  background: rgba(91, 143, 168, 0.16);
+  border: 1px solid rgba(91, 143, 168, 0.38);
+  font-size: 9px;
+  color: #5B8FA8;
 }

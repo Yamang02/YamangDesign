@@ -1,0 +1,10 @@
+.bg {
+  position: absolute;
+  inset: 0;
+  background-color: #F5F2EC;
+  background-image:
+    linear-gradient(rgba(28, 28, 28, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 28, 28, 0.07) 1px, transparent 1px);
+  background-size: calc(100% / 16) calc(100% / 10);
+  pointer-events: none;
+}

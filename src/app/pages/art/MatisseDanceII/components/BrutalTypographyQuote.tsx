@@ -50,7 +50,7 @@ export function BrutalTypographyQuote() {
 
       {/* 인용구 카드 */}
       <blockquote className={styles.card}>
-        <p className={styles.quote}>&ldquo;Creativity takes courage.&rdquo;</p>
+        <p className={styles.quote}>Creativity takes courage</p>
         <cite className={styles.cite}>— Henri Matisse</cite>
       </blockquote>
     </div>

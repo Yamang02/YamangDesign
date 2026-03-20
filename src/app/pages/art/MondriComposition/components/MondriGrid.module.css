@@ -1,0 +1,41 @@
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.cell {
+  transition: background-color 0.3s ease;
+  cursor: crosshair;
+}
+
+.resetBtn {
+  position: absolute;
+  bottom: var(--ds-spacing-6, 24px);
+  right: var(--ds-spacing-6, 24px);
+  background: transparent;
+  border: 1px solid #1C1C1C;
+  color: #1C1C1C;
+  font-size: var(--ds-text-xs);
+  padding: 6px 14px;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  z-index: 3;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.resetBtn:hover {
+  background: #1C1C1C;
+  color: #F5F2EC;
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+}

@@ -12,7 +12,6 @@ export const swissMonochromePalette: PaletteDefinition = {
     accent: '#FFFFFF',
   },
   bgStrategy: 'light',
-  recommendedNeutral: 'gray',
   contrast: 'normal',
   recommendedForStyles: ['minimal', 'brutalism'],
 };

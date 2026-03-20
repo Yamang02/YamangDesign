@@ -2,6 +2,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  z-index: 0;
 }
 
 .blob {
@@ -52,6 +53,79 @@
   right: 20%;
   animation-name: drift4;
   animation-duration: 9s;
+}
+
+/* ── Floating lotus-like motifs (연꽃/잎 잔상 오브젝트) ── */
+.motifs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.motif {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 999px;
+  transform: rotate(var(--rot, 0deg));
+
+  /* 오브젝트마다 주는 값 */
+  width: var(--w, 120px);
+  height: var(--h, 120px);
+  filter: blur(var(--blur, 2px));
+  opacity: var(--op, 0.15);
+
+  animation: motifFloat var(--dur, 18s) ease-in-out infinite;
+  animation-delay: var(--delay, -10s);
+  mix-blend-mode: soft-light;
+}
+
+/* 꽃잎(부드러운 하이라이트 중심 + 외곽 투명) */
+.petal {
+  border-radius: 55% 45% 62% 38% / 60% 45% 55% 40%;
+  background: radial-gradient(
+    circle at 30% 35%,
+    rgba(232, 228, 213, 0.72) 0%,
+    rgba(155, 139, 180, 0.22) 38%,
+    rgba(45, 80, 22, 0.0) 72%
+  );
+}
+
+/* 연잎(그린 방사형 + 살짝 더 짙은 가장자리) */
+.leaf {
+  border-radius: 60% 40% 55% 45% / 60% 40% 55% 45%;
+  background: radial-gradient(
+    ellipse at 35% 30%,
+    rgba(91, 143, 168, 0.32) 0%,
+    rgba(45, 80, 22, 0.28) 40%,
+    rgba(45, 80, 22, 0.0) 70%
+  );
+}
+
+/* 아주 작은 잔상(거품/수면 반사 느낌) */
+.accent {
+  background: radial-gradient(circle, rgba(91, 143, 168, 0.45) 0%, rgba(91, 143, 168, 0) 70%);
+}
+
+@keyframes motifFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--rot, 0deg)) scale(1);
+    opacity: var(--op, 0.15);
+  }
+  50% {
+    transform: translate3d(-0.8vw, -1.2vh, 0) rotate(calc(var(--rot, 0deg) + 6deg)) scale(1.02);
+    opacity: calc(var(--op, 0.15) + 0.05);
+  }
+  100% {
+    transform: translate3d(0.7vw, -0.9vh, 0) rotate(var(--rot, 0deg)) scale(0.99);
+    opacity: var(--op, 0.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motif {
+    animation: none;
+  }
 }
 
 @keyframes drift1 {

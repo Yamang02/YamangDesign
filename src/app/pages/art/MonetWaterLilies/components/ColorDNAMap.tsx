@@ -1,5 +1,5 @@
 import styles from './ColorDNAMap.module.css';
-import { MONET_PALETTE } from './PaletteSwatchBar';
+import { MONET_PALETTE } from '../monet-palette';
 
 function hexToHsl(hex: string): { h: number; s: number; l: number } {
   const r = parseInt(hex.slice(1, 3), 16) / 255;

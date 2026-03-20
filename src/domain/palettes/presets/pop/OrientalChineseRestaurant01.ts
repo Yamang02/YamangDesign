@@ -13,7 +13,6 @@ export const orientalChineseRestaurant01Palette: PaletteDefinition = {
     sub: '#002C2B', // 선택, 컬러풀 보조색
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
-  recommendedNeutral: 'gray', // Original neutral #6B7280 matches gray-500 exactly.
   contrast: 'normal', // 'normal' | 'high'
 
   semanticMapping: {
