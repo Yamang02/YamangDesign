@@ -49,4 +49,18 @@
     cursor: pointer;
     font-size: var(--ds-text-sm);
   }
+
+  @media (max-width: 767px) {
+    .fab {
+      right: var(--ds-spacing-3);
+      bottom: var(--ds-spacing-3);
+    }
+
+    .panel {
+      right: var(--ds-spacing-3);
+      bottom: var(--ds-spacing-3);
+      width: calc(100vw - var(--ds-spacing-6));
+      max-height: 50vh;
+    }
+  }
 }

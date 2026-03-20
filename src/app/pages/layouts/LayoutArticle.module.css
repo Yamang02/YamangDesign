@@ -1,0 +1,13 @@
+@layer ds {
+  .container {
+    max-width: var(--app-max-width);
+    margin: 0 auto;
+    padding: var(--ds-spacing-8);
+  }
+
+  @media (max-width: 767px) {
+    .container {
+      padding: var(--ds-spacing-4) var(--ds-spacing-3);
+    }
+  }
+}

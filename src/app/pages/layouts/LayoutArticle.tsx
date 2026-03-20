@@ -1,11 +1,12 @@
 import { useLayoutPreviewControls } from '@app/context/LayoutPreviewControlsContext';
 import { FloatingLayoutControlPanel } from './FloatingLayoutControlPanel';
+import styles from './LayoutArticle.module.css';
 
 export function LayoutArticle() {
   const { themeVars, fontFamilyValue } = useLayoutPreviewControls();
 
   return (
-    <div style={{ ...themeVars, fontFamily: fontFamilyValue, maxWidth: 'var(--app-max-width)', margin: '0 auto', padding: 'var(--ds-spacing-8)' }}>
+    <div style={{ ...themeVars, fontFamily: fontFamilyValue }} className={styles.container}>
       <article style={{ maxWidth: '42rem', margin: '0 auto' }}>
         <h1 style={{ margin: '0 0 var(--ds-spacing-2) 0' }}>아티클 제목 (타이포그래피 목업)</h1>
         <p style={{ margin: '0 0 var(--ds-spacing-6) 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-text-sm)' }}>

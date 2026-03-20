@@ -168,4 +168,26 @@
     flex-direction: column;
     gap: var(--ds-spacing-4);
   }
+
+  @media (max-width: 767px) {
+    .hero {
+      padding: var(--ds-spacing-8) var(--ds-spacing-4);
+    }
+
+    .heroTitle {
+      font-size: var(--ds-text-2xl);
+    }
+
+    .heroSubtitle {
+      font-size: var(--ds-text-md);
+    }
+
+    .section {
+      padding: var(--ds-spacing-8) var(--ds-spacing-4);
+    }
+
+    .pricingHighlight {
+      transform: none;
+    }
+  }
 }
