@@ -234,8 +234,8 @@
     justify-content: flex-end;
   }
 
-  /* E21/P02: Mobile breakpoint — max-width 767px (below md: 768px) */
-  @media (max-width: 767px) {
+  /* E21/P02: Compact breakpoint — max-width 1023px (below lg: 1024px) */
+  @media (max-width: 1023px) {
     /* Show hamburger button on mobile */
     .hamburger {
       display: flex;

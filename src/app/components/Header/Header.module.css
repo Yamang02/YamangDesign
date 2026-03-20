@@ -45,8 +45,8 @@
     flex: 1;
   }
 
-  /* E21/P02: Mobile — make header container the positioning parent for mobile menu */
-  @media (max-width: 767px) {
+  /* E21/P02: Compact — make header container the positioning parent for compact menu */
+  @media (max-width: 1023px) {
     .container {
       position: relative;
     }
