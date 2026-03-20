@@ -33,6 +33,7 @@ interface ArtApplicationSectionProps {
   typography: ArtTypographyItem[]
   artCard: ArtCardMeta
   variant?: 'glass' | 'brutal'
+  sectionId?: string  // 추가 — 기본값: 'chapter-3'
 }
 
 export function ArtApplicationSection({
@@ -41,6 +42,7 @@ export function ArtApplicationSection({
   typography,
   artCard,
   variant = 'glass',
+  sectionId,
 }: ArtApplicationSectionProps) {
   const sectionClass =
     variant === 'brutal' ? `${styles.section} ${styles.sectionBrutal}` : styles.section;
@@ -69,7 +71,7 @@ export function ArtApplicationSection({
       : styles.artCardTag;
 
   return (
-    <section id="chapter-3" className={sectionClass}>
+    <section id={sectionId ?? 'chapter-3'} className={sectionClass}>
       <span className={styles.chapterLabel}>Chapter 3 — The Application</span>
 
       {/* Block 1: Color Tokens */}

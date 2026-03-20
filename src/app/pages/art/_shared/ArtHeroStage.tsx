@@ -3,7 +3,7 @@ import { PaletteSwatchBar } from './PaletteSwatchBar';
 import type { PaletteItem } from './PaletteSwatchBar';
 import styles from './ArtHeroStage.module.css';
 
-interface LabelInfo {
+export interface LabelInfo {
   title: string
   subtitle?: string
   artist: string
