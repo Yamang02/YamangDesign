@@ -10,9 +10,10 @@ export const artDecoGoldPalette: PaletteDefinition = {
     primary: '#C5A55A',
     secondary: '#1B1B1B',
     accent: '#2A6B5E',
-    neutral: '#F5F0E1',
   },
   bgStrategy: 'light',
+  // Original neutral #F5F0E1 was a warm cream/off-white; 'stone' (warm beige tone) is the closest match.
+  recommendedNeutral: 'stone',
   contrast: 'normal',
   recommendedForStyles: ['minimal'],
 };

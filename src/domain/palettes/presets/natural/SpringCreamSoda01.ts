@@ -11,8 +11,9 @@ export const springCreamSoda01Palette: PaletteDefinition = {
     secondary: '#72333E',
     accent: '#C2D95C',
     sub: '#F7C9DD',
-    neutral: '#7F4A6F',
   },
   bgStrategy: 'light',
+  // Original neutral #7F4A6F was a warm purple-toned hue; 'stone' (warm beige) is the closest neutral preset.
+  recommendedNeutral: 'stone',
   contrast: 'normal',
 };
