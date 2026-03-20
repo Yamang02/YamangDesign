@@ -11,9 +11,9 @@ export const orientalChineseRestaurant01Palette: PaletteDefinition = {
     secondary: '#FFE329', // 선택
     accent: '#00A63C', // 선택
     sub: '#002C2B', // 선택, 컬러풀 보조색
-    neutral: '#6B7280', // 선택, 무채색 (텍스트/테두리/배경용)
   },
   bgStrategy: 'light', // 'light' | 'colored' | 'dark'
+  recommendedNeutral: 'gray', // Original neutral #6B7280 matches gray-500 exactly.
   contrast: 'normal', // 'normal' | 'high'
 
   semanticMapping: {

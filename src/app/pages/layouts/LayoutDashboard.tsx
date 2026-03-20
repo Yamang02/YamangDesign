@@ -1,15 +1,16 @@
 import { Card } from '@app/components';
 import { useLayoutPreviewControls } from '@app/context/LayoutPreviewControlsContext';
 import { FloatingLayoutControlPanel } from './FloatingLayoutControlPanel';
+import styles from './LayoutDashboard.module.css';
 
 export function LayoutDashboard() {
   const { themeVars, fontFamilyValue } = useLayoutPreviewControls();
 
   return (
     <div style={{ ...themeVars, fontFamily: fontFamilyValue }}>
-      <div style={{ maxWidth: 'var(--app-max-width)', margin: '0 auto', padding: 'var(--ds-spacing-8)' }}>
+      <div className={styles.container}>
         <h1 style={{ margin: '0 0 var(--ds-spacing-6) 0' }}>Dashboard</h1>
-        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 'var(--ds-spacing-4)', marginBottom: 'var(--ds-spacing-8)' }}>
+        <section className={styles.statsGrid}>
           {[
             { label: '총 사용자', value: '12,847' },
             { label: '이번 달 매출', value: '₩24.5M' },

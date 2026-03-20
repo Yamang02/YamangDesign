@@ -10,9 +10,10 @@ export const vaporwaveNeonPalette: PaletteDefinition = {
     primary: '#FF71CE',
     secondary: '#B967FF',
     accent: '#01CDFE',
-    neutral: '#1A1A2E',
   },
   bgStrategy: 'dark',
+  // Original neutral #1A1A2E was a very dark navy/indigo; 'slate' (cool blue-tinted dark) is the closest match.
+  recommendedNeutral: 'slate',
   contrast: 'normal',
   recommendedForStyles: ['glassmorphism'],
 };

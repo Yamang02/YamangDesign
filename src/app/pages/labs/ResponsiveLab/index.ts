@@ -1,0 +1,1 @@
+export { ResponsiveLab } from './ResponsiveLab';

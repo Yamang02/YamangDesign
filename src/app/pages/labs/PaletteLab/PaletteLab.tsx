@@ -237,10 +237,12 @@ function NeutralPresetCard({
   presetName,
   onClick,
   selected,
+  recommended,
 }: {
   presetName: NeutralPresetName;
   onClick: () => void;
   selected: boolean;
+  recommended?: boolean;
 }) {
   return (
     <ComparisonCard
@@ -248,6 +250,11 @@ function NeutralPresetCard({
       styleVars={getNeutralPresetVariables(presetName)}
       onClick={onClick}
       selected={selected}
+      headerAction={
+        recommended ? (
+          <span className={styles.recommendedBadge}>(추천)</span>
+        ) : undefined
+      }
     >
       <div className={styles.colorColumn}>
         <p className={styles.colorKeyLabel}>Neutral</p>
@@ -450,6 +457,9 @@ function CustomPresetCard({
 export function PaletteLab() {
   const [detailSelection, setDetailSelection] = useState<DetailSelection>(null);
   const [activeBrandTab, setActiveBrandTab] = useState<BrandColorTabId>('all');
+  /** P07: 브랜드/중립 독립 축 선택 */
+  const [selectedBrandDef, setSelectedBrandDef] = useState<PaletteDefinition | null>(null);
+  const [selectedNeutral, setSelectedNeutral] = useState<NeutralPresetName>('gray');
 
   const designNav = useDesignSettingsNav();
   const {
@@ -475,7 +485,11 @@ export function PaletteLab() {
     return { expanded, mapping };
   }, [currentPaletteDefinition]);
 
+  /** P07: 선택된 브랜드 팔레트의 추천 중립 프리셋 */
+  const recommendedNeutral = selectedBrandDef?.recommendedNeutral ?? null;
+
   const handlePaletteSelect = (def: PaletteDefinition) => {
+    setSelectedBrandDef(def);
     setDetailSelection({ type: 'palette', definition: def });
   };
 
@@ -502,6 +516,7 @@ export function PaletteLab() {
   };
 
   const handleNeutralSelect = (name: NeutralPresetName) => {
+    setSelectedNeutral(name);
     setDetailSelection({ type: 'neutral', name });
   };
 
@@ -550,10 +565,7 @@ export function PaletteLab() {
                       def={def}
                       onClick={() => handlePaletteSelect(def)}
                       onMappingClick={handleMappingIconClick(def)}
-                      selected={
-                        detailSelection?.type === 'palette' &&
-                        detailSelection.definition.id === def.id
-                      }
+                      selected={selectedBrandDef?.id === def.id}
                     />
                   ))
                 )}
@@ -586,10 +598,7 @@ export function PaletteLab() {
                         def={def}
                         onClick={() => handlePaletteSelect(def)}
                         onMappingClick={handleMappingIconClick(def)}
-                        selected={
-                          detailSelection?.type === 'palette' &&
-                          detailSelection.definition.id === def.id
-                        }
+                        selected={selectedBrandDef?.id === def.id}
                       />
                     ))
                   )}
@@ -628,9 +637,10 @@ export function PaletteLab() {
                 key={presetName}
                 presetName={presetName}
                 onClick={() => handleNeutralSelect(presetName)}
-                selected={
-                  detailSelection?.type === 'neutral' &&
-                  detailSelection.name === presetName
+                selected={selectedNeutral === presetName}
+                recommended={
+                  recommendedNeutral !== null &&
+                  recommendedNeutral === presetName
                 }
               />
             ))}

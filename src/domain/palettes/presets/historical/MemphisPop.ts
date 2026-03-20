@@ -10,9 +10,10 @@ export const memphisPopPalette: PaletteDefinition = {
     primary: '#FF6F61',
     secondary: '#FFD700',
     accent: '#00CED1',
-    neutral: '#2C2C54',
   },
   bgStrategy: 'light',
+  // Original neutral #2C2C54 was a dark purple-navy; 'slate' (cool blue-tinted) is the closest available neutral preset.
+  recommendedNeutral: 'slate',
   contrast: 'normal',
   recommendedForStyles: ['brutalism'],
 };

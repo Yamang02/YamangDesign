@@ -3,9 +3,9 @@
     position: fixed;
     right: var(--ds-spacing-6);
     bottom: var(--ds-spacing-6);
-    z-index: 60;
+    z-index: var(--ds-z-overlay);
     border: var(--ds-border-width) solid var(--ds-color-border-default);
-    border-radius: 999px;
+    border-radius: var(--ds-radius-full);
     background: var(--ds-color-bg-surface);
     color: var(--ds-color-text-primary);
     padding: var(--ds-spacing-2) var(--ds-spacing-4);
@@ -20,7 +20,7 @@
     width: min(22rem, calc(100vw - var(--ds-spacing-8)));
     max-height: 70vh;
     overflow: auto;
-    z-index: 60;
+    z-index: var(--ds-z-overlay);
     border: var(--ds-border-width) solid var(--ds-color-border-default);
     border-radius: var(--ds-radius-lg);
     background: var(--ds-color-bg-surface);
@@ -48,5 +48,19 @@
     color: var(--ds-color-text-secondary);
     cursor: pointer;
     font-size: var(--ds-text-sm);
+  }
+
+  @media (max-width: 767px) {
+    .fab {
+      right: var(--ds-spacing-3);
+      bottom: var(--ds-spacing-3);
+    }
+
+    .panel {
+      right: var(--ds-spacing-3);
+      bottom: var(--ds-spacing-3);
+      width: calc(100vw - var(--ds-spacing-6));
+      max-height: 50vh;
+    }
   }
 }

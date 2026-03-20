@@ -10,9 +10,9 @@ export const swissMonochromePalette: PaletteDefinition = {
     primary: '#E52320',
     secondary: '#333333',
     accent: '#FFFFFF',
-    neutral: '#666666',
   },
   bgStrategy: 'light',
+  recommendedNeutral: 'gray',
   contrast: 'normal',
   recommendedForStyles: ['minimal', 'brutalism'],
 };

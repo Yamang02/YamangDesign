@@ -5,6 +5,7 @@
 
 import type { GeneratedScales } from '@shared/@types/tokens';
 import type { StyleName } from '@shared/@types/theme';
+import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 
 // PaletteSelection은 E11 P03에서 state/ 레이어로 이동됨
 // 하위 호환을 위해 re-export 유지
@@ -187,14 +188,18 @@ export interface PaletteDefinition {
     primary: string;
     secondary?: string;
     accent?: string;
-    /** Neutral(무채색). 텍스트/테두리/배경용 */
-    neutral?: string;
     /** Sub(컬러풀 보조색). 지정된 영역에만 사용. 비워두면 미사용 */
     sub?: string;
   };
 
   /** 배경색 전략 */
   bgStrategy: BgStrategy;
+
+  /**
+   * 추천 중립색 프리셋. neutralPreset이 단독 소스이며, 이 값은 힌트 용도.
+   * 미지정 시 neutralPreset 기본값(gray) 사용.
+   */
+  recommendedNeutral?: NeutralPresetName;
 
   /** 이 팔레트가 잘 어울리는 스타일 목록 (추천용) */
   recommendedForStyles?: StyleName[];

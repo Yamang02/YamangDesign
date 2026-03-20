@@ -43,6 +43,7 @@ export const navCategories: NavCategory[] = [
       { id: 'spacing', label: 'Spacing', icon: 'space-bar' },
       { id: 'grid', label: 'Grid', icon: 'grid-on' },
       { id: 'motion', label: 'Motion', icon: 'animation' },
+      { id: 'responsive', label: 'Responsive', icon: 'devices' },
     ],
   },
   {
