@@ -4,14 +4,17 @@
 import { useState } from 'react';
 import { LabLayout, LabSection, LabOverview, type TocItem } from '../../../layouts';
 import { spacing } from '@domain/tokens/global/spacing';
-import type { SpacingKey } from '@domain/tokens/global/spacing';
+import type { SpacingKey, SpacingValue } from '@domain/tokens/global/spacing';
 import styles from './SpacingLab.module.css';
 
-const spacingEntries = Object.entries(spacing) as [string, string][];
+const spacingEntries = (Object.keys(spacing) as unknown as SpacingKey[]).map(
+  (key) => [key, spacing[key]] as [SpacingKey, SpacingValue],
+);
 const maxPx = 96;
 
-function keyToCssVar(key: string): string {
-  return `--ds-spacing-${key.replace('.', '-')}`;
+function keyToCssVar(key: SpacingKey): string {
+  const keyStr = String(key);
+  return `--ds-spacing-${keyStr.replace('.', '-')}`;
 }
 
 const tocItems: TocItem[] = [
@@ -24,19 +27,18 @@ const tocItems: TocItem[] = [
 type ContextMode = 'padding' | 'gap' | 'margin';
 
 export function SpacingLab() {
-  const [diffA, setDiffA] = useState('4');
-  const [diffB, setDiffB] = useState('8');
+  const [diffA, setDiffA] = useState<SpacingKey>(4);
+  const [diffB, setDiffB] = useState<SpacingKey>(8);
   const [contextMode, setContextMode] = useState<ContextMode>('padding');
 
-  const valueA = spacing[diffA as SpacingKey] ?? '0px';
-  const valueB = spacing[diffB as SpacingKey] ?? '0px';
+  const valueA = spacing[diffA] ?? '0px';
+  const valueB = spacing[diffB] ?? '0px';
   const pxA = parseInt(valueA, 10);
   const pxB = parseInt(valueB, 10);
   const diffPx = Math.abs(pxB - pxA);
 
   const contextEntries = spacingEntries.filter(([key]) => {
-    const n = Number(key);
-    return n >= 1 && n <= 12 && Number.isInteger(n);
+    return key >= 1 && key <= 12 && Number.isInteger(key);
   });
 
   return (
@@ -100,11 +102,11 @@ export function SpacingLab() {
               <span className={styles.diffLabelText}>A</span>
               <select
                 value={diffA}
-                onChange={(e) => setDiffA(e.target.value)}
+                onChange={(e) => setDiffA(Number(e.target.value) as SpacingKey)}
                 className={styles.diffSelect}
               >
                 {spacingEntries.map(([key, val]) => (
-                  <option key={key} value={key}>
+                  <option key={key} value={String(key)}>
                     {key} ({val})
                   </option>
                 ))}
@@ -114,11 +116,11 @@ export function SpacingLab() {
               <span className={styles.diffLabelText}>B</span>
               <select
                 value={diffB}
-                onChange={(e) => setDiffB(e.target.value)}
+                onChange={(e) => setDiffB(Number(e.target.value) as SpacingKey)}
                 className={styles.diffSelect}
               >
                 {spacingEntries.map(([key, val]) => (
-                  <option key={key} value={key}>
+                  <option key={key} value={String(key)}>
                     {key} ({val})
                   </option>
                 ))}

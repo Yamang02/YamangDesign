@@ -9,7 +9,7 @@ export function BrutalTypographyQuote() {
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
-    letterRefs.current.forEach((el, i) => {
+    letterRefs.current.forEach((el) => {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;

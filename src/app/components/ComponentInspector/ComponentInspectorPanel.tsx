@@ -49,6 +49,8 @@ function ComponentPreview({
   activeComponent: InspectorComponentKey;
   styleVars: React.CSSProperties;
 }) {
+  const [selectValue, setSelectValue] = useState<string>('apple');
+
   return (
     <div data-context="preview" className={styles.previewArea} style={styleVars}>
       {activeComponent === 'Button' && (
@@ -99,7 +101,9 @@ function ComponentPreview({
       {activeComponent === 'Select' && (
         <div className={styles.previewGroup}>
           <Select
-            options={selectShowcase.fruitOptions}
+            options={selectShowcase.fruitOptions.map((opt) => ({ ...opt }))}
+            value={selectValue}
+            onChange={setSelectValue}
             placeholder="선택하세요"
           />
         </div>
