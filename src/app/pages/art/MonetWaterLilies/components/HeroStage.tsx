@@ -3,8 +3,7 @@ import { PaletteSwatchBar } from '../../_shared/PaletteSwatchBar';
 import { MONET_PALETTE } from '../monet-palette';
 import styles from './HeroStage.module.css';
 
-const IMAGE_URL =
-  'https://www.art-prints-on-demand.com/kunst/claude_monet/Seerosen-Gruene-Reflektionen-mittlere-Teil.jpg';
+const IMAGE_URL = '/art/monet-water-lilies-green-reflections.png';
 
 export function HeroStage() {
   return (

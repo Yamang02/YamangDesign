@@ -22,7 +22,7 @@ const CHAPTERS: ArtChapter[] = [
   { id: 'chapter-3', number: 'Ch.3', title: 'The Application' },
 ];
 
-const IMAGE_URL = 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Matissedance.jpg';
+const IMAGE_URL = '/art/matisse-dance-ii.png';
 
 const MATISSE_PALETTE_ITEMS: ArtPaletteItem[] = [
   { name: 'Matisse Red',  hex: '#C8361A', role: 'Primary' },
@@ -47,7 +47,7 @@ const MATISSE_TYPOGRAPHY: ArtTypographyItem[] = [
 ]
 
 const MATISSE_ART_CARD: ArtCardMeta = {
-  imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/Matissedance.jpg',
+  imageUrl: IMAGE_URL,
   title: 'La Danse (II)',
   artist: 'Henri Matisse',
   year: 1910,

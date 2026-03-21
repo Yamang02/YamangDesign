@@ -5,8 +5,7 @@
 import { MONET_PALETTE } from '../monet-palette';
 import styles from './ComponentApplication.module.css';
 
-const IMAGE_URL =
-  'https://www.art-prints-on-demand.com/kunst/claude_monet/Seerosen-Gruene-Reflektionen-mittlere-Teil.jpg';
+const IMAGE_URL = '/art/monet-water-lilies-green-reflections.png';
 
 const TOKEN_ROLES: Record<string, string> = {
   '#2D5016': 'Primary',

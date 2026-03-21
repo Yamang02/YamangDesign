@@ -23,7 +23,7 @@ const CHAPTERS: ArtChapter[] = [
   { id: 'chapter-3', number: 'Ch.3', title: 'The Application' },
 ];
 
-const IMAGE_URL = 'https://mdl.artvee.com/sftb/913118ab.jpg';
+const IMAGE_URL = '/art/mondrian-composition-1921.png';
 
 const MONDRI_PALETTE_ITEMS: ArtPaletteItem[] = [
   { name: 'Mondrian Blue',   hex: '#7A9BBF', role: 'Primary' },
@@ -50,7 +50,7 @@ const MONDRI_TYPOGRAPHY: ArtTypographyItem[] = [
 ];
 
 const MONDRI_ART_CARD: ArtCardMeta = {
-  imageUrl: 'https://mdl.artvee.com/sftb/913118ab.jpg',
+  imageUrl: IMAGE_URL,
   title: 'Composition with Large Blue Plane',
   artist: 'Piet Mondrian',
   year: 1921,

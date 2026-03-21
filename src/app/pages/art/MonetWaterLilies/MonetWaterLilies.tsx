@@ -31,7 +31,7 @@ const MONET_LABEL: LabelInfo = {
   yearEnd: 1918,
 };
 
-const IMAGE_URL = 'https://www.art-prints-on-demand.com/kunst/claude_monet/Seerosen-Gruene-Reflektionen-mittlere-Teil.jpg';
+const IMAGE_URL = '/art/monet-water-lilies-green-reflections.png';
 
 const MONET_PALETTE_ITEMS: ArtPaletteItem[] = [
   { name: 'Deep Green',  hex: '#2D5016', role: 'Primary' },
