@@ -2,8 +2,8 @@
  * E12: import 경로 수정 스크립트
  * 새 3계층 구조(domain/app/shared)에 맞게 cross-layer import를 alias로 교체
  */
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const SRC = path.resolve(__dirname, '../src');
 
@@ -23,7 +23,7 @@ function fixImportsInFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
 
   // This file's layer (domain, app, or shared)
-  const relToSrc = path.relative(SRC, filePath).replace(/\\/g, '/');
+  const relToSrc = path.relative(SRC, filePath).replaceAll('\\', '/');
   const parts = relToSrc.split('/');
 
   // parts[0] is the layer dir (domain, app, shared) or a root file
@@ -37,8 +37,8 @@ function fixImportsInFile(filePath) {
 
   // Pattern: from '../../xxx/...' where xxx is a recognizable directory
   // We need to find relative imports and check if they cross layers
-  updated = updated.replace(
-    /from '(\.\.[\w\/\.\-@]+)'/g,
+  updated = updated.replaceAll(
+    /from '(\.\.[-\w./@]+)'/g,
     (match, importPath) => {
       // Only process relative paths (start with ..)
       if (!importPath.startsWith('..')) return match;

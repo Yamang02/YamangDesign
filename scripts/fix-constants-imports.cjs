@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('node:fs');
 
 const LAB_CONTENT_ITEMS = ['sampleText','buttonLabels','inputPlaceholders','sectionTitles','formatters','fontFamilyLabels','semanticPreviews'];
 const SHOWCASE_ITEMS = ['showcaseSections','showcaseLabels','showcaseContent','showcaseSectionTokens','ATOM_USED_IN','buttonShowcase','cardShowcase','inputShowcase','selectShowcase','iconShowcase','ShowcaseSectionId'];
@@ -15,28 +15,32 @@ const files = [
   'src/app/pages/build/Organisms.tsx',
 ];
 
-files.forEach(function(f) {
+const importDomainConstants = /import\s+(type\s+)?\{([^}]+)\}\s+from\s+'@domain\/constants';/g;
+
+files.forEach((f) => {
   if (!fs.existsSync(f)) return;
-  var c = fs.readFileSync(f, 'utf8');
-  var original = c;
+  let c = fs.readFileSync(f, 'utf8');
+  const original = c;
 
-  // Replace each import { ... } from '@domain/constants' or from '@app/content/build-content' etc.
-  c = c.replace(/import\s+(type\s+)?\{([^}]+)\}\s+from\s+'@domain\/constants';/g, function(match, isType, imports) {
-    var items = imports.split(',').map(function(i) { return i.trim(); }).filter(Boolean);
-    var labItems = items.filter(function(i) { return LAB_CONTENT_ITEMS.indexOf(i) >= 0; });
-    var showcaseItems = items.filter(function(i) { return SHOWCASE_ITEMS.indexOf(i) >= 0; });
-    var buildItems = items.filter(function(i) { return BUILD_ITEMS.indexOf(i) >= 0; });
-    var domainItems = items.filter(function(i) {
-      return LAB_CONTENT_ITEMS.indexOf(i) < 0 && SHOWCASE_ITEMS.indexOf(i) < 0 && BUILD_ITEMS.indexOf(i) < 0;
-    });
+  c = c.replaceAll(importDomainConstants, (match, isType, imports) => {
+    const items = imports.split(',').map((i) => i.trim()).filter(Boolean);
+    const labItems = items.filter((i) => LAB_CONTENT_ITEMS.includes(i));
+    const showcaseItems = items.filter((i) => SHOWCASE_ITEMS.includes(i));
+    const buildItems = items.filter((i) => BUILD_ITEMS.includes(i));
+    const domainItems = items.filter(
+      (i) =>
+        !LAB_CONTENT_ITEMS.includes(i) &&
+        !SHOWCASE_ITEMS.includes(i) &&
+        !BUILD_ITEMS.includes(i),
+    );
 
-    var prefix = isType || '';
-    var result = '';
+    const prefix = isType || '';
+    let result = '';
     if (labItems.length) result += 'import ' + prefix + '{ ' + labItems.join(', ') + " } from '@app/content/lab-content';\n";
     if (showcaseItems.length) result += 'import ' + prefix + '{ ' + showcaseItems.join(', ') + " } from '@app/content/showcase-content';\n";
     if (buildItems.length) result += 'import ' + prefix + '{ ' + buildItems.join(', ') + " } from '@app/content/build-content';\n";
     if (domainItems.length) result += 'import ' + prefix + '{ ' + domainItems.join(', ') + " } from '@domain/constants';";
-    return result.trimRight();
+    return result.trimEnd();
   });
 
   if (c !== original) {
