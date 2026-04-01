@@ -1,6 +1,10 @@
 /**
  * E05: Lab 비교 뷰 - 프리셋 나란히 비교용 카드
+ *
+ * 헤더에 실제 `<button>`이 올 수 있으므로, `headerAction`+`onClick` 동시에는
+ * 루트를 `<button>`으로 두지 않는다(중첩 버튼·hydration 경고 방지).
  */
+import type { KeyboardEvent } from 'react';
 import { clsx } from '@shared/utils/clsx';
 import styles from './LabLayout.module.css';
 
@@ -29,10 +33,32 @@ export function ComparisonCard({
   headerAction,
   surfaceContent = false,
 }: Readonly<ComparisonCardProps>) {
-  const Wrapper = onClick ? 'button' : 'div';
+  const interactive = Boolean(onClick);
+  /** 헤더 보조 버튼과 루트 네이티브 버튼을 동시에 쓰면 HTML상 중첩이 된다. */
+  const useRootDivButton = interactive && Boolean(headerAction);
+  const Wrapper = interactive && !useRootDivButton ? 'button' : 'div';
+
+  let rootProps: Record<string, unknown> = {};
+  if (interactive && useRootDivButton && onClick) {
+    rootProps = {
+      role: 'button' as const,
+      tabIndex: 0 as const,
+      onClick,
+      onKeyDown: (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      },
+      'aria-pressed': selected,
+    };
+  } else if (interactive && !useRootDivButton && onClick) {
+    rootProps = { type: 'button' as const, onClick, 'aria-pressed': selected };
+  }
+
   return (
     <Wrapper
-      {...(onClick ? { type: 'button' as const, onClick } : {})}
+      {...rootProps}
       className={clsx(
         styles.comparisonCard,
         selected && styles.comparisonCardSelected,

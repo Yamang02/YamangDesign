@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { flattenToCSSVars } from './css';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { flattenToCSSVars, injectCSSVariables, removeCSSVariables } from './css';
 
 describe('flattenToCSSVars', () => {
   it('단일 depth 객체를 CSS 변수로 변환', () => {
@@ -51,5 +51,39 @@ describe('flattenToCSSVars', () => {
       '--ds-color-bg-subtle': '#F5F5F5',
       '--ds-color-text-primary': '#000',
     });
+  });
+});
+
+describe('injectCSSVariables / removeCSSVariables', () => {
+  const setProperty = vi.fn();
+  const removeProperty = vi.fn();
+
+  beforeEach(() => {
+    setProperty.mockClear();
+    removeProperty.mockClear();
+    vi.stubGlobal(
+      'document',
+      {
+        documentElement: {
+          style: { setProperty, removeProperty },
+        },
+      } as unknown as Document
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('injectCSSVariables가 :root style에 변수를 설정한다', () => {
+    injectCSSVariables({ '--ds-color-bg': '#fff', '--ds-spacing': '8px' });
+    expect(setProperty).toHaveBeenCalledWith('--ds-color-bg', '#fff');
+    expect(setProperty).toHaveBeenCalledWith('--ds-spacing', '8px');
+  });
+
+  it('removeCSSVariables가 지정한 변수를 제거한다', () => {
+    removeCSSVariables(['--a', '--b']);
+    expect(removeProperty).toHaveBeenCalledWith('--a');
+    expect(removeProperty).toHaveBeenCalledWith('--b');
   });
 });
