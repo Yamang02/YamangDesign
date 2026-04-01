@@ -2,9 +2,10 @@
 id: E28-B0001
 title: 코드 주석·CC-05 Code Hygiene (basis 정합)
 tags: [convention, cc-05, comments, backlog]
-status: selected
+status: archived
 owner: TBD
 createdAt: 2026-04-01
+archivedAt: 2026-04-01
 relatedEpic: E27.2026-04-01_audit-remediation-layer-quality
 ---
 

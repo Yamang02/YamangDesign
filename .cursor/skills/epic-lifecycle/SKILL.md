@@ -40,6 +40,7 @@ docs/epic/
 
 docs/archive/
   E##.YYYY-MM-DD_{epic-name}/   # same folder name after move; E## preserved
+  backlog/                      # promoted backlog records whose epic is archived (see Operation C2)
 ```
 
 ## E## numbering
@@ -130,7 +131,8 @@ Do **not** move folders until all three pass:
 4. Re-verify every Phase checklist against the codebase.
 5. Re-verify epic `Readme.md` Phase checkboxes vs reality.
 6. Move **`docs/epic/E##.YYYY-MM-DD_{epic-name}/`** → **`docs/archive/`** with the **same** directory name.
-7. Append to archived `Readme.md`:
+7. **Promoted backlog cleanup:** For each file under `docs/epic/backlog/` whose frontmatter `relatedEpic` matches this epic id and `status` is `selected`, **move** it to **`docs/archive/backlog/`** (create the folder if needed), set **`status: archived`** and **`archivedAt`**, and ensure nothing duplicate remains under `docs/epic/backlog/`.
+8. Append to archived `Readme.md`:
 
 ```markdown
 ## 완료
@@ -139,11 +141,11 @@ Do **not** move folders until all three pass:
 
 (use the project’s locale if the repo standard differs; date required)
 
-8. Confirm `docs/epic/` no longer contains this epic directory.
+9. Confirm `docs/epic/` no longer contains this epic directory.
 
 **Exception:** Without archive date, treat archive as invalid.
 
-**Done when:** Folder only under `docs/archive/`, completion date recorded, epic tree clean.
+**Done when:** Folder only under `docs/archive/`, related promoted backlog files under `docs/archive/backlog/` (not left active under `docs/epic/backlog/`), completion date recorded, epic tree clean.
 
 ---
 

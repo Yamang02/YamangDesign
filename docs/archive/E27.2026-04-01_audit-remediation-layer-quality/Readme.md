@@ -55,4 +55,10 @@
 
 ## 백로그 연결
 
-- 승격 원본: E27-B0001 (`status: selected`), E28-B0001 → **본 에픽 P07**로 편입 (`status: selected`).
+- 승격 원본 기록: [E27-B0001](../backlog/2026-04-01_E27-B0001_audit-remediation-implementation.md), [E28-B0001](../backlog/2026-04-01_E28-B0001_code-comment-hygiene-cc05.md) (`docs/archive/backlog/`, `status: archived`). CC-05 구현·체크리스트는 **본 에픽 P07** 문서가 단일 소스.
+
+---
+
+## 완료
+
+아카이브일: 2026-04-01

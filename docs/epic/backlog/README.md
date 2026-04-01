@@ -7,8 +7,9 @@
 ## 핵심 원칙(버전 불일치 방지)
 1. **아이디어 문서는 단일 소스(One record)**로 유지합니다. 같은 아이디어를 여러 버전의 백로그 문서로 복제하지 않습니다.
 2. 백로그 문서의 콘텐츠를 “자유롭게 계속 수정”하지 않고, 상태가 전환될 때만 최소 변경합니다.
-3. 에픽으로 승격되면 **백로그 문서는 `selected`(또는 `archived`)로 고정**하고, 이후 스펙/결정은 에픽 문서에서만 관리합니다.
-4. 백로그 문서 ↔ 에픽 문서 사이에는 **링크만 유지**합니다(복사 금지).
+3. 에픽으로 승격되면 **백로그 문서는 `selected`로 고정**하고, 이후 스펙/결정은 에픽 문서에서만 관리합니다.
+4. **에픽이 `docs/archive/`로 이전되면** 해당 에픽과 연결된 승격 백로그 문서(`relatedEpic` 일치, `status: selected`)는 **`docs/epic/backlog/`에서 제거**하고 **`docs/archive/backlog/`로 이동**합니다. 이때 `status: archived`, `archivedAt`을 넣습니다. 활성 백로그 디렉터리에는 “진행 중 에픽에 매달린 승격 기록”만 남지 않습니다.
+5. 백로그 문서 ↔ 에픽 문서 사이에는 **링크만 유지**합니다(복사 금지).
 
 ## 파일 네이밍 규칙
 - 형식: `YYYY-MM-DD_<short-id>_<short-title>.md`
@@ -25,6 +26,7 @@ tags: [style, token, diff]
 status: triage | incubating | proposed | selected | archived
 owner: (이름/역할)
 createdAt: YYYY-MM-DD
+archivedAt: YYYY-MM-DD (에픽 아카이브와 함께 `docs/archive/backlog/`로 옮길 때만)
 relatedEpic: E17.2026-03-19_style-expressiveness (없으면 공란)
 ---
 ```
@@ -33,8 +35,8 @@ relatedEpic: E17.2026-03-19_style-expressiveness (없으면 공란)
 - `triage`: 아이디어 후보(아직 범위가 거칠 수 있음). 최소 근거/가설만 적습니다.
 - `incubating`: 추가 조사/견해 정리 단계. 다만 스펙 확정(구현 디테일)은 금지합니다.
 - `proposed`: 다음 grooming 때 에픽 승격 후보로 제시됨.
-- `selected`: 실제 에픽으로 승격됨. 이후 내용 수정은 링크/상태 메타만.
-- `archived`: 폐기/연기. 이후 다시 살릴 때는 새 백로그 아이템을 만들지 말고 `incubating`으로 롤백만 고려합니다(가능하면).
+- `selected`: 실제 에픽으로 승격됨. 이후 내용 수정은 링크/상태 메타만. **에픽이 아카이브되면** 파일은 `docs/archive/backlog/`로 옮기고 여기서는 `archived`로 표기합니다.
+- `archived`: 폐기/연기, **또는** 에픽 완료와 함께 `docs/archive/backlog/`로 이전된 기록. 연기 건은 다시 살릴 때 새 백로그 아이템을 만들지 말고 `incubating` 롤백만 고려합니다(가능하면).
 
 ## 운영 방법(주기/체크)
 - “선정 주기”마다(예: 1~2주 또는 월 1회) `status=proposed/triage`만 리뷰합니다.
@@ -50,5 +52,5 @@ relatedEpic: E17.2026-03-19_style-expressiveness (없으면 공란)
 - `docs/epic/backlog/` : 다음 에픽으로 뽑기 위한 아이디어 저장소
 - `docs/epic/<epic>/Readme.md` : 해당 에픽 내부에서 이어질 구체 백로그
 
-승격된 에픽 예: [E27 Audit Remediation](../E27.2026-04-01_audit-remediation-layer-quality/Readme.md) (백로그 [E27-B0001](./2026-04-01_E27-B0001_audit-remediation-implementation.md), [E28-B0001](./2026-04-01_E28-B0001_code-comment-hygiene-cc05.md) → 에픽 **P07** 편입).
+아카이브된 승격 기록 예: 에픽 [E27 Audit Remediation](../../archive/E27.2026-04-01_audit-remediation-layer-quality/Readme.md)와 연결된 백로그 [E27-B0001](../../archive/backlog/2026-04-01_E27-B0001_audit-remediation-implementation.md), [E28-B0001](../../archive/backlog/2026-04-01_E28-B0001_code-comment-hygiene-cc05.md)는 **`docs/archive/backlog/`**에 있습니다.
 
