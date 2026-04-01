@@ -107,11 +107,11 @@ function AnimBall({
 
 const BALL_COLORS = [
   'var(--ds-color-primary-500)',
-  'var(--ds-color-secondary-500, var(--ds-color-accent-500))',
-  '#10b981',
-  '#f59e0b',
-  '#ef4444',
-  '#8b5cf6',
+  'var(--ds-color-secondary-500)',
+  'var(--ds-color-accent-500)',
+  'var(--ds-color-sub-500)',
+  'var(--ds-color-neutral-600)',
+  'var(--ds-color-primary-700)',
 ];
 
 export function MotionLab() {

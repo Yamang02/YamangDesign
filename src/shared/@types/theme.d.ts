@@ -1,8 +1,8 @@
 /**
  * Palette/Style 이름 (E03)
- * PaletteName은 theme-presets에서 유도 (registry → themePresets 단일 소스)
+ * PaletteName은 shared/types/palette-name — registry id와 동기화
  */
-export type { PaletteName } from '@domain/constants/theme-presets';
+export type { PaletteName } from '../types/palette-name';
 export type StyleName = 'minimal' | 'neumorphism' | 'brutalism' | 'glassmorphism';
 
 /** E08: 시스템 컬러 프리셋 (Error, Warning, Success, Info) */

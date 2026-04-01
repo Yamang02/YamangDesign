@@ -287,6 +287,12 @@ const styles = {
 
 ---
 
+## Art Reference Gallery
+
+`src/app/pages/art/**` 는 명화·스타일 재현용 **실험 구역**이다. 전역 Header/Footer는 DS·테마를 따르고, 페이지 내부는 그리드·간격·타이포는 토큰, **표면 색은 DS semantic 전면 적용 대상이 아니다**. 상세·리터럴 검사 예외는 [.cursor/skills/yamang-design-stack/SKILL.md](../../.cursor/skills/yamang-design-stack/SKILL.md) 를 본다.
+
+---
+
 ## 문서 목록
 
 | 문서 | 내용 |
@@ -305,6 +311,7 @@ const styles = {
 | [12-component-input.md](./12-component-input.md) | Input 스펙 |
 | [13-component-navigation.md](./13-component-navigation.md) | Navigation 스펙 |
 | [16-semantic-mapping.md](./16-semantic-mapping.md) | Semantic Mapping 독립 축 |
+| [19-new-token-checklist.md](./19-new-token-checklist.md) | 신규 토큰 추가 체크리스트 |
 
 ---
 

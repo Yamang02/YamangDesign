@@ -4,7 +4,14 @@
  * 새 팔레트 추가 시: 해당 카테고리 index.ts에 export만 추가하면 됨.
  */
 import type { PaletteDefinition } from '../palettes';
+import type { CustomSemanticPaletteId } from '@shared/types/palette-name';
 import { getAllThemes } from '../palettes/presets/registry';
+
+export type {
+  BuiltinPaletteId,
+  CustomSemanticPaletteId,
+  PaletteName,
+} from '@shared/types/palette-name';
 
 const themes = getAllThemes();
 const themePresets = Object.fromEntries(
@@ -19,17 +26,6 @@ const themePresets = Object.fromEntries(
 
 export { themePresets };
 
-/** Lab/Playground 등에서 사용하는 빌트인 팔레트 ID */
-export type BuiltinPaletteId = keyof typeof themePresets;
-
-/** 시맨틱 매핑 커스텀 프리셋 ID (베이스 참조 + 오버라이드) */
-export type CustomSemanticPaletteId = `custom-semantic:${string}`;
-
-/** 사용자 정의 포함 전체 팔레트 이름 */
-export type PaletteName = BuiltinPaletteId | 'custom' | CustomSemanticPaletteId; // NOSONAR typescript:S6571 — custom 슬롯
-
-export function isCustomSemanticPaletteId(
-  name: string
-): name is CustomSemanticPaletteId {
+export function isCustomSemanticPaletteId(name: string): name is CustomSemanticPaletteId {
   return name.startsWith('custom-semantic:');
 }

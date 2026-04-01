@@ -120,7 +120,7 @@
   .durationPillActive {
     background: var(--ds-color-primary-500);
     border-color: var(--ds-color-primary-500);
-    color: #fff;
+    color: var(--ds-color-text-on-primary);
   }
 
   /* ── Easing Grid ── */
@@ -238,7 +238,7 @@
   .stateLayerOverlay {
     position: absolute;
     inset: 0;
-    background: #000;
+    background: var(--ds-color-neutral-900);
   }
 
   .stateLayerKey {

@@ -24,6 +24,15 @@
 8. Art gallery pages → `yamang-art-page-workflow`.
 9. See **`epic-lifecycle`** optional routing table for the rest of the workflow skills.
 
+## 프로젝트 규모
+
+- **티어:** S — 단일 저장소 POC, 소규모·에이전틱 워크플로 중심.
+
+## Git 브랜치 (GC-01)
+
+- 에픽: `epic/E##-{scope}`
+- Phase/기능: `feat/E##/P##-{scope}`, `fix/E##/…` 등 — `docs/epic`의 E##·P##와 대응.
+
 ## AI Policy Generation
 
 Ignore file generation (`.claudeignore`, `.cursorignore`) is managed by:

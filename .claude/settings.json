@@ -33,7 +33,8 @@
       "Bash(# E12 상태 확인 - domain/ app/ shared/ 구조가 있는지 ls src/)",
       "Bash(xargs grep -l \"LabLayout\")",
       "Bash(grep -l \"var\\(--ds-\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Header/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Navigation/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Footer/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Tooltip/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/DetailPanel/*.css)",
-      "Bash(grep -oh \"var\\(--ds-[^\\)]*\\)\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Header/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Navigation/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Footer/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Tooltip/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/DetailPanel/*.css)"
+      "Bash(grep -oh \"var\\(--ds-[^\\)]*\\)\" /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Header/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Navigation/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Footer/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/Tooltip/*.css /c/Users/ljj02/Desktop/dev/YamangDesign/src/app/components/DetailPanel/*.css)",
+      "Bash(npx vitest:*)"
     ],
     "additionalDirectories": [
       "C:\\Users\\ljj02\\AppData\\Roaming\\Code\\User",

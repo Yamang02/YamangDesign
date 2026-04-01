@@ -184,7 +184,7 @@
   .contextTabActive {
     background: var(--ds-color-primary-500);
     border-color: var(--ds-color-primary-500);
-    color: #fff;
+    color: var(--ds-color-text-on-primary);
   }
 
   .contextGrid {
@@ -242,9 +242,9 @@
   }
 
   .contextGap {
-    background: color-mix(in srgb, var(--ds-color-accent-500, #f59e0b) 35%, transparent);
-    border-left: 1px dashed color-mix(in srgb, var(--ds-color-accent-500, #f59e0b) 80%, transparent);
-    border-right: 1px dashed color-mix(in srgb, var(--ds-color-accent-500, #f59e0b) 80%, transparent);
+    background: color-mix(in srgb, var(--ds-color-accent-500) 35%, transparent);
+    border-left: 1px dashed color-mix(in srgb, var(--ds-color-accent-500) 80%, transparent);
+    border-right: 1px dashed color-mix(in srgb, var(--ds-color-accent-500) 80%, transparent);
     min-width: 1px;
   }
 

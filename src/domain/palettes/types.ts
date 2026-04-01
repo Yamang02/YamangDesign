@@ -5,9 +5,7 @@
 
 import type { GeneratedScales } from '@shared/@types/tokens';
 import type { StyleName } from '@shared/@types/theme';
-// PaletteSelection은 E11 P03에서 state/ 레이어로 이동됨
-// 하위 호환을 위해 re-export 유지
-export type { PaletteSelection } from '@app/state/types';
+export type { PaletteSelection } from '@shared/types/palette-selection';
 
 // PaletteName은 constants/theme-presets.ts에서 정의됨
 // PaletteDefinition.name은 내부 유연성을 위해 string 유지

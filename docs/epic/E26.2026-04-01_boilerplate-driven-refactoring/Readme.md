@@ -11,8 +11,8 @@
 ### 현재 상태
 - YamangDesign은 domain/app/shared 3-layer 구조, CSS variable 기반 토큰 시스템, 24+ 컴포넌트를 가진 React 디자인 시스템 POC
 - `AGENT.md` + `ai/rules.yaml`로 agent 규칙을 관리하며, `yamang-art-*` skill이 프로젝트 특화로 존재
-- 로컬 SonarQube 서버는 있으나 YamangDesign 프로젝트는 미연결 상태
-- SonarCloud 기반 `sonar-issues.json`(E25)이 존재하나 로컬 SonarQube 기준으로 재스캔 필요
+- 로컬 SonarQube에 프로젝트 등록·`npm run sonar:scan` 실행이 가능함(P01~P03)
+- SonarCloud 기반 `sonar-issues.json`(E25)은 참고용; **로컬 Sonar 결과를 기준**으로 삼음(특이점)
 
 ### 문제
 - vibe_boilerplate에 정립된 공통 skill/basis 규칙이 YamangDesign에 적용되지 않아 프로젝트 간 워크플로우가 불일치
@@ -25,6 +25,7 @@
 - **프로젝트 특화 skill 관리:** boilerplate에 `templates/project-stack.tmpl.md` 템플릿을 작성하고, YamangDesign은 이를 기반으로 `yamang-design-stack.md` 생성
 - **SonarQube:** 기존 SonarCloud 결과는 참고용, 로컬 SonarQube 결과를 기준으로 삼음
 - **리팩토링 깊이:** 프로젝트 규모가 크지 않으므로 Minor까지 전부 수정 (C 수준)
+- **P03 종료 시점 (2026-04-01):** 로컬 Sonar 기준 **`MINOR=0`**, **`BLOCKER/CRITICAL=0`**. 색 대비 `css:S7924` MAJOR는 **디자인 의도**로 Sonar UI에서 **Accepted** 처리하여 에픽 Sonar 목표와 정합.
 - **P04~P08은 점검(audit) 전용:** 위반 사항을 발견·기록하되, 코드 수정은 하지 않는다. 수정이 필요하면 별도 에픽 또는 백로그로 승격한다
 - **프론트엔드 전용 제외 항목:** AR-03(백엔드), DS-01(DB), SC-02(인증/인가), SC-04(API 보안), PT-01(도메인 모델링 패턴)은 해당 없음으로 제외
 
@@ -39,11 +40,26 @@
 - [P08: 프로세스/문서 점검](./P08.process-documentation-audit.md)
 
 ## 상태
+
+**현재 페이즈:** 전 Phase 완료. **후속 구현 에픽:** [E27 Audit Remediation](../E27.2026-04-01_audit-remediation-layer-quality/Readme.md) (원안 [E27-B0001](../backlog/2026-04-01_E27-B0001_audit-remediation-implementation.md)).
+
 - [x] P01 완료
 - [x] P02 완료
-- [ ] P03 완료 (진행 중: `S6759` 전량 해소(`96 -> 0`), `npm run build` / `npm run lint` 확인, 로컬 SonarQube `total=125 (BLOCKER 0, CRITICAL 0, MAJOR 58, MINOR 60, INFO 7)`)
-- [ ] P04 완료
-- [ ] P05 완료
-- [ ] P06 완료
-- [ ] P07 완료
-- [ ] P08 완료
+- [x] P03 완료 *(Sonar 대비 이슈 Accepted 등 [P03](./P03.code-refactoring.md)·위 특이점 참조)*
+- [x] P04 완료 *(아키텍처 점검·기록 완료; AR 역방향 import 0건은 미달 — [P04](./P04.architecture-audit.md))*
+- [x] P05 완료 ([P05](./P05.design-token-audit.md))
+- [x] P06 완료 ([P06](./P06.code-convention-audit.md))
+- [x] P07 완료 ([P07](./P07.quality-security-audit.md))
+- [x] P08 완료 ([P08](./P08.process-documentation-audit.md))
+
+---
+
+## 완료 검토 요약 (Operation C, 2026-04-01)
+
+| 게이트 | 결과 |
+|--------|------|
+| **C1 에픽 목표** | Skill 이식(P02)·로컬 Sonar clean(P03)·basis 점검 기록(P04~P08) **충족**. “코드가 CC/CN/AR에 **전면** 부합”은 P04~P06에서 **일부 예외·기록**으로 남음 → **후속 에픽(백로그)**으로 이관. |
+| **C2 Phase 간 일관성** | P03 Sonar·P04 AR·P05 토큰 서술 상충 없음. |
+| **C3 이연 항목** | 코드 변경이 필요한 항목은 에픽 특이점대로 **백로그**에만 두고 본 에픽에서는 수정하지 않음 → [E27-B0001](../backlog/2026-04-01_E27-B0001_audit-remediation-implementation.md). |
+
+**아카이브 이동:** `docs/archive/` 이전은 팀 정책에 따라 수행. 위 검토만으로 에픽 문서 `docs/epic/`에 **유지 가능**.

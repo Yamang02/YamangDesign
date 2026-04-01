@@ -1,16 +1,13 @@
 /**
- * E03: Palette × Style 조합 기반 ThemeProvider
- * PaletteSelection 기반 단일 상태 모델
+ * E03: Palette × Style 조합 기반 ThemeProvider (앱 레이어)
+ * UI·저장소·훅에 의존하는 부분은 domain ThemeContext와 분리해 AR-01-02 방향을 맞춘다.
  */
 import { useState, useLayoutEffect, useMemo, useCallback, type ReactNode } from 'react';
-import type {
-  StyleName,
-  SystemPresetName,
-} from '@shared/@types/theme';
+import type { StyleName, SystemPresetName } from '@shared/@types/theme';
 import type { ColorInput } from '@shared/@types/tokens';
-import { neutralPresets } from '../tokens/global/neutral-presets';
-import type { NeutralPresetName } from '../tokens/global/neutral-presets';
-import type { PaletteSelection } from '@app/state/types';
+import type { PaletteSelection } from '@shared/types/palette-selection';
+import { neutralPresets } from '@domain/tokens/global/neutral-presets';
+import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 import {
   savePaletteSelection,
   loadPaletteSelection,
@@ -19,12 +16,12 @@ import {
 } from '@app/state/palette-selection';
 import { siteStyle } from '@app/config/site-style';
 import { flattenToCSSVars, injectCSSVariables } from '@shared/utils/css';
-import { getMergedMapping } from '../palettes/mapping/resolve';
-import { defaultSemanticMappings } from '../palettes/strategies/default-mappings';
+import { getMergedMapping } from '@domain/palettes/mapping/resolve';
+import { defaultSemanticMappings } from '@domain/palettes/strategies/default-mappings';
 import type { StoredSettings } from '@app/components/GlobalSettings/types';
-import { flattenTokenSet, buildThemeAndTokenSet } from './token-set';
-import { stylePresets } from './presets';
-import type { CustomThemePreset } from '../constants/semantic-presets';
+import { flattenTokenSet, buildThemeAndTokenSet } from '@domain/themes/token-set';
+import { stylePresets } from '@domain/themes/presets';
+import type { CustomThemePreset } from '@domain/constants/semantic-presets';
 import { usePaletteSelection } from '@app/hooks/usePaletteResolution';
 import { useCustomThemePresets } from '@app/hooks/useCustomThemePresets';
 import {
@@ -42,11 +39,11 @@ import {
   duration,
   easing,
   stateLayer,
-} from '../tokens/global';
-import { generateTextStyleVars } from '../tokens/typography';
-import { ThemeContext } from './ThemeContext';
+} from '@domain/tokens/global';
+import { generateTextStyleVars } from '@domain/tokens/typography';
+import { ThemeContext } from '@domain/themes/ThemeContext';
 
-export type { ThemeContextValue } from './ThemeContext';
+export type { ThemeContextValue } from '@domain/themes/ThemeContext';
 
 function resolveInitialPaletteSelection(
   initialSelection: PaletteSelection | undefined,
@@ -95,7 +92,6 @@ export function ThemeProvider({
     () => resolveInitialPaletteSelection(initialSelection, initialPalette, initialPaletteName)
   );
 
-  // 커스텀 테마 프리셋 관리 (localStorage 연동)
   const {
     presets: customSemanticPresets,
     add: addCustomSemanticPresetInternal,
@@ -103,13 +99,11 @@ export function ThemeProvider({
     remove: removeCustomSemanticPresetInternal,
   } = useCustomThemePresets();
 
-  // 팔레트 해석 (PaletteSelection → PaletteDefinition)
   const { definition: paletteDefinition, colors: palette } = usePaletteSelection(
     selection,
     customSemanticPresets
   );
 
-  // P05: 전역 시맨틱 오버라이드 병합 (설정 페이지 적용분)
   const definitionForTheme = useMemo(() => {
     const base = defaultSemanticMappings[paletteDefinition.bgStrategy];
     const withDef = getMergedMapping(base, paletteDefinition.semanticMapping);
@@ -117,7 +111,6 @@ export function ThemeProvider({
     return { ...paletteDefinition, semanticMapping: merged };
   }, [paletteDefinition, appliedSettings?.semanticMapping]);
 
-  // P08: design-settings 적용 시 selection을 palette 스냅샷으로 동기화
   const [prevAppliedSettings, setPrevAppliedSettings] = useState(appliedSettings);
   if (prevAppliedSettings !== appliedSettings) {
     setPrevAppliedSettings(appliedSettings);
@@ -129,22 +122,17 @@ export function ThemeProvider({
     }
   }
 
-  // ============================================================================
-  // 새 API: setPaletteSelection
-  // ============================================================================
   const setPaletteSelection = useCallback((newSelection: PaletteSelection) => {
     setSelectionState(newSelection);
     savePaletteSelection(newSelection);
   }, []);
 
-  // P05: theme + tokenSet을 buildThemeAndTokenSet으로 한 번에 계산 (createPalette 중복 호출 제거)
   const { theme, tokenSet } = useMemo(() => {
     const styleDef = stylePresets[styleName] ?? stylePresets.minimal;
     const neutralScale = neutralPresets[neutralPreset]?.scale;
     return buildThemeAndTokenSet(definitionForTheme, styleDef, { systemPreset, neutralPreset: neutralScale ? neutralPreset : undefined });
   }, [definitionForTheme, styleName, systemPreset, neutralPreset]);
 
-  // 커스텀 프리셋 CRUD 래퍼 (삭제 시 현재 팔레트 초기화 포함)
   const addCustomSemanticPreset = useCallback(
     (preset: Omit<CustomThemePreset, 'id' | 'createdAt'>) => {
       return addCustomSemanticPresetInternal(preset);
@@ -155,7 +143,6 @@ export function ThemeProvider({
   const deleteCustomSemanticPreset = useCallback(
     (id: string) => {
       removeCustomSemanticPresetInternal(id);
-      // 현재 선택된 프리셋이 삭제되면 기본값으로 초기화
       if (selection.type === 'custom-semantic' && selection.presetId === id) {
         setPaletteSelection(createPresetSelection(siteStyle.defaults.palette));
       }
@@ -166,7 +153,6 @@ export function ThemeProvider({
   useLayoutEffect(() => {
     const paletteStyleVars = flattenTokenSet(tokenSet);
 
-    // Global alias vars: each palette+style var also exposed as {var}-global
     const globalAliasVars = Object.fromEntries(
       Object.entries(paletteStyleVars).map(([k, v]) => [`${k}-global`, v])
     );

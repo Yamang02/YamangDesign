@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { ThemeProvider } from '@domain/themes';
+import { ThemeProvider } from '@app/providers/ThemeProvider';
 import { Footer, Header, HeaderNav } from '@app/components';
 import {
   GLOBAL_SETTINGS_STORAGE_KEY,

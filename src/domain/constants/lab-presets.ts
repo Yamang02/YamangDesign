@@ -120,7 +120,7 @@ export function getNeutralPresetVariables(
 /** 비교 대상 프리셋 목록 (SOT: 각 preset 객체의 key에서 파생) */
 export const comparisonPresets = {
   styles: Object.keys(stylePresets) as StyleName[],
-  palettes: Object.keys(palettePresets),
+  palettes: Object.keys(palettePresets) as PaletteName[],
   systemPresets: Object.keys(systemColorPresets) as SystemPresetName[],
   neutralPresets: Object.keys(neutralPresets) as NeutralPresetName[],
 };

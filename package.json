@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "node scripts/build-manifest.js && tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . && stylelint \"src/**/*.css\" && npm run check:literals",
+    "lint:css": "stylelint \"src/**/*.css\"",
     "check:literals": "node scripts/check-runtime-literals.js",
     "check:literals:with-size": "node scripts/check-runtime-literals.js --with-size",
     "preview": "vite preview",
@@ -30,6 +31,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "stylelint": "^17.6.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
     "vite": "^7.3.1",

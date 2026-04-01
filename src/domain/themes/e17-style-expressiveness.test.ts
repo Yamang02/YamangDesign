@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import categoriesJson from '@app/content/labs/token-lab/categories.json';
+import categoriesJson from '@shared/content/labs/token-lab/categories.json';
 import { themeRegistry } from '@domain/palettes/presets/registry';
 import { stylePresets } from '@domain/themes/presets';
 import { buildThemeAndTokenSet } from '@domain/themes/token-set';

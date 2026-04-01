@@ -26,6 +26,7 @@ When writing or reviewing epic/Phase content, enforce:
 | Phase `## 목표` | Outcomes **verifiable within that Phase alone**; subset of epic intent; no hidden dependency on a later Phase for “done”. |
 | Phase `## 구현 상세` | **Approach** + **change scope** (files to create/modify). No code-level dump. Exception: spike Phase may start with approach only and refine. |
 | Phase `## 체크리스트` | **Result-based** items (“X renders”, “Y returns Z”), not “implement X”. Each item independently checkable. |
+| **Cross-references** | **Inside the epic folder only** (`Readme.md` ↔ `P##.*.md`, Phase ↔ Phase): use **relative markdown links** (e.g. `./P01.scope.md`, `./Readme.md`). **Outside the epic directory:** **no markdown links.** Refer by **human-readable identity** — epic + Phase label (“E26 P04 아키텍처 점검”), document title, skill name, etc. **Full file paths are optional**; add them only when disambiguation needs it. Rationale: epic folders may move to `docs/archive/`; no links + no path churn. |
 
 Propagation: if epic-level goals change, **update epic Readme first**, then affected Phase docs, then implementation.
 

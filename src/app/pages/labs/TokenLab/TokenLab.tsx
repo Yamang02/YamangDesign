@@ -18,7 +18,7 @@ import { DetailPanel } from '../../../components';
 import { useCssVar } from '@app/hooks/useCssVar';
 import { formatStructuredDisplay } from '@shared/utils/css-structured';
 import { TokenOverviewDiagram } from './TokenOverviewDiagram';
-import categoriesJson from '../../../content/labs/token-lab/categories.json';
+import categoriesJson from '@shared/content/labs/token-lab/categories.json';
 import styles from './TokenLab.module.css';
 
 type ShellCategory = { title: string; tokens: string[]; fullRow?: boolean };

@@ -11,7 +11,7 @@ import type {
 import type { ColorInput } from '@shared/@types/tokens';
 import type { CustomThemePreset } from '../constants/semantic-presets';
 import type { PaletteDefinition, SemanticMapping } from '../palettes/types';
-import type { PaletteSelection } from '@app/state/types';
+import type { PaletteSelection } from '@shared/types/palette-selection';
 import type { NeutralPresetName } from '../tokens/global/neutral-presets';
 
 export interface ThemeContextValue {

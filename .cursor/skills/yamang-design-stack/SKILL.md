@@ -12,18 +12,21 @@ Project-specific conventions for the YamangDesign design system. These rules ext
 ```bash
 npm run dev              # Vite dev server (http://localhost:5173)
 npm run build            # tsc -b && vite build
-npm run lint             # ESLint check
+npm run lint             # ESLint + Stylelint + 색/크기 리터럴 스크립트 (`scripts/check-runtime-literals.js`)
 npm run test             # Vitest run
 npm run test:watch       # Vitest watch
-npm run check:literals   # Hardcoded literal detection
+npm run check:literals   # 위 리터럴 검사만 단독 실행 (lint에 포함됨)
+npm run lint:css         # Stylelint만
 ```
+
+**리터럴 검사:** CSS는 Stylelint(현재 규칙 세트는 최소); TS/TSX·테마 트리는 **스크립트**가 담당(문자열 리터럴 내부·`art` 경로 등은 정책대로 제외). ESLint 단독으로 동일 동작을 내기 어려워 **lint 한 줄**에 묶어 단일 진입점만 유지한다.
 
 ## Styling Policy
 
 | Rule | Detail |
 |------|--------|
 | Variable prefix | `var(--ds-*)` (테마/팔레트 영향), `var(--ui-*)` (사이트 shell 고정) |
-| Hardcoding policy | 컴포넌트·페이지에서 hex/rgb/named color 직접 사용 금지. 토큰/프리셋 **정의** 파일(`*presets*.ts`, `*mappings*.ts`, `uiTokens`)만 예외 |
+| Hardcoding policy | 컴포넌트·페이지에서 hex/rgb/named color 직접 사용 금지. 토큰/프리셋 **정의** 파일(`*presets*.ts`, `*mappings*.ts`, `uiTokens`)만 예외. **Art Reference Gallery**(`src/app/pages/art/**`)는 아래 **Art Reference Gallery** 절 |
 | Hex format | **대문자** 통일 (`#FFFFFF`, `#6366F1`). 소문자 금지 |
 | Styling approach | CSS Modules (`.module.css`) + CSS Variables. CSS-in-JS/Tailwind 사용하지 않음 |
 | Transition | 하드코딩 금지. `var(--ds-transition-*)` recipe 사용 |
@@ -55,6 +58,18 @@ npm run check:literals   # Hardcoded literal detection
 - 이 컴포넌트에서만 쓰는 레이아웃 (flex, grid 구조)
 - 시스템 스케일 외 고유 값 (`max-width: 800px`)
 - 다른 컴포넌트와 맞출 필요 없음
+
+## Art Reference Gallery (`src/app/pages/art/**`)
+
+**실험 구역:** 명화·스타일 재현을 위한 페이지로, **semantic 컬러 토큰 전면 적용 대상이 아님**. 배경·액센트·질감은 HEX/rgba 등으로 자유롭게 둘 수 있다.
+
+**앱 크롬:** `App`의 Header / `main` 래퍼 / Footer는 기존처럼 테마·DS와 맞춘다. 아트 전용으로 전역 쉘을 바꾸지 않는다.
+
+**페이지 안 레이아웃:** `ArtShell`(챕터 사이드바 + 본문 그리드)과 본문은 **간격·폭·타이포 스케일·`--nav-height` 보정** 등에는 `var(--ds-*)` / `var(--ui-*)` / `--app-*`를 쓴다. **챕터 네비·필요 시 일부 본문**은 페이지 배경에 맞춰 **아트 전용 크롬**(예: `theme` prop, 페이지 로컬 CSS 변수)으로 색 대비를 맞춘다.
+
+**접근성:** 장식적 배경은 완화 가능. 본문·버튼·링크·포커스는 대비·키보드 최소 기준을 유지한다.
+
+**`npm run check:literals`:** `src/app/pages/art/` 트리는 스크립트에서 **스캔 제외**(위 정책과 정합). 그 외 `src/app/`·`src/domain/themes`는 기존대로 검사한다.
 
 ## Component Structure
 
@@ -116,9 +131,10 @@ app/ → shared/
 
 ## Reference
 
-- [docs/design/ARCHITECTURE.md](docs/design/ARCHITECTURE.md)
+- [docs/design/ARCHITECTURE.md](docs/design/ARCHITECTURE.md) — Art Reference Gallery 한 줄 요약 포함
 - [docs/design/18-token-naming-reference.md](docs/design/18-token-naming-reference.md)
 - [docs/design/17-token-3tier-reference.md](docs/design/17-token-3tier-reference.md)
+- [docs/design/19-new-token-checklist.md](docs/design/19-new-token-checklist.md)
 
 ---
 
