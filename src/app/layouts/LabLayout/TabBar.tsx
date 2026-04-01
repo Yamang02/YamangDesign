@@ -15,7 +15,7 @@ export interface TabBarProps {
   variant?: 'underline' | 'pill';
 }
 
-export function TabBar({ tabs, activeTab, onChange, variant = 'underline' }: TabBarProps) {
+export function TabBar({ tabs, activeTab, onChange, variant = 'underline' }: Readonly<TabBarProps>) {
   return (
     <div
       className={clsx(styles.tabBar, variant === 'pill' ? styles.pill : styles.underline)}

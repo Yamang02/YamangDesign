@@ -7,10 +7,22 @@ import { useState } from 'react';
 import { resolveColorValue } from '@domain/palettes/mapping/resolve';
 import { ScaleSelectionModal } from './ScaleSelectionModal';
 import type { SemanticTokenPath } from '@domain/palettes/mapping/recommendations';
-import type { BgStrategy, SemanticMapping } from '@domain/palettes/types';
-import type { ComputedPalette } from '@domain/palettes/types';
+import type { BgStrategy, SemanticMapping, ComputedPalette } from '@domain/palettes/types';
 import type { GeneratedScales } from '@shared/@types/tokens';
 import styles from './ColorUsageDiagram.module.css';
+
+function getSourceBadgeColor(source: string): string {
+  const step = Number.parseInt(source.split('-').pop() ?? '500', 10);
+  return step <= 400 ? 'var(--shell-text-primary)' : 'var(--shell-text-on-action)';
+}
+
+function formatMappingValue(value: unknown): string {
+  if (typeof value === 'object' && value !== null) {
+    const ref = value as { scale: string; step: number };
+    return `${ref.scale}-${ref.step}`;
+  }
+  return value as string;
+}
 
 /** 편집 가능한 토큰 → SemanticTokenPath 매핑 (onAction-* 제외: auto-computed) */
 const TOKEN_TO_PATH: Record<string, SemanticTokenPath> = {
@@ -147,7 +159,7 @@ function SemanticMappingTabs({
   bgStrategy,
   onMappingChange,
   onTokenSelect,
-}: {
+}: Readonly<{
   mappings: Array<{ category: string; items: SemanticToken[] }>;
   interactive?: boolean;
   mapping?: SemanticMapping;
@@ -156,7 +168,7 @@ function SemanticMappingTabs({
   onMappingChange?: (path: SemanticTokenPath, value: string | import('@domain/palettes/types').ScaleReference) => void;
   /** 인라인 모드: 스와치 클릭 시 모달 대신 콜백 호출 */
   onTokenSelect?: (path: SemanticTokenPath) => void;
-}) {
+}>) {
   const [activeCategory, setActiveCategory] = useState(mappings[0]?.category ?? '');
   const [modalToken, setModalToken] = useState<SemanticTokenPath | null>(null);
   const activeMapping = mappings.find((m) => m.category === activeCategory);
@@ -173,19 +185,12 @@ function SemanticMappingTabs({
     setModalToken(path);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent, item: SemanticToken) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleSwatchClick(item);
-    }
-  };
-
   return (
     <div className={styles.section}>
       <h4 className={styles.sectionTitle}>
-        시맨틱 컬러 매핑
+        시맨틱 컬러 매핑{' '}
         <span className={styles.sectionHint}>
-          {bgStrategy ? ` (${bgStrategy}-bg 기준)` : ' (light-bg 기준)'}
+          {bgStrategy ? `(${bgStrategy}-bg 기준)` : '(light-bg 기준)'}
         </span>
       </h4>
       <div className={styles.mappingTabs}>
@@ -221,31 +226,32 @@ function SemanticMappingTabs({
                     ? resolveColorValue(getValueByPath(mapping, path), scales)
                     : `var(${item.token})`;
                 const sourceVar = item.source && `--ds-color-${item.source}`;
+                const swatch = isEditable ? (
+                  <button
+                    type="button"
+                    className={styles.tokenSwatch}
+                    style={{ backgroundColor: displayColor }}
+                    title={item.token}
+                    onClick={() => handleSwatchClick(item)}
+                    aria-label={`${item.token} 매핑 편집`}
+                  />
+                ) : (
+                  <div
+                    className={styles.tokenSwatch}
+                    style={{ backgroundColor: displayColor }}
+                    title={item.token}
+                  />
+                );
                 return (
                   <div key={item.token} className={styles.tokenRow}>
-                    <div
-                      className={styles.tokenSwatch}
-                      style={{ backgroundColor: displayColor }}
-                      title={item.token}
-                      role={isEditable ? 'button' : undefined}
-                      tabIndex={isEditable ? 0 : undefined}
-                      onClick={isEditable ? () => handleSwatchClick(item) : undefined}
-                      onKeyDown={isEditable ? (e) => handleKeyDown(e, item) : undefined}
-                      aria-label={isEditable ? `${item.token} 매핑 편집` : undefined}
-                    />
+                    {swatch}
                     <code className={styles.tokenName}>{item.token}</code>
                     {item.source && sourceVar && !mapping && (
                       <span
                         className={styles.sourceBadge}
                         style={{
                           backgroundColor: `var(${sourceVar})`,
-                          color: (() => {
-                            const step = parseInt(
-                              item.source!.split('-').pop() ?? '500',
-                              10
-                            );
-                            return step <= 400 ? 'var(--shell-text-primary)' : 'var(--shell-text-on-action)';
-                          })(),
+                          color: getSourceBadgeColor(item.source),
                         }}
                         title={`light-bg 기준: ${item.source}`}
                       >
@@ -254,9 +260,7 @@ function SemanticMappingTabs({
                     )}
                     {mapping && path && (
                       <span className={styles.tokenNote}>
-                        {typeof getValueByPath(mapping, path) === 'object'
-                          ? `${(getValueByPath(mapping, path) as { scale: string; step: number }).scale}-${(getValueByPath(mapping, path) as { scale: string; step: number }).step}`
-                          : (getValueByPath(mapping, path) as string)}
+                        {formatMappingValue(getValueByPath(mapping, path))}
                       </span>
                     )}
                     {!mapping && item.note && (
@@ -312,10 +316,10 @@ const COMPONENT_TOKENS: Array<{
 function ComponentDiagram({
   mapping,
   scales,
-}: {
+}: Readonly<{
   mapping?: SemanticMapping;
   scales?: GeneratedScales;
-}) {
+}>) {
   return (
     <div className={styles.componentDiagram}>
       <div className={styles.diagramTitle}>토큰 예시</div>
@@ -324,7 +328,7 @@ function ComponentDiagram({
           const color =
             mapping && scales
               ? resolveColorValue(getValueByPath(mapping, path), scales)
-              : `var(--ds-color-${path.replace(/\./g, '-')})`;
+              : `var(--ds-color-${path.replaceAll('.', '-')})`;
           if (type === 'bg') {
             return (
               <div key={path} className={styles.tokenExampleRow}>
@@ -421,7 +425,7 @@ export function ColorUsageDiagram({
   onTokenSelect,
   horizontalLayout = false,
   hideTokenExample = false,
-}: ColorUsageDiagramProps = {}) {
+}: Readonly<ColorUsageDiagramProps> = {}) {
   const scales = palette?.scales;
   const bgStrategy = palette?.bgStrategy;
 
@@ -465,8 +469,8 @@ export function ColorUsageDiagram({
                 </div>
               </div>
               <div className={styles.usageList}>
-                {role.usages.map((usage, i) => (
-                  <span key={i} className={styles.usageTag}>
+                {role.usages.map((usage) => (
+                  <span key={usage} className={styles.usageTag}>
                     {usage}
                   </span>
                 ))}

@@ -20,9 +20,9 @@ export function extractStyleVars(
   const vars: Record<string, string> = {
     '--ds-surface-backdrop': def.material?.backdropFilter ?? 'none',
     '--ds-surface-bg-alpha':
-      def.material?.backgroundAlpha !== undefined
-        ? String(def.material.backgroundAlpha)
-        : '1',
+      def.material?.backgroundAlpha === undefined
+        ? '1'
+        : String(def.material.backgroundAlpha),
     '--ds-surface-texture': def.material?.backgroundImage ?? 'none',
     '--ds-surface-blend': def.material?.backgroundBlendMode ?? 'normal',
     '--ds-filter': def.filter?.element ?? 'none',

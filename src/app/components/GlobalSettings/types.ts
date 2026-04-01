@@ -8,9 +8,14 @@ import type { StyleName, SystemPresetName } from '@shared/@types/theme';
 import type { SemanticMapping } from '@domain/palettes/types';
 import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 
-const VALID_STYLE_NAMES: StyleName[] = ['minimal', 'neumorphism', 'brutalism', 'glassmorphism'];
+const VALID_STYLE_NAMES = new Set<StyleName>([
+  'minimal',
+  'neumorphism',
+  'brutalism',
+  'glassmorphism',
+]);
 function normalizeStyleName(v: unknown): StyleName {
-  if (typeof v === 'string' && VALID_STYLE_NAMES.includes(v as StyleName)) return v as StyleName;
+  if (typeof v === 'string' && VALID_STYLE_NAMES.has(v as StyleName)) return v as StyleName;
   return 'minimal';
 }
 
@@ -65,8 +70,10 @@ export function migrateV1ToV2(v1: StoredSettingsV1): StoredSettings {
 /** P08: 로드된 설정에서 styleName 보정 (undefined/비유효 시 minimal) */
 export function normalizeStoredSettings(s: Partial<StoredSettings> | null): Partial<StoredSettings> | null {
   if (!s || typeof s !== 'object') return s;
-  if (s.styleName !== undefined) (s as StoredSettings).styleName = normalizeStyleName(s.styleName);
-  return s;
+  return {
+    ...s,
+    styleName: normalizeStyleName(s.styleName),
+  };
 }
 
 export function isStoredSettingsV1(

@@ -6,9 +6,8 @@
 import type { PaletteDefinition } from '../palettes';
 import type { ColorInput } from '@shared/@types/tokens';
 import type { PaletteName } from '@shared/@types/theme';
-import { themePresets } from './theme-presets';
 
-export { themePresets };
+export { themePresets } from './theme-presets';
 
 /** 색상 시작점 (ColorPicker용 - 단일 primary 베이스) */
 export const colorStartPoints: Record<string, ColorInput> = {

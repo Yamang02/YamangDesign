@@ -20,7 +20,7 @@ import { MOLECULES } from '@app/content/build-content';
 import type { MoleculeId } from '@app/content/build-content';
 import styles from './Components/Components.module.css';
 
-function MoleculePreview({ id }: { id: MoleculeId }) {
+function MoleculePreview({ id }: Readonly<{ id: MoleculeId }>) {
   switch (id) {
     case 'form-field':
       return (
@@ -82,7 +82,7 @@ function MoleculePreview({ id }: { id: MoleculeId }) {
   }
 }
 
-function MoleculeModalContent({ id }: { id: MoleculeId }) {
+function MoleculeModalContent({ id }: Readonly<{ id: MoleculeId }>) {
   const def = MOLECULES.find((m) => m.id === id);
   if (!def) return null;
   return (

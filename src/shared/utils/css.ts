@@ -6,7 +6,7 @@ const CSS_VAR_PREFIX = 'ds';
  * onAction → on-action
  */
 function toKebabCase(str: string): string {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  return str.replaceAll(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 /**
@@ -26,7 +26,7 @@ export function flattenToCSSVars(
   for (const [key, value] of Object.entries(obj)) {
     if (key.startsWith('_')) continue;
 
-    const kebabKey = toKebabCase(key).replace(/\./g, '-');
+    const kebabKey = toKebabCase(key).replaceAll('.', '-');
     const varName = prefix ? `${prefix}-${kebabKey}` : kebabKey;
 
     if (typeof value === 'object' && value !== null) {

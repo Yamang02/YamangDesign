@@ -10,21 +10,14 @@ export interface LabCardProps {
   selected?: boolean;
 }
 
-export function LabCard({ children, onClick, selected }: LabCardProps) {
-  return (
-    <div
-      className={clsx(styles.labCard, selected && styles.selected)}
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      onKeyDown={(e) => {
-        if (onClick && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-    >
-      {children}
-    </div>
-  );
+export function LabCard({ children, onClick, selected }: Readonly<LabCardProps>) {
+  const className = clsx(styles.labCard, selected && styles.selected);
+  if (onClick) {
+    return (
+      <button type="button" className={className} onClick={onClick}>
+        {children}
+      </button>
+    );
+  }
+  return <div className={className}>{children}</div>;
 }

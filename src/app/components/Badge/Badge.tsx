@@ -7,7 +7,7 @@ export function Badge({
   size = 'sm',
   children,
   className,
-}: BadgeProps) {
+}: Readonly<BadgeProps>) {
   return (
     <span
       className={clsx(styles.badge, className)}

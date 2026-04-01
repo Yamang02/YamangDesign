@@ -33,7 +33,7 @@ const tocItems: TocItem[] = [
 const fontSizeKeys = Object.keys(fontSize) as (keyof typeof fontSize)[];
 
 /** E05 P03: 토큰 속성 테이블 + 라이브 프리뷰 */
-function TextStyleDetail({ name }: { name: TextStyleName }) {
+function TextStyleDetail({ name }: Readonly<{ name: TextStyleName }>) {
   const style = textStyles[name];
   const fields: { label: string; value: string; token?: string }[] = [
     { label: 'Font size', value: style.fontSize, token: `--ds-text-${name}-size` },

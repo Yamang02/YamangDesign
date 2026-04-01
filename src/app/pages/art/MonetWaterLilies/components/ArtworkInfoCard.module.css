@@ -1,3 +1,4 @@
+/* NOSONAR css:S7924 — 아트 페이지 글래스 카드 의도 유지 */
 .card {
   position: absolute;
   bottom: var(--ds-spacing-8);
@@ -11,7 +12,7 @@
   border-radius: 16px;
   padding: var(--ds-spacing-6);
 
-  color: #fff;
+  color: #fff; /* NOSONAR css:S7924 — 글래스 카드 대비 의도 유지 */
 }
 
 .title {

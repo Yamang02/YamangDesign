@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { ThemeProvider } from '@domain/themes';
 import { Footer, Header, HeaderNav } from '@app/components';
 import {
@@ -154,6 +154,11 @@ function App() {
     setAppliedSettings(draft);
   }, []);
 
+  const designSettingsNavValue = useMemo(
+    () => ({ openDesignSettings }),
+    [openDesignSettings]
+  );
+
   const renderPage = () => {
     switch (page) {
       case 'design-settings':
@@ -212,12 +217,15 @@ function App() {
   };
 
   return (
-    <DesignSettingsNavContext.Provider value={{ openDesignSettings }}>
+    <DesignSettingsNavContext.Provider value={designSettingsNavValue}>
       <InspectorProvider>
       <ThemeProvider
         initialStyleName={initialSettings?.styleName ?? 'minimal'}
-        initialPalette={initialSettings?.palette ?? defaultPalette}
-        initialSelection={initialSettings ? createCustomSelection(initialSettings.palette) : undefined}
+        initialSelection={
+          initialSettings
+            ? createCustomSelection(initialSettings.palette)
+            : createCustomSelection(defaultPalette)
+        }
         systemPreset={initialSettings?.systemPreset ?? 'default'}
         appliedSettings={appliedSettings}
       >
@@ -248,7 +256,7 @@ function App() {
   );
 }
 
-function PlaceholderPage({ title }: { title: string }) {
+function PlaceholderPage({ title }: Readonly<{ title: string }>) {
   return (
     <div
       style={{

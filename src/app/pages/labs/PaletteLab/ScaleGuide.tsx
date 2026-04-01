@@ -3,7 +3,7 @@
  * ColorUsageDiagram과 동일한 섹션 구조 사용
  */
 import type { ColorScale } from '@shared/@types/tokens';
-import { SCALE_STEP_GUIDES, type ScaleStep } from '@domain/constants';
+import { SCALE_STEP_GUIDES } from '@domain/constants';
 import styles from './ScaleGuide.module.css';
 
 interface ScaleGuideProps {
@@ -11,16 +11,16 @@ interface ScaleGuideProps {
   primaryScale?: ColorScale;
 }
 
-export function ScaleGuide({ primaryScale }: ScaleGuideProps) {
+export function ScaleGuide({ primaryScale }: Readonly<ScaleGuideProps>) {
   return (
     <div className={styles.section}>
       <h4 className={styles.sectionTitle}>
-        스케일 스텝 가이드
-        <span className={styles.sectionHint}> (50-900)</span>
+        스케일 스텝 가이드{' '}
+        <span className={styles.sectionHint}>(50-900)</span>
       </h4>
       <div className={styles.stepList}>
         {SCALE_STEP_GUIDES.map((guide) => {
-          const step = guide.step as ScaleStep;
+          const step = guide.step;
           const color = primaryScale?.[step];
 
           return (

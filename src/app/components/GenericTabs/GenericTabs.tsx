@@ -11,10 +11,12 @@ export function GenericTabs<T extends string>({
   onTabChange,
   ariaLabel,
   className,
-}: GenericTabsProps<T>) {
+}: Readonly<GenericTabsProps<T>>) {
+  const tabListClassName = className ? `${styles.tabList} ${className}` : styles.tabList;
+
   return (
     <div
-      className={`${styles.tabList}${className ? ` ${className}` : ''}`}
+      className={tabListClassName}
       role="tablist"
       aria-label={ariaLabel}
     >

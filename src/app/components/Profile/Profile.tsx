@@ -12,7 +12,7 @@ export function Profile({
   avatarVariant = 'secondary',
   className,
   avatar,
-}: ProfileProps) {
+}: Readonly<ProfileProps>) {
   return (
     <div className={clsx(styles.profile, className)}>
       {avatar ?? (

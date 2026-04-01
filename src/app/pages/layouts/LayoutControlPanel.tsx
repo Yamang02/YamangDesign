@@ -1,7 +1,5 @@
 import { PreviewControlPanel } from '@app/layouts';
 import { comparisonPresets } from '@domain/constants';
-import type { PaletteName, StyleName, SystemPresetName } from '@shared/@types/theme';
-import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 import { useLayoutPreviewControls } from '@app/context/LayoutPreviewControlsContext';
 
 type FontKey = 'sans' | 'mono';
@@ -39,25 +37,25 @@ export function LayoutControlPanel() {
         label="Palette (Brand)"
         value={palette}
         options={paletteOptions}
-        onChange={(v) => setPalette(v as PaletteName)}
+        onChange={setPalette}
       />
       <PreviewControlPanel
         label="System"
         value={systemPreset}
         options={systemPresetOptions}
-        onChange={(v) => setSystemPreset(v as SystemPresetName)}
+        onChange={setSystemPreset}
       />
       <PreviewControlPanel
         label="Neutral"
         value={neutralPreset}
         options={neutralPresetOptions}
-        onChange={(v) => setNeutralPreset(v as NeutralPresetName)}
+        onChange={setNeutralPreset}
       />
       <PreviewControlPanel
         label="Style"
         value={style}
         options={styleOptions}
-        onChange={(v) => setStyle(v as StyleName)}
+        onChange={setStyle}
       />
       <PreviewControlPanel
         label="Font"

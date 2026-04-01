@@ -7,12 +7,11 @@ import type { PaletteDefinition } from '../palettes';
 import type { StyleDefinition } from '../styles';
 import { createPalette } from '../palettes';
 import { createStyle } from '../styles';
-import type { Theme } from '@shared/@types/theme';
+import type { Theme, SystemPresetName } from '@shared/@types/theme';
 import { flattenToCSSVars } from '@shared/utils/css';
 import { PALETTE_SCALES } from '../constants/palette-scales';
 import type { SystemColorPreset } from '../tokens/global/system-colors';
 import { systemColorPresets } from '../tokens/global/system-colors';
-import type { SystemPresetName } from '@shared/@types/theme';
 import { neutralPresets } from '../tokens/global/neutral-presets';
 import type { NeutralPresetName } from '../tokens/global/neutral-presets';
 
@@ -65,7 +64,7 @@ export function buildTokenSet(
   const resolvedSystemPreset: SystemColorPreset | undefined = (() => {
     if (!options?.systemPreset) return undefined;
     if (typeof options.systemPreset === 'string') {
-      return systemColorPresets[options.systemPreset as SystemPresetName];
+      return systemColorPresets[options.systemPreset];
     }
     return options.systemPreset;
   })();
@@ -161,7 +160,7 @@ export function buildThemeAndTokenSet(
   const resolvedSystemPreset: SystemColorPreset | undefined = (() => {
     if (!options?.systemPreset) return undefined;
     if (typeof options.systemPreset === 'string') {
-      return systemColorPresets[options.systemPreset as SystemPresetName];
+      return systemColorPresets[options.systemPreset];
     }
     return options.systemPreset;
   })();

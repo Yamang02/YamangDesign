@@ -11,7 +11,14 @@ interface PaletteSwatchBarProps {
   variant?: 'glass' | 'brutal' | 'minimal'
 }
 
-export function PaletteSwatchBar({ palette, variant = 'glass' }: PaletteSwatchBarProps) {
+function SwatchLabel({ copied, hex }: Readonly<{ copied: boolean; hex: string }>) {
+  if (copied) {
+    return <span className={styles.copied}>Copied!</span>;
+  }
+  return <span className={styles.tooltip}>{hex}</span>;
+}
+
+export function PaletteSwatchBar({ palette, variant = 'glass' }: Readonly<PaletteSwatchBarProps>) {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
 
   const handleCopy = (hex: string) => {
@@ -21,10 +28,11 @@ export function PaletteSwatchBar({ palette, variant = 'glass' }: PaletteSwatchBa
     });
   };
 
-  const barClass =
-    variant === 'brutal' ? styles.barBrutal :
-    variant === 'minimal' ? styles.barMinimal :
-    styles.bar;
+  const barClassMap: Record<string, string> = {
+    brutal: styles.barBrutal,
+    minimal: styles.barMinimal,
+  };
+  const barClass = barClassMap[variant] ?? styles.bar;
 
   return (
     <div className={barClass}>
@@ -39,11 +47,7 @@ export function PaletteSwatchBar({ palette, variant = 'glass' }: PaletteSwatchBa
             title={`${name} — ${hex}`}
             aria-label={`Copy ${name} ${hex}`}
           >
-            {copiedHex === hex ? (
-              <span className={styles.copied}>Copied!</span>
-            ) : (
-              <span className={styles.tooltip}>{hex}</span>
-            )}
+            <SwatchLabel copied={copiedHex === hex} hex={hex} />
           </button>
         ))}
       </div>

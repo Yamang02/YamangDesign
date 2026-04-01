@@ -42,7 +42,7 @@ export function presetToPaletteDefinition(
   const base =
     preset.basePaletteId === 'custom' || isCustomSemanticPaletteId(preset.basePaletteId)
       ? null
-      : themePresets[preset.basePaletteId as keyof typeof themePresets];
+      : themePresets[preset.basePaletteId];
   if (!base) return null;
   const baseMapping = getMergedMapping(
     defaultSemanticMappings[base.bgStrategy],

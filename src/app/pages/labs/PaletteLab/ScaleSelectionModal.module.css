@@ -3,11 +3,22 @@
 .overlay {
   position: fixed;
   inset: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: none;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--shell-overlay);
+  background: transparent;
   z-index: 1000;
+}
+
+.overlay::backdrop {
+  background: var(--shell-overlay);
 }
 
 .modal {
@@ -78,11 +89,20 @@
 }
 
 .section {
-  margin-bottom: var(--ds-spacing-4);
+  border: none;
+  margin: 0 0 var(--ds-spacing-4);
+  padding: 0;
+  min-width: 0;
 }
 
 .section:last-child {
   margin-bottom: 0;
+}
+
+.section legend.label {
+  padding: 0;
+  float: none;
+  width: auto;
 }
 
 .label {

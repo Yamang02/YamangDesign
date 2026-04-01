@@ -17,7 +17,7 @@ export function HeaderNav({
   activePage,
   onSelect,
   onOpenSettings,
-}: HeaderNavProps) {
+}: Readonly<HeaderNavProps>) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 

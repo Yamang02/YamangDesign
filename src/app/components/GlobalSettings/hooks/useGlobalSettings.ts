@@ -47,6 +47,21 @@ const DEFAULT_SELECTION: PaletteSelection = createCustomSelection(DEFAULT_PALETT
 
 const STORAGE_VERSION = '2.0' as const;
 
+function parseRawSettings(raw: string): Partial<StoredSettings> | null {
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (isStoredSettingsV1(parsed)) {
+      return migrateV1ToV2(parsed);
+    }
+    if (validateImportedSettings(parsed)) {
+      return parsed;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
 /** P08: design-settings 한 덩어리 (설정 + componentMapping) */
 function saveDesignSystemBlob(
   settings: Omit<StoredSettings, 'updatedAt'>,
@@ -231,28 +246,17 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     if (!raw) return;
     const payload = parseYamangJSON(raw);
     let data: Partial<StoredSettings> | null = payload ? extractGlobalSettings(payload) : null;
-    if (!data) {
-      try {
-        const parsed = JSON.parse(raw) as unknown;
-        if (isStoredSettingsV1(parsed)) {
-          data = migrateV1ToV2(parsed);
-        } else if (validateImportedSettings(parsed)) {
-          data = parsed as Partial<StoredSettings>;
-        }
-      } catch {
-        /* ignore */
-      }
-    }
+    data ??= parseRawSettings(raw);
     if (!data || !validateImportedSettings(data)) {
-      window.alert(getImportErrorMessage('global-settings', payload));
+      globalThis.alert(getImportErrorMessage('global-settings', payload));
       return;
     }
     if (data.palette) {
-      setLocalSelection(createCustomSelection(data.palette as ColorInput));
+      setLocalSelection(createCustomSelection(data.palette));
     }
-    if (data.styleName) setLocalStyleName(data.styleName as StyleName);
-    if (data.systemPreset) setLocalSystemPreset(data.systemPreset as SystemPresetName);
-    if (data.neutralPreset) setLocalNeutralPreset(data.neutralPreset as NeutralPresetName);
+    if (data.styleName) setLocalStyleName(data.styleName);
+    if (data.systemPreset) setLocalSystemPreset(data.systemPreset);
+    if (data.neutralPreset) setLocalNeutralPreset(data.neutralPreset);
     if (data.semanticMapping !== undefined) {
       setLocalSemanticMapping(data.semanticMapping ?? null);
     }

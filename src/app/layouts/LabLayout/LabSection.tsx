@@ -21,7 +21,7 @@ export function LabSection({
   card = true,
   id,
   description,
-}: LabSectionProps) {
+}: Readonly<LabSectionProps>) {
   const header = (
     <div className={styles.sectionHeader}>
       <h2 className={styles.sectionTitle}>{title}</h2>

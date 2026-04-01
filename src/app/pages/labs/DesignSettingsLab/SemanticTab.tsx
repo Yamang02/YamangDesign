@@ -7,9 +7,8 @@ import { Icon } from '../../../components';
 import { createPalette } from '@domain/palettes';
 import { defaultSemanticMappings } from '@domain/palettes/strategies/default-mappings';
 import { getMergedMapping } from '@domain/palettes/mapping/resolve';
-import type { PaletteDefinition, SemanticMapping } from '@domain/palettes/types';
 import type { SemanticTokenPath } from '@domain/palettes/mapping/recommendations';
-import type { ScaleReference } from '@domain/palettes/types';
+import type { PaletteDefinition, SemanticMapping, ScaleReference } from '@domain/palettes/types';
 import { ColorUsageDiagram } from '../PaletteLab/ColorUsageDiagram';
 import { ScaleStepGrid } from '../PaletteLab/ScaleStepGrid';
 import styles from './SemanticTab.module.css';
@@ -39,7 +38,7 @@ export function SemanticTab({
   definition,
   overrides,
   onOverridesChange,
-}: SemanticTabProps) {
+}: Readonly<SemanticTabProps>) {
   const [selectedToken, setSelectedToken] = useState<SemanticTokenPath | null>(null);
 
   const { expanded, mapping } = useMemo(() => {

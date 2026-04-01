@@ -5,10 +5,12 @@
 import { useState, useCallback } from 'react';
 import {
   CUSTOM_THEME_PRESETS_STORAGE_KEY,
-  CUSTOM_SEMANTIC_PRESETS_STORAGE_KEY,
   type CustomThemePreset,
   type StoredCustomThemePresets,
 } from '@domain/constants/semantic-presets';
+
+/** 마이그레이션 전용 구 키 (semantic-presets의 deprecated 상수와 동일 값) */
+const LEGACY_SEMANTIC_PRESETS_STORAGE_KEY = 'yamang-custom-semantic-presets';
 
 export interface UseCustomThemePresetsReturn {
   /** 현재 커스텀 테마 프리셋 목록 */
@@ -41,7 +43,7 @@ export function useCustomThemePresets(): UseCustomThemePresetsReturn {
         return parsed?.presets ?? [];
       }
       // 새 키가 없으면 구 키에서 마이그레이션
-      const legacyRaw = localStorage.getItem(CUSTOM_SEMANTIC_PRESETS_STORAGE_KEY);
+      const legacyRaw = localStorage.getItem(LEGACY_SEMANTIC_PRESETS_STORAGE_KEY);
       if (legacyRaw) {
         const parsed: StoredCustomThemePresets = JSON.parse(legacyRaw);
         const migrated = parsed?.presets ?? [];

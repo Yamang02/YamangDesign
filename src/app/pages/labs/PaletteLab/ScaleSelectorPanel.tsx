@@ -3,8 +3,7 @@
  * 시맨틱 매핑 모달 왼쪽에 표시. 추천(✓)/경고(⚠️) 아이콘 표시
  */
 import { useState } from 'react';
-import { Icon } from '../../../components';
-import { Tooltip } from '../../../components';
+import { Icon, Tooltip } from '../../../components';
 import {
   getScaleRecommendation,
   type RecommendationLevel,
@@ -36,11 +35,35 @@ function isScaleReference(v: string | ScaleReference): v is ScaleReference {
   );
 }
 
+function syncStateFromValue(
+  currentValue: string | ScaleReference,
+  setSelectedScale: (v: ScaleReference['scale']) => void,
+  setSelectedStep: (v: ScaleReference['step']) => void,
+  setUseDirectColor: (v: boolean) => void,
+  setDirectHex: (v: string) => void,
+) {
+  if (isScaleReference(currentValue)) {
+    setSelectedScale(currentValue.scale);
+    setSelectedStep(currentValue.step);
+    setUseDirectColor(false);
+    setDirectHex('');
+  } else {
+    setUseDirectColor(true);
+    setDirectHex(currentValue || '');
+  }
+}
+
+function resolveDirectHex(hex: string): string | null {
+  const trimmed = hex.trim();
+  if (!trimmed) return null;
+  return trimmed.startsWith('#') ? trimmed : `#${trimmed}`;
+}
+
 function RecommendationIcon({
   recommendation,
-}: {
+}: Readonly<{
   recommendation: { level: RecommendationLevel; message?: string };
-}) {
+}>) {
   if (recommendation.level === 'recommended') {
     return (
       <Tooltip content={recommendation.message ?? '권장 매핑'} portal position="top">
@@ -80,7 +103,7 @@ export function ScaleSelectorPanel({
   bgStrategy,
   onSelect,
   onClose,
-}: ScaleSelectorPanelProps) {
+}: Readonly<ScaleSelectorPanelProps>) {
   const [prevCurrentValue, setPrevCurrentValue] = useState(currentValue);
   const [selectedScale, setSelectedScale] = useState<ScaleReference['scale']>(
     isScaleReference(currentValue) ? currentValue.scale : 'neutral'
@@ -93,27 +116,15 @@ export function ScaleSelectorPanel({
 
   if (prevCurrentValue !== currentValue) {
     setPrevCurrentValue(currentValue);
-    if (isScaleReference(currentValue)) {
-      setSelectedScale(currentValue.scale);
-      setSelectedStep(currentValue.step);
-      setUseDirectColor(false);
-      setDirectHex('');
-    } else {
-      setUseDirectColor(true);
-      setDirectHex(currentValue || '');
-    }
+    syncStateFromValue(currentValue, setSelectedScale, setSelectedStep, setUseDirectColor, setDirectHex);
   }
 
-  const recommendation = !useDirectColor
-    ? getScaleRecommendation(semanticToken, selectedScale, selectedStep, bgStrategy)
-    : { level: 'neutral' as RecommendationLevel };
+  const recommendation = useDirectColor
+    ? { level: 'neutral' as RecommendationLevel }
+    : getScaleRecommendation(semanticToken, selectedScale, selectedStep, bgStrategy);
 
   const resolvedColor = useDirectColor
-    ? directHex.trim().startsWith('#')
-      ? directHex.trim()
-      : directHex.trim()
-        ? `#${directHex.trim()}`
-        : null
+    ? resolveDirectHex(directHex)
     : scales[selectedScale]?.[selectedStep] ?? null;
 
   const handleApply = () => {
@@ -130,14 +141,13 @@ export function ScaleSelectorPanel({
     onClose();
   };
 
-  const canApply =
-    useDirectColor
-      ? directHex.trim() && /^#?[0-9A-Fa-f]{6}$/.test(
-          directHex.trim().startsWith('#')
-            ? directHex.trim()
-            : `#${directHex.trim()}`
-        )
-      : true;
+  const canApply = (() => {
+    if (!useDirectColor) return true;
+    const trimmed = directHex.trim();
+    if (!trimmed) return false;
+    const normalized = trimmed.startsWith('#') ? trimmed : `#${trimmed}`;
+    return /^#?[0-9A-Fa-f]{6}$/.test(normalized);
+  })();
 
   return (
     <div className={styles.panel}>
@@ -157,8 +167,8 @@ export function ScaleSelectorPanel({
       </div>
 
       <div className={styles.content}>
-        <section className={styles.section}>
-          <label className={styles.label}>스케일</label>
+        <fieldset className={styles.section}>
+          <legend className={styles.label}>스케일</legend>
           <div className={styles.scaleList}>
             {SCALES.map((scale) => {
               const scaleData = scales[scale];
@@ -191,10 +201,10 @@ export function ScaleSelectorPanel({
               );
             })}
           </div>
-        </section>
+        </fieldset>
 
-        <section className={styles.section}>
-          <label className={styles.label}>Step</label>
+        <fieldset className={styles.section}>
+          <legend className={styles.label}>Step</legend>
           <div className={styles.stepRow}>
             {STEPS.map((step) => {
               const color = scales[selectedScale]?.[step] ?? RUNTIME_COLOR_FALLBACK;
@@ -219,15 +229,16 @@ export function ScaleSelectorPanel({
               );
             })}
           </div>
-        </section>
+        </fieldset>
 
         <section className={styles.section}>
-          <label className={styles.directLabel}>
+          <label className={styles.directLabel} htmlFor="scale-selector-direct-hex">
             <input
+              id="scale-selector-direct-hex"
               type="checkbox"
               checked={useDirectColor}
               onChange={(e) => setUseDirectColor(e.target.checked)}
-            />
+            />{' '}
             직접 색상 (#HEX)
           </label>
           {useDirectColor && (
@@ -239,7 +250,7 @@ export function ScaleSelectorPanel({
                 value={directHex.replace(/^#/, '')}
                 onChange={(e) =>
                   setDirectHex(
-                    e.target.value.replace(/[^0-9A-Fa-f]/g, '').slice(0, 6)
+                    e.target.value.replaceAll(/[^0-9A-Fa-f]/g, '').slice(0, 6)
                   )
                 }
                 placeholder="FFFFFF"

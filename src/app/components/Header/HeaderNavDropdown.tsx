@@ -16,7 +16,7 @@ export function HeaderNavDropdown({
   isOpen,
   onToggle,
   onSelect,
-}: HeaderNavDropdownProps) {
+}: Readonly<HeaderNavDropdownProps>) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (itemId: string) => {

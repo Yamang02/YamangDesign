@@ -36,7 +36,7 @@ export interface PaletteCategoryTabsProps {
 export function PaletteCategoryTabs({
   activeTab,
   onTabChange,
-}: PaletteCategoryTabsProps) {
+}: Readonly<PaletteCategoryTabsProps>) {
   return (
     <GenericTabs
       tabs={TABS}

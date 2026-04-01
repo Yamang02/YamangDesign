@@ -19,7 +19,7 @@ function getFontFamily(panel: PlaygroundPanel): string {
   return panel.font === 'sans' ? fontFamily.sans : fontFamily.mono;
 }
 
-function PanelHeader({ panel }: { panel: PlaygroundPanel }) {
+function PanelHeader({ panel }: Readonly<{ panel: PlaygroundPanel }>) {
   return (
     <header className={styles.panelHeader}>
       <h3 className={styles.panelHeaderTitle}>{panel.label}</h3>
@@ -28,7 +28,7 @@ function PanelHeader({ panel }: { panel: PlaygroundPanel }) {
   );
 }
 
-function PanelContent({ variant }: { variant: 'brand' | 'system' }) {
+function PanelContent({ variant }: Readonly<{ variant: 'brand' | 'system' }>) {
   if (variant === 'brand') {
     return (
       <>
@@ -201,10 +201,10 @@ function PanelContent({ variant }: { variant: 'brand' | 'system' }) {
 export function PreviewPanel({
   panel,
   variant,
-}: {
+}: Readonly<{
   panel: PlaygroundPanel;
   variant: 'brand' | 'system';
-}) {
+}>) {
   return (
     <div className={styles.panel}>
       <PanelHeader panel={panel} />

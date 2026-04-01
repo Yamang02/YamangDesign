@@ -4,6 +4,57 @@ import styles from './Icon.module.css';
 import { materialIcons } from './icons/material';
 import { nucleoIcons } from './icons/nucleo';
 
+interface SvgConfig {
+  path: string;
+  fill: string;
+  stroke: string;
+  strokeWidth: number;
+  strokeLinecap?: 'round';
+  strokeLinejoin?: 'round';
+}
+
+function buildNucleoConfig(
+  iconData: { path: string; stroke?: boolean },
+  color: string,
+): SvgConfig {
+  const { path, stroke } = iconData;
+  return {
+    path,
+    fill: stroke ? 'none' : color,
+    stroke: stroke ? color : 'none',
+    strokeWidth: stroke ? 2 : 0,
+    strokeLinecap: stroke ? 'round' : undefined,
+    strokeLinejoin: stroke ? 'round' : undefined,
+  };
+}
+
+function renderSvg(
+  config: SvgConfig,
+  wrapperClass: string,
+  wrapperStyle: React.CSSProperties | undefined,
+  title: string | undefined,
+) {
+  return (
+    <span className={wrapperClass} style={wrapperStyle}>
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 24 24"
+        fill={config.fill}
+        stroke={config.stroke}
+        strokeWidth={config.strokeWidth}
+        strokeLinecap={config.strokeLinecap}
+        strokeLinejoin={config.strokeLinejoin}
+        aria-label={title ?? undefined}
+        aria-hidden={title ? undefined : true}
+      >
+        {title && <title>{title}</title>}
+        <path d={config.path} />
+      </svg>
+    </span>
+  );
+}
+
 export function Icon({
   name,
   library = 'material',
@@ -14,6 +65,7 @@ export function Icon({
   style,
 }: IconProps) {
   const sizeClass = styles[`size${size.charAt(0).toUpperCase() + size.slice(1)}`];
+  const wrapperClass = clsx(styles.icon, sizeClass, className);
 
   // Material Icons (fill-based)
   if (library === 'material') {
@@ -24,21 +76,9 @@ export function Icon({
       return null;
     }
 
-    return (
-      <span className={clsx(styles.icon, sizeClass, className)} style={style}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 24 24"
-          fill={color}
-          role={title ? 'img' : 'presentation'}
-          aria-label={title}
-          aria-hidden={!title}
-        >
-          {title && <title>{title}</title>}
-          <path d={path} />
-        </svg>
-      </span>
+    return renderSvg(
+      { path, fill: color, stroke: 'none', strokeWidth: 0 },
+      wrapperClass, style, title,
     );
   }
 
@@ -51,27 +91,9 @@ export function Icon({
       return null;
     }
 
-    const { path, stroke } = iconData;
-
-    return (
-      <span className={clsx(styles.icon, sizeClass, className)} style={style}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 24 24"
-          fill={stroke ? 'none' : color}
-          stroke={stroke ? color : 'none'}
-          strokeWidth={stroke ? 2 : 0}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          role={title ? 'img' : 'presentation'}
-          aria-label={title}
-          aria-hidden={!title}
-        >
-          {title && <title>{title}</title>}
-          <path d={path} />
-        </svg>
-      </span>
+    return renderSvg(
+      buildNucleoConfig(iconData, color),
+      wrapperClass, style, title,
     );
   }
 

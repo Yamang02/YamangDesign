@@ -222,11 +222,17 @@
     transition: box-shadow 150ms ease, border-color 150ms ease;
   }
 
-  .labCard[role='button'] {
+  button.labCard {
     cursor: pointer;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    appearance: none;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .labCard[role='button']:hover {
+  button.labCard:hover {
     box-shadow: var(--shell-shadow-md);
     border-color: var(--shell-border-default);
   }

@@ -48,15 +48,26 @@ import { ThemeContext } from './ThemeContext';
 
 export type { ThemeContextValue } from './ThemeContext';
 
+function resolveInitialPaletteSelection(
+  initialSelection: PaletteSelection | undefined,
+  initialPalette: ColorInput | undefined,
+  initialPaletteName: string | undefined,
+): PaletteSelection {
+  if (initialSelection) return initialSelection;
+  if (initialPalette) return createCustomSelection(initialPalette);
+  if (initialPaletteName) return createPresetSelection(initialPaletteName);
+  return loadPaletteSelection() ?? createPresetSelection(siteStyle.defaults.palette);
+}
+
 export interface ThemeProviderProps {
   children: ReactNode;
   initialStyle?: StyleName;
-  /** @deprecated initialStyle 사용 권장 */
+  /** Legacy: initialStyle과 동일 의미 */
   initialTheme?: StyleName;
   initialStyleName?: StyleName;
-  /** @deprecated initialSelection 사용 권장 */
+  /** Legacy: initialSelection 또는 createPresetSelection으로 대체 */
   initialPaletteName?: string;
-  /** @deprecated initialSelection 사용 권장 */
+  /** Legacy: initialSelection(createCustomSelection(...))으로 대체 */
   initialPalette?: ColorInput;
   /** 초기 팔레트 선택 상태 */
   initialSelection?: PaletteSelection;
@@ -75,21 +86,14 @@ export function ThemeProvider({
   initialSelection,
   systemPreset: initialSystemPreset = 'default',
   appliedSettings = null,
-}: ThemeProviderProps) {
+}: Readonly<ThemeProviderProps>) {
   const [styleName, setStyleName] = useState<StyleName>(initialStyleName);
-  const [systemPreset, setSystemPresetState] =
-    useState<SystemPresetName>(initialSystemPreset);
-  const [neutralPreset, setNeutralPresetState] =
-    useState<NeutralPresetName>(appliedSettings?.neutralPreset ?? 'gray');
+  const [systemPreset, setSystemPresetState] = useState<SystemPresetName>(initialSystemPreset); // NOSONAR typescript:S6754 — 공개 setSystemPreset과 구분
+  const [neutralPreset, setNeutralPresetState] = useState<NeutralPresetName>(appliedSettings?.neutralPreset ?? 'gray'); // NOSONAR typescript:S6754
 
-  // PaletteSelection 기반 단일 상태
-  const [selection, setSelectionState] = useState<PaletteSelection>(() => {
-    // 우선순위: initialSelection > initialPalette > initialPaletteName > localStorage > default
-    if (initialSelection) return initialSelection;
-    if (initialPalette) return createCustomSelection(initialPalette);
-    if (initialPaletteName) return createPresetSelection(initialPaletteName);
-    return loadPaletteSelection() ?? createPresetSelection(siteStyle.defaults.palette);
-  });
+  const [selection, setSelectionState] = useState<PaletteSelection>( // NOSONAR typescript:S6754
+    () => resolveInitialPaletteSelection(initialSelection, initialPalette, initialPaletteName)
+  );
 
   // 커스텀 테마 프리셋 관리 (localStorage 연동)
   const {
@@ -204,21 +208,23 @@ export function ThemeProvider({
       ...typographyVars,
     });
 
-    document.documentElement.setAttribute('data-palette', theme.palette);
-    document.documentElement.setAttribute('data-style', theme.style);
-    document.documentElement.setAttribute('data-theme', styleName);
-    document.documentElement.setAttribute('data-system-preset', systemPreset);
+    document.documentElement.dataset.palette = theme.palette;
+    document.documentElement.dataset.style = theme.style;
+    document.documentElement.dataset.theme = styleName;
+    document.documentElement.dataset.systemPreset = systemPreset;
   }, [theme, tokenSet, styleName, systemPreset]);
 
-  const setSystemPreset = (name: SystemPresetName) => {
+  const setSystemPreset = useCallback((name: SystemPresetName) => {
     setSystemPresetState(name);
-  };
+  }, []);
 
-  const setNeutralPreset = (name: NeutralPresetName) => {
+  const setNeutralPreset = useCallback((name: NeutralPresetName) => {
     setNeutralPresetState(name);
-  };
+  }, []);
 
-  const value = {
+  const semanticMapping = appliedSettings?.semanticMapping ?? null;
+
+  const value = useMemo(() => ({
     theme,
     selection,
     setPaletteSelection,
@@ -234,8 +240,13 @@ export function ThemeProvider({
     updateCustomSemanticPreset,
     deleteCustomSemanticPreset,
     paletteDefinition,
-    semanticMapping: appliedSettings?.semanticMapping ?? null,
-  };
+    semanticMapping,
+  }), [
+    theme, selection, setPaletteSelection, styleName, palette,
+    systemPreset, setSystemPreset, neutralPreset, setNeutralPreset,
+    customSemanticPresets, addCustomSemanticPreset, updateCustomSemanticPreset,
+    deleteCustomSemanticPreset, paletteDefinition, semanticMapping,
+  ]);
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>

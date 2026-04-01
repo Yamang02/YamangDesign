@@ -11,6 +11,8 @@ import type {
   SemanticMappingValue,
 } from '../types';
 import type { SemanticTokenPath } from './recommendations';
+
+export type { SemanticTokenPath } from './recommendations';
 import { colorMix, computeOnActionColor } from '@shared/utils/color';
 
 /** ScaleReference 여부 판별 */
@@ -185,8 +187,6 @@ export function getMergedMapping(
     feedback: { ...base.feedback, ...custom.feedback },
   };
 }
-
-export type { SemanticTokenPath };
 
 export function updateMappingAtPath(
   mapping: SemanticMapping,

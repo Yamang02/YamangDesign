@@ -59,7 +59,9 @@ export const formatters = {
     fontWeight: string,
     lineHeight?: string
   ) =>
-    `${name} · ${fontSize} · ${fontWeight}${lineHeight && lineHeight !== 'normal' ? ` · ${lineHeight}` : ''}`,
+    lineHeight && lineHeight !== 'normal'
+      ? `${name} · ${fontSize} · ${fontWeight} · ${lineHeight}`
+      : `${name} · ${fontSize} · ${fontWeight}`,
 } as const;
 
 /** Font Family 라벨 (FontLab) */

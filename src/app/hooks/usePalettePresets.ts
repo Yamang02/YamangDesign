@@ -17,7 +17,7 @@ const defaultPresets: PalettePreset[] = Object.entries(colorStartPoints).map(
 );
 
 function generateId(): string {
-  return `preset-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  return `preset-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
 function loadFromStorage(): PalettePreset[] {

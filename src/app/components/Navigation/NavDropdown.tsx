@@ -14,7 +14,7 @@ export function NavDropdown({
   onToggle,
   onSelect,
   activeItem,
-}: NavDropdownProps) {
+}: Readonly<NavDropdownProps>) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (itemId: string) => {

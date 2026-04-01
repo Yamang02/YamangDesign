@@ -32,7 +32,7 @@ export function Navigation({
   centerContent,
   rightContent,
   asSlot = false,
-}: NavigationProps) {
+}: Readonly<NavigationProps>) {
   const { styleName, setStyleName, palette, setPaletteSelection } = useTheme();
   const [isColorEditorOpen, setIsColorEditorOpen] = useState(false);
   const [editingColors, setEditingColors] = useState<ColorInput>(palette);
@@ -96,6 +96,7 @@ export function Navigation({
                     type="button"
                     className={styles.colorEditorClose}
                     onClick={() => setIsColorEditorOpen(false)}
+                    aria-label="색상 편집기 닫기"
                   >
                     <Icon name="close" size="sm" />
                   </button>
@@ -151,20 +152,17 @@ export function Navigation({
       data-shell
     >
       <div className={styles.left}>
-        <span
-          className={styles.brand}
-          onClick={onLogoClick}
-          role={onLogoClick ? 'button' : undefined}
-          tabIndex={onLogoClick ? 0 : undefined}
-          onKeyDown={(e) => {
-            if (onLogoClick && (e.key === 'Enter' || e.key === ' ')) {
-              e.preventDefault();
-              onLogoClick();
-            }
-          }}
-        >
-          {brand}
-        </span>
+        {onLogoClick ? (
+          <button
+            type="button"
+            className={styles.brand}
+            onClick={onLogoClick}
+          >
+            {brand}
+          </button>
+        ) : (
+          <span className={styles.brand}>{brand}</span>
+        )}
       </div>
       {navContent}
     </nav>

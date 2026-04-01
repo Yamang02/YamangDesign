@@ -126,14 +126,18 @@ export async function pickYamangJSONFile(): Promise<string | null> {
     input.type = 'file';
     input.accept = '.json,application/json';
     input.onchange = () => {
-      const file = input.files?.[0];
-      if (!file) {
-        resolve(null);
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = () => resolve((reader.result as string) ?? null);
-      reader.readAsText(file);
+      void (async () => {
+        const file = input.files?.[0];
+        if (!file) {
+          resolve(null);
+          return;
+        }
+        try {
+          resolve(await file.text());
+        } catch {
+          resolve(null);
+        }
+      })();
     };
     input.click();
   });
@@ -158,7 +162,7 @@ export function extractComponentMapping(
 ): ComponentMappingOverrides | null {
   const m = payload.componentMapping;
   if (!m || typeof m !== 'object') return null;
-  return m as ComponentMappingOverrides;
+  return m;
 }
 
 /** 전역 설정 import: payload에서 globalSettings 추출 (v1이면 v2로 마이그레이션) */
@@ -169,7 +173,7 @@ export function extractGlobalSettings(
   if (!g || typeof g !== 'object') return null;
   if (!g.palette || !g.styleName || !g.systemPreset) return null;
   if (isStoredSettingsV1(g)) return migrateV1ToV2(g);
-  return g as StoredSettings;
+  return g;
 }
 
 /** 시맨틱 매핑 import: payload에서 overrides 추출 (레거시 형식 호환) */

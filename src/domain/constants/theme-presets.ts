@@ -22,14 +22,11 @@ export { themePresets };
 /** Lab/Playground 등에서 사용하는 빌트인 팔레트 ID */
 export type BuiltinPaletteId = keyof typeof themePresets;
 
-/** @deprecated BuiltinPaletteId 사용 권장 */
-export type PresetPaletteName = BuiltinPaletteId;
-
 /** 시맨틱 매핑 커스텀 프리셋 ID (베이스 참조 + 오버라이드) */
 export type CustomSemanticPaletteId = `custom-semantic:${string}`;
 
 /** 사용자 정의 포함 전체 팔레트 이름 */
-export type PaletteName = BuiltinPaletteId | 'custom' | CustomSemanticPaletteId;
+export type PaletteName = BuiltinPaletteId | 'custom' | CustomSemanticPaletteId; // NOSONAR typescript:S6571 — custom 슬롯
 
 export function isCustomSemanticPaletteId(
   name: string

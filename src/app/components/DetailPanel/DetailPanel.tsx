@@ -6,7 +6,7 @@ import { Icon } from '../Icon';
 import type { DetailPanelProps } from './DetailPanel.types';
 import styles from './DetailPanel.module.css';
 
-export function DetailPanel({ open, onClose, title, children }: DetailPanelProps) {
+export function DetailPanel({ open, onClose, title, children }: Readonly<DetailPanelProps>) {
   return (
     <aside
       className={clsx(styles.detailPanel, open && styles.open)}

@@ -16,21 +16,25 @@ export function ComponentDetailModal({
   children,
   previewStyle,
 }: ComponentDetailModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!open) return;
+    const d = dialogRef.current;
     previousActiveElement.current = document.activeElement as HTMLElement | null;
+    d?.showModal();
+    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      d?.close();
       previousActiveElement.current?.focus?.();
     };
   }, [open, onClose]);
@@ -38,14 +42,24 @@ export function ComponentDetailModal({
   if (!open) return null;
 
   const modal = (
-    <div
+    <dialog // NOSONAR typescript:S6847
+      ref={dialogRef}
       className={styles.overlay}
-      role="dialog"
-      aria-modal="true"
       aria-labelledby="component-detail-modal-title"
       onClick={(e) => e.target === e.currentTarget && onClose()}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClose();
+        }
+      }}
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
     >
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()} data-shell>
+      <div className={styles.modal} data-shell>
         <header className={styles.header}>
           <h2 id="component-detail-modal-title" className={styles.title}>
             {title}
@@ -63,7 +77,7 @@ export function ComponentDetailModal({
           {children}
         </div>
       </div>
-    </div>
+    </dialog>
   );
 
   return createPortal(modal, document.body);

@@ -7,7 +7,7 @@ export interface TokenValueRowProps {
   value: string;
 }
 
-export function TokenValueRow({ label, token, value }: TokenValueRowProps) {
+export function TokenValueRow({ label, token, value }: Readonly<TokenValueRowProps>) {
   return (
     <div className={styles.row}>
       <span className={styles.label}>{label}</span>

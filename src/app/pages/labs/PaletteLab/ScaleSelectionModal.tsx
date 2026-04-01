@@ -3,8 +3,7 @@
  * E08 P01: 직접 HEX 입력 제거 — scale/step 선택에 집중
  */
 import { useState, useEffect, useRef } from 'react';
-import { Icon } from '../../../components';
-import { Tooltip } from '../../../components';
+import { Icon, Tooltip } from '../../../components';
 import {
   getScaleRecommendation,
   type RecommendationLevel,
@@ -40,9 +39,9 @@ function isScaleReference(
 
 function RecommendationIcon({
   recommendation,
-}: {
+}: Readonly<{
   recommendation: { level: RecommendationLevel; message?: string };
-}) {
+}>) {
   if (recommendation.level === 'recommended') {
     return (
       <Tooltip content={recommendation.message ?? '권장 매핑'} portal position="top">
@@ -90,10 +89,10 @@ export function ScaleSelectionModal({
   scales,
   bgStrategy,
   onSelect,
-}: ScaleSelectionModalProps) {
+}: Readonly<ScaleSelectionModalProps>) {
   const [selectedScale, setSelectedScale] = useState<ScaleReference['scale']>('neutral');
   const [selectedStep, setSelectedStep] = useState<ScaleReference['step']>(500);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -110,6 +109,8 @@ export function ScaleSelectionModal({
 
   useEffect(() => {
     if (!open) return;
+    const d = dialogRef.current;
+    d?.showModal();
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
@@ -118,6 +119,7 @@ export function ScaleSelectionModal({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      d?.close();
     };
   }, [open, onClose]);
 
@@ -136,19 +138,24 @@ export function ScaleSelectionModal({
   if (!open) return null;
 
   return (
-    <div
+    <dialog // NOSONAR typescript:S6847
+      ref={dialogRef}
       className={styles.overlay}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
       aria-labelledby="scale-selection-title"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClose();
+        }
+      }}
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
     >
-      <div
-        ref={modalRef}
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()}
-        data-shell
-      >
+      <div className={styles.modal} data-shell>
         <header className={styles.header}>
           <div className={styles.scaleHeader}>
             <h2 id="scale-selection-title" className={styles.title}>
@@ -168,8 +175,8 @@ export function ScaleSelectionModal({
 
         <div className={styles.content}>
           {/* Scale 선택 */}
-          <section className={styles.section}>
-            <label className={styles.label}>스케일</label>
+          <fieldset className={styles.section}>
+            <legend className={styles.label}>스케일</legend>
             <div className={styles.scaleRow}>
               {SCALES.map((scale) => {
                 const scaleData = scales[scale];
@@ -192,11 +199,11 @@ export function ScaleSelectionModal({
                 );
               })}
             </div>
-          </section>
+          </fieldset>
 
           {/* Step 선택 */}
-          <section className={styles.section}>
-            <label className={styles.label}>Step</label>
+          <fieldset className={styles.section}>
+            <legend className={styles.label}>Step</legend>
             <div className={styles.stepRow}>
               {STEPS.map((step) => {
                 const color = scales[selectedScale]?.[step] ?? RUNTIME_COLOR_FALLBACK;
@@ -218,7 +225,7 @@ export function ScaleSelectionModal({
                 );
               })}
             </div>
-          </section>
+          </fieldset>
         </div>
 
         <footer className={styles.footer}>
@@ -231,6 +238,6 @@ export function ScaleSelectionModal({
           </button>
         </footer>
       </div>
-    </div>
+    </dialog>
   );
 }

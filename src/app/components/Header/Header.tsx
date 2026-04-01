@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import type { HeaderProps } from './Header.types';
 import styles from './Header.module.css';
 
-export function Header({ children, onLogoClick }: HeaderProps) {
+export function Header({ children, onLogoClick }: Readonly<HeaderProps>) {
   const [fontReady, setFontReady] = useState(false);
 
   useEffect(() => {

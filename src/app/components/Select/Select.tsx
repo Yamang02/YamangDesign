@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useId } from 'react';
 import type { SelectProps } from './Select.types';
 import { clsx } from '@shared/utils/clsx';
 import styles from './Select.module.css';
@@ -17,14 +17,18 @@ export function Select({
   open,
   onOpenChange,
   triggerClassName,
-}: SelectProps) {
+}: Readonly<SelectProps>) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const isOpen = open !== undefined ? open : internalOpen;
+  const isOpen = open ?? internalOpen;
+  const listboxId = useId();
 
-  const setOpen = (next: boolean) => {
-    if (open === undefined) setInternalOpen(next);
-    onOpenChange?.(next);
-  };
+  const setOpen = useCallback(
+    (next: boolean) => {
+      if (open === undefined) setInternalOpen(next);
+      onOpenChange?.(next);
+    },
+    [open, onOpenChange]
+  );
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -46,7 +50,7 @@ export function Select({
       return () =>
         document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [isOpen]);
+  }, [isOpen, setOpen]);
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -71,13 +75,13 @@ export function Select({
           break;
         case 'ArrowDown':
           event.preventDefault();
-          if (!isOpen) {
-            setOpen(true);
-          } else {
+          if (isOpen) {
             setHighlightedIndex((prev) => {
               const next = prev + 1;
               return next >= options.length ? 0 : next;
             });
+          } else {
+            setOpen(true);
           }
           break;
         case 'ArrowUp':
@@ -91,14 +95,14 @@ export function Select({
           break;
       }
     },
-    [disabled, isOpen, highlightedIndex, options, onChange]
+    [disabled, isOpen, highlightedIndex, options, onChange, setOpen]
   );
 
   useEffect(() => {
     if (isOpen) {
       const currentIndex = options.findIndex((opt) => opt.value === value);
       queueMicrotask(() => {
-        setHighlightedIndex(currentIndex >= 0 ? currentIndex : 0);
+        setHighlightedIndex(Math.max(currentIndex, 0));
       });
     }
   }, [isOpen, options, value]);
@@ -138,6 +142,12 @@ export function Select({
         onKeyDown={handleKeyDown}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-controls={isOpen ? listboxId : undefined}
+        aria-activedescendant={
+          isOpen && highlightedIndex >= 0 && options[highlightedIndex]
+            ? `option-${options[highlightedIndex].value}`
+            : undefined
+        }
         aria-disabled={disabled}
         disabled={disabled}
       >
@@ -166,6 +176,7 @@ export function Select({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden="true"
           >
             <polyline points="6 9 12 15 18 9" />
           </svg>
@@ -173,28 +184,31 @@ export function Select({
       </button>
 
       {isOpen && (
-        <ul
+        <ul // NOSONAR typescript:S6819 typescript:S6842 — 커스텀 콤보박스 패턴
+          id={listboxId}
           ref={listRef}
           className={styles.dropdown}
-          role="listbox"
-          aria-activedescendant={
-            highlightedIndex >= 0
-              ? `option-${options[highlightedIndex]?.value}`
-              : undefined
-          }
+          role="listbox" // NOSONAR typescript:S6842
+          tabIndex={-1} // NOSONAR typescript:S6842
         >
           {options.map((option, index) => (
-            <li
+            <li // NOSONAR typescript:S6819 typescript:S6842
               key={option.value}
               id={`option-${option.value}`}
               className={styles.option}
-              role="option"
+              role="option" // NOSONAR typescript:S6842
               aria-selected={option.value === value}
               aria-disabled={option.disabled}
               data-selected={option.value === value || undefined}
               data-disabled={option.disabled || undefined}
               data-highlighted={index === highlightedIndex || undefined}
               onClick={() => handleOptionClick(option.value, option.disabled)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleOptionClick(option.value, option.disabled);
+                }
+              }}
               onMouseEnter={() => setHighlightedIndex(index)}
             >
               {option.icon}

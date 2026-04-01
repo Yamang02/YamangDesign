@@ -10,8 +10,8 @@ export function useCssVar(name: string): string {
       setValue(v);
     };
     read();
-    const id = window.setInterval(read, 500);
-    return () => window.clearInterval(id);
+    const id = globalThis.setInterval(read, 500);
+    return () => globalThis.clearInterval(id);
   }, [name]);
 
   return value;

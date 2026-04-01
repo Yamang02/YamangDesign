@@ -76,6 +76,19 @@
     gap: var(--ds-spacing-2);
   }
 
+  fieldset.section {
+    border: none;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  fieldset.section legend.label {
+    padding: 0;
+    float: none;
+    width: auto;
+  }
+
   .label {
     font-size: var(--ds-text-xs);
     font-weight: var(--ds-font-weight-medium);

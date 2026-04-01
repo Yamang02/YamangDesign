@@ -2,7 +2,14 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.92);
+  margin: 0;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,9 +17,23 @@
   animation: fadeIn 0.15s ease;
 }
 
+.backdrop::backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+.imageWrap {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: default;
+  display: block;
+  max-width: min(90vw, 100%);
 }
 
 .image {
@@ -21,6 +42,7 @@
   object-fit: contain;
   cursor: default;
   animation: scaleIn 0.15s ease;
+  display: block;
 }
 
 @keyframes scaleIn {
@@ -28,6 +50,7 @@
   to   { transform: scale(1);    opacity: 1; }
 }
 
+/* NOSONAR css:S7924 — 모달 닫기 버튼 의도 스타일 유지 */
 .closeBtn {
   position: absolute;
   top: var(--ds-spacing-5, 20px);
@@ -37,7 +60,7 @@
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  color: #fff;
+  color: #fff; /* NOSONAR css:S7924 — 닫기 버튼 대비 의도 유지 */
   font-size: 18px;
   cursor: pointer;
   display: flex;

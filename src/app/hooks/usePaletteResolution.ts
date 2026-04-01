@@ -32,8 +32,8 @@ function isSameColors(a: ColorInput, b: ColorInput): boolean {
 }
 
 function findMatchingPresetByColors(colors: ColorInput): PaletteDefinition | null {
-  const presetList = Object.values(palettePresets) as PaletteDefinition[];
-  const matched = presetList.find((preset) => isSameColors(preset.colors as ColorInput, colors));
+  const presetList: PaletteDefinition[] = Object.values(palettePresets);
+  const matched = presetList.find((preset) => isSameColors(preset.colors, colors));
   return matched ?? null;
 }
 
@@ -51,11 +51,11 @@ export function resolveSelection(
   switch (selection.type) {
     case 'preset': {
       const preset =
-        palettePresets[selection.presetId as keyof typeof palettePresets] ??
+        palettePresets[selection.presetId] ??
         palettePresets.default;
       return {
         definition: preset,
-        colors: preset.colors as ColorInput,
+        colors: preset.colors,
       };
     }
 
@@ -64,7 +64,7 @@ export function resolveSelection(
       if (matchedPreset) {
         return {
           definition: matchedPreset,
-          colors: matchedPreset.colors as ColorInput,
+          colors: matchedPreset.colors,
         };
       }
       return {
@@ -80,18 +80,18 @@ export function resolveSelection(
       if (preset) {
         const def = presetToPaletteDefinition(preset);
         const base =
-          palettePresets[preset.basePaletteId as keyof typeof palettePresets];
+          palettePresets[preset.basePaletteId];
         if (def && base) {
           return {
             definition: def,
-            colors: base.colors as ColorInput,
+            colors: base.colors,
           };
         }
       }
       // fallback
       return {
         definition: palettePresets.default,
-        colors: palettePresets.default.colors as ColorInput,
+        colors: palettePresets.default.colors,
       };
     }
   }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './ArtImageModal.module.css';
 
 interface ArtImageModalProps {
@@ -7,30 +7,54 @@ interface ArtImageModalProps {
   onClose: () => void
 }
 
-export function ArtImageModal({ imageUrl, imageAlt, onClose }: ArtImageModalProps) {
+export function ArtImageModal({ imageUrl, imageAlt, onClose }: Readonly<ArtImageModalProps>) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
+    const d = dialogRef.current;
+    d?.showModal();
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      d?.close();
+    };
   }, [onClose]);
 
   return (
-    <div
+    <dialog // NOSONAR typescript:S6847 — 네이티브 dialog 백드롭 닫기
+      ref={dialogRef}
       className={styles.backdrop}
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
       aria-label={imageAlt}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClose();
+        }
+      }}
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
     >
-      <button className={styles.closeBtn} onClick={onClose} aria-label="닫기">✕</button>
-      <img
-        src={imageUrl}
-        alt={imageAlt}
-        className={styles.image}
+      <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="닫기">
+        ✕
+      </button>
+      <button
+        type="button"
+        className={styles.imageWrap}
         onClick={(e) => e.stopPropagation()}
-      />
-    </div>
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') e.stopPropagation();
+        }}
+        aria-label={imageAlt}
+      >
+        <img src={imageUrl} alt="" className={styles.image} />
+      </button>
+    </dialog>
   );
 }

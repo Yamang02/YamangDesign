@@ -97,15 +97,16 @@ function PresetItemCustom({
   onLoad,
   onDelete,
   isApplied,
-}: {
+}: Readonly<{
   preset: StoredPreset;
   onLoad: (p: StoredPreset) => void;
   onDelete: (id: string) => void;
   isApplied?: boolean;
-}) {
+}>) {
   const palette = preset.settings.palette || {};
   const styleLabel = capitalize(preset.settings.styleName ?? 'minimal');
   const hasSemantic = hasSemanticOverrides(preset.settings);
+  const presetColors = getPresetColorsFromPalette(palette);
   return (
     <div className={`${styles.presetItem} ${isApplied ? styles.presetItemApplied : ''}`}>
       <div className={styles.presetBadges}>
@@ -129,8 +130,8 @@ function PresetItemCustom({
         {preset.name}
       </button>
       <div className={styles.presetColors}>
-        {getPresetColorsFromPalette(palette).map((color, i) => (
-          <span key={i} className={styles.presetDot} style={{ backgroundColor: color }} />
+        {presetColors.map((color) => (
+          <span key={`${preset.id}-${color}`} className={styles.presetDot} style={{ backgroundColor: color }} />
         ))}
       </div>
       <div className={styles.presetDeleteSlot}>
@@ -156,7 +157,7 @@ export interface PresetTabProps {
   settings: PresetTabSettings;
 }
 
-export function PresetTab({ settings }: PresetTabProps) {
+export function PresetTab({ settings }: Readonly<PresetTabProps>) {
   const {
     palette,
     styleName,
@@ -213,10 +214,11 @@ export function PresetTab({ settings }: PresetTabProps) {
   const filteredThemesByCategory = useMemo(() => {
     if (!presetSearch.trim()) return themesByCategory;
     const all = searchThemesByName(presetSearch);
+    const matchIds = new Set(all.map((a) => a.id));
     return Object.fromEntries(
       Object.entries(themesByCategory).map(([cat, themes]) => [
         cat,
-        themes.filter((t) => all.some((a) => a.id === t.id)),
+        themes.filter((t) => matchIds.has(t.id)),
       ])
     );
   }, [themesByCategory, presetSearch]);
@@ -418,6 +420,7 @@ export function PresetTab({ settings }: PresetTabProps) {
                     const category = themeRegistry.find((g) =>
                       g.themes.some((t) => t.id === presetId)
                     )?.category;
+                    const defColors = getPresetColorsFromPalette(def.colors as ColorInput);
                     return (
                       <button
                         key={presetId}
@@ -437,8 +440,8 @@ export function PresetTab({ settings }: PresetTabProps) {
                           {def.displayName ?? def.id}
                         </span>
                         <div className={styles.presetColors}>
-                          {getPresetColorsFromPalette(def.colors as ColorInput).map((color, i) => (
-                            <span key={i} className={styles.presetDot} style={{ backgroundColor: color }} />
+                          {defColors.map((color) => (
+                            <span key={`${presetId}-${color}`} className={styles.presetDot} style={{ backgroundColor: color }} />
                           ))}
                         </div>
                         <div className={styles.presetDeleteSlot} aria-hidden />
@@ -486,12 +489,14 @@ export function PresetTab({ settings }: PresetTabProps) {
         {themeRegistry.map((group) => {
           const filtered =
             filteredThemesByCategory[group.category] ?? [];
-          const badgeClass =
-            group.category === 'default'
-              ? styles.yamang
-              : group.category === 'natural'
-                ? styles.natural
-                : styles.category;
+          const badgeClassMap: Record<string, string> = {
+            default: styles.yamang,
+            natural: styles.natural,
+          };
+          const badgeClass = badgeClassMap[group.category] ?? styles.category;
+          const emptyCategoryMessage = presetSearch
+            ? '검색 결과가 없습니다'
+            : `${CATEGORY_LABEL[group.category] ?? group.displayName} 테마가 없습니다`;
           return (
             <div
               key={group.category}
@@ -504,18 +509,13 @@ export function PresetTab({ settings }: PresetTabProps) {
               {presetTab === group.category && (
                 <>
                   {filtered.length === 0 ? (
-                    <EmptyCategory
-                      message={
-                        presetSearch
-                          ? '검색 결과가 없습니다'
-                          : `${CATEGORY_LABEL[group.category] ?? group.displayName} 테마가 없습니다`
-                      }
-                    />
+                    <EmptyCategory message={emptyCategoryMessage} />
                   ) : (
                     <div className={styles.presetList}>
                       {filtered.map((def) => {
                         const presetId = def.id;
                         const isApplied = isPaletteEqual(draftForCompare.palette, def.colors);
+                        const defColors = getPresetColorsFromPalette(def.colors as ColorInput);
                         return (
                           <button
                             key={presetId}
@@ -542,11 +542,9 @@ export function PresetTab({ settings }: PresetTabProps) {
                               {def.displayName ?? def.id}
                             </span>
                             <div className={styles.presetColors}>
-                              {getPresetColorsFromPalette(
-                                def.colors as ColorInput
-                              ).map((color, i) => (
+                              {defColors.map((color) => (
                                 <span
-                                  key={i}
+                                  key={`${presetId}-${color}`}
                                   className={styles.presetDot}
                                   style={{ backgroundColor: color }}
                                 />

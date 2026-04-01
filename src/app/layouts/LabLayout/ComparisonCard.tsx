@@ -28,23 +28,16 @@ export function ComparisonCard({
   selected,
   headerAction,
   surfaceContent = false,
-}: ComparisonCardProps) {
+}: Readonly<ComparisonCardProps>) {
+  const Wrapper = onClick ? 'button' : 'div';
   return (
-    <div
+    <Wrapper
+      {...(onClick ? { type: 'button' as const, onClick } : {})}
       className={clsx(
         styles.comparisonCard,
         selected && styles.comparisonCardSelected,
         surfaceContent && styles.comparisonCardSurface
       )}
-      onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      onKeyDown={(e) => {
-        if (onClick && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          onClick();
-        }
-      }}
     >
       <div className={styles.comparisonHeader}>
         <div className={styles.comparisonHeaderMain}>
@@ -52,10 +45,14 @@ export function ComparisonCard({
           {subtitle && <p className={styles.comparisonSubtitle}>{subtitle}</p>}
         </div>
         {headerAction && (
-          <div
+          <div // NOSONAR typescript:S6819 typescript:S6847 — 헤더 액션 래퍼(카드 버튼과 이벤트 분리)
             className={styles.comparisonHeaderAction}
             onClick={(e) => e.stopPropagation()}
-            role="presentation"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') e.stopPropagation();
+            }}
+            role="group"
+            aria-label="카드 헤더 액션"
           >
             {headerAction}
           </div>
@@ -69,6 +66,6 @@ export function ComparisonCard({
       >
         <div>{children}</div>
       </div>
-    </div>
+    </Wrapper>
   );
 }

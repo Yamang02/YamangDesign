@@ -6,8 +6,6 @@ import { useState, useCallback } from 'react';
 import { LabLayout, LabSection, PreviewControlPanel, type TocItem } from '../../../layouts';
 import { sectionTitles, fontFamilyLabels } from '@app/content/lab-content';
 import { comparisonPresets } from '@domain/constants';
-import type { PaletteName, StyleName, SystemPresetName } from '@shared/@types/theme';
-import type { NeutralPresetName } from '@domain/tokens/global/neutral-presets';
 import { DEFAULT_PANELS, type PlaygroundPanel, type FontKey } from './types';
 import { PreviewPanel } from './PreviewPanel';
 import styles from './Playground.module.css';
@@ -62,31 +60,31 @@ export function Playground() {
       tocItems={tocItems}
     >
       <LabSection title={sectionTitles.combinationSelect} id="combination-select">
-        {/* TODO(E07): 패널별 독립 Controls */}
+        {/* 향후 E07: 패널별 독립 Controls */}
         <div className={styles.controlsStack}>
           <PreviewControlPanel
             label="Palette (Brand)"
             value={panels[0].palette}
             options={paletteOptions}
-            onChange={(v) => updateAllPanels({ palette: v as PaletteName })}
+            onChange={(v) => updateAllPanels({ palette: v })}
           />
           <PreviewControlPanel
             label="System"
             value={panels[0].systemPreset}
             options={systemPresetOptions}
-            onChange={(v) => updateAllPanels({ systemPreset: v as SystemPresetName })}
+            onChange={(v) => updateAllPanels({ systemPreset: v })}
           />
           <PreviewControlPanel
             label="Neutral"
             value={panels[0].neutralPreset}
             options={neutralPresetOptions}
-            onChange={(v) => updateAllPanels({ neutralPreset: v as NeutralPresetName })}
+            onChange={(v) => updateAllPanels({ neutralPreset: v })}
           />
           <PreviewControlPanel
             label="Style"
             value={panels[0].style}
             options={styleOptions}
-            onChange={(v) => updateAllPanels({ style: v as StyleName })}
+            onChange={(v) => updateAllPanels({ style: v })}
           />
           <PreviewControlPanel
             label="Font"
@@ -98,9 +96,9 @@ export function Playground() {
       </LabSection>
 
       <LabSection title={sectionTitles.componentPreview} id="component-preview">
-        {/* TODO(E07): 패널 추가/삭제 버튼 */}
-        {/* TODO(E07): previewLevel 선택 (atoms | molecules | organisms | page) */}
-        {/* TODO(E07): "전역 테마로 적용" 버튼 */}
+        {/* 향후 E07: 패널 추가/삭제 버튼 */}
+        {/* 향후 E07: previewLevel 선택 (atoms | molecules | organisms | page) */}
+        {/* 향후 E07: "전역 테마로 적용" 버튼 */}
         <div className={styles.previewGrid}>
           {panels.map((panel) => (
             <PreviewPanel

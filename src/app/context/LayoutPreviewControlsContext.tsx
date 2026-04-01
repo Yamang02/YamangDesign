@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- context: Provider + hook */
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
 import {
   getThemeVariables,
@@ -27,7 +28,7 @@ interface LayoutPreviewControlsContextValue {
 
 const LayoutPreviewControlsContext = createContext<LayoutPreviewControlsContextValue | null>(null);
 
-export function LayoutPreviewControlsProvider({ children }: { children: ReactNode }) {
+export function LayoutPreviewControlsProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [palette, setPalette] = useState<PaletteName>(comparisonPresets.palettes[0]);
   const [systemPreset, setSystemPreset] = useState<SystemPresetName>(comparisonPresets.systemPresets[0]);
   const [neutralPreset, setNeutralPreset] = useState<NeutralPresetName>(comparisonPresets.neutralPresets[0]);
@@ -44,7 +45,7 @@ export function LayoutPreviewControlsProvider({ children }: { children: ReactNod
 
   const fontFamilyValue = font === 'sans' ? fontFamily.sans : fontFamily.mono;
 
-  const value: LayoutPreviewControlsContextValue = {
+  const value = useMemo<LayoutPreviewControlsContextValue>(() => ({
     palette,
     systemPreset,
     neutralPreset,
@@ -57,7 +58,7 @@ export function LayoutPreviewControlsProvider({ children }: { children: ReactNod
     setFont,
     themeVars,
     fontFamilyValue,
-  };
+  }), [palette, systemPreset, neutralPreset, style, font, themeVars, fontFamilyValue]);
 
   return (
     <LayoutPreviewControlsContext.Provider value={value}>

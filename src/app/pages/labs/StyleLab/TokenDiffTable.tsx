@@ -28,11 +28,11 @@ export function TokenDiffTable({
   baseStyle,
   compareStyles,
   paletteId,
-}: {
+}: Readonly<{
   baseStyle: StyleName;
   compareStyles: StyleName[];
   paletteId: PaletteName;
-}) {
+}>) {
   const paletteDef = palettePresets[paletteId];
 
   const stylesToCompute = useMemo(() => {

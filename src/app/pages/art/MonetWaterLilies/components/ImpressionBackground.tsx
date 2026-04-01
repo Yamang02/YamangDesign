@@ -1,4 +1,14 @@
+import type { CSSProperties } from 'react';
 import styles from './ImpressionBackground.module.css';
+
+/** CSS 변수 애니메이션용 (모듈 CSS와 맞춤) */
+type MotifMotionStyle = CSSProperties & {
+  '--op'?: number;
+  '--dur'?: string;
+  '--delay'?: string;
+  '--blur'?: string;
+  '--rot'?: string;
+};
 
 export function ImpressionBackground() {
   const motifs = [
@@ -33,26 +43,27 @@ export function ImpressionBackground() {
       <div className={`${styles.blob} ${styles.blob4}`} />
 
       <div className={styles.motifs} aria-hidden>
-        {motifs.map((m) => (
-          <div
-            key={m.id}
-            className={`${styles.motif} ${styles[m.kind]}`}
-            style={
-              {
-                left: m.left,
-                top: m.top,
-                width: m.size,
-                height: m.size,
-                opacity: m.opacity,
-                ['--op' as any]: m.opacity,
-                ['--dur' as any]: `${m.dur}s`,
-                ['--delay' as any]: `${m.delay}s`,
-                ['--blur' as any]: `${m.blur}px`,
-                ['--rot' as any]: `${m.rot}deg`,
-              } as any
-            }
-          />
-        ))}
+        {motifs.map((m) => {
+          const style: MotifMotionStyle = {
+            left: m.left,
+            top: m.top,
+            width: m.size,
+            height: m.size,
+            opacity: m.opacity,
+            '--op': m.opacity,
+            '--dur': `${m.dur}s`,
+            '--delay': `${m.delay}s`,
+            '--blur': `${m.blur}px`,
+            '--rot': `${m.rot}deg`,
+          };
+          return (
+            <div
+              key={m.id}
+              className={`${styles.motif} ${styles[m.kind]}`}
+              style={style}
+            />
+          );
+        })}
       </div>
     </div>
   );

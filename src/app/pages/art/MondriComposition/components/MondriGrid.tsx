@@ -4,6 +4,7 @@ import styles from './MondriGrid.module.css';
 const COLS = 16;
 const ROWS = 10;
 const TOTAL = COLS * ROWS;
+const CELL_IDS = Array.from({ length: TOTAL }, (_, idx) => `cell-${idx + 1}`);
 
 const COLOR_POOL = ['#7A9BBF', '#C47A6A', '#D4C06A', '#B0ADA8'];
 
@@ -12,7 +13,7 @@ function nextColor(index: number): string {
 }
 
 export function MondriGrid() {
-  const [cells, setCells] = useState<(string | null)[]>(Array(TOTAL).fill(null));
+  const [cells, setCells] = useState<(string | null)[]>(new Array(TOTAL).fill(null));
   const [colorIndex, setColorIndex] = useState(0);
 
   const handleEnter = useCallback((i: number) => {
@@ -27,21 +28,25 @@ export function MondriGrid() {
   }, [colorIndex]);
 
   const handleReset = () => {
-    setCells(Array(TOTAL).fill(null));
+    setCells(new Array(TOTAL).fill(null));
     setColorIndex(0);
   };
+
+  const cellElements = cells.map((color, i) => (
+    <button
+      key={CELL_IDS[i]}
+      type="button"
+      className={styles.cell}
+      style={color ? { backgroundColor: color } : undefined}
+      onMouseEnter={() => handleEnter(i)}
+      aria-label={`격자 셀 ${i + 1}`}
+    />
+  ));
 
   return (
     <>
       <div className={styles.grid} aria-hidden>
-        {cells.map((color, i) => (
-          <div
-            key={i}
-            className={styles.cell}
-            style={color ? { backgroundColor: color } : undefined}
-            onMouseEnter={() => handleEnter(i)}
-          />
-        ))}
+        {cellElements}
       </div>
       <button className={styles.resetBtn} onClick={handleReset} aria-label="격자 초기화">
         Reset

@@ -13,7 +13,7 @@ import {
   ColorSwatchGrid,
   type TocItem,
 } from '../../../layouts';
-import { DetailPanel } from '../../../components';
+import { DetailPanel, Icon, Tooltip } from '../../../components';
 import { sectionTitles } from '@app/content/lab-content';
 import { getPaletteVariablesFromDefinition, getSystemColorVariables, getNeutralPresetVariables, comparisonPresets, PALETTE_SCALES, SCALE_STEPS, SYSTEM_COLOR_KEYS, SYSTEM_SCALE_STEPS } from '@domain/constants';
 import { createPalette } from '@domain/palettes';
@@ -37,8 +37,6 @@ import { ColorUsageDiagram } from './ColorUsageDiagram';
 import { EmptyCategory } from './EmptyCategory';
 import { PaletteCategoryTabs, type BrandColorTabId } from './PaletteCategoryTabs';
 import { ScaleGuide } from './ScaleGuide';
-import { Icon } from '../../../components';
-import { Tooltip } from '../../../components';
 import styles from './PaletteLab.module.css';
 
 // 상수는 constants/palette-scales.ts에서 import
@@ -50,9 +48,9 @@ function capitalize(str: string): string {
 
 function PaletteDetail({
   definition,
-}: {
+}: Readonly<{
   definition: PaletteDefinition;
-}) {
+}>) {
   const expanded = createPalette(definition);
 
   return (
@@ -68,8 +66,8 @@ function PaletteDetail({
             return scale && Object.keys(scale).length > 0;
           })
           .map((key) => {
-            const scale = expanded.scales[key]!;
-            const base = scale[500] ?? scale[400] ?? Object.values(scale)[0];
+            const scale = expanded.scales[key];
+            const base = scale?.[500] ?? scale?.[400] ?? (scale ? Object.values(scale)[0] : '');
             return { label: capitalize(key), color: base };
           })}
       />
@@ -83,7 +81,7 @@ function PaletteDetail({
               <span className={styles.scaleLabel}>{capitalize(colorKey)}</span>
               <div className={styles.scaleRow}>
                 {SCALE_STEPS.map((step) => {
-                  const color = scale[step as keyof typeof scale];
+                  const color = scale[step];
                   if (!color) return null;
                   return (
                     <div
@@ -137,6 +135,23 @@ type DetailSelection =
   | { type: 'system'; name: SystemPresetName }
   | null;
 
+function getDetailSelectionTitle(
+  selection: DetailSelection,
+  cap: (s: string) => string,
+): string {
+  if (!selection) return '';
+  if (selection.type === 'palette') {
+    return selection.definition.displayName ?? cap(selection.definition.id);
+  }
+  if (selection.type === 'custom') {
+    const { preset } = selection;
+    if (preset.displayName) return preset.displayName;
+    const baseLabel =
+      palettePresets[preset.basePaletteId]?.displayName ?? preset.basePaletteId;
+    return `${baseLabel} (커스텀)`;
+  }
+  return cap(selection.name);
+}
 
 const tocItems: TocItem[] = [
   { id: 'overview', label: 'Overview' },
@@ -145,7 +160,7 @@ const tocItems: TocItem[] = [
   { id: 'system-colors', label: sectionTitles.systemColors },
 ];
 
-function NeutralPresetDetail({ presetName }: { presetName: NeutralPresetName }) {
+function NeutralPresetDetail({ presetName }: Readonly<{ presetName: NeutralPresetName }>) {
   const preset = neutralPresets[presetName];
   if (!preset) return null;
   const { scale } = preset;
@@ -186,7 +201,7 @@ function NeutralPresetDetail({ presetName }: { presetName: NeutralPresetName }) 
   );
 }
 
-function SystemPresetDetail({ presetName }: { presetName: SystemPresetName }) {
+function SystemPresetDetail({ presetName }: Readonly<{ presetName: SystemPresetName }>) {
   const preset = systemColorPresets[presetName];
   if (!preset) return null;
 
@@ -206,9 +221,7 @@ function SystemPresetDetail({ presetName }: { presetName: SystemPresetName }) {
             <span className={styles.scaleLabel}>{capitalize(colorKey)}</span>
             <div className={styles.scaleRow}>
               {SYSTEM_SCALE_STEPS.map((step) => {
-                const color = preset.colors[colorKey as keyof typeof preset.colors][
-                  step as 50 | 500 | 700
-                ];
+                const color = preset.colors[colorKey][step];
                 return (
                   <div
                     key={step}
@@ -237,11 +250,11 @@ function NeutralPresetCard({
   presetName,
   onClick,
   selected,
-}: {
+}: Readonly<{
   presetName: NeutralPresetName;
   onClick: () => void;
   selected: boolean;
-}) {
+}>) {
   return (
     <ComparisonCard
       title={capitalize(presetName)}
@@ -272,11 +285,11 @@ function SystemColorCard({
   presetName,
   onClick,
   selected,
-}: {
+}: Readonly<{
   presetName: SystemPresetName;
   onClick: () => void;
   selected: boolean;
-}) {
+}>) {
   return (
     <ComparisonCard
       title={capitalize(presetName)}
@@ -289,8 +302,8 @@ function SystemColorCard({
           <p className={styles.colorKeyLabel}>{capitalize(colorKey)}</p>
           <div className={styles.swatchRow}>
             {SYSTEM_SCALE_STEPS.map((step) => {
-              const varSuffix =
-                step === 50 ? '-subtle' : step === 700 ? '-emphasis' : '';
+              const varSuffixMap: Record<number, string> = { 50: '-subtle', 700: '-emphasis' };
+              const varSuffix = varSuffixMap[step] ?? '';
               return (
                 <div
                   key={step}
@@ -314,12 +327,12 @@ function ThemeCard({
   onClick,
   onMappingClick,
   selected,
-}: {
+}: Readonly<{
   def: PaletteDefinition;
   onClick: () => void;
   onMappingClick: (e: React.MouseEvent) => void;
   selected: boolean;
-}) {
+}>) {
   const expanded = createPalette(def);
   const styleVars = getPaletteVariablesFromDefinition(def);
 
@@ -374,19 +387,19 @@ function CustomPresetCard({
   onMappingClick,
   onDelete,
   selected,
-}: {
+}: Readonly<{
   preset: CustomThemePreset;
   onClick: () => void;
   onMappingClick: (e: React.MouseEvent) => void;
   onDelete: (e: React.MouseEvent) => void;
   selected: boolean;
-}) {
+}>) {
   const def = presetToPaletteDefinition(preset);
   if (!def) return null;
   const expanded = createPalette(def);
   const styleVars = getPaletteVariablesFromDefinition(def);
   const baseDisplayName =
-    palettePresets[preset.basePaletteId as keyof typeof palettePresets]
+    palettePresets[preset.basePaletteId]
       ?.displayName ?? capitalize(preset.basePaletteId);
   const title = preset.displayName ?? `${baseDisplayName} (커스텀)`;
 
@@ -474,7 +487,7 @@ export function PaletteLab() {
     const expanded = createPalette(def);
     const mapping = def.semanticMapping
       ? getMergedMapping(defaultSemanticMappings[def.bgStrategy], def.semanticMapping)
-      : getMergedMapping(defaultSemanticMappings[def.bgStrategy], undefined);
+      : getMergedMapping(defaultSemanticMappings[def.bgStrategy]);
     return { expanded, mapping };
   }, [currentPaletteDefinition]);
 
@@ -487,12 +500,7 @@ export function PaletteLab() {
     setDetailSelection({ type: 'custom', preset });
   };
 
-  const handleMappingIconClick = (_def: PaletteDefinition) => (e: React.MouseEvent) => {
-    e.stopPropagation();
-    designNav?.openDesignSettings('semantic');
-  };
-
-  const handleCustomMappingClick = (_preset: CustomThemePreset) => (e: React.MouseEvent) => {
+  const openSemanticMappingFromEvent = (e: React.MouseEvent) => {
     e.stopPropagation();
     designNav?.openDesignSettings('semantic');
   };
@@ -514,15 +522,7 @@ export function PaletteLab() {
     setDetailSelection({ type: 'system', name });
   };
 
-  const detailTitle = detailSelection
-    ? detailSelection.type === 'palette'
-      ? detailSelection.definition.displayName ??
-        capitalize(detailSelection.definition.id)
-      : detailSelection.type === 'custom'
-        ? detailSelection.preset.displayName ??
-          `${palettePresets[detailSelection.preset.basePaletteId as keyof typeof palettePresets]?.displayName ?? detailSelection.preset.basePaletteId} (커스텀)`
-        : capitalize(detailSelection.name)
-    : '';
+  const detailTitle = getDetailSelectionTitle(detailSelection, capitalize);
   const detailOpen = !!detailSelection;
 
   return (
@@ -554,7 +554,7 @@ export function PaletteLab() {
                       key={def.id}
                       def={def}
                       onClick={() => handlePaletteSelect(def)}
-                      onMappingClick={handleMappingIconClick(def)}
+                      onMappingClick={openSemanticMappingFromEvent}
                       selected={selectedBrandDef?.id === def.id}
                     />
                   ))
@@ -564,7 +564,7 @@ export function PaletteLab() {
                     key={preset.id}
                     preset={preset}
                     onClick={() => handleCustomPresetSelect(preset)}
-                    onMappingClick={handleCustomMappingClick(preset)}
+                    onMappingClick={openSemanticMappingFromEvent}
                     onDelete={handleCustomDelete(preset)}
                     selected={
                       detailSelection?.type === 'custom' &&
@@ -574,27 +574,29 @@ export function PaletteLab() {
                 ))}
               </ComparisonGrid>
             )}
-            {themeRegistry.map((group) =>
-              activeBrandTab === group.category ? (
+            {themeRegistry.map((group) => {
+              if (activeBrandTab !== group.category) return null;
+              const themesInCategory = themesByCategory[group.category] ?? [];
+              return (
                 <ComparisonGrid key={group.category} className={styles.comparisonGrid}>
-                  {(themesByCategory[group.category] ?? []).length === 0 ? (
+                  {themesInCategory.length === 0 ? (
                     <EmptyCategory
                       message={`등록된 ${group.displayName} 테마가 없습니다`}
                     />
                   ) : (
-                    (themesByCategory[group.category] ?? []).map((def) => (
+                    themesInCategory.map((def) => (
                       <ThemeCard
                         key={def.id}
                         def={def}
                         onClick={() => handlePaletteSelect(def)}
-                        onMappingClick={handleMappingIconClick(def)}
+                        onMappingClick={openSemanticMappingFromEvent}
                         selected={selectedBrandDef?.id === def.id}
                       />
                     ))
                   )}
                 </ComparisonGrid>
-              ) : null
-            )}
+              );
+            })}
             {activeBrandTab === 'custom' && (
               <ComparisonGrid className={styles.comparisonGrid}>
                 {customSemanticPresets.length === 0 ? (
@@ -605,7 +607,7 @@ export function PaletteLab() {
                       key={preset.id}
                       preset={preset}
                       onClick={() => handleCustomPresetSelect(preset)}
-                      onMappingClick={handleCustomMappingClick(preset)}
+                      onMappingClick={openSemanticMappingFromEvent}
                       onDelete={handleCustomDelete(preset)}
                       selected={
                         detailSelection?.type === 'custom' &&

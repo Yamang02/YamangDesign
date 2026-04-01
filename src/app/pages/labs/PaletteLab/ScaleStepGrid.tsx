@@ -2,14 +2,13 @@
  * P05: 전체 스케일×스텝 그리드 - 왼쪽에 고정 표시
  * 토큰 선택 후 원하는 셀 클릭으로 매핑
  */
-import { Tooltip } from '../../../components';
+import { Icon, Tooltip } from '../../../components';
 import {
   getScaleRecommendation,
   type SemanticTokenPath,
 } from '@domain/palettes/mapping/recommendations';
 import type { BgStrategy, ScaleReference } from '@domain/palettes/types';
 import type { GeneratedScales } from '@shared/@types/tokens';
-import { Icon } from '../../../components';
 import styles from './ScaleStepGrid.module.css';
 import { RUNTIME_COLOR_FALLBACK } from '@domain/constants/runtime-fallbacks';
 
@@ -45,7 +44,7 @@ export function ScaleStepGrid({
   bgStrategy,
   selectedToken,
   onSelect,
-}: ScaleStepGridProps) {
+}: Readonly<ScaleStepGridProps>) {
   const canSelect = !!selectedToken;
 
   return (
@@ -67,10 +66,13 @@ export function ScaleStepGrid({
                   const rec = selectedToken
                     ? getScaleRecommendation(selectedToken, scale, step, bgStrategy)
                     : null;
+                  const tooltipContent = rec?.message
+                    ? `${scale}-${step} · ${rec.message}`
+                    : `${scale}-${step}`;
                   return (
                     <Tooltip
                       key={step}
-                      content={`${scale}-${step}${rec?.message ? ` · ${rec.message}` : ''}`}
+                      content={tooltipContent}
                       portal
                       position="right"
                     >

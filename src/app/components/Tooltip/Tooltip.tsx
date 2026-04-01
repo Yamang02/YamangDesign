@@ -16,9 +16,9 @@ export function Tooltip({
   portal = false,
   open,
   children,
-}: TooltipProps) {
+}: Readonly<TooltipProps>) {
   const [visible, setVisible] = useState(false);
-  const isVisible = open !== undefined ? open : visible;
+  const isVisible = open ?? visible;
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLSpanElement | null>(null);
@@ -72,11 +72,11 @@ export function Tooltip({
   useEffect(() => {
     if (!isVisible || !portal) return;
     const handler = () => updatePosition();
-    window.addEventListener('scroll', handler, true);
-    window.addEventListener('resize', handler);
+    globalThis.addEventListener('scroll', handler, true);
+    globalThis.addEventListener('resize', handler);
     return () => {
-      window.removeEventListener('scroll', handler, true);
-      window.removeEventListener('resize', handler);
+      globalThis.removeEventListener('scroll', handler, true);
+      globalThis.removeEventListener('resize', handler);
     };
   }, [isVisible, portal, updatePosition]);
 
@@ -110,7 +110,7 @@ export function Tooltip({
               position: 'fixed' as const,
               top: coords?.top ?? -9999,
               left: coords?.left ?? -9999,
-              visibility: coords ? 'visible' : 'hidden',
+              visibility: coords == null ? 'hidden' : 'visible',
             }
           : {}),
       }}
@@ -120,15 +120,22 @@ export function Tooltip({
     </span>
   );
 
+  let renderedTooltip: React.ReactNode = null;
+  if (tooltipEl) {
+    renderedTooltip = portal ? createPortal(tooltipEl, document.body) : tooltipEl;
+  }
+
   return (
-    <span
+    <span // NOSONAR typescript:S6848 — 트리거 래퍼, 자식 포커스 가능
       ref={triggerRef}
       className={styles.wrapper}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocus={handleMouseEnter}
+      onBlur={handleMouseLeave}
     >
       {children}
-      {portal ? (tooltipEl ? createPortal(tooltipEl, document.body) : null) : tooltipEl}
+      {renderedTooltip}
     </span>
   );
 }

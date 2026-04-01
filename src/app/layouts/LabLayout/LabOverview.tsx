@@ -18,20 +18,22 @@ export interface LabOverviewProps {
   children?: React.ReactNode;
 }
 
-export function LabOverview({ description, items, children }: LabOverviewProps) {
+export function LabOverview({ description, items, children }: Readonly<LabOverviewProps>) {
+  const itemElements = items?.map((item) => (
+    <div key={item.label} className={styles.item}>
+      <span className={styles.itemLabel}>{item.label}</span>
+      {item.description && (
+        <span className={styles.itemDesc}>{item.description}</span>
+      )}
+    </div>
+  ));
+
   return (
     <div className={styles.overview}>
       {description && <p className={styles.description}>{description}</p>}
-      {items && items.length > 0 && (
+      {itemElements && itemElements.length > 0 && (
         <div className={styles.itemGrid}>
-          {items.map((item, index) => (
-            <div key={index} className={styles.item}>
-              <span className={styles.itemLabel}>{item.label}</span>
-              {item.description && (
-                <span className={styles.itemDesc}>{item.description}</span>
-              )}
-            </div>
-          ))}
+          {itemElements}
         </div>
       )}
       {children && <div className={styles.customContent}>{children}</div>}

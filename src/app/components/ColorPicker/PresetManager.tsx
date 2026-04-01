@@ -9,7 +9,7 @@ export function PresetManager({
   onSave,
   onSelect,
   onDelete,
-}: PresetManagerProps) {
+}: Readonly<PresetManagerProps>) {
   const [newPresetName, setNewPresetName] = useState('');
 
   const handleSave = () => {
@@ -57,18 +57,11 @@ export function PresetManager({
           const resolved = resolvePalette(preset.palette);
           const scales = generateColorScales(resolved);
           return (
-            <div
+            <button
+              type="button"
               key={preset.id}
               className={styles.presetItem}
               onClick={() => onSelect(preset)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onSelect(preset);
-                }
-              }}
-              role="button"
-              tabIndex={0}
             >
               <div className={styles.presetColors}>
                 <div
@@ -100,11 +93,12 @@ export function PresetManager({
                     onDelete(preset.id);
                   }}
                   className={styles.presetDeleteButton}
+                  aria-label={`${preset.name} 삭제`}
                 >
                   <Icon name="delete" size="sm" />
                 </button>
               )}
-            </div>
+            </button>
           );
         })}
       </div>

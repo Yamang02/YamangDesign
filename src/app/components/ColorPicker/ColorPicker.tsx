@@ -32,7 +32,7 @@ export function ColorPicker({
   onSelect,
   onDelete,
   onLoadThemePreset,
-}: ColorPickerProps) {
+}: Readonly<ColorPickerProps>) {
   const handleColorChange = (key: keyof ColorInput, value: string) => {
     onChange({
       ...palette,

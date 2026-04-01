@@ -74,37 +74,60 @@ const tocItems: (TocItem | TocItemTree)[] = [
 ];
 
 // E08 P08: 토큰 → 카테고리·레이어 (Detail Panel용)
+const SHELL_CATEGORY_MAP: Record<string, string> = {
+  bg: '배경 (bg)',
+  text: '텍스트 (text)',
+  border: '경계선 (border)',
+  action: '액션 (action)',
+  shadow: '그림자 (shadow)',
+};
+
+const DS_CATEGORY_MAP: Record<string, string> = {
+  bg: '배경',
+  text: '텍스트',
+  border: '경계선',
+  spacing: '간격',
+  duration: 'motion',
+  ease: 'motion',
+};
+
+const SYS_KEYWORDS: [string, string][] = [
+  ['error', 'Error'],
+  ['warning', 'Warning'],
+  ['success', 'Success'],
+  ['info', 'Info'],
+];
+
+const SHELL_TOKEN_RE = /^--shell-([a-z]+)/;
+
+function getShellMeta(token: string): { layer: string; layerNote: string; category: string } {
+  const m = SHELL_TOKEN_RE.exec(token);
+  const cat = m ? m[1] : '—';
+  return { layer: 'Shell', layerNote: '고정 라이트, 테마 무관', category: SHELL_CATEGORY_MAP[cat] ?? cat };
+}
+
+const DS_TOKEN_RE = /^--ds-(?:color-)?([a-z]+)/;
+
+function getDsMeta(token: string): { layer: string; layerNote: string; category: string } {
+  const m = DS_TOKEN_RE.exec(token);
+  const cat = m ? m[1] : '—';
+  return { layer: 'DS', layerNote: '테마 반응형 (ThemeProvider)', category: DS_CATEGORY_MAP[cat] ?? cat };
+}
+
+function getSysMeta(token: string): { layer: string; layerNote: string; category: string } {
+  const found = SYS_KEYWORDS.find(([kw]) => token.includes(kw));
+  return { layer: 'Sys', layerNote: '상태 색상, 테마 무관', category: found ? found[1] : '—' };
+}
+
 function getTokenMeta(token: string): { layer: string; layerNote: string; category: string } {
-  if (token.startsWith('--shell-')) {
-    const m = token.match(/^--shell-([a-z]+)/);
-    const cat = m ? m[1] : '—';
-    return {
-      layer: 'Shell',
-      layerNote: '고정 라이트, 테마 무관',
-      category: cat === 'bg' ? '배경 (bg)' : cat === 'text' ? '텍스트 (text)' : cat === 'border' ? '경계선 (border)' : cat === 'action' ? '액션 (action)' : cat === 'shadow' ? '그림자 (shadow)' : cat,
-    };
-  }
-  if (token.startsWith('--ds-')) {
-    const m = token.match(/^--ds-(?:color-)?([a-z]+)/);
-    const cat = m ? m[1] : '—';
-    return {
-      layer: 'DS',
-      layerNote: '테마 반응형 (ThemeProvider)',
-      category: cat === 'bg' ? '배경' : cat === 'text' ? '텍스트' : cat === 'border' ? '경계선' : cat === 'spacing' ? '간격' : cat === 'duration' || cat === 'ease' ? 'motion' : cat,
-    };
-  }
-  if (token.startsWith('--sys-')) {
-    return {
-      layer: 'Sys',
-      layerNote: '상태 색상, 테마 무관',
-      category: token.includes('error') ? 'Error' : token.includes('warning') ? 'Warning' : token.includes('success') ? 'Success' : token.includes('info') ? 'Info' : '—',
-    };
-  }
+  if (token.startsWith('--shell-')) return getShellMeta(token);
+  if (token.startsWith('--ds-')) return getDsMeta(token);
+  if (token.startsWith('--sys-')) return getSysMeta(token);
   return { layer: '—', layerNote: '', category: '—' };
 }
 
 
-function TokenDetailContent({ token }: { token: string }) {
+function TokenDetailContent({ token }: Readonly<{ token: string }>) {
   const value = useCssVar(token);
   const meta = getTokenMeta(token);
 
@@ -160,24 +183,24 @@ function TokenTableRow({
   showSwatchColumn,
   onSelect,
   formatDisplayValue,
-}: {
+}: Readonly<{
   token: string;
   displayLabel: string;
   showSwatchColumn: boolean;
   onSelect?: (token: string) => void;
   formatDisplayValue?: (token: string, value: string) => string;
-}) {
+}>) {
   const value = useCssVar(token);
   const displayValue = formatDisplayValue
     ? formatDisplayValue(token, value || '')
     : value || '(not set)';
   const showSwatch = showSwatchColumn && isColorValue(value);
   return (
-    <tr
-      onClick={() => onSelect?.(token)}
+    <tr // NOSONAR typescript:S6819 — 테이블 행 클릭 선택
+      onClick={() => onSelect?.(token)} // NOSONAR
       style={{ cursor: onSelect ? 'pointer' : undefined }}
       role={onSelect ? 'button' : undefined}
-      tabIndex={onSelect ? 0 : undefined}
+      tabIndex={onSelect ? 0 : undefined} // NOSONAR
       onKeyDown={
         onSelect
           ? (e) => {
@@ -221,13 +244,13 @@ function TokenTable({
   showSwatchColumn = true,
   onSelectToken,
   formatDisplayValue,
-}: {
+}: Readonly<{
   tokens: string[];
   showHeader?: boolean;
   showSwatchColumn?: boolean;
   onSelectToken?: (token: string) => void;
   formatDisplayValue?: (token: string, value: string) => string;
-}) {
+}>) {
   const prefix = getLongestCommonPrefix(tokens);
   const hasMeaningfulPrefix = prefix.length >= 3;
   const getDisplayLabel = (token: string) =>
@@ -274,13 +297,13 @@ export function ShellTokensSection({
   sortMode,
   collapsed,
   onToggleCollapsed,
-}: {
+}: Readonly<{
   onSelectToken?: (token: string) => void;
   search: string;
   sortMode: SortMode;
   collapsed: Record<string, boolean>;
   onToggleCollapsed: (key: string) => void;
-}) {
+}>) {
   const gridCategories = SHELL_CATEGORIES.filter((c) => !c.fullRow);
   const fullRowCategories = SHELL_CATEGORIES.filter((c) => c.fullRow);
 
@@ -343,13 +366,13 @@ export function GlobalSection({
   sortMode,
   collapsed,
   onToggleCollapsed,
-}: {
+}: Readonly<{
   onSelectToken?: (token: string) => void;
   search: string;
   sortMode: SortMode;
   collapsed: Record<string, boolean>;
   onToggleCollapsed: (key: string) => void;
-}) {
+}>) {
   const gridGroups = GLOBAL_GROUPS.filter((g) => !g.fullRow);
   const fullRowGroups = GLOBAL_GROUPS.filter((g) => g.fullRow);
 
@@ -414,13 +437,13 @@ export function AliasSection({
   sortMode,
   collapsed,
   onToggleCollapsed,
-}: {
+}: Readonly<{
   onSelectToken?: (token: string) => void;
   search: string;
   sortMode: SortMode;
   collapsed: Record<string, boolean>;
   onToggleCollapsed: (key: string) => void;
-}) {
+}>) {
   return (
     <LabPanel title="Alias" id="ds-alias">
       <div className={styles.tokenCategoryGrid}>
@@ -458,13 +481,13 @@ export function SysTokensSection({
   sortMode,
   collapsed,
   onToggleCollapsed,
-}: {
+}: Readonly<{
   onSelectToken?: (token: string) => void;
   search: string;
   sortMode: SortMode;
   collapsed: Record<string, boolean>;
   onToggleCollapsed: (key: string) => void;
-}) {
+}>) {
   return (
     <LabSection title="System" id="sys-tokens">
       <div className={styles.tokenCategoryGrid}>

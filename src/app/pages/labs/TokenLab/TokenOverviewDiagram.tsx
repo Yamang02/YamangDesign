@@ -16,7 +16,7 @@ const { layers } = overviewJson as { layers: Layer[] };
 
 export function TokenOverviewDiagram() {
   return (
-    <div className={styles.diagram} role="img" aria-label="3-layer token architecture">
+    <section className={styles.diagram} aria-label="3-layer token architecture">
       {layers.map((layer) => (
         <div key={layer.id} className={styles.layerCard}>
           <h4 className={styles.layerTitle}>{layer.title}</h4>
@@ -31,6 +31,6 @@ export function TokenOverviewDiagram() {
           </dl>
         </div>
       ))}
-    </div>
+    </section>
   );
 }

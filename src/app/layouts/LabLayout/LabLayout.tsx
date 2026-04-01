@@ -40,7 +40,7 @@ export function LabLayout({
   tocItems = [],
   navigationMode = 'scroll',
   headerActions,
-}: LabLayoutProps) {
+}: Readonly<LabLayoutProps>) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const idsToObserve = useMemo(() => flattenTocIds(tocItems), [tocItems]);
   const useToc = showToc && idsToObserve.length >= 2 && navigationMode === 'scroll';
@@ -53,7 +53,7 @@ export function LabLayout({
       (entries) => {
         const visible = entries.filter((e) => e.isIntersecting);
         if (visible.length === 0) return;
-        const sorted = visible.sort(
+        const sorted = [...visible].sort(
           (a, b) => (a.boundingClientRect.top ?? 0) - (b.boundingClientRect.top ?? 0)
         );
         setActiveSection(sorted[0].target.id);

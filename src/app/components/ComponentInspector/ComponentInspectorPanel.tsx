@@ -21,7 +21,7 @@ function isColorValue(value: string): boolean {
   );
 }
 
-function TokenRow({ role, token }: { role: string; token: string }) {
+function TokenRow({ role, token }: Readonly<{ role: string; token: string }>) {
   const value = useCssVar(token);
   const showSwatch = isColorValue(value);
   return (
@@ -45,10 +45,10 @@ function TokenRow({ role, token }: { role: string; token: string }) {
 function ComponentPreview({
   activeComponent,
   styleVars,
-}: {
+}: Readonly<{
   activeComponent: InspectorComponentKey;
   styleVars: React.CSSProperties;
-}) {
+}>) {
   const [selectValue, setSelectValue] = useState<string>('apple');
 
   return (
@@ -137,11 +137,10 @@ export function ComponentInspectorPanel() {
   const styleVars = getThemeVariables(theme.palette, theme.style);
 
   return (
-    <div
+    <aside
       className={styles.panel}
-      role="dialog"
       aria-label="Component Inspector"
-      style={panelLeft != null ? { left: panelLeft } : undefined}
+      style={panelLeft === null ? undefined : { left: panelLeft }}
     >
       <div className={styles.panelHeader}>
         <p className={styles.panelTitle}>Component Inspector</p>
@@ -194,6 +193,6 @@ export function ComponentInspectorPanel() {
           </div>
         </section>
       </div>
-    </div>
+    </aside>
   );
 }

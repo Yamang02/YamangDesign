@@ -11,15 +11,24 @@ export function Card({
   onClick,
   children,
   className,
-}: CardProps) {
-  const handleKeyDown = clickable
-    ? (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          if (!disabled) onClick?.();
-        }
-      }
-    : undefined;
+}: Readonly<CardProps>) {
+  if (clickable) {
+    return (
+      <button
+        type="button"
+        className={clsx(styles.card, className)}
+        data-variant={variant}
+        data-padding={padding}
+        data-hoverable={hoverable || undefined}
+        data-clickable
+        data-disabled={disabled || undefined}
+        onClick={disabled ? undefined : onClick}
+        disabled={disabled}
+      >
+        {children}
+      </button>
+    );
+  }
 
   return (
     <div
@@ -27,20 +36,14 @@ export function Card({
       data-variant={variant}
       data-padding={padding}
       data-hoverable={hoverable || undefined}
-      data-clickable={clickable || undefined}
       data-disabled={disabled || undefined}
-      onClick={clickable && !disabled ? onClick : undefined}
-      onKeyDown={handleKeyDown}
-      role={clickable ? 'button' : undefined}
-      tabIndex={clickable ? 0 : undefined}
-      aria-disabled={clickable && disabled ? true : undefined}
     >
       {children}
     </div>
   );
 }
 
-Card.Header = function CardHeader({ children, className }: CardSectionProps) {
+Card.Header = function CardHeader({ children, className }: Readonly<CardSectionProps>) {
   return (
     <div className={clsx(styles.header, className)}>
       {children}
@@ -48,7 +51,7 @@ Card.Header = function CardHeader({ children, className }: CardSectionProps) {
   );
 };
 
-Card.Body = function CardBody({ children, className }: CardSectionProps) {
+Card.Body = function CardBody({ children, className }: Readonly<CardSectionProps>) {
   return (
     <div className={clsx(styles.body, className)}>
       {children}
@@ -56,7 +59,7 @@ Card.Body = function CardBody({ children, className }: CardSectionProps) {
   );
 };
 
-Card.Footer = function CardFooter({ children, className }: CardSectionProps) {
+Card.Footer = function CardFooter({ children, className }: Readonly<CardSectionProps>) {
   return (
     <div className={clsx(styles.footer, className)}>
       {children}

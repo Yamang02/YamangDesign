@@ -36,6 +36,24 @@ interface ArtApplicationSectionProps {
   sectionId?: string  // 추가 — 기본값: 'chapter-3'
 }
 
+function variantClass(
+  base: string,
+  variant: 'glass' | 'brutal' | 'minimal',
+  variantMap: Partial<Record<'brutal' | 'minimal', string>>,
+): string {
+  const suffix = variantMap[variant as keyof typeof variantMap];
+  return suffix ? `${base} ${suffix}` : base;
+}
+
+function getTypographyClass(
+  level: ArtTypographyItem['level'],
+  stylesObj: typeof styles,
+): string {
+  if (level === 'Display') return stylesObj.typeDisplay;
+  if (level === 'Body') return stylesObj.typeBody;
+  return stylesObj.typeCaption;
+}
+
 export function ArtApplicationSection({
   palette,
   buttons,
@@ -43,34 +61,13 @@ export function ArtApplicationSection({
   artCard,
   variant = 'glass',
   sectionId,
-}: ArtApplicationSectionProps) {
-  const sectionClass =
-    variant === 'brutal' ? `${styles.section} ${styles.sectionBrutal}` :
-    variant === 'minimal' ? `${styles.section} ${styles.sectionMinimal}` :
-    styles.section;
-
-  const tokenChipClass =
-    variant === 'brutal' ? `${styles.tokenChip} ${styles.tokenChipBrutal}` :
-    variant === 'minimal' ? `${styles.tokenChip} ${styles.tokenChipMinimal}` :
-    styles.tokenChip;
-
-  const tokenMetaClass =
-    variant === 'brutal' ? `${styles.tokenMeta} ${styles.tokenMetaBrutal}` :
-    variant === 'minimal' ? `${styles.tokenMeta} ${styles.tokenMetaMinimal}` :
-    styles.tokenMeta;
-
-  const btnClass =
-    variant === 'brutal' ? `${styles.btn} ${styles.btnBrutal}` : styles.btn;
-
-  const artCardClass =
-    variant === 'brutal' ? `${styles.artCard} ${styles.artCardBrutal}` :
-    variant === 'minimal' ? `${styles.artCard} ${styles.artCardMinimal}` :
-    styles.artCard;
-
-  const artCardTagClass =
-    variant === 'brutal' ? `${styles.artCardTag} ${styles.artCardTagBrutal}` :
-    variant === 'minimal' ? `${styles.artCardTag} ${styles.artCardTagMinimal}` :
-    styles.artCardTag;
+}: Readonly<ArtApplicationSectionProps>) {
+  const sectionClass = variantClass(styles.section, variant, { brutal: styles.sectionBrutal, minimal: styles.sectionMinimal });
+  const tokenChipClass = variantClass(styles.tokenChip, variant, { brutal: styles.tokenChipBrutal, minimal: styles.tokenChipMinimal });
+  const tokenMetaClass = variantClass(styles.tokenMeta, variant, { brutal: styles.tokenMetaBrutal, minimal: styles.tokenMetaMinimal });
+  const btnClass = variantClass(styles.btn, variant, { brutal: styles.btnBrutal });
+  const artCardClass = variantClass(styles.artCard, variant, { brutal: styles.artCardBrutal, minimal: styles.artCardMinimal });
+  const artCardTagClass = variantClass(styles.artCardTag, variant, { brutal: styles.artCardTagBrutal, minimal: styles.artCardTagMinimal });
 
   return (
     <section id={sectionId ?? 'chapter-3'} className={sectionClass}>
@@ -116,7 +113,7 @@ export function ArtApplicationSection({
           {typography.map(({ level, text, hex }) => (
             <p
               key={level}
-              className={styles[`type${level}` as keyof typeof styles] as string}
+              className={getTypographyClass(level, styles)}
               style={{ color: hex, margin: 0 }}
             >
               {text}

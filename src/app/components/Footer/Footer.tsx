@@ -2,7 +2,7 @@ import { Icon } from '../Icon';
 import type { FooterProps } from './Footer.types';
 import styles from './Footer.module.css';
 
-export function Footer({ className }: FooterProps) {
+export function Footer({ className }: Readonly<FooterProps>) {
   const githubUrl = 'https://github.com/Yamang02';
   const currentYear = new Date().getFullYear();
 

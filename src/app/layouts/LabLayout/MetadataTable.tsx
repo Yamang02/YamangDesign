@@ -10,7 +10,7 @@ export interface MetadataTableProps {
   title?: string;
 }
 
-export function MetadataTable({ rows, title }: MetadataTableProps) {
+export function MetadataTable({ rows, title }: Readonly<MetadataTableProps>) {
   return (
     <div className={styles.wrapper}>
       {title && <p className={styles.title}>{title}</p>}

@@ -10,20 +10,23 @@ export function Avatar({
   variant = 'secondary',
   className,
   children,
-}: AvatarProps) {
+}: Readonly<AvatarProps>) {
+  let inner: React.ReactNode;
+  if (src) {
+    inner = <img src={src} alt={alt} className={styles.avatarImage} />;
+  } else if (children) {
+    inner = children;
+  } else {
+    inner = initials;
+  }
+
   return (
     <div
       className={clsx(styles.avatar, className)}
       data-size={size}
       data-variant={src ? undefined : variant}
     >
-      {src ? (
-        <img src={src} alt={alt} className={styles.avatarImage} />
-      ) : children ? (
-        children
-      ) : (
-        initials
-      )}
+      {inner}
     </div>
   );
 }

@@ -22,13 +22,14 @@ const tocItems: TocItem[] = [
 ];
 
 /** cubic-bezier 파라미터를 SVG 패스로 변환 */
-function CubicBezierCurve({ value, size = 56 }: { value: string; size?: number }) {
+function CubicBezierCurve({ value, size = 56 }: Readonly<{ value: string; size?: number }>) {
   const isCubic = value.startsWith('cubic-bezier(');
   const isLinear = value === 'linear';
 
   let x1 = 0, y1 = 0, x2 = 1, y2 = 1;
   if (isCubic) {
-    const match = value.match(/cubic-bezier\(([^)]+)\)/);
+    const cubicBezierRe = /cubic-bezier\(([^)]+)\)/;
+    const match = cubicBezierRe.exec(value);
     if (match) {
       const [a, b, c, d] = match[1].split(',').map(Number);
       x1 = a; y1 = b; x2 = c; y2 = d;
@@ -83,12 +84,12 @@ function AnimBall({
   eas,
   animKey,
   color,
-}: {
+}: Readonly<{
   dur: string;
   eas: string;
   animKey: number;
   color?: string;
-}) {
+}>) {
   return (
     <div className={styles.animTrack}>
       <div

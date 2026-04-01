@@ -13,7 +13,7 @@ interface LabTocProps {
 }
 
 function hasChildren(item: TocItem | TocItemTree): item is TocItemTree {
-  return 'children' in item && Array.isArray((item as TocItemTree).children) && (item as TocItemTree).children!.length > 0;
+  return 'children' in item && Array.isArray(item.children) && item.children.length > 0;
 }
 
 function renderTocItems(
@@ -25,7 +25,7 @@ function renderTocItems(
   return items.map((item) => {
     const isActive = activeId === item.id;
     const hasChildItems = hasChildren(item);
-    const children = hasChildItems ? (item as TocItemTree).children! : [];
+    const children = hasChildItems ? (item.children ?? []) : [];
 
     return (
       <li key={item.id}>
@@ -54,14 +54,12 @@ function renderTocItems(
   });
 }
 
-export function LabToc({ items, activeId, onItemClick, footer }: LabTocProps) {
+export function LabToc({ items, activeId, onItemClick, footer }: Readonly<LabTocProps>) {
   const inspector = useInspector();
 
   return (
     <nav
-      ref={(el) => {
-        if (inspector?.tocAnchorRef) inspector.tocAnchorRef.current = el;
-      }}
+      ref={(el) => inspector?.setTocAnchorElement(el)}
       className={styles.toc}
       aria-label="Table of contents"
     >

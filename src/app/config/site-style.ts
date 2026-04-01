@@ -3,7 +3,7 @@
  */
 
 export const siteStyle = {
-  /** UI 밀도 — TODO(P05): 실제 사용처 없음. 향후 레이아웃 시스템에서 활용 예정 */
+  /** UI 밀도 — 향후(P05): 실제 사용처 없음. 레이아웃 시스템 연동 시 활용 예정 */
   uiDensity: 'minimal' as const,
 
   /** 가이드/도움말 스타일 (Tooltip.tsx에서 tooltipDelay 사용) */
@@ -20,13 +20,13 @@ export const siteStyle = {
     bgStrategy: 'light' as const,
   },
 
-  /** 레이아웃 — TODO(P05): 실제 사용처 없음. 향후 레이아웃 시스템에서 활용 예정 */
+  /** 레이아웃 — 향후(P05): 실제 사용처 없음. 레이아웃 시스템 연동 시 활용 예정 */
   layout: {
     maxContentWidth: '75rem',
     spacingScale: 'normal' as const,
   },
 
-  /** 상호작용 — TODO(P05): 실제 사용처 없음. 향후 애니메이션/포커스 시스템에서 활용 예정 */
+  /** 상호작용 — 향후(P05): 실제 사용처 없음. 애니메이션/포커스 시스템 연동 시 활용 예정 */
   interaction: {
     animation: 'subtle' as const,
     focusIndicator: 'ring' as const,

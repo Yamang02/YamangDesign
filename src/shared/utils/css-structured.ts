@@ -40,7 +40,7 @@ function parseBoxShadowLayer(layerStr: string): BoxShadowLayer | null {
   const lengthAtStart = /^-?[\d.]+(?:px|em|rem|%)?\s*/;
   while (lengths.length < 4) {
     const part = rest.slice(idx);
-    const m = part.match(lengthAtStart);
+    const m = lengthAtStart.exec(part);
     if (!m) break;
     lengths.push(m[0].trim());
     idx += m[0].length;
@@ -79,7 +79,7 @@ function parseBoxShadow(css: string): BoxShadowLayer[] {
 
 function formatBoxShadowDisplay(css: string, fallbackRaw?: string): string {
   const layers = parseBoxShadow(css);
-  if (layers.length === 0) return fallbackRaw && fallbackRaw.trim() ? fallbackRaw.trim() : 'none';
+  if (layers.length === 0) return fallbackRaw?.trim() || 'none';
   const one = (l: BoxShadowLayer, indent = '') =>
     [
       l.inset ? 'Inset' : null,

@@ -9,7 +9,7 @@ export interface LabPanelProps {
   description?: React.ReactNode;
 }
 
-export function LabPanel({ title, children, id, description }: LabPanelProps) {
+export function LabPanel({ title, children, id, description }: Readonly<LabPanelProps>) {
   return (
     <div id={id} className={styles.panelCard}>
       <div className={styles.panelHeader}>

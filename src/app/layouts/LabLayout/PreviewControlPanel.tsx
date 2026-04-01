@@ -4,20 +4,25 @@
  */
 import styles from './PreviewControlPanel.module.css';
 
-export interface PreviewControlOption {
-  value: string;
+export interface PreviewControlOption<T extends string = string> {
+  value: T;
   label: string;
   description?: string;
 }
 
-export interface PreviewControlPanelProps {
+export interface PreviewControlPanelProps<T extends string = string> {
   label: string;
-  value: string;
-  options: PreviewControlOption[];
-  onChange: (value: string) => void;
+  value: T;
+  options: PreviewControlOption<T>[];
+  onChange: (value: T) => void;
 }
 
-export function PreviewControlPanel({ label, value, options, onChange }: PreviewControlPanelProps) {
+export function PreviewControlPanel<T extends string = string>({
+  label,
+  value,
+  options,
+  onChange,
+}: Readonly<PreviewControlPanelProps<T>>) {
   return (
     <div className={styles.controlPanel}>
       <span className={styles.controlLabel}>{label}</span>

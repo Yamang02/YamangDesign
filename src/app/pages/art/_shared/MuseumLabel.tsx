@@ -9,7 +9,7 @@ interface MuseumLabelProps {
   yearEnd?: number
 }
 
-export function MuseumLabel({ title, subtitle, artist, medium, year, yearEnd }: MuseumLabelProps) {
+export function MuseumLabel({ title, subtitle, artist, medium, year, yearEnd }: Readonly<MuseumLabelProps>) {
   return (
     <div className={styles.label} aria-label="작품 정보">
       <span className={styles.title}>{title}</span>

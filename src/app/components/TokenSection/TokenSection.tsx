@@ -32,7 +32,7 @@ function stripPrefix(token: string): string {
   return token.replace(/^--(ds|sys|shell)-/, '');
 }
 
-export function TokenSection({ tokens }: TokenSectionProps) {
+export function TokenSection({ tokens }: Readonly<TokenSectionProps>) {
   const values = useMemo(() => {
     const computed = getComputedStyle(document.documentElement);
     const result: Record<string, string> = {};

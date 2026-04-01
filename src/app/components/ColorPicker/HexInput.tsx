@@ -15,7 +15,7 @@ export function HexInput({
   label,
   showColorPreview = true,
   disabled = false,
-}: HexInputProps) {
+}: Readonly<HexInputProps>) {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {

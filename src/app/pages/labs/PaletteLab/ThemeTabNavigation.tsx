@@ -21,7 +21,7 @@ const TABS: { id: ThemeCategory; label: string }[] = [
 export function ThemeTabNavigation({
   activeTab,
   onTabChange,
-}: ThemeTabNavigationProps) {
+}: Readonly<ThemeTabNavigationProps>) {
   return (
     <div
       className={styles.tabList}

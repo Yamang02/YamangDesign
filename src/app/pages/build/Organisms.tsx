@@ -20,7 +20,7 @@ import { ORGANISMS } from '@app/content/build-content';
 import type { OrganismId } from '@app/content/build-content';
 import styles from './Components/Components.module.css';
 
-function OrganismPreview({ id }: { id: OrganismId }) {
+function OrganismPreview({ id }: Readonly<{ id: OrganismId }>) {
   const wrapper = (node: React.ReactNode) => (
     <div data-context="preview" style={{ width: '100%' }}>
       {node}
@@ -176,7 +176,7 @@ function OrganismPreview({ id }: { id: OrganismId }) {
   }
 }
 
-function OrganismModalContent({ id }: { id: OrganismId }) {
+function OrganismModalContent({ id }: Readonly<{ id: OrganismId }>) {
   const def = ORGANISMS.find((o) => o.id === id);
   if (!def) return null;
   return (

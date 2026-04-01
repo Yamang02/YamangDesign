@@ -14,21 +14,14 @@ export function ComponentCard({
   usedIn,
   composedOf,
   composedOfLabel = 'Atoms:',
-}: ComponentCardProps) {
+}: Readonly<ComponentCardProps>) {
   const hasUsedIn = usedIn && usedIn.length > 0;
   const hasComposedOf = composedOf && composedOf.length > 0;
   return (
-    <div
+    <button
+      type="button"
       className={styles.card}
-      role="button"
-      tabIndex={0}
       onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick();
-        }
-      }}
       aria-label={`${title} 상세 보기`}
     >
       <div className={styles.header}>
@@ -41,7 +34,7 @@ export function ComponentCard({
       {hasUsedIn && (
         <div className={styles.usedIn} aria-label="사용처">
           <span className={styles.usedInLabel}>Used in:</span>
-          {usedIn!.map((name) => (
+          {usedIn.map((name) => (
             <span key={name} className={styles.usedInBadge}>{name}</span>
           ))}
         </div>
@@ -49,11 +42,11 @@ export function ComponentCard({
       {hasComposedOf && (
         <div className={styles.composedOf} aria-label="구성">
           <span className={styles.composedOfLabel}>{composedOfLabel}</span>
-          {composedOf!.map((name) => (
+          {composedOf.map((name) => (
             <span key={name} className={styles.composedOfBadge}>{name}</span>
           ))}
         </div>
       )}
-    </div>
+    </button>
   );
 }

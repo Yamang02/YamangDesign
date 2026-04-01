@@ -11,9 +11,9 @@ export interface EmptyCategoryProps {
 
 export function EmptyCategory({
   message = '아직 테마가 없습니다',
-}: EmptyCategoryProps) {
+}: Readonly<EmptyCategoryProps>) {
   return (
-    <div className={styles.empty} role="status" aria-live="polite">
+    <div className={styles.empty} aria-live="polite">
       <p className={styles.message}>{message}</p>
     </div>
   );

@@ -33,7 +33,7 @@ const tocItems = [
 export function DesignSettingsLab({
   onApply,
   initialTab,
-}: DesignSettingsLabProps) {
+}: Readonly<DesignSettingsLabProps>) {
   useEffect(() => {
     if (initialTab && initialTab !== 'preset') {
       requestAnimationFrame(() => {

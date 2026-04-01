@@ -41,10 +41,10 @@ function looksLikeColor(value: string): boolean {
   const v = value.trim();
   return (
     /^#[0-9A-Fa-f]{3,8}$/.test(v) ||
-    /^rgb\(/.test(v) ||
-    /^rgba\(/.test(v) ||
-    /^hsl\(/.test(v) ||
-    /^hsla\(/.test(v)
+    v.startsWith('rgb(') ||
+    v.startsWith('rgba(') ||
+    v.startsWith('hsl(') ||
+    v.startsWith('hsla(')
   );
 }
 

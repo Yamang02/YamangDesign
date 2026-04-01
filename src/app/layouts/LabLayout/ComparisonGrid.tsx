@@ -9,7 +9,7 @@ export interface ComparisonGridProps {
   className?: string;
 }
 
-export function ComparisonGrid({ children, paletteVars, className }: ComparisonGridProps) {
+export function ComparisonGrid({ children, paletteVars, className }: Readonly<ComparisonGridProps>) {
   return (
     <div
       className={clsx(styles.grid, className)}

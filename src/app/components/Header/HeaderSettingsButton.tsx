@@ -8,7 +8,7 @@ import styles from './HeaderNav.module.css';
 
 export function HeaderSettingsButton({
   onOpenSettings,
-}: HeaderSettingsButtonProps) {
+}: Readonly<HeaderSettingsButtonProps>) {
   return (
     <button
       type="button"

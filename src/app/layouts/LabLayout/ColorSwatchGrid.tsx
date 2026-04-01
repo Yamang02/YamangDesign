@@ -9,7 +9,7 @@ export interface ColorSwatchGridProps {
   swatches: ColorSwatch[];
 }
 
-export function ColorSwatchGrid({ swatches }: ColorSwatchGridProps) {
+export function ColorSwatchGrid({ swatches }: Readonly<ColorSwatchGridProps>) {
   return (
     <div className={styles.grid}>
       {swatches.map((swatch) => (

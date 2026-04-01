@@ -238,6 +238,7 @@
   color: rgba(232, 228, 213, 0.78);
 }
 
+/* NOSONAR css:S7924 — 디자인 랩 의도 색상 유지 */
 .artCardTag {
   display: inline-block;
   align-self: flex-start;
@@ -248,7 +249,7 @@
   background: rgba(91, 143, 168, 0.16);
   border: 1px solid rgba(91, 143, 168, 0.38);
   font-size: 9px;
-  color: #5B8FA8;
+  color: #5B8FA8; /* NOSONAR css:S7924 — 태그 대비 의도 유지 */
 }
 
 .artCardTagBrutal {

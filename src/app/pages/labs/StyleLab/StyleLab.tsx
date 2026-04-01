@@ -7,8 +7,7 @@ import { LabLayout, LabSection, LabOverview, ComparisonCard, ComparisonGrid, Met
 import { sampleText, buttonLabels, sectionTitles } from '@app/content/lab-content';
 import { getStyleVariables, getPaletteVariablesFromDefinition, getThemeVariables, comparisonPresets } from '@domain/constants';
 import { createStyle } from '@domain/styles';
-import { stylePresets } from '@domain/themes/presets';
-import { palettePresets } from '@domain/themes/presets';
+import { stylePresets, palettePresets } from '@domain/themes/presets';
 import type { PaletteName, StyleName } from '@shared/@types/theme';
 import type { StyleDefinition } from '@domain/styles';
 import { createPalette } from '@domain/palettes';
@@ -40,6 +39,10 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function isBuiltinPaletteName(value: string): value is PaletteName {
+  return comparisonPresets.palettes.includes(value);
+}
+
 const STYLE_METADATA: Partial<Record<string, Pick<StyleVariant, 'description' | 'characteristics'>>> =
   Object.fromEntries(
     (overviewJson as StyleLabOverview).styleVariants.map((v) => [
@@ -53,11 +56,11 @@ function PropertyMatrix({
   presets,
   activeStyle,
   onStyleSelect,
-}: {
+}: Readonly<{
   presets: StyleName[];
   activeStyle: StyleName | null;
   onStyleSelect: (name: StyleName) => void;
-}) {
+}>) {
   const propertyRows = useMemo(() => {
     const rows: { id: string; label: string; getValue: (def: StyleDefinition) => string }[] = [
       {
@@ -78,14 +81,18 @@ function PropertyMatrix({
         getValue: (def) => {
           const v = def.material?.backdropFilter;
           if (!v) return '—';
-          const m = v.match(/blur\(([^)]+)\)/);
-          return m ? m[1].trim() : (v.length > 12 ? `${v.slice(0, 12)}…` : v);
+          const blurRe = /blur\(([^)]+)\)/;
+          const m = blurRe.exec(v);
+          if (m) return m[1].trim();
+          if (v.length > 12) return `${v.slice(0, 12)}…`;
+          return v;
         },
       },
       {
         id: 'material-alpha',
         label: 'material alpha',
-        getValue: (def) => (def.material?.backgroundAlpha != null ? String(def.material.backgroundAlpha) : '—'),
+        getValue: (def) =>
+          def.material?.backgroundAlpha == null ? '—' : String(def.material.backgroundAlpha),
       },
       {
         id: 'filter',
@@ -146,7 +153,7 @@ function PropertyMatrix({
   );
 }
 
-function StyleDetail({ name, bgColor }: { name: StyleName; bgColor: string }) {
+function StyleDetail({ name, bgColor }: Readonly<{ name: StyleName; bgColor: string }>) {
   const styleDef = stylePresets[name];
   const meta = STYLE_METADATA[name];
   if (!styleDef) return null;
@@ -160,8 +167,8 @@ function StyleDetail({ name, bgColor }: { name: StyleName; bgColor: string }) {
           <p className={styles.detailDescription}>{meta.description}</p>
           <h4 className={styles.detailSectionTitle}>특징</h4>
           <ul className={styles.characteristicsList}>
-            {meta.characteristics.map((char, i) => (
-              <li key={i} className={styles.characteristicItem}>
+            {meta.characteristics.map((char) => (
+              <li key={char} className={styles.characteristicItem}>
                 {char}
               </li>
             ))}
@@ -172,12 +179,12 @@ function StyleDetail({ name, bgColor }: { name: StyleName; bgColor: string }) {
         title="Shadow"
         rows={(['none', 'sm', 'md', 'lg', 'xl', 'inset'] as const)
           .filter((key) => {
-            const v = key === 'none' ? resolved.shadows.none : resolved.shadows[key as keyof typeof resolved.shadows];
+            const v = key === 'none' ? resolved.shadows.none : resolved.shadows[key];
             return v !== undefined;
           })
           .map((key) => {
-            const v = key === 'none' ? resolved.shadows.none : resolved.shadows[key as keyof typeof resolved.shadows];
-            return { key: `shadow-${key}`, value: v! };
+            const v = key === 'none' ? resolved.shadows.none : resolved.shadows[key];
+            return { key: `shadow-${key}`, value: v };
           })}
       />
       <MetadataTable
@@ -248,7 +255,10 @@ export function StyleLab() {
               <select
                 className={styles.paletteSelect}
                 value={paletteId}
-                onChange={(e) => setPaletteId(e.target.value as PaletteName)}
+                onChange={(e) => {
+                  const next = e.target.value;
+                  if (isBuiltinPaletteName(next)) setPaletteId(next);
+                }}
               >
                 {comparisonPresets.palettes.map((p) => (
                   <option key={p} value={p}>

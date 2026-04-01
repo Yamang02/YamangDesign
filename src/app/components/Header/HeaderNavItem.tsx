@@ -5,7 +5,7 @@ import { clsx } from '@shared/utils/clsx';
 import type { HeaderNavItemProps } from './HeaderNavItem.types';
 import styles from './HeaderNav.module.css';
 
-export function HeaderNavItem({ icon, label, active, onClick, display = 'icon+label' }: HeaderNavItemProps) {
+export function HeaderNavItem({ icon, label, active, onClick, display = 'icon+label' }: Readonly<HeaderNavItemProps>) {
   return (
     <button
       type="button"

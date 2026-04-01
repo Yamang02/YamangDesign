@@ -23,15 +23,21 @@ const BP_LABELS: Record<GridBreakpoint, string> = {
   desktop: 'Desktop',
 };
 
+function formatBreakpointRange(bp: GridBreakpoint, bpTokens: typeof breakpoints): string {
+  if (bp === 'compact') return `< ${bpTokens.md}`;
+  if (bp === 'tablet') return `${bpTokens.md} – ${bpTokens.lg}`;
+  return `≥ ${bpTokens.lg}`;
+}
+
 function GridOverlay({
   columns,
   gutter,
   margin,
-}: {
+}: Readonly<{
   columns: number;
   gutter: string;
   margin: string;
-}) {
+}>) {
   const items: React.ReactNode[] = [];
   for (let i = 0; i < columns; i++) {
     items.push(<div key={`col-${i}`} className={styles.overlayColumn} />);
@@ -104,13 +110,13 @@ export function GridLab() {
           <GridOverlay columns={columns} gutter={gutter} margin={margin} />
           <div className={styles.canvasContent}>
             <div className={styles.contentFlex} style={{ paddingLeft: margin, paddingRight: margin }}>
-              {Array.from({ length: columns }).map((_, i) => (
-                <>
-                  <div key={`cb-${i}`} className={styles.contentBlock} />
-                  {i < columns - 1 && (
-                    <div key={`cg-${i}`} style={{ width: gutter, flexShrink: 0 }} />
+              {Array.from({ length: columns }, (_, idx) => `col-${idx + 1}`).map((columnId, idx) => (
+                <div key={columnId}>
+                  <div className={styles.contentBlock} />
+                  {idx < columns - 1 && (
+                    <div style={{ width: gutter, flexShrink: 0 }} />
                   )}
-                </>
+                </div>
               ))}
             </div>
           </div>
@@ -139,7 +145,7 @@ export function GridLab() {
             <div key={bp} className={styles.bpTableRow}>
               <code className={styles.bpName}>{bp}</code>
               <span className={styles.bpCell}>
-                {bp === 'compact' ? `< ${breakpoints.md}` : bp === 'tablet' ? `${breakpoints.md} – ${breakpoints.lg}` : `≥ ${breakpoints.lg}`}
+                {formatBreakpointRange(bp, breakpoints)}
               </span>
               <span className={styles.bpCell}>{gridColumns[bp]}</span>
               <span className={styles.bpCell}>{gridGutter[bp]}</span>
@@ -167,8 +173,8 @@ export function GridLab() {
                 <span className={styles.specValue}>{gridMargin[bp]}</span>
               </div>
               <div className={styles.specMiniGrid}>
-                {Array.from({ length: gridColumns[bp] }).map((_, i) => (
-                  <div key={i} className={styles.specMiniCol} />
+                {Array.from({ length: gridColumns[bp] }, (_, idx) => `${bp}-mini-${idx + 1}`).map((miniId) => (
+                  <div key={miniId} className={styles.specMiniCol} />
                 ))}
               </div>
             </div>

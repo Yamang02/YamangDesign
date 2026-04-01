@@ -28,18 +28,19 @@ export function ArtHeroStage({
   label,
   palette,
   variant = 'glass',
-}: ArtHeroStageProps) {
+}: Readonly<ArtHeroStageProps>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <section className={styles.stage}>
-      <img
-        src={imageUrl}
-        alt={imageAlt}
-        className={styles.image}
+      <button
+        type="button"
+        className={styles.imageTrigger}
         onClick={() => setIsModalOpen(true)}
-        style={{ cursor: 'zoom-in' }}
-      />
+        aria-label={`${imageAlt} 크게 보기`}
+      >
+        <img src={imageUrl} alt={imageAlt} className={styles.image} />
+      </button>
       {variant === 'glass' && <div className={styles.overlay} />}
       <div className={styles.panels}>
         <MuseumLabel {...label} />

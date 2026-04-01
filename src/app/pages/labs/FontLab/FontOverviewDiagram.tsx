@@ -66,8 +66,8 @@ export function FontOverviewDiagram() {
                 <span className={styles.propertyDesc}>{prop.description}</span>
               </div>
               <div className={styles.scaleList}>
-                {prop.scale.map((value, i) => (
-                  <span key={i} className={styles.scaleTag}>
+                {prop.scale.map((value) => (
+                  <span key={value} className={styles.scaleTag}>
                     {value}
                   </span>
                 ))}

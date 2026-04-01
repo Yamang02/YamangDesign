@@ -33,8 +33,8 @@ export function SpacingLab() {
 
   const valueA = spacing[diffA] ?? '0px';
   const valueB = spacing[diffB] ?? '0px';
-  const pxA = parseInt(valueA, 10);
-  const pxB = parseInt(valueB, 10);
+  const pxA = Number.parseInt(valueA, 10);
+  const pxB = Number.parseInt(valueB, 10);
   const diffPx = Math.abs(pxB - pxA);
 
   const contextEntries = spacingEntries.filter(([key]) => {
@@ -57,7 +57,7 @@ export function SpacingLab() {
       <LabSection title="Scale" id="scale">
         <div className={styles.scaleList}>
           {spacingEntries.map(([key, value]) => {
-            const px = parseInt(value, 10);
+            const px = Number.parseInt(value, 10);
             const pct = (px / maxPx) * 100;
             return (
               <div key={key} className={styles.scaleRow}>

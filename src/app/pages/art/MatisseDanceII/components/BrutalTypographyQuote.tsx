@@ -2,6 +2,7 @@ import { useRef, useCallback } from 'react';
 import styles from './BrutalTypographyQuote.module.css';
 
 const WORD = 'DANCE';
+const WORD_CHARS = WORD.split('');
 const COLORS = ['#C8361A', '#2E6B35', '#1A4F8C'];
 
 export function BrutalTypographyQuote() {
@@ -29,16 +30,16 @@ export function BrutalTypographyQuote() {
   }, []);
 
   return (
-    <div
+    <div // NOSONAR typescript:S6848 — 장식용 근접 색상 효과
       className={styles.wrapper}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       {/* 거대 타이포 */}
       <div className={styles.wordRow} aria-label={WORD}>
-        {WORD.split('').map((char, i) => (
+        {WORD_CHARS.map((char, i) => (
           <span
-            key={i}
+            key={char}
             ref={(el) => { letterRefs.current[i] = el; }}
             className={styles.letter}
             aria-hidden

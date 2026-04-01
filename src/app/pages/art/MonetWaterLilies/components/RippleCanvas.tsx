@@ -43,7 +43,7 @@ export function RippleCanvas() {
       canvas.height = canvas.offsetHeight;
     };
     resize();
-    window.addEventListener('resize', resize);
+    globalThis.addEventListener('resize', resize);
 
     const addRipple = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -81,7 +81,7 @@ export function RippleCanvas() {
     const scheduleRandomRipple = () => {
       // "아주 간헐적"보다는 조금 더 자주 보이도록 간격을 축소
       const delay = 2800 + Math.random() * 3800; // 2.8s ~ 6.6s
-      randomRippleTimeoutRef.current = window.setTimeout(() => {
+      randomRippleTimeoutRef.current = globalThis.setTimeout(() => {
         // canvas 좌표계 기준
         const x = Math.random() * canvas.width;
         const y = Math.random() * canvas.height;
@@ -117,10 +117,10 @@ export function RippleCanvas() {
       canvas.removeEventListener('mousemove', addRipple);
       cancelAnimationFrame(rafRef.current);
       if (randomRippleTimeoutRef.current) {
-        window.clearTimeout(randomRippleTimeoutRef.current);
+        globalThis.clearTimeout(randomRippleTimeoutRef.current);
       }
     };
   }, []);
 
-  return <canvas ref={canvasRef} className={styles.canvas} aria-hidden />;
+  return <canvas ref={canvasRef} className={styles.canvas} />;
 }

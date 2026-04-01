@@ -4,17 +4,20 @@
 import type { CompositionMapProps } from './CompositionMap.types';
 import styles from './CompositionMap.module.css';
 
-export function CompositionMap({ lines }: CompositionMapProps) {
+export function CompositionMap({ lines }: Readonly<CompositionMapProps>) {
   if (!lines.length) return null;
+
+  const lineElements = lines.map((line, i) => (
+    <span key={line} className={styles.line}>
+      {line}
+      {i < lines.length - 1 ? '\n' : ''}
+    </span>
+  ));
+
   return (
     <pre className={styles.tree} data-context="preview" aria-label="조합 구조">
       <code className={styles.code}>
-        {lines.map((line, i) => (
-          <span key={i} className={styles.line}>
-            {line}
-            {i < lines.length - 1 ? '\n' : ''}
-          </span>
-        ))}
+        {lineElements}
       </code>
     </pre>
   );

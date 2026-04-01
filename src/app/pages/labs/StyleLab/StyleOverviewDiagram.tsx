@@ -31,8 +31,8 @@ function StyleComparisonDiagram() {
               <span className={styles.previewLabel}>Preview</span>
             </div>
             <ul className={styles.characteristicsList}>
-              {variant.characteristics.map((char, i) => (
-                <li key={i} className={styles.characteristicItem}>
+              {variant.characteristics.map((char) => (
+                <li key={char} className={styles.characteristicItem}>
                   {char}
                 </li>
               ))}
@@ -86,8 +86,8 @@ export function StyleOverviewDiagram() {
                 <span className={styles.propertyDesc}>{prop.description}</span>
               </div>
               <div className={styles.valueList}>
-                {prop.values.map((value, i) => (
-                  <span key={i} className={styles.valueTag}>
+                {prop.values.map((value) => (
+                  <span key={value} className={styles.valueTag}>
                     {value}
                   </span>
                 ))}

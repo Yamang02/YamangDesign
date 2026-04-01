@@ -46,6 +46,12 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+const SIZE_LABEL_SM_MD_LG: Record<'sm' | 'md' | 'lg', string> = {
+  sm: 'Small',
+  md: 'Medium',
+  lg: 'Large',
+};
+
 /** E06 P04: Atoms 그리드 (Badge, Icon, Avatar, Button, Input, Select, Card) */
 const SHOWCASE_GRID_IDS: ShowcaseSectionId[] = [
   'badge',
@@ -68,7 +74,7 @@ const VARIANT_COUNTS: Record<ShowcaseSectionId, number> = {
 };
 
 /** 모달 내 쇼케이스 — 폰트 위계·공간 활용·Variants 그리드 배치 */
-function ComponentShowcase({ id }: { id: ShowcaseSectionId }) {
+function ComponentShowcase({ id }: Readonly<{ id: ShowcaseSectionId }>) {
   const hasTokens = (showcaseSectionTokens[id]?.length ?? 0) > 0;
   return (
     <>
@@ -91,7 +97,7 @@ function ComponentShowcase({ id }: { id: ShowcaseSectionId }) {
 }
 
 /** 그리드 한 셀: 라벨(shell) + 컴포넌트(ds, data-context="preview") */
-function VariantCell({ label, children }: { label: string; children: React.ReactNode }) {
+function VariantCell({ label, children }: Readonly<{ label: string; children: React.ReactNode }>) {
   return (
     <div className={styles.showcaseVariantItem}>
       <span className={styles.showcaseVariantItemLabel}>{label}</span>
@@ -103,7 +109,7 @@ function VariantCell({ label, children }: { label: string; children: React.React
 }
 
 /** 섹션별 본문 (모달 Variants). 그리드 배치 + 폰트 위계(그룹 라벨 > 셀 라벨) */
-function SectionContent({ id }: { id: ShowcaseSectionId }) {
+function SectionContent({ id }: Readonly<{ id: ShowcaseSectionId }>) {
   switch (id) {
     case 'badge':
       return (
@@ -144,7 +150,7 @@ function SectionContent({ id }: { id: ShowcaseSectionId }) {
             <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
             <div className={styles.showcaseVariantGrid}>
               {(['sm', 'md', 'lg'] as const).map((s) => (
-                <VariantCell key={s} label={s === 'sm' ? 'Small' : s === 'md' ? 'Medium' : 'Large'}>
+                <VariantCell key={s} label={SIZE_LABEL_SM_MD_LG[s]}>
                   <Icon name="star" size={s} title={showcaseContent.icon} />
                 </VariantCell>
               ))}
@@ -159,7 +165,7 @@ function SectionContent({ id }: { id: ShowcaseSectionId }) {
             <p className={styles.showcaseModalGroupLabel}>{showcaseLabels.sizes}</p>
             <div className={styles.showcaseVariantGrid}>
               {(['sm', 'md', 'lg'] as const).map((s) => (
-                <VariantCell key={s} label={s === 'sm' ? 'Small' : s === 'md' ? 'Medium' : 'Large'}>
+                <VariantCell key={s} label={SIZE_LABEL_SM_MD_LG[s]}>
                   <Avatar initials={showcaseContent.avatar} size={s} />
                 </VariantCell>
               ))}
@@ -412,11 +418,7 @@ function getCardPreview(id: ShowcaseSectionId): React.ReactNode {
         />
       );
     case 'input':
-      return (
-        <>
-          <Input placeholder={showcaseContent.input} />
-        </>
-      );
+      return <Input placeholder={showcaseContent.input} />;
     default:
       return null;
   }

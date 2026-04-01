@@ -24,7 +24,7 @@ export function ThemeSearchBar({
   debounceMs = 300,
   placeholder = '테마 검색...',
   id = 'theme-search',
-}: ThemeSearchBarProps) {
+}: Readonly<ThemeSearchBarProps>) {
   const [localValue, setLocalValue] = useState(value);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
