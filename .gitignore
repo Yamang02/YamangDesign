@@ -41,11 +41,14 @@ Thumbs.db
 coverage/
 .nyc_output/
 
+# SonarQube / SonarScanner (CLI 로컬 분석 산출물)
+.scannerwork/
+report-task.txt
+
 # Cache
 .cache/
 .parcel-cache/
 .eslintcache
-*.tsbuildinfo
 
 # pnpm 사용 시 npm lock 파일 제외
 package-lock.json
