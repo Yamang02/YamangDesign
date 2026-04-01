@@ -33,6 +33,10 @@
 - 에픽: `epic/E##-{scope}`
 - Phase/기능: `feat/E##/P##-{scope}`, `fix/E##/…` 등 — `docs/epic`의 E##·P##와 대응.
 
+## 코딩 컨벤션 (프로젝트)
+
+- 단일 요약: [docs/process/CODING_CONVENTIONS.md](docs/process/CODING_CONVENTIONS.md) — 레이어 import, lint 게이트, CC-05, 네이밍·Git (E26/E27 반영).
+
 ## AI Policy Generation
 
 Ignore file generation (`.claudeignore`, `.cursorignore`) is managed by:

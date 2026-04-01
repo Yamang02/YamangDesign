@@ -9,6 +9,7 @@
 - **프로세스** 문서(GC-01 브랜치 패턴, 프로젝트 티어 한 줄)가 실제 사용과 맞거나, 문서에 실제 패턴이 명시된다.
 - **색·크기 리터럴 검사**가 ESLint + Stylelint + **통합된 리터럴 스크립트**로 단일 `npm run lint` 진입점을 갖는다(P06).
 - **CC-05 Code Hygiene**(주석 위치·공식 문서 이전·미사용 코드)이 E26 P06 점검 및 basis와 정합한다(P07).
+- **프로젝트 코딩 컨벤션**이 문서·ESLint·EditorConfig로 고정되어 에이전트·인간이 동일 기준을 본다(P08).
 
 ## 배경 / 맥락
 
@@ -39,6 +40,7 @@
 - [P05: 프로세스·문서 정렬](./P05.process-documentation-alignment.md)
 - [P06: 색·크기 리터럴 검사 — ESLint + Stylelint 이관](./P06.lint-color-literals-eslint-stylelint.md)
 - [P07: CC-05 Code Hygiene — 주석·미사용 코드](./P07.cc-05-code-hygiene.md)
+- [P08: 프로젝트 코딩 컨벤션 문서·도구 설정](./P08.project-coding-conventions.md)
 
 ## 상태
 
@@ -49,6 +51,7 @@
 - [x] P05 완료 ([P05](./P05.process-documentation-alignment.md))
 - [x] P06 완료 ([P06](./P06.lint-color-literals-eslint-stylelint.md))
 - [x] P07 완료 ([P07](./P07.cc-05-code-hygiene.md))
+- [x] P08 완료 ([P08](./P08.project-coding-conventions.md))
 
 ## 백로그 연결
 

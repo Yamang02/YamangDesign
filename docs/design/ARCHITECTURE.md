@@ -303,6 +303,7 @@ const styles = {
 
 | 문서 | 내용 |
 |------|------|
+| [../process/CODING_CONVENTIONS.md](../process/CODING_CONVENTIONS.md) | 프로젝트 코딩 컨벤션 (레이어·lint·CC-05, E26/E27) |
 | [01-tech-stack.md](./01-tech-stack.md) | 기술 스택 선정 |
 | [02-folder-structure.md](./02-folder-structure.md) | 폴더 구조 |
 | [03-token-architecture.md](./03-token-architecture.md) | 토큰 계층 구조 |

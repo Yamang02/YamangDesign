@@ -25,6 +25,21 @@ export default defineConfig([
         varsIgnorePattern: '^_',
         caughtErrorsIgnorePattern: '^_',
       }],
+      'react-hooks/exhaustive-deps': 'error',
+    },
+  },
+  {
+    files: ['src/domain/**/*.{ts,tsx}', 'src/shared/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [
+          {
+            group: ['@app', '@app/*'],
+            message:
+              'Domain/shared must not import from @app. See docs/process/CODING_CONVENTIONS.md (E27 layer boundaries).',
+          },
+        ],
+      }],
     },
   },
 ])

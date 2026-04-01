@@ -1,0 +1,12 @@
+---
+description: YamangDesign project coding conventions (layers, lint, CC-05) — E26/E27
+globs: src/**/*.ts,src/**/*.tsx
+alwaysApply: false
+---
+
+# Yamang coding conventions
+
+Before editing application code, follow **docs/process/CODING_CONVENTIONS.md** (layer imports, lint pipeline, CC-05 comments, naming sampling).
+
+- Domain/shared **must not** import `@app/*` (ESLint enforced).
+- Run **`npm run lint`** before claiming work complete; hooks exhaustive-deps are errors.

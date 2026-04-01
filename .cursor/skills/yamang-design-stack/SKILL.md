@@ -7,6 +7,8 @@ description: Use when building or reviewing YamangDesign — project-specific co
 
 Project-specific conventions for the YamangDesign design system. These rules extend `typescript-stack` and `react-stack`, and take precedence when they conflict.
 
+**저장소 전역 코딩·레이어·CC-05 요약:** [docs/process/CODING_CONVENTIONS.md](../../../docs/process/CODING_CONVENTIONS.md) (E26/E27, ESLint와 함께 유지).
+
 ## Commands
 
 ```bash
