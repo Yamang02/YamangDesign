@@ -1,4 +1,6 @@
-// Labs - full page layouts for lab use cases
+/**
+ * 앱 페이지 라우트 re-export: Labs, Build·Context·Layouts, Art Reference Gallery.
+ */
 export {
   Landing,
   PaletteLab,
@@ -13,16 +15,10 @@ export {
   ResponsiveLab,
 } from './labs';
 
-// E06 P01/P04: Build (Atoms, Molecules, Organisms, Components) / Context
 export { Atoms, Molecules, Organisms, Components } from './build';
 export { Service, Shell } from './context';
 export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';
 
-// E22: Art Reference Gallery
 export { MonetWaterLilies } from './art/MonetWaterLilies';
-
-// E23: Art Reference Gallery — La Danse II
 export { MatisseDanceII } from './art/MatisseDanceII';
-
-// E24: Art Reference Gallery — Mondrian Composition
 export { MondriComposition } from './art/MondriComposition';

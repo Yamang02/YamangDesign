@@ -1,6 +1,6 @@
 /**
- * Material Icons (Filled style)
- * viewBox: 0 0 24 24
+ * Material Icons (Filled style). viewBox: 0 0 24 24.
+ * 객체 내부 `//` 줄은 아이콘 그룹 구분용(카탈로그 유지).
  */
 export const materialIcons: Record<string, string> = {
   // Navigation — names aligned with `nav-categories` / Material Symbols ids

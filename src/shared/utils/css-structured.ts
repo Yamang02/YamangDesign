@@ -1,6 +1,6 @@
 /**
- * 구조화가 필요한 CSS 값 처리 (Figma/Sketch 스타일)
- * box-shadow, border, transition 등 토큰명/값에 따라 구조화 표기로 변환
+ * 구조화가 필요한 CSS 값 처리 (Figma/Sketch 스타일).
+ * box-shadow / border / transition 파서는 파일 내 순서대로 그룹화되어 있다.
  */
 
 /** box-shadow 한 레이어 */
@@ -28,7 +28,6 @@ export interface TransitionStructured {
   delay: string;
 }
 
-// --- box-shadow ---
 function parseBoxShadowLayer(layerStr: string): BoxShadowLayer | null {
   const s = layerStr.trim();
   if (!s) return null;
@@ -96,7 +95,6 @@ function formatBoxShadowDisplay(css: string, fallbackRaw?: string): string {
   return layers.map((l, i) => `Layer ${i + 1}:\n${one(l, '  ')}`).join('\n\n');
 }
 
-// --- border (width style color) ---
 function parseBorder(value: string): BorderStructured | null {
   const s = value.trim();
   if (!s) return null;
@@ -114,7 +112,6 @@ function formatBorderDisplay(value: string): string {
   return `Width: ${b.width}\nStyle: ${b.style}\nColor: ${b.color}`;
 }
 
-// --- transition ---
 function parseTransition(value: string): TransitionStructured | null {
   const s = value.trim();
   if (!s || s === 'none') return null;
@@ -135,7 +132,6 @@ function formatTransitionDisplay(value: string): string {
   return `Property: ${t.property}\nDuration: ${t.duration}\nTiming: ${t.timing}\nDelay: ${t.delay}`;
 }
 
-// --- 단일 진입점: 토큰명/값에 따라 구조화 표기 반환 ---
 const SHADOW_LIKE = /shadow|focus-glow|focus-ring/;
 const BORDER_LIKE = /border-(?:width|style|default|subtle|strong|hover|focus)/;
 const TRANSITION_LIKE = /transition|duration|ease/;

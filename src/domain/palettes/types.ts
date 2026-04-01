@@ -1,14 +1,11 @@
 /**
- * Palette 레이어 타입 정의
- * E01: 배색을 독립 레이어로 관리
+ * Palette 레이어 타입 정의 (배색 독립 레이어).
+ * `PaletteName`은 theme-presets·공유 타입에서 정의. `PaletteDefinition.name`은 유연성을 위해 string.
  */
 
 import type { GeneratedScales } from '@shared/@types/tokens';
 import type { StyleName } from '@shared/@types/theme';
 export type { PaletteSelection } from '@shared/types/palette-selection';
-
-// PaletteName은 constants/theme-presets.ts에서 정의됨
-// PaletteDefinition.name은 내부 유연성을 위해 string 유지
 
 /** 배경 전략 */
 export type BgStrategy = 'light' | 'colored' | 'dark';

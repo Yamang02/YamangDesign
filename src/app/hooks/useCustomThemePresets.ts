@@ -1,6 +1,6 @@
 /**
- * 커스텀 테마 프리셋 관리 훅
- * localStorage 로직을 컴포넌트에서 분리
+ * 커스텀 테마 프리셋 CRUD — localStorage와 동기화.
+ * 초기 로드: 신규 스토리지 키를 먼저 읽고, 없으면 레거시 키에서 마이그레이션 후 신규 키에 저장.
  */
 import { useState, useCallback } from 'react';
 import {
@@ -28,26 +28,18 @@ export interface UseCustomThemePresetsReturn {
   remove: (id: string) => void;
 }
 
-/**
- * 커스텀 테마 프리셋 CRUD 훅
- * localStorage와 자동 동기화
- * localStorage 마이그레이션: 기존 'yamang-custom-semantic-presets' 키 → 새 키로 이전
- */
 export function useCustomThemePresets(): UseCustomThemePresetsReturn {
   const [presets, setPresets] = useState<CustomThemePreset[]>(() => {
     try {
-      // 새 키에서 먼저 읽기
       const raw = localStorage.getItem(CUSTOM_THEME_PRESETS_STORAGE_KEY);
       if (raw) {
         const parsed: StoredCustomThemePresets = JSON.parse(raw);
         return parsed?.presets ?? [];
       }
-      // 새 키가 없으면 구 키에서 마이그레이션
       const legacyRaw = localStorage.getItem(LEGACY_SEMANTIC_PRESETS_STORAGE_KEY);
       if (legacyRaw) {
         const parsed: StoredCustomThemePresets = JSON.parse(legacyRaw);
         const migrated = parsed?.presets ?? [];
-        // 새 키로 저장
         localStorage.setItem(
           CUSTOM_THEME_PRESETS_STORAGE_KEY,
           JSON.stringify({ version: '1', presets: migrated } satisfies StoredCustomThemePresets)

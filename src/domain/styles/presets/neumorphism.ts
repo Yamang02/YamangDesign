@@ -37,14 +37,12 @@ export const neumorphismStyle: StyleDefinition = {
     colorStrategy: 'transparent',
   },
   createVars: () => ({
-    // Radius (P01)
     '--ds-radius-sm': '8px',
     '--ds-radius-md': '12px',
     '--ds-radius-lg': '16px',
     '--ds-radius-xl': '20px',
     '--ds-radius-full': '9999px',
 
-    // Motion (P01)
     '--ds-duration-instant': '0ms',
     '--ds-duration-fast': '200ms',
     '--ds-duration-normal': '350ms',

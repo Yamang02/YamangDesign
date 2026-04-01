@@ -1,6 +1,7 @@
 /**
- * E03: Palette × Style 조합 기반 ThemeProvider (앱 레이어)
- * UI·저장소·훅에 의존하는 부분은 domain ThemeContext와 분리해 AR-01-02 방향을 맞춘다.
+ * Palette × Style 조합 기반 ThemeProvider (앱 레이어).
+ * UI·저장소·훅에 의존하는 부분은 domain ThemeContext와 분리한다.
+ * @see docs/design/ARCHITECTURE.md — 레이어·테마
  */
 import { useState, useLayoutEffect, useMemo, useCallback, type ReactNode } from 'react';
 import type { StyleName, SystemPresetName } from '@shared/@types/theme';

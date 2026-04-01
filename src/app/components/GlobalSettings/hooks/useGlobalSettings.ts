@@ -1,6 +1,8 @@
 /**
- * E03: 전역 설정 상태 관리 (Phase 1: palette, styleName, systemPreset)
- * PaletteSelection 기반으로 마이그레이션
+ * 전역 설정 UI용 훅: Theme의 selection·style·preset과 동기화되는 로컬 draft.
+ * apply 시 Theme·design-settings 저장소·componentMapping blob을 갱신한다.
+ * import/export·사용자 프리셋 CRUD 포함. `palette` 필드는 selection을 해석한 ColorInput(하위 호환).
+ * @see docs/design/ARCHITECTURE.md — 레이어·설정 흐름
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useTheme } from '@domain/themes';
@@ -62,7 +64,6 @@ function parseRawSettings(raw: string): Partial<StoredSettings> | null {
   return null;
 }
 
-/** P08: design-settings 한 덩어리 (설정 + componentMapping) */
 function saveDesignSystemBlob(
   settings: Omit<StoredSettings, 'updatedAt'>,
   componentMapping: import('@app/infra/storage').ComponentMappingOverrides | null
@@ -117,7 +118,6 @@ function validateImportedSettings(data: unknown): data is Partial<StoredSettings
 
 const EMPTY_SEMANTIC_PRESETS: CustomThemePreset[] = [];
 
-/** P08: selection을 해석해 항상 실제 팔레트 색상 반환 (preset이면 preset colors) */
 function resolvePaletteFromSelection(
   selection: PaletteSelection,
   customSemanticPresets: CustomThemePreset[]
@@ -140,7 +140,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     customSemanticPresets,
   } = useTheme();
 
-  // 로컬 상태 (설정 페이지 draft)
   const [localSelection, setLocalSelection] = useState<PaletteSelection>(selection);
   const [localStyleName, setLocalStyleName] = useState<StyleName>(styleName);
   const [localSystemPreset, setLocalSystemPreset] =
@@ -152,7 +151,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
 
   const semanticPresets = customSemanticPresets ?? EMPTY_SEMANTIC_PRESETS;
 
-  // 전역 상태가 바뀌면 로컬 상태 동기화
   useEffect(() => {
     queueMicrotask(() => {
       setLocalSelection(selection);
@@ -163,7 +161,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     });
   }, [selection, styleName, systemPreset, neutralPreset, themeSemanticMapping]);
 
-  // 변경 여부 확인
   const hasChanges = useMemo(() => {
     const mappingEqual =
       (localSemanticMapping == null && themeSemanticMapping == null) ||
@@ -177,7 +174,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     );
   }, [localSelection, localStyleName, localSystemPreset, localNeutralPreset, localSemanticMapping, selection, styleName, systemPreset, neutralPreset, themeSemanticMapping]);
 
-  /** 현재 draft를 StoredSettings v2로 반환 (P08: 저장 시 palette만 사용, palettePresetId 미저장) */
   const getDraft = useCallback((): StoredSettings => {
     const paletteForStorage = resolvePaletteFromSelection(localSelection, semanticPresets);
     return {
@@ -192,7 +188,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     };
   }, [localSelection, localSemanticMapping, localStyleName, localSystemPreset, localNeutralPreset, semanticPresets]);
 
-  // 적용: 전역 상태 + storage 반영 후 onApply 콜백
   const apply = useCallback(() => {
     if (!isPaletteSelectionEqual(localSelection, selection)) {
       setPaletteSelection(localSelection);
@@ -223,7 +218,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     options?.onApply?.(draft);
   }, [localSelection, localStyleName, localSystemPreset, localNeutralPreset, selection, styleName, systemPreset, neutralPreset, setPaletteSelection, setStyleName, setSystemPreset, setNeutralPreset, getDraft, options]);
 
-  // 초기화
   const reset = useCallback(() => {
     setLocalSelection(DEFAULT_SELECTION);
     setLocalStyleName('minimal');
@@ -232,7 +226,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     setLocalSemanticMapping(null);
   }, []);
 
-  // 내보내기 (P06: 컴포넌트 매핑 오버라이드 포함)
   const exportSettings = useCallback(() => {
     const payload = createGlobalSettingsPayload(getDraft(), {
       componentMapping: loadComponentMappingOverrides() ?? undefined,
@@ -240,7 +233,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     downloadYamangJSON(payload, YAMANG_FILENAMES.GLOBAL_SETTINGS);
   }, [getDraft]);
 
-  // 가져오기 (P06: 컴포넌트 매핑 오버라이드 복원)
   const importSettings = useCallback(async () => {
     const raw = await pickYamangJSONFile();
     if (!raw) return;
@@ -266,7 +258,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     }
   }, []);
 
-  // 사용자 프리셋 관리
   const [userPresets, setUserPresets] = useState<StoredPreset[]>(() =>
     loadStoredPresets()
   );
@@ -319,9 +310,6 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     });
   }, []);
 
-  // ============================================================================
-  // 하위 호환: palette(ColorInput) — P08: preset 선택 시에도 해석된 colors 사용
-  // ============================================================================
   const localPalette = useMemo(
     () => resolvePaletteFromSelection(localSelection, semanticPresets),
     [localSelection, semanticPresets]
@@ -331,21 +319,18 @@ export function useGlobalSettings(options?: { onApply?: (draft: StoredSettings) 
     setLocalSelection(createCustomSelection(colors));
   }, []);
 
-  /** 프리셋 선택 (P08: 선택 시 palette에 복사해 항상 custom처럼 동작, 좌측 팔레트 갱신) */
   const selectPreset = useCallback((presetId: string) => {
     const def = resolveSelection(createPresetSelection(presetId), semanticPresets);
     setLocalSelection(createCustomSelection(def.colors));
   }, [semanticPresets]);
 
   return {
-    // 새 API
     selection: localSelection,
     setSelection: setLocalSelection,
     selectPreset,
     semanticMapping: localSemanticMapping,
     setSemanticMapping: setLocalSemanticMapping,
     getDraft,
-    // 하위 호환 API
     palette: localPalette,
     styleName: localStyleName,
     systemPreset: localSystemPreset,

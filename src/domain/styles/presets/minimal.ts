@@ -31,14 +31,12 @@ export const minimalStyle: StyleDefinition = {
     colorStrategy: 'palette',
   },
   createVars: () => ({
-    // Radius (P01)
     '--ds-radius-sm': '4px',
     '--ds-radius-md': '8px',
     '--ds-radius-lg': '12px',
     '--ds-radius-xl': '16px',
     '--ds-radius-full': '9999px',
 
-    // Motion (P01)
     '--ds-duration-instant': '0ms',
     '--ds-duration-fast': '100ms',
     '--ds-duration-normal': '200ms',

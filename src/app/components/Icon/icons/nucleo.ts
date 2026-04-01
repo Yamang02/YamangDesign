@@ -1,7 +1,6 @@
 /**
- * Nucleo Icons (Outline style)
- * viewBox: 0 0 24 24
- * stroke-based icons
+ * Nucleo Icons (Outline style). viewBox: 0 0 24 24, stroke-based.
+ * 객체 내부 `//` 줄은 아이콘 그룹 구분용(카탈로그 유지).
  */
 export const nucleoIcons: Record<string, { path: string; stroke?: boolean }> = {
   // Theme related

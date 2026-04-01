@@ -1,7 +1,7 @@
 /**
- * E11 P01: ThemeTokenSet — Palette × Style 조합의 CSS 변수 전체를 담는 Value Object
- * ThemeProvider와 getThemeVariables 모두 이 단일 경로를 사용한다.
- * P05: buildThemeAndTokenSet으로 createPalette 중복 호출 제거
+ * ThemeTokenSet — Palette × Style 조합의 CSS 변수 전체를 담는 Value Object.
+ * ThemeProvider·getThemeVariables는 이 단일 경로를 사용한다. `buildThemeAndTokenSet`은 createPalette/createStyle 중복 호출을 막는다.
+ * 처리 순서: systemPreset 해석(이름 또는 객체) → 스케일 변수 → 시맨틱(피드백은 시스템 프리셋 시 덮어씀) → 스타일·서피스 변수.
  */
 import type { PaletteDefinition } from '../palettes';
 import type { StyleDefinition } from '../styles';
@@ -60,7 +60,6 @@ export function buildTokenSet(
   const expanded = createPalette(palette, { neutralScale });
   const resolved = createStyle(style, expanded.semantic.bg.base);
 
-  // Resolve systemPreset: accept name string or object
   const resolvedSystemPreset: SystemColorPreset | undefined = (() => {
     if (!options?.systemPreset) return undefined;
     if (typeof options.systemPreset === 'string') {
@@ -69,7 +68,6 @@ export function buildTokenSet(
     return options.systemPreset;
   })();
 
-  // 1. Scale vars — --ds-color-{scale}-{step}
   const scaleVars: Record<string, string> = {};
   PALETTE_SCALES.forEach((key) => {
     const scale = expanded.scales[key];
@@ -80,7 +78,6 @@ export function buildTokenSet(
     }
   });
 
-  // Compute feedback colors: use systemPreset overrides when provided
   const feedbackColors = resolvedSystemPreset
     ? {
         error: {
@@ -106,7 +103,6 @@ export function buildTokenSet(
       }
     : expanded.semantic.feedback;
 
-  // 2. Semantic vars — --ds-color-{bg|text|border|action|feedback|badge}-*
   const semanticVars = flattenToCSSVars({
     color: {
       bg: expanded.semantic.bg,
@@ -129,13 +125,11 @@ export function buildTokenSet(
     },
   });
 
-  // 3. Style vars — --ds-shadow-*, --ds-border-*
   const styleVars = flattenToCSSVars({
     shadow: resolved.shadows,
     border: resolved.border,
   });
 
-  // 4. Surface vars — --ds-surface-*, --ds-filter, --ds-perspective, etc.
   const surfaceVars = resolved.vars;
 
   return { scaleVars, semanticVars, styleVars, surfaceVars };
@@ -156,7 +150,6 @@ export function buildThemeAndTokenSet(
   const expanded = createPalette(palette, { neutralScale });
   const resolved = createStyle(style, expanded.semantic.bg.base);
 
-  // Resolve systemPreset
   const resolvedSystemPreset: SystemColorPreset | undefined = (() => {
     if (!options?.systemPreset) return undefined;
     if (typeof options.systemPreset === 'string') {
@@ -165,7 +158,6 @@ export function buildThemeAndTokenSet(
     return options.systemPreset;
   })();
 
-  // Scale vars
   const scaleVars: Record<string, string> = {};
   PALETTE_SCALES.forEach((key) => {
     const scale = expanded.scales[key];
@@ -176,7 +168,6 @@ export function buildThemeAndTokenSet(
     }
   });
 
-  // Feedback colors
   const feedbackColors = resolvedSystemPreset
     ? {
         error: {

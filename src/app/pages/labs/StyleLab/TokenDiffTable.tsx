@@ -54,7 +54,10 @@ export function TokenDiffTable({
     }, {} as Record<StyleName, Record<string, string>>);
   }, [paletteDef, stylesToCompute]);
 
-  const baseVars = valuesByStyle[baseStyle] ?? {};
+  const baseVars = useMemo(
+    () => valuesByStyle[baseStyle] ?? {},
+    [valuesByStyle, baseStyle]
+  );
   const diffTokens = useMemo(() => {
     const all = new Set<string>(Object.keys(baseVars));
     compareStyles.forEach((styleName) => {

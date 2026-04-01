@@ -57,4 +57,4 @@ E26 P04~P08에서 **코드 수정 없이 기록만** 한 항목을 바탕으로,
 ## 비고
 
 - 본 아이템은 **구현 스펙 확정 문서가 아님** (`docs/epic/backlog/README.md` 원칙). 승격 시 `docs/epic/E27.*/Readme.md`에서 Phase·목표를 확정한다.
-- E26 P06에서 언급된 **인라인 `//` 주석·CC-05** 정리는 E27 범위 밖 후속으로 [E28-B0001](./2026-04-01_E28-B0001_code-comment-hygiene-cc05.md)에 기록함.
+- E26 P06에서 언급된 **CC-05**는 백로그 [E28-B0001](./2026-04-01_E28-B0001_code-comment-hygiene-cc05.md)를 거쳐 **E27 Phase 7**로 편입됨(`selected`). 구현은 에픽 E27의 Phase 7 문서에서만 관리한다.

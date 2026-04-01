@@ -1,5 +1,6 @@
 /**
- * E20 P03: Motion Lab — duration / easing / stateLayer 시각화
+ * Motion Lab — duration / easing / stateLayer 시각화.
+ * CubicBezierCurve SVG: CSS easing 좌표는 y-up이나 SVG는 y-down이므로 `1 - y`로 매핑한다.
  */
 import { useState, useCallback } from 'react';
 import { LabLayout, LabSection, LabOverview, type TocItem } from '../../../layouts';
@@ -40,7 +41,6 @@ function CubicBezierCurve({ value, size = 56 }: Readonly<{ value: string; size?:
   const pad = 4;
   const s = p - pad * 2;
 
-  // SVG 좌표계: y는 아래가 양수이므로 뒤집음
   const toSvg = (x: number, y: number) => ({
     x: pad + x * s,
     y: pad + (1 - y) * s,

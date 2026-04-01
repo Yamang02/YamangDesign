@@ -1,7 +1,6 @@
 /**
- * Palette 레이어 - 배색을 독립적으로 관리
- * E01: Palette × Style 분리
- * P03: strategyFn 제거, resolve 경로로 통일
+ * Palette 레이어 — 배색 독립 관리, Palette × Style 분리, resolve 경로 통일.
+ * `PaletteName`은 `@shared/@types/theme`·theme-presets에서 import한다.
  */
 import type { ColorInput, ColorScale } from '@shared/@types/tokens';
 import { resolvePalette, generateColorScales } from './palette';
@@ -40,5 +39,4 @@ export function createPalette(
 }
 
 export type { PaletteDefinition, ComputedPalette, BgStrategy } from './types';
-// PaletteName은 @types/theme 또는 constants/theme-presets에서 import
 export { defaultPalette } from './presets';

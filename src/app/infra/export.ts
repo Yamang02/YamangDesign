@@ -176,25 +176,25 @@ export function extractGlobalSettings(
   return g;
 }
 
-/** 시맨틱 매핑 import: payload에서 overrides 추출 (레거시 형식 호환) */
+/**
+ * 시맨틱 매핑 import: overrides 추출. 우선순위 — 통합 스키마 `semanticMapping.overrides`,
+ * 레거시 `{ semanticOverrides }`, 마지막으로 루트에 bg/text/border가 있는 직접 Partial.
+ */
 export function extractSemanticOverrides(
   payload: unknown
 ): Partial<SemanticMapping> | null {
   if (!payload || typeof payload !== 'object') return null;
 
-  // 신규 통합 스키마
   const p = payload as YamangDesignExport;
   if (p.semanticMapping?.overrides && typeof p.semanticMapping.overrides === 'object') {
     return p.semanticMapping.overrides;
   }
 
-  // 레거시: { semanticOverrides: ... }
   const legacy = payload as { semanticOverrides?: Partial<SemanticMapping> };
   if (legacy.semanticOverrides && typeof legacy.semanticOverrides === 'object') {
     return legacy.semanticOverrides;
   }
 
-  // 레거시: 직접 Partial<SemanticMapping>
   const direct = payload as Partial<SemanticMapping>;
   if (direct.bg || direct.text || direct.border) {
     return direct;

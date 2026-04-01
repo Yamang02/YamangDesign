@@ -39,9 +39,6 @@ import { PaletteCategoryTabs, type BrandColorTabId } from './PaletteCategoryTabs
 import { ScaleGuide } from './ScaleGuide';
 import styles from './PaletteLab.module.css';
 
-// 상수는 constants/palette-scales.ts에서 import
-// PALETTE_SCALES, SCALE_STEPS, SYSTEM_COLOR_KEYS, SYSTEM_SCALE_STEPS
-
 function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }

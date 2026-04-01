@@ -35,14 +35,12 @@ export const brutalismStyle: StyleDefinition = {
     colorStrategy: 'palette',
   },
   createVars: () => ({
-    // Radius (P01)
     '--ds-radius-sm': '0px',
     '--ds-radius-md': '0px',
     '--ds-radius-lg': '0px',
     '--ds-radius-xl': '0px',
     '--ds-radius-full': '0px',
 
-    // Motion (P01)
     '--ds-duration-instant': '0ms',
     '--ds-duration-fast': '0ms',
     '--ds-duration-normal': '50ms',

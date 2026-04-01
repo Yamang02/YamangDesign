@@ -67,7 +67,6 @@ export function Icon({
   const sizeClass = styles[`size${size.charAt(0).toUpperCase() + size.slice(1)}`];
   const wrapperClass = clsx(styles.icon, sizeClass, className);
 
-  // Material Icons (fill-based)
   if (library === 'material') {
     const path = materialIcons[name];
 
@@ -82,7 +81,6 @@ export function Icon({
     );
   }
 
-  // Nucleo Icons (stroke-based)
   if (library === 'nucleo') {
     const iconData = nucleoIcons[name];
 

@@ -1,5 +1,5 @@
 /**
- * E05/E06 P02: Style Lab - Property Matrix, 비교 뷰, DetailPanel
+ * Style Lab — Property Matrix, 비교 뷰, DetailPanel, Overview는 도메인 StyleDefinition·프리셋에서 동적 구성.
  */
 import { useMemo, useState } from 'react';
 import { Button, Card, DetailPanel } from '../../../components';
@@ -27,7 +27,6 @@ const tocItems: TocItem[] = [
   { id: 'token-diff', label: 'Token Diff' },
 ];
 
-/** E06 P02: 기준 팔레트 변수 (Comparison 섹션 배경용) */
 function usePaletteVars(paletteId: PaletteName): Record<string, string> {
   return useMemo(() => {
     const def = palettePresets[paletteId];
@@ -227,7 +226,6 @@ export function StyleLab() {
     return `경고: ${capitalize(baseStyle)}는 bgStrategy가 '${bg}'일 때 효과가 소멸할 수 있습니다.`;
   }, [baseStyle, paletteId]);
 
-  // P04: Overview 요약을 도메인 데이터(StyleDefinition)에서 추출
   return (
     <>
       <LabLayout

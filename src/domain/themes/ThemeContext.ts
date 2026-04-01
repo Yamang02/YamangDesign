@@ -1,6 +1,6 @@
 /**
- * E03: Theme context - useTheme에서 소비
- * ThemeProvider와 분리하여 react-refresh/only-export-components 충족
+ * Theme context (`useTheme` 소비). ThemeProvider와 파일 분리(react-refresh/only-export-components).
+ * 필드 그룹: PaletteSelection API, 스타일·시스템 프리셋, 하위 호환 `palette`, 시맨틱 매핑 오버라이드.
  */
 import { createContext } from 'react';
 import type {
@@ -17,9 +17,6 @@ import type { NeutralPresetName } from '../tokens/global/neutral-presets';
 export interface ThemeContextValue {
   theme: Theme;
 
-  // ============================================================================
-  // 새 API: PaletteSelection 기반
-  // ============================================================================
   /** 현재 팔레트 선택 상태 */
   selection: PaletteSelection;
   /** 팔레트 선택 변경 (단일 API) */

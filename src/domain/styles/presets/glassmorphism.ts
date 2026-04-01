@@ -40,14 +40,12 @@ export const glassmorphismStyle: StyleDefinition = {
     backgroundBlendMode: 'normal',
   },
   createVars: () => ({
-    // Radius (P01)
     '--ds-radius-sm': '8px',
     '--ds-radius-md': '16px',
     '--ds-radius-lg': '20px',
     '--ds-radius-xl': '24px',
     '--ds-radius-full': '9999px',
 
-    // Motion (P01)
     '--ds-duration-instant': '0ms',
     '--ds-duration-fast': '150ms',
     '--ds-duration-normal': '250ms',

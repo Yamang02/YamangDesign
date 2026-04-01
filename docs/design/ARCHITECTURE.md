@@ -293,6 +293,12 @@ const styles = {
 
 ---
 
+## 코드 위생(CC-05)과 모듈 주석
+
+의사결정·긴 why는 본 문서와 `docs/design` 하위 스펙에 두고, 소스에는 **파일 상단 블록**과 여기로의 참조(`@see`)만 둔다. 전역 설정 draft와 Theme 동기화는 `useGlobalSettings`·`ThemeProvider` 파일 상단을 본다. 아이콘·추천 규칙 등 **대형 데이터 맵**의 `//` 구간 표시는 카탈로그 탐색용으로, 파일 상단에서 범위를 밝힌다. 미사용 import·변수는 ESLint(`@typescript-eslint/no-unused-vars`)로 차단한다.
+
+---
+
 ## 문서 목록
 
 | 문서 | 내용 |

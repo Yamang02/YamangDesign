@@ -50,7 +50,5 @@ relatedEpic: E17.2026-03-19_style-expressiveness (없으면 공란)
 - `docs/epic/backlog/` : 다음 에픽으로 뽑기 위한 아이디어 저장소
 - `docs/epic/<epic>/Readme.md` : 해당 에픽 내부에서 이어질 구체 백로그
 
-승격된 에픽 예: [E27 Audit Remediation](../E27.2026-04-01_audit-remediation-layer-quality/Readme.md) (백로그 [E27-B0001](./2026-04-01_E27-B0001_audit-remediation-implementation.md)).
-
-후속 아이디어(에픽 밖): 인라인 주석·CC-05 위생 — [E28-B0001](./2026-04-01_E28-B0001_code-comment-hygiene-cc05.md).
+승격된 에픽 예: [E27 Audit Remediation](../E27.2026-04-01_audit-remediation-layer-quality/Readme.md) (백로그 [E27-B0001](./2026-04-01_E27-B0001_audit-remediation-implementation.md), [E28-B0001](./2026-04-01_E28-B0001_code-comment-hygiene-cc05.md) → 에픽 **P07** 편입).
 

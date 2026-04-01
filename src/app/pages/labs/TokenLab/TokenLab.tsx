@@ -1,7 +1,7 @@
 /**
- * E06 P03: Token Lab 3-레이어 뷰
- * --shell-* / --ds-* / --sys-* 구분, Architecture 다이어그램, 카테고리별 토큰 표시
- * P04: Overview 항목을 ThemeTokenSet 데이터에서 동적 생성
+ * Token Lab 3-레이어 뷰: --shell-* / --ds-* / --sys-*, Overview·토큰 테이블.
+ * SHELL_CATEGORY_MAP 등은 Detail Panel 라벨용. 공통 토큰 테이블 유틸은 Design tokens 표기와 맞춘다.
+ * @see docs/design/ARCHITECTURE.md
  */
 import { useState } from 'react';
 import {
@@ -39,7 +39,6 @@ const {
   sysGroups: TokenGroup[];
 };
 
-/** 구조화 필요한 값(shadow, border, transition 등)은 구조화 표기로 표시 */
 function formatTokenDisplayValue(token: string, value: string): string {
   return formatStructuredDisplay(token, value || '');
 }
@@ -73,7 +72,6 @@ const tocItems: (TocItem | TocItemTree)[] = [
   { id: 'sys-tokens', label: 'System' },
 ];
 
-// E08 P08: 토큰 → 카테고리·레이어 (Detail Panel용)
 const SHELL_CATEGORY_MAP: Record<string, string> = {
   bg: '배경 (bg)',
   text: '텍스트 (text)',
@@ -148,7 +146,6 @@ function TokenDetailContent({ token }: Readonly<{ token: string }>) {
   );
 }
 
-// E08 P05: 공통 토큰 테이블 (Build Design tokens 패턴 정렬)
 function isColorValue(value: string): boolean {
   if (!value) return false;
   return (
@@ -158,7 +155,6 @@ function isColorValue(value: string): boolean {
   );
 }
 
-/** 토큰 배열에서 공통 접두사 추출 — 첫 열에는 접미사만 표시 */
 function getLongestCommonPrefix(tokens: string[]): string {
   if (tokens.length === 0) return '';
   let prefix = tokens[0];
@@ -290,7 +286,6 @@ function TokenTable({
   );
 }
 
-// --- Shell Tokens ---
 export function ShellTokensSection({
   onSelectToken,
   search,
@@ -359,7 +354,6 @@ export function ShellTokensSection({
   );
 }
 
-// --- DS Global ---
 export function GlobalSection({
   onSelectToken,
   search,
@@ -430,7 +424,6 @@ export function GlobalSection({
   );
 }
 
-// --- DS Alias (역할별 세분화) ---
 export function AliasSection({
   onSelectToken,
   search,
@@ -474,7 +467,6 @@ export function AliasSection({
   );
 }
 
-// --- Sys Tokens ---
 export function SysTokensSection({
   onSelectToken,
   search,

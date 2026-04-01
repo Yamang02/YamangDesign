@@ -1,6 +1,6 @@
 /**
- * P04: 시맨틱 토큰별 스케일/스텝 추천
- * 배경 전략에 따른 적합한 매핑 판별
+ * 시맨틱 토큰별 스케일/스텝 추천 — 배경 전략에 따른 적합한 매핑 판별.
+ * `RULES` 배열 내부 `//` 줄은 bgStrategy×접두(prefix) 그룹 탐색용(데이터 카탈로그).
  */
 import type { BgStrategy, ScaleReference } from '../types';
 

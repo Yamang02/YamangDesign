@@ -1,6 +1,6 @@
 /**
- * E06: Tooltip - Site Style 가이드용
- * portal: true 시 document.body에 렌더링 (모달/스크롤 컨테이너 내부에서 스크롤바에 가려지지 않음)
+ * Tooltip — Site Style 가이드. `portal`이면 body에 포털 렌더(스크롤/모달 위 표시).
+ * 포털 모드에서 위치는 툴팁 DOM 측정 후 rAF 두 번으로 갱신한다.
  */
 import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
@@ -62,7 +62,6 @@ export function Tooltip({
 
   useLayoutEffect(() => {
     if (isVisible && portal) {
-      // 첫 렌더링 후 툴팁 크기가 측정된 후 위치 계산
       requestAnimationFrame(() => {
         requestAnimationFrame(updatePosition);
       });
