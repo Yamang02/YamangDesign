@@ -39,7 +39,7 @@ function capitalize(str: string): string {
 }
 
 function isBuiltinPaletteName(value: string): value is PaletteName {
-  return comparisonPresets.palettes.some((p) => p === value);
+  return comparisonPresets.palettes.includes(value as PaletteName);
 }
 
 const STYLE_METADATA: Partial<Record<string, Pick<StyleVariant, 'description' | 'characteristics'>>> =
