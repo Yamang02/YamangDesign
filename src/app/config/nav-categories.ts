@@ -49,7 +49,7 @@ export const navCategories: NavCategory[] = [
   },
   {
     id: 'build',
-    icon: 'widgets',
+    icon: 'build',
     iconLibrary: 'material',
     tooltip: 'Build',
     items: [
@@ -77,6 +77,7 @@ export const navCategories: NavCategory[] = [
       { id: 'monet-water-lilies', label: 'Water Lilies', icon: 'image' },
       { id: 'matisse-dance-ii', label: 'La Danse II', icon: 'image' },
       { id: 'mondri-composition', label: 'Composition', icon: 'image' },
+      { id: 'golconda', label: 'Golconda', icon: 'image' },
     ],
   },
   {

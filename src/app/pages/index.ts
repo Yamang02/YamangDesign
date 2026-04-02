@@ -22,3 +22,4 @@ export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';
 export { MonetWaterLilies } from './art/MonetWaterLilies';
 export { MatisseDanceII } from './art/MatisseDanceII';
 export { MondriComposition } from './art/MondriComposition';
+export { Golconda } from './art/Golconda';

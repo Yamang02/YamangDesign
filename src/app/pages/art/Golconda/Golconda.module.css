@@ -1,0 +1,45 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #dfe8ef 0%, #c5d4e0 48%, #b0c4d4 100%);
+  color: #252528;
+}
+
+.anchorTarget {
+  scroll-margin-top: calc(var(--nav-height, 48px) + var(--ds-spacing-8));
+}
+
+.chapterTransition {
+  height: var(--ds-spacing-16, 64px);
+}
+
+.chapter2 {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ds-spacing-8) var(--ds-spacing-6);
+  overflow: hidden;
+}
+
+.chapter2Label {
+  position: absolute;
+  top: var(--ds-spacing-6, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--ds-text-xs);
+  color: rgba(37, 37, 40, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.chapter2Content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

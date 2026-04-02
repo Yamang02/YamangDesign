@@ -1,0 +1,47 @@
+.root {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #b8c9d4;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: min(85vh, 900px);
+  cursor: none;
+}
+
+.quote {
+  position: absolute;
+  bottom: var(--ds-spacing-8, 32px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: min(520px, 92vw);
+  padding: var(--ds-spacing-6, 24px) var(--ds-spacing-8, 32px);
+  text-align: center;
+  pointer-events: none;
+  background: rgba(238, 242, 245, 0.82);
+  border: 1px solid rgba(74, 90, 104, 0.35);
+  border-radius: var(--ds-border-radius-lg, 12px);
+  box-shadow: 0 8px 32px rgba(36, 44, 56, 0.12);
+}
+
+.quoteText {
+  margin: 0 0 var(--ds-spacing-4, 16px);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: var(--ds-text-base, 1rem);
+  line-height: 1.65;
+  font-style: italic;
+  color: #252528;
+}
+
+.quoteSource {
+  font-size: var(--ds-text-xs, 0.75rem);
+  color: #4a5a68;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
