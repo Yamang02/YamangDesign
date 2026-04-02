@@ -34,13 +34,13 @@ const GOLCONDA_BUTTONS: ArtButtonItem[] = [
   { label: 'Primary', hex: '#6B8FA8', textHex: '#EEF2F5' },
   { label: 'Secondary', hex: '#252528', textHex: '#EEF2F5' },
   { label: 'Accent', hex: '#D4A574', textHex: '#252528' },
-  { label: 'Ghost', hex: 'transparent', textHex: '#4A5A68' },
+  { label: 'Ghost', hex: 'transparent', textHex: '#252528' },
 ];
 
 const GOLCONDA_TYPOGRAPHY: ArtTypographyItem[] = [
-  { level: 'Display', text: 'Golconda', hex: '#6B8FA8' },
-  { level: 'Body', text: 'The visible conceals another visibility.', hex: '#252528' },
-  { level: 'Caption', text: 'René Magritte, 1953', hex: '#8A9098' },
+  { level: 'Display', text: 'Golconda', hex: '#252528' },
+  { level: 'Body', text: 'The visible conceals another visibility.', hex: '#4A5A68' },
+  { level: 'Caption', text: 'René Magritte, 1953', hex: '#6B8FA8' },
 ];
 
 const GOLCONDA_ART_CARD: ArtCardMeta = {
@@ -62,14 +62,14 @@ const GOLCONDA_LABEL: LabelInfo = {
 export function Golconda() {
   return (
     <div className={styles.page}>
-      <ArtShell chapters={CHAPTERS}>
+      <ArtShell chapters={CHAPTERS} theme="dark">
         <div id="chapter-1" className={styles.anchorTarget}>
           <ArtHeroStage
             imageUrl={IMAGE_URL}
             imageAlt="René Magritte — Golconda, 1953"
             label={GOLCONDA_LABEL}
             palette={GOLCONDA_PALETTE}
-            variant="glass"
+            variant="minimal"
           />
         </div>
 
@@ -89,7 +89,7 @@ export function Golconda() {
           buttons={GOLCONDA_BUTTONS}
           typography={GOLCONDA_TYPOGRAPHY}
           artCard={GOLCONDA_ART_CARD}
-          variant="glass"
+          variant="minimal"
           sectionId="chapter-3"
         />
       </ArtShell>

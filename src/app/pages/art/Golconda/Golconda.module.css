@@ -29,7 +29,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: var(--ds-text-xs);
-  color: rgba(37, 37, 40, 0.45);
+  color: rgba(28, 28, 28, 0.35);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   white-space: nowrap;

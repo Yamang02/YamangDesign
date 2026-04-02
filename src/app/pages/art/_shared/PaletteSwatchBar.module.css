@@ -23,6 +23,14 @@
   padding: var(--ds-spacing-4) var(--ds-spacing-5);
 }
 
+.barMinimal .label {
+  color: rgba(28, 28, 28, 0.45);
+}
+
+.barMinimal .swatch {
+  border: 1px solid #1C1C1C;
+}
+
 .barBrutal {
   position: absolute;
   bottom: var(--ds-spacing-8);
