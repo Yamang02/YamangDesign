@@ -22,7 +22,7 @@ const CHAPTERS: ArtChapter[] = [
   { id: 'chapter-3', number: 'Ch.3', title: 'The Application' },
 ];
 
-const IMAGE_URL = '/art/matisse-dance-ii.png';
+const IMAGE_URL = '/art/matisse-dance-ii/hero.png';
 
 const MATISSE_PALETTE_ITEMS: ArtPaletteItem[] = [
   { name: 'Matisse Red',  hex: '#C8361A', role: 'Primary' },

@@ -20,6 +20,12 @@ interface ArtHeroStageProps {
   label: LabelInfo
   palette: PaletteItem[]
   variant?: 'glass' | 'brutal' | 'minimal'
+  /** e.g. `48% 38%` — crop bias for composition (Starry Night moon / swirl) */
+  imageObjectPosition?: string
+  /** LCP: 히어로 원화에 `high` 권장 */
+  imageFetchPriority?: 'high' | 'low' | 'auto'
+  imageLoading?: 'eager' | 'lazy'
+  imageDecoding?: 'async' | 'sync' | 'auto'
 }
 
 export function ArtHeroStage({
@@ -28,6 +34,10 @@ export function ArtHeroStage({
   label,
   palette,
   variant = 'glass',
+  imageObjectPosition,
+  imageFetchPriority,
+  imageLoading = 'eager',
+  imageDecoding = 'async',
 }: Readonly<ArtHeroStageProps>) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +49,15 @@ export function ArtHeroStage({
         onClick={() => setIsModalOpen(true)}
         aria-label={`${imageAlt} 크게 보기`}
       >
-        <img src={imageUrl} alt={imageAlt} className={styles.image} />
+        <img
+          src={imageUrl}
+          alt={imageAlt}
+          className={styles.image}
+          style={imageObjectPosition ? { objectPosition: imageObjectPosition } : undefined}
+          decoding={imageDecoding}
+          loading={imageLoading}
+          fetchPriority={imageFetchPriority}
+        />
       </button>
       {variant === 'glass' && <div className={styles.overlay} />}
       <div className={styles.panels}>

@@ -15,7 +15,7 @@ import {
 import { getRooflineYFromTable, scanRooflineYTable } from './buildingMask';
 import styles from './GolcondaImpression.module.css';
 
-const BG_URL = '/art/Golconda_bg.png';
+const BG_URL = '/art/golconda/background.png';
 
 /** Courier New 고정 — 로캘별 U+005C(₩) 표기 차이를 줄이기 위함 */
 function buildTierCaches(): Map<string, TierDrawCache> {

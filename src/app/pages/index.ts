@@ -13,6 +13,7 @@ export {
   GridLab,
   MotionLab,
   ResponsiveLab,
+  CraftLab,
 } from './labs';
 
 export { Atoms, Molecules, Organisms, Components } from './build';
@@ -23,3 +24,4 @@ export { MonetWaterLilies } from './art/MonetWaterLilies';
 export { MatisseDanceII } from './art/MatisseDanceII';
 export { MondriComposition } from './art/MondriComposition';
 export { Golconda } from './art/Golconda';
+export { VanGoghStarryNight } from './art/VanGoghStarryNight';

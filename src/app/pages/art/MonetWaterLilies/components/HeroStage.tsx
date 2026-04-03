@@ -3,7 +3,7 @@ import { PaletteSwatchBar } from '../../_shared/PaletteSwatchBar';
 import { MONET_PALETTE } from '../monet-palette';
 import styles from './HeroStage.module.css';
 
-const IMAGE_URL = '/art/monet-water-lilies-green-reflections.png';
+const IMAGE_URL = '/art/monet-water-lilies/hero.png';
 
 export function HeroStage() {
   return (

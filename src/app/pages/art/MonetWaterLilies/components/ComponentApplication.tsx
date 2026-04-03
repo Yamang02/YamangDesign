@@ -5,7 +5,7 @@
 import { MONET_PALETTE } from '../monet-palette';
 import styles from './ComponentApplication.module.css';
 
-const IMAGE_URL = '/art/monet-water-lilies-green-reflections.png';
+const IMAGE_URL = '/art/monet-water-lilies/hero.png';
 
 const TOKEN_ROLES: Record<string, string> = {
   '#2D5016': 'Primary',

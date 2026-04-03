@@ -45,6 +45,7 @@ export const navCategories: NavCategory[] = [
       { id: 'grid', label: 'Grid', icon: 'grid-on' },
       { id: 'motion', label: 'Motion', icon: 'animation' },
       { id: 'responsive', label: 'Responsive', icon: 'devices' },
+      { id: 'craft', label: 'CraftLab', icon: 'widgets' },
     ],
   },
   {
@@ -78,6 +79,7 @@ export const navCategories: NavCategory[] = [
       { id: 'matisse-dance-ii', label: 'La Danse II', icon: 'image' },
       { id: 'mondri-composition', label: 'Composition', icon: 'image' },
       { id: 'golconda', label: 'Golconda', icon: 'image' },
+      { id: 'starry-night', label: 'Starry Night', icon: 'image' },
     ],
   },
   {

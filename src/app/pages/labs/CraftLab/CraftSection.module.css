@@ -1,0 +1,37 @@
+@layer shell {
+  .section {
+    margin-bottom: var(--ds-spacing-12);
+    scroll-margin-top: calc(var(--nav-height) + var(--ds-spacing-4));
+  }
+
+  .header {
+    margin-bottom: var(--ds-spacing-4);
+  }
+
+  .title {
+    margin: 0 0 var(--ds-spacing-2);
+    font-size: var(--ds-text-xl);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-color-text-primary);
+  }
+
+  .description {
+    font-size: var(--ds-text-sm);
+    line-height: var(--ds-line-height-relaxed);
+    color: var(--ds-color-text-secondary);
+    max-width: 52rem;
+  }
+
+  .codeBlock {
+    margin: 0;
+    padding: var(--ds-spacing-4);
+    overflow-x: auto;
+    font-family: var(--ds-font-family-mono);
+    font-size: var(--ds-text-xs);
+    line-height: var(--ds-line-height-relaxed);
+    color: var(--ds-color-text-primary);
+    background: var(--ds-color-bg-muted);
+    border-radius: var(--ds-border-radius-md);
+    border: var(--ds-border-width) var(--ds-border-style) var(--shell-border-subtle);
+  }
+}

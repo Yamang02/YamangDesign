@@ -1,0 +1,8 @@
+@layer shell {
+  .overviewDesc {
+    margin: 0;
+    font-size: var(--ds-text-sm);
+    color: var(--ds-color-text-secondary);
+    line-height: var(--ds-line-height-relaxed);
+  }
+}

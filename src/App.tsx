@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { lazy, Suspense, useState, useCallback, useMemo } from 'react';
 import { ThemeProvider } from '@app/providers/ThemeProvider';
 import { Footer, Header, HeaderNav } from '@app/components';
 import {
@@ -23,6 +23,7 @@ import {
   GridLab,
   MotionLab,
   ResponsiveLab,
+  CraftLab,
   Atoms,
   Molecules,
   Organisms,
@@ -31,11 +32,23 @@ import {
   LayoutLanding,
   LayoutDashboard,
   LayoutArticle,
-  MonetWaterLilies,
-  MatisseDanceII,
-  MondriComposition,
-  Golconda,
 } from '@app/pages';
+
+const MonetWaterLilies = lazy(() =>
+  import('@app/pages/art/MonetWaterLilies').then((m) => ({ default: m.MonetWaterLilies })),
+);
+const MatisseDanceII = lazy(() =>
+  import('@app/pages/art/MatisseDanceII').then((m) => ({ default: m.MatisseDanceII })),
+);
+const MondriComposition = lazy(() =>
+  import('@app/pages/art/MondriComposition').then((m) => ({ default: m.MondriComposition })),
+);
+const Golconda = lazy(() =>
+  import('@app/pages/art/Golconda').then((m) => ({ default: m.Golconda })),
+);
+const VanGoghStarryNight = lazy(() =>
+  import('@app/pages/art/VanGoghStarryNight').then((m) => ({ default: m.VanGoghStarryNight })),
+);
 import type { DesignSettingsTabId } from '@app/pages/labs/DesignSettingsLab';
 import { DesignSettingsNavContext } from '@app/context/DesignSettingsNavContext';
 import { InspectorProvider } from '@app/context/InspectorContext';
@@ -65,10 +78,12 @@ export type PageName =
   | 'grid'
   | 'motion'
   | 'responsive'
+  | 'craft'
   | 'monet-water-lilies'
   | 'matisse-dance-ii'
   | 'mondri-composition'
-  | 'golconda';
+  | 'golconda'
+  | 'starry-night';
 
 /** P08: design-settings 블롭에서 componentMapping 동기화 후 설정만 반환 */
 function parseDesignSystemBlob(raw: string): StoredSettings | null {
@@ -186,6 +201,8 @@ function App() {
         return <MotionLab />;
       case 'responsive':
         return <ResponsiveLab />;
+      case 'craft':
+        return <CraftLab />;
       case 'playground':
         return <Playground />;
       case 'atoms':
@@ -212,6 +229,8 @@ function App() {
         return <MondriComposition />;
       case 'golconda':
         return <Golconda />;
+      case 'starry-night':
+        return <VanGoghStarryNight />;
       case 'dashboard':
       case 'card-grid':
         return <PlaceholderPage title={page === 'dashboard' ? 'Dashboard' : 'Card Grid'} />;
@@ -249,7 +268,9 @@ function App() {
               transition: 'background-color 300ms ease-in-out',
             }}
           >
-            <LayoutPreviewControlsProvider>{renderPage()}</LayoutPreviewControlsProvider>
+            <LayoutPreviewControlsProvider>
+              <Suspense fallback={<ArtRouteFallback />}>{renderPage()}</Suspense>
+            </LayoutPreviewControlsProvider>
           </main>
           <Footer />
         </div>
@@ -257,6 +278,20 @@ function App() {
       </ThemeProvider>
       </InspectorProvider>
     </DesignSettingsNavContext.Provider>
+  );
+}
+
+function ArtRouteFallback() {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      style={{
+        minHeight: 'min(50vh, 400px)',
+        backgroundColor: 'var(--ds-color-bg-base)',
+      }}
+    />
   );
 }
 

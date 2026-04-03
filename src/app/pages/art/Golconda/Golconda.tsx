@@ -17,7 +17,7 @@ const CHAPTERS: ArtChapter[] = [
   { id: 'chapter-3', number: 'Ch.3', title: 'The Application' },
 ];
 
-const IMAGE_URL = '/art/Golconda.jpg';
+const IMAGE_URL = '/art/golconda/hero.jpg';
 
 const GOLCONDA_PALETTE_ITEMS: ArtPaletteItem[] = [
   { name: 'Sky Wash', hex: '#B8C9D4', role: 'Primary' },
