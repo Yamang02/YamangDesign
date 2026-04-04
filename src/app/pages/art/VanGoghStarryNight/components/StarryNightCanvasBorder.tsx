@@ -1,122 +1,23 @@
 /**
  * E30 Ch.2 — Canvas wavy ring (물결 외곽 + 안쪽 홀)
  *
- * 안정성 우선 렌더링:
- * 1) 바깥 직사각 + 안쪽 라운드 사각을 한 경로로 두고 `clip('evenodd')` → 링 모양만 그리기 허용
- * 2) 단색 fillRect + (로드 시) 텍스처 drawImage cover
- * 3) `destination-out` 미사용 — 합성/알파 환경에서 링이 통째로 사라지는 케이스 회피
- * 4) 마지막에 외곽 물결 stroke 장식
+ * 경로·패딩은 starryNightRingPath 와 공유 (clip-path 와 동일 시각).
  */
 import { useLayoutEffect, useRef, type RefObject } from 'react';
+import {
+  computeWaveAmplitude,
+  readPaddingPx,
+  STARRY_RING_WAVES,
+  traceInnerRoundedRectPath,
+  traceOuterWavyPath,
+  type CanvasMotionPreference,
+} from './starryNightRingPath';
 import styles from './StarryNightCanvasBorder.module.css';
+
+export type { CanvasMotionPreference } from './starryNightRingPath';
 
 const SEAMLESS_URL = '/art/starry-night/seamless_bg.png';
 const FALLBACK_RING_FILL = '#2F4D96';
-const DEFAULT_PAD_X = 44;
-const DEFAULT_PAD_Y = 36;
-
-function readPaddingPx(el: HTMLElement): { padX: number; padY: number } {
-  const cs = getComputedStyle(el);
-  /** CSS 변수와 실제 padding 이 어긋날 때를 대비해 변수 우선 */
-  const fromVarX = Number.parseFloat(cs.getPropertyValue('--starryBorderX').trim());
-  const fromVarY = Number.parseFloat(cs.getPropertyValue('--starryBorderY').trim());
-  const pl = Number.parseFloat(cs.paddingLeft);
-  const pt = Number.parseFloat(cs.paddingTop);
-  const padX =
-    Number.isFinite(fromVarX) && fromVarX > 0
-      ? fromVarX
-      : Number.isFinite(pl) && pl > 0
-        ? pl
-        : DEFAULT_PAD_X;
-  const padY =
-    Number.isFinite(fromVarY) && fromVarY > 0
-      ? fromVarY
-      : Number.isFinite(pt) && pt > 0
-        ? pt
-        : DEFAULT_PAD_Y;
-  return { padX, padY };
-}
-
-function traceOuterWavyPath(
-  ctx: CanvasRenderingContext2D,
-  W: number,
-  H: number,
-  r: number,
-  amp: number,
-  waves: number
-): void {
-  const spanX = W - 2 * r;
-  const spanY = H - 2 * r;
-  const steps = Math.max(28, Math.floor(Math.min(W, H) / 10));
-
-  ctx.moveTo(0, r);
-  ctx.arc(r, r, r, Math.PI, -Math.PI / 2, false);
-
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const x = r + t * spanX;
-    const taper = Math.sin(Math.PI * t);
-    const y = taper * amp * Math.sin(2 * Math.PI * waves * t);
-    ctx.lineTo(x, y);
-  }
-
-  ctx.arc(W - r, r, r, -Math.PI / 2, 0, false);
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const y = r + t * spanY;
-    const taper = Math.sin(Math.PI * t);
-    const x = W + taper * amp * Math.sin(2 * Math.PI * waves * t + 1.1);
-    ctx.lineTo(x, y);
-  }
-
-  ctx.arc(W - r, H - r, r, 0, Math.PI / 2, false);
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const x = W - r - t * spanX;
-    const taper = Math.sin(Math.PI * t);
-    const y = H + taper * amp * Math.sin(2 * Math.PI * waves * t + 2.2);
-    ctx.lineTo(x, y);
-  }
-
-  ctx.arc(r, H - r, r, Math.PI / 2, Math.PI, false);
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const y = H - r - t * spanY;
-    const taper = Math.sin(Math.PI * t);
-    const x = taper * amp * Math.sin(2 * Math.PI * waves * t + 3.3);
-    ctx.lineTo(x, y);
-  }
-
-  ctx.closePath();
-}
-
-function traceInnerRoundedRectPath(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  rad: number
-): void {
-  const cornerR = Math.min(rad, w / 2, h / 2);
-  if (w <= 0 || h <= 0) return;
-
-  if (typeof ctx.roundRect === 'function') {
-    ctx.roundRect(x, y, w, h, cornerR);
-    return;
-  }
-
-  ctx.moveTo(x + cornerR, y);
-  ctx.lineTo(x + w - cornerR, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + cornerR);
-  ctx.lineTo(x + w, y + h - cornerR);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - cornerR, y + h);
-  ctx.lineTo(x + cornerR, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - cornerR);
-  ctx.lineTo(x, y + cornerR);
-  ctx.quadraticCurveTo(x, y, x + cornerR, y);
-  ctx.closePath();
-}
 
 /** object-fit: cover 와 동일 — 링 전체를 덮도록 균일 확대 후 중앙 크롭 */
 function drawImageCover(
@@ -150,9 +51,13 @@ function strokeOuterWavyPath(
 
 interface StarryNightCanvasBorderProps {
   readonly containerRef: RefObject<HTMLDivElement | null>;
+  readonly motionPreference?: CanvasMotionPreference;
 }
 
-export function StarryNightCanvasBorder({ containerRef }: StarryNightCanvasBorderProps) {
+export function StarryNightCanvasBorder({
+  containerRef,
+  motionPreference = 'system',
+}: StarryNightCanvasBorderProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useLayoutEffect(() => {
@@ -181,15 +86,11 @@ export function StarryNightCanvasBorder({ containerRef }: StarryNightCanvasBorde
       canvas.style.height = `${H}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const reduce =
-        typeof globalThis.matchMedia === 'function' &&
-        globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const baseAmp = Math.min(5, Math.min(W, H) * 0.013);
-      const waveAmp = reduce ? 0 : baseAmp;
+      const { reduce, waveAmp } = computeWaveAmplitude(W, H, motionPreference);
 
       const r = Math.min(12, Math.min(W, H) * 0.035);
       const innerR = Math.max(2, r * 0.55);
-      const waves = 2.35;
+      const waves = STARRY_RING_WAVES;
       const iw = W - 2 * padX;
       const ih = H - 2 * padY;
 
@@ -222,7 +123,7 @@ export function StarryNightCanvasBorder({ containerRef }: StarryNightCanvasBorde
       if (iw > 1 && ih > 1) {
         ctx.save();
         ctx.beginPath();
-        ctx.rect(0, 0, W, H);
+        traceOuterWavyPath(ctx, W, H, r, waveAmp, waves);
         traceInnerRoundedRectPath(ctx, padX, padY, iw, ih, innerR);
         ctx.clip('evenodd');
 
@@ -237,14 +138,39 @@ export function StarryNightCanvasBorder({ containerRef }: StarryNightCanvasBorde
           }
         }
         ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        traceInnerRoundedRectPath(ctx, padX, padY, iw, ih, innerR);
+        ctx.strokeStyle = 'rgba(245, 200, 66, 0.16)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
       } else {
         paintRingBands();
       }
 
-      if (waveAmp > 0.25) {
+      if (iw > 1 && ih > 1) {
+        strokeOuterWavyPath(ctx, W, H, r, waveAmp, waves);
+        if (reduce || waveAmp <= 0.25) {
+          ctx.strokeStyle = 'rgba(245, 200, 66, 0.22)';
+          ctx.lineWidth = 1.1;
+          ctx.stroke();
+        } else {
+          ctx.strokeStyle = 'rgba(245, 200, 66, 0.14)';
+          ctx.lineWidth = 3;
+          ctx.lineJoin = 'round';
+          ctx.lineCap = 'round';
+          ctx.stroke();
+          strokeOuterWavyPath(ctx, W, H, r, waveAmp, waves);
+          ctx.strokeStyle = 'rgba(255, 228, 160, 0.55)';
+          ctx.lineWidth = 1.35;
+          ctx.stroke();
+        }
+      } else if (waveAmp > 0.25) {
         strokeOuterWavyPath(ctx, W, H, r, waveAmp, waves);
         ctx.strokeStyle = 'rgba(245, 200, 66, 0.22)';
-        ctx.lineWidth = 1.25;
+        ctx.lineWidth = 1.1;
         ctx.stroke();
       }
     };
@@ -260,7 +186,7 @@ export function StarryNightCanvasBorder({ containerRef }: StarryNightCanvasBorde
     ro.observe(el);
 
     const mq =
-      typeof globalThis.matchMedia === 'function'
+      motionPreference === 'system' && typeof globalThis.matchMedia === 'function'
         ? globalThis.matchMedia('(prefers-reduced-motion: reduce)')
         : null;
     mq?.addEventListener('change', paintSoon);
@@ -270,7 +196,7 @@ export function StarryNightCanvasBorder({ containerRef }: StarryNightCanvasBorde
       mq?.removeEventListener('change', paintSoon);
       img.onload = null;
     };
-  }, [containerRef]);
+  }, [containerRef, motionPreference]);
 
   return <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />;
 }

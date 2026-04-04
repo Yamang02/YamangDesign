@@ -7,7 +7,7 @@
 
 .frame {
   --starryBorderY: 36px;
-  /* 좌우만 조금 더 넓게 */
+  /* 좌우만 조금 더 넓게 — canvas 데칼 위치(imageWrap 과 동일 콘텐츠 박스) */
   --starryBorderX: 44px;
   /* 데칼·halo: 기준 60px 테두리 대비 축소 비율 */
   --starryDecorScale: calc(36 / 60);
@@ -16,18 +16,11 @@
   box-sizing: border-box;
 }
 
-/* Canvas 띠: 패딩 = 테두리 두께 (캔버스가 같은 영역에 링을 그림) */
+/* Canvas 띠: 패딩 = 테두리 두께 — seamless 텍스처는 캔버스 링에만 그림 (전면 타일 제거) */
 .frameCanvas {
   border: none;
   padding: var(--starryBorderY) var(--starryBorderX);
-  /*
-   * 캔버스 렌더 실패/지연에도 링이 완전히 사라지지 않도록 기본 텍스처를 깐다.
-   * 실제 wavy 윤곽·디테일은 StarryNightCanvasBorder(canvas)가 위에서 덮어쓴다.
-   */
-  background:
-    url("/art/starry-night/seamless_bg.png")
-    center / cover
-    no-repeat;
+  background-color: #152a5c;
 }
 
 /* 기존 CSS border-image 9-slice */
@@ -48,11 +41,16 @@
  */
 .imageWrap {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   overflow: visible;
 
   /* 자화상 가장자리가 투명해질 때 드러나는 색 — seamless 테두리 톤에 맞춤 */
   background-color: #152a5c;
+}
+
+/* 오른쪽 패널: 자화상 < 링 캔버스 < 데칼 */
+.frameCanvas .imageWrap {
+  z-index: 1;
 }
 
 /* wavy ring(canvas): 내부 박스에 맞춰 자화상을 cover */
@@ -100,6 +98,32 @@
   mask-mode: alpha;
 }
 
+/* Canvas: 링 clip-path + 별 — 달·나무는 imageWrap 과 동일한 콘텐츠 박스 기준 */
+.canvasDecalClip {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+}
+
+/*
+ * 직사각 content-box mask 는 물결 clip 과 겹치며 별이 링 밖으로 튀어 보일 수 있음 —
+ * 부모 path( evenodd ) 만으로 링 영역을 자른다.
+ */
+.canvasDecalClip .haloRing {
+  mask: none;
+  -webkit-mask: none;
+  overflow: hidden;
+}
+
+.canvasDecalInner {
+  position: absolute;
+  inset: var(--starryBorderY) var(--starryBorderX);
+  pointer-events: none;
+}
+
 /* 별 — 테두리 링에만 보이도록 클립 */
 .haloRing {
   position: absolute;
@@ -109,7 +133,7 @@
   left: calc(-1 * var(--starryBorderX));
   box-sizing: border-box;
   padding: var(--starryBorderY) var(--starryBorderX);
-  z-index: 1;
+  z-index: 2;
 
   mask:
     linear-gradient(#000 0 0) content-box,

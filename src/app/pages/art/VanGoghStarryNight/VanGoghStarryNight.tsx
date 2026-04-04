@@ -14,6 +14,7 @@ import type {
   ArtCardMeta,
 } from '../_shared/ArtApplicationSection';
 import { STARRY_NIGHT_PALETTE, STARRY_NIGHT_SWATCHES } from './starry-night-palette';
+import type { CanvasMotionPreference } from './components/StarryNightCanvasBorder';
 import { StarryNightFrame } from './components/StarryNightFrame';
 import styles from './VanGoghStarryNight.module.css';
 
@@ -69,11 +70,36 @@ const CANVAS_WIDTH_MAX = 420;
 const CANVAS_WIDTH_DEFAULT = 380;
 const CANVAS_WIDTH_STEP = 4;
 
+const BORDER_IMAGE_REPEAT_OPTIONS = [
+  { value: 'stretch', label: 'stretch' },
+  { value: 'repeat', label: 'repeat' },
+  { value: 'round', label: 'round' },
+  { value: 'space', label: 'space' },
+] as const;
+
+type BorderImageRepeatKeyword = (typeof BORDER_IMAGE_REPEAT_OPTIONS)[number]['value'];
+
+const CANVAS_MOTION_OPTIONS: ReadonlyArray<{
+  value: CanvasMotionPreference;
+  label: string;
+}> = [
+  { value: 'system', label: 'System' },
+  { value: 'full', label: 'Full' },
+  { value: 'reduced', label: 'Reduced' },
+];
+
 export function VanGoghStarryNight() {
   const canvasLabelId = useId();
   const canvasScaleId = useId();
   const canvasHintId = useId();
+  const borderImageRepeatLabelId = useId();
+  const borderImageRepeatSelectId = useId();
+  const canvasMotionLabelId = useId();
+  const canvasMotionSelectId = useId();
   const [canvasWidthPx, setCanvasWidthPx] = useState(CANVAS_WIDTH_DEFAULT);
+  const [borderImageRepeat, setBorderImageRepeat] = useState<BorderImageRepeatKeyword>('round');
+  const [canvasMotionPreference, setCanvasMotionPreference] =
+    useState<CanvasMotionPreference>('system');
 
   const frameWrapStyleShared = {
     '--starry-frame-max-width': `${canvasWidthPx}px`,
@@ -81,7 +107,7 @@ export function VanGoghStarryNight() {
 
   const frameWrapStyleCss = {
     ...frameWrapStyleShared,
-    '--starry-border-image-repeat': 'round',
+    '--starry-border-image-repeat': borderImageRepeat,
   } as CSSProperties;
 
   return (
@@ -139,10 +165,35 @@ export function VanGoghStarryNight() {
             <div className={styles.chapter2Panel}>
               <h3 className={styles.chapter2PanelTitle}>CSS border-image</h3>
               <p className={styles.chapter2PanelHint}>
-                9-slice seamless PNG, browser tiling (round).
+                9-slice seamless PNG — compare{' '}
+                <code className={styles.chapter2InlineCode}>border-image-repeat</code> keywords.
               </p>
               <div className={styles.chapter2PanelFrame} style={frameWrapStyleCss}>
                 <StarryNightFrame variant="css" />
+              </div>
+              <div className={styles.chapter2PanelSelectRow}>
+                <label
+                  id={borderImageRepeatLabelId}
+                  className={styles.chapter2PanelSelectLabel}
+                  htmlFor={borderImageRepeatSelectId}
+                >
+                  Repeat
+                </label>
+                <select
+                  id={borderImageRepeatSelectId}
+                  className={styles.chapter2PanelSelect}
+                  value={borderImageRepeat}
+                  onChange={(e) => {
+                    setBorderImageRepeat(e.target.value as BorderImageRepeatKeyword);
+                  }}
+                  aria-labelledby={borderImageRepeatLabelId}
+                >
+                  {BORDER_IMAGE_REPEAT_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className={styles.chapter2Panel}>
@@ -151,7 +202,34 @@ export function VanGoghStarryNight() {
                 Procedural path: rounded corners + edge waves; texture fill + inner cut-out.
               </p>
               <div className={styles.chapter2PanelFrame} style={frameWrapStyleShared}>
-                <StarryNightFrame variant="canvas" />
+                <StarryNightFrame
+                  variant="canvas"
+                  canvasMotionPreference={canvasMotionPreference}
+                />
+              </div>
+              <div className={styles.chapter2PanelSelectRow}>
+                <label
+                  id={canvasMotionLabelId}
+                  className={styles.chapter2PanelSelectLabel}
+                  htmlFor={canvasMotionSelectId}
+                >
+                  Motion
+                </label>
+                <select
+                  id={canvasMotionSelectId}
+                  className={styles.chapter2PanelSelect}
+                  value={canvasMotionPreference}
+                  onChange={(e) => {
+                    setCanvasMotionPreference(e.target.value as CanvasMotionPreference);
+                  }}
+                  aria-labelledby={canvasMotionLabelId}
+                >
+                  {CANVAS_MOTION_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>

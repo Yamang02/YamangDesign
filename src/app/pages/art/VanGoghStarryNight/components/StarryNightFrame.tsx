@@ -1,7 +1,13 @@
 /**
  * E30 Ch.2 — CSS border-image 또는 Canvas 물결 띠 + 별·달·나무 데칼
  */
-import { useRef, useState, type CSSProperties } from 'react';
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import {
+  buildCanvasRingClipPathData,
+  computeWaveAmplitude,
+  readPaddingPx,
+} from './starryNightRingPath';
+import type { CanvasMotionPreference } from './starryNightRingPath';
 import { StarryNightCanvasBorder } from './StarryNightCanvasBorder';
 import styles from './StarryNightFrame.module.css';
 
@@ -75,55 +81,134 @@ function buildHaloStyles(): CSSProperties[] {
 
 interface StarryNightFrameProps {
   readonly variant?: StarryNightFrameVariant;
+  readonly canvasMotionPreference?: CanvasMotionPreference;
 }
 
-export function StarryNightFrame({ variant = 'canvas' }: StarryNightFrameProps) {
+export function StarryNightFrame({
+  variant = 'canvas',
+  canvasMotionPreference = 'system',
+}: StarryNightFrameProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [haloStyles, setHaloStyles] = useState(() => buildHaloStyles());
+  const [canvasRingClipPath, setCanvasRingClipPath] = useState<string | null>(null);
+
   const frameClass =
     variant === 'css'
       ? `${styles.frame} ${styles.frameCss}`
       : `${styles.frame} ${styles.frameCanvas}`;
 
+  useLayoutEffect(() => {
+    if (variant !== 'canvas') return;
+
+    const el = frameRef.current;
+    if (!el) return;
+
+    const updateClip = () => {
+      const node = frameRef.current;
+      if (!node) return;
+      const W = node.clientWidth;
+      const H = node.clientHeight;
+      if (W < 2 || H < 2) return;
+      const { padX, padY } = readPaddingPx(node);
+      const { waveAmp } = computeWaveAmplitude(W, H, canvasMotionPreference);
+      const d = buildCanvasRingClipPathData(W, H, padX, padY, waveAmp);
+      setCanvasRingClipPath(d);
+    };
+
+    updateClip();
+    const ro = new ResizeObserver(updateClip);
+    ro.observe(el);
+
+    const mq =
+      canvasMotionPreference === 'system' && typeof globalThis.matchMedia === 'function'
+        ? globalThis.matchMedia('(prefers-reduced-motion: reduce)')
+        : null;
+    mq?.addEventListener('change', updateClip);
+
+    return () => {
+      ro.disconnect();
+      mq?.removeEventListener('change', updateClip);
+    };
+  }, [variant, canvasMotionPreference]);
+
+  const haloNodes = (
+    <>
+      {HALO_URLS.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          className={styles.halo}
+          style={haloStyles[i]}
+          onAnimationIteration={() => {
+            setHaloStyles((prev) =>
+              prev.map((style, idx) =>
+                idx === i ? { ...style, ...randomHaloPlacement() } : style
+              )
+            );
+          }}
+          draggable={false}
+          loading="lazy"
+          decoding="async"
+        />
+      ))}
+    </>
+  );
+
+  const moonTreeNodes = (
+    <>
+      <img
+        src={MOON_URL}
+        alt=""
+        className={styles.cornerMoon}
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+      />
+      <div className={styles.cornerTreeOuter}>
+        <img
+          src={TREE_URL}
+          alt=""
+          className={styles.cornerTree}
+          draggable={false}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </>
+  );
+
+  const clipStyle: CSSProperties | undefined =
+    variant === 'canvas' && canvasRingClipPath
+      ? {
+          clipPath: `path(evenodd, '${canvasRingClipPath}')`,
+          WebkitClipPath: `path(evenodd, '${canvasRingClipPath}')`,
+        }
+      : undefined;
+
   return (
     <div className={styles.wrapper}>
       <div ref={frameRef} className={frameClass}>
-        {variant === 'canvas' ? <StarryNightCanvasBorder containerRef={frameRef} /> : null}
-        <div className={styles.haloRing} aria-hidden="true">
-          {HALO_URLS.map((src, i) => (
-            <img
-              key={src}
-              src={src}
-              alt=""
-              className={styles.halo}
-              style={haloStyles[i]}
-              onAnimationIteration={() => {
-                setHaloStyles((prev) =>
-                  prev.map((style, idx) =>
-                    idx === i ? { ...style, ...randomHaloPlacement() } : style
-                  )
-                );
-              }}
-              draggable={false}
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
-        </div>
+        {variant === 'canvas' ? (
+          <StarryNightCanvasBorder
+            containerRef={frameRef}
+            motionPreference={canvasMotionPreference}
+          />
+        ) : null}
+
+        {variant === 'canvas' ? (
+          <div className={styles.canvasDecalClip} style={clipStyle} aria-hidden="true">
+            <div className={styles.haloRing}>{haloNodes}</div>
+            <div className={styles.canvasDecalInner}>{moonTreeNodes}</div>
+          </div>
+        ) : (
+          <div className={styles.haloRing} aria-hidden="true">
+            {haloNodes}
+          </div>
+        )}
 
         <div className={styles.imageWrap}>
-          {variant === 'canvas' ? (
-            <div className={styles.portraitCrop}>
-              <img
-                src={SELF_PORTRAIT_URL}
-                alt="Vincent van Gogh — Self-Portrait"
-                className={styles.image}
-                draggable={false}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          ) : (
+          <div className={styles.portraitCrop}>
             <img
               src={SELF_PORTRAIT_URL}
               alt="Vincent van Gogh — Self-Portrait"
@@ -132,25 +217,8 @@ export function StarryNightFrame({ variant = 'canvas' }: StarryNightFrameProps) 
               loading="lazy"
               decoding="async"
             />
-          )}
-          <img
-            src={MOON_URL}
-            alt=""
-            className={styles.cornerMoon}
-            draggable={false}
-            loading="lazy"
-            decoding="async"
-          />
-          <div className={styles.cornerTreeOuter}>
-            <img
-              src={TREE_URL}
-              alt=""
-              className={styles.cornerTree}
-              draggable={false}
-              loading="lazy"
-              decoding="async"
-            />
           </div>
+          {variant === 'css' ? moonTreeNodes : null}
         </div>
       </div>
     </div>
