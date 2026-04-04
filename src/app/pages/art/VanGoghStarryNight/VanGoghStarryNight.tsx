@@ -69,35 +69,19 @@ const CANVAS_WIDTH_MAX = 420;
 const CANVAS_WIDTH_DEFAULT = 380;
 const CANVAS_WIDTH_STEP = 4;
 
-/** `border-image-repeat` — 한 값으로 가로·세로 변에 동일 적용 */
-const BORDER_IMAGE_REPEAT_OPTIONS = [
-  { value: 'stretch', label: 'Stretch', hint: 'Scale edge fill to fit (no repeat).' },
-  { value: 'repeat', label: 'Repeat', hint: 'Tile at native size; may clip at corners.' },
-  { value: 'round', label: 'Round', hint: 'Tile count adjusts; scales evenly (no clip).' },
-  {
-    value: 'space',
-    label: 'Space',
-    hint:
-      'Whole tiles only, no scaling — short edges may show nothing (e.g. top/bottom on a tall frame).',
-  },
-] as const;
-
-type BorderImageRepeatOption = (typeof BORDER_IMAGE_REPEAT_OPTIONS)[number]['value'];
-
 export function VanGoghStarryNight() {
   const canvasLabelId = useId();
   const canvasScaleId = useId();
   const canvasHintId = useId();
-  const tileRepeatLabelId = useId();
-  const tileRepeatId = useId();
-  const tileRepeatHintId = useId();
   const [canvasWidthPx, setCanvasWidthPx] = useState(CANVAS_WIDTH_DEFAULT);
-  const [borderImageRepeat, setBorderImageRepeat] =
-    useState<BorderImageRepeatOption>('round');
 
-  const frameWrapStyle = {
+  const frameWrapStyleShared = {
     '--starry-frame-max-width': `${canvasWidthPx}px`,
-    '--starry-border-image-repeat': borderImageRepeat,
+  } as CSSProperties;
+
+  const frameWrapStyleCss = {
+    ...frameWrapStyleShared,
+    '--starry-border-image-repeat': 'round',
   } as CSSProperties;
 
   return (
@@ -149,41 +133,27 @@ export function VanGoghStarryNight() {
             </span>
           </div>
           <p id={canvasHintId} className={styles.canvasControlHint}>
-            Corners stay fixed; seamless tiles stretch along the border as the canvas changes.
+            Use the slider to change the preview width for both panels below.
           </p>
-          <div className={styles.tileRepeatControl}>
-            <label
-              id={tileRepeatLabelId}
-              className={styles.canvasControlLabel}
-              htmlFor={tileRepeatId}
-            >
-              Edge tiles
-            </label>
-            <select
-              id={tileRepeatId}
-              className={styles.tileRepeatSelect}
-              value={borderImageRepeat}
-              onChange={(e) => {
-                setBorderImageRepeat(e.target.value as BorderImageRepeatOption);
-              }}
-              aria-labelledby={tileRepeatLabelId}
-              aria-describedby={tileRepeatHintId}
-            >
-              {BORDER_IMAGE_REPEAT_OPTIONS.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <p id={tileRepeatHintId} className={styles.tileRepeatHint} aria-live="polite">
-            {
-              BORDER_IMAGE_REPEAT_OPTIONS.find((o) => o.value === borderImageRepeat)?.hint ??
-              ''
-            }
-          </p>
-          <div className={styles.chapter2Content} style={frameWrapStyle}>
-            <StarryNightFrame />
+          <div className={styles.chapter2Compare}>
+            <div className={styles.chapter2Panel}>
+              <h3 className={styles.chapter2PanelTitle}>CSS border-image</h3>
+              <p className={styles.chapter2PanelHint}>
+                9-slice seamless PNG, browser tiling (round).
+              </p>
+              <div className={styles.chapter2PanelFrame} style={frameWrapStyleCss}>
+                <StarryNightFrame variant="css" />
+              </div>
+            </div>
+            <div className={styles.chapter2Panel}>
+              <h3 className={styles.chapter2PanelTitle}>Canvas wavy ring</h3>
+              <p className={styles.chapter2PanelHint}>
+                Procedural path: rounded corners + edge waves; texture fill + inner cut-out.
+              </p>
+              <div className={styles.chapter2PanelFrame} style={frameWrapStyleShared}>
+                <StarryNightFrame variant="canvas" />
+              </div>
+            </div>
           </div>
         </section>
 

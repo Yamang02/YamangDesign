@@ -7,21 +7,38 @@
 
 .frame {
   --starryBorderY: 36px;
-  /* 좌우만 조금 더 넓게 (seamless 9-slice 가로 변이 늘어나도록) */
+  /* 좌우만 조금 더 넓게 */
   --starryBorderX: 44px;
   /* 데칼·halo: 기준 60px 테두리 대비 축소 비율 */
   --starryDecorScale: calc(36 / 60);
 
   position: relative;
   box-sizing: border-box;
+}
+
+/* Canvas 띠: 패딩 = 테두리 두께 (캔버스가 같은 영역에 링을 그림) */
+.frameCanvas {
+  border: none;
+  padding: var(--starryBorderY) var(--starryBorderX);
+  /*
+   * 캔버스 렌더 실패/지연에도 링이 완전히 사라지지 않도록 기본 텍스처를 깐다.
+   * 실제 wavy 윤곽·디테일은 StarryNightCanvasBorder(canvas)가 위에서 덮어쓴다.
+   */
+  background:
+    url("/art/starry-night/seamless_bg.png")
+    center / cover
+    no-repeat;
+}
+
+/* 기존 CSS border-image 9-slice */
+.frameCss {
+  padding: 0;
   border-style: solid;
   border-color: transparent;
-  border-width: var(--starryBorderY) var(--starryBorderX) var(--starryBorderY)
-    var(--starryBorderX);
+  border-width: var(--starryBorderY) var(--starryBorderX);
   border-image-source: url("/art/starry-night/seamless_bg.png");
   border-image-slice: 36;
-  border-image-width: var(--starryBorderY) var(--starryBorderX) var(--starryBorderY)
-    var(--starryBorderX);
+  border-image-width: var(--starryBorderY) var(--starryBorderX);
   border-image-repeat: var(--starry-border-image-repeat, round);
 }
 
@@ -36,6 +53,26 @@
 
   /* 자화상 가장자리가 투명해질 때 드러나는 색 — seamless 테두리 톤에 맞춤 */
   background-color: #152a5c;
+}
+
+/* wavy ring(canvas): 내부 박스에 맞춰 자화상을 cover */
+.portraitCrop {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: min(10px, 2.5vw);
+  aspect-ratio: 3 / 4;
+}
+
+.portraitCrop .image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
 }
 
 .image {
