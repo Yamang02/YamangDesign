@@ -37,3 +37,7 @@ Design Labs는 전부 Design System 토큰 탐색 도구(PaletteLab, StyleLab, F
 - [x] P02 완료
 - [x] P03 완료
 - [x] P04 완료
+
+## 완료
+
+아카이브일: 2026-04-04
