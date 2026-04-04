@@ -195,6 +195,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* 테두리·링이 패널 가장자리에 붙어 잘리지 않도록 */
+  padding: var(--ds-spacing-3, 12px) var(--ds-spacing-2, 8px);
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {

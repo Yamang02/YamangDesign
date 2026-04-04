@@ -8,7 +8,10 @@ import {
   readPaddingPx,
 } from './starryNightRingPath';
 import type { CanvasMotionPreference } from './starryNightRingPath';
-import { StarryNightCanvasBorder } from './StarryNightCanvasBorder';
+import {
+  STARRY_NIGHT_SEAMLESS_BG_URL,
+  StarryNightCanvasBorder,
+} from './StarryNightCanvasBorder';
 import styles from './StarryNightFrame.module.css';
 
 export type StarryNightFrameVariant = 'css' | 'canvas';
@@ -86,7 +89,7 @@ interface StarryNightFrameProps {
 
 export function StarryNightFrame({
   variant = 'canvas',
-  canvasMotionPreference = 'system',
+  canvasMotionPreference = 'full',
 }: StarryNightFrameProps) {
   const frameRef = useRef<HTMLDivElement>(null);
   const [haloStyles, setHaloStyles] = useState(() => buildHaloStyles());
@@ -178,11 +181,18 @@ export function StarryNightFrame({
     </>
   );
 
-  const clipStyle: CSSProperties | undefined =
+  const ringPathStyle: CSSProperties | undefined =
     variant === 'canvas' && canvasRingClipPath
       ? {
           clipPath: `path(evenodd, '${canvasRingClipPath}')`,
           WebkitClipPath: `path(evenodd, '${canvasRingClipPath}')`,
+        }
+      : undefined;
+  const canvasTextureStyle: CSSProperties | undefined =
+    variant === 'canvas'
+      ? {
+          ...ringPathStyle,
+          backgroundImage: `url("${STARRY_NIGHT_SEAMLESS_BG_URL}")`,
         }
       : undefined;
 
@@ -190,14 +200,18 @@ export function StarryNightFrame({
     <div className={styles.wrapper}>
       <div ref={frameRef} className={frameClass}>
         {variant === 'canvas' ? (
+          <div className={styles.canvasTextureRing} style={canvasTextureStyle} aria-hidden="true" />
+        ) : null}
+        {variant === 'canvas' ? (
           <StarryNightCanvasBorder
             containerRef={frameRef}
+            ringClipPathReady={Boolean(canvasRingClipPath)}
             motionPreference={canvasMotionPreference}
           />
         ) : null}
 
         {variant === 'canvas' ? (
-          <div className={styles.canvasDecalClip} style={clipStyle} aria-hidden="true">
+          <div className={styles.canvasDecalClip} style={ringPathStyle} aria-hidden="true">
             <div className={styles.haloRing}>{haloNodes}</div>
             <div className={styles.canvasDecalInner}>{moonTreeNodes}</div>
           </div>

@@ -2,7 +2,7 @@
  * E30: Art Reference Gallery — The Starry Night, Vincent van Gogh (1889)
  * Ch.1 원화 · Ch.2 Canvas 프레임 인상 · Ch.3 팔레트 × DS 적용
  */
-import { useId, useState, type CSSProperties } from 'react';
+import { useId, useLayoutEffect, useState, type CSSProperties } from 'react';
 import { ArtShell, type ArtChapter } from '../_shared/ArtShell';
 import { ArtHeroStage } from '../_shared/ArtHeroStage';
 import type { LabelInfo } from '../_shared/ArtHeroStage';
@@ -14,7 +14,10 @@ import type {
   ArtCardMeta,
 } from '../_shared/ArtApplicationSection';
 import { STARRY_NIGHT_PALETTE, STARRY_NIGHT_SWATCHES } from './starry-night-palette';
-import type { CanvasMotionPreference } from './components/StarryNightCanvasBorder';
+import {
+  STARRY_NIGHT_SEAMLESS_BG_URL,
+  type CanvasMotionPreference,
+} from './components/StarryNightCanvasBorder';
 import { StarryNightFrame } from './components/StarryNightFrame';
 import styles from './VanGoghStarryNight.module.css';
 
@@ -89,6 +92,17 @@ const CANVAS_MOTION_OPTIONS: ReadonlyArray<{
 ];
 
 export function VanGoghStarryNight() {
+  useLayoutEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = STARRY_NIGHT_SEAMLESS_BG_URL;
+    document.head.appendChild(link);
+    return () => {
+      link.remove();
+    };
+  }, []);
+
   const canvasLabelId = useId();
   const canvasScaleId = useId();
   const canvasHintId = useId();
@@ -99,7 +113,7 @@ export function VanGoghStarryNight() {
   const [canvasWidthPx, setCanvasWidthPx] = useState(CANVAS_WIDTH_DEFAULT);
   const [borderImageRepeat, setBorderImageRepeat] = useState<BorderImageRepeatKeyword>('round');
   const [canvasMotionPreference, setCanvasMotionPreference] =
-    useState<CanvasMotionPreference>('system');
+    useState<CanvasMotionPreference>('full');
 
   const frameWrapStyleShared = {
     '--starry-frame-max-width': `${canvasWidthPx}px`,

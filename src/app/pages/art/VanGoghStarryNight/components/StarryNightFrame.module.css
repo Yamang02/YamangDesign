@@ -6,11 +6,12 @@
 }
 
 .frame {
-  --starryBorderY: 36px;
+  /* 링·스트로크가 데칼·자화상 마스크에 덜 가려지도록 약간 넓힘 */
+  --starryBorderY: 40px;
   /* 좌우만 조금 더 넓게 — canvas 데칼 위치(imageWrap 과 동일 콘텐츠 박스) */
-  --starryBorderX: 44px;
+  --starryBorderX: 48px;
   /* 데칼·halo: 기준 60px 테두리 대비 축소 비율 */
-  --starryDecorScale: calc(36 / 60);
+  --starryDecorScale: calc(40 / 60);
 
   position: relative;
   box-sizing: border-box;
@@ -51,6 +52,29 @@
 /* 오른쪽 패널: 자화상 < 링 캔버스 < 데칼 */
 .frameCanvas .imageWrap {
   z-index: 1;
+}
+
+/* 텍스처는 CSS 레이어가 담당 (최초 로딩 안정성) */
+.canvasTextureRing {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  padding: var(--starryBorderY) var(--starryBorderX);
+  pointer-events: none;
+  background-color: #2f4d96;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
 }
 
 /* wavy ring(canvas): 내부 박스에 맞춰 자화상을 cover */
@@ -102,7 +126,7 @@
 .canvasDecalClip {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   overflow: hidden;
   isolation: isolate;
   pointer-events: none;

@@ -1,7 +1,7 @@
 /**
- * E30 Ch.2 — Canvas wavy ring (물결 외곽 + 안쪽 홀)
+ * E30 Ch.2 — Canvas wavy ring stroke overlay (물결 외곽 + 안쪽 홀 스트로크)
  *
- * 경로·패딩은 starryNightRingPath 와 공유 (clip-path 와 동일 시각).
+ * 텍스처 채우기는 CSS 레이어가 담당하고, 캔버스는 stroke만 담당한다.
  */
 import { useLayoutEffect, useRef, type RefObject } from 'react';
 import {
@@ -16,26 +16,8 @@ import styles from './StarryNightCanvasBorder.module.css';
 
 export type { CanvasMotionPreference } from './starryNightRingPath';
 
-const SEAMLESS_URL = '/art/starry-night/seamless_bg.png';
-const FALLBACK_RING_FILL = '#2F4D96';
-
-/** object-fit: cover 와 동일 — 링 전체를 덮도록 균일 확대 후 중앙 크롭 */
-function drawImageCover(
-  ctx: CanvasRenderingContext2D,
-  img: CanvasImageSource,
-  iw: number,
-  ih: number,
-  cw: number,
-  ch: number
-): void {
-  if (iw <= 0 || ih <= 0 || cw <= 0 || ch <= 0) return;
-  const scale = Math.max(cw / iw, ch / ih);
-  const dw = iw * scale;
-  const dh = ih * scale;
-  const dx = (cw - dw) / 2;
-  const dy = (ch - dh) / 2;
-  ctx.drawImage(img, dx, dy, dw, dh);
-}
+/** CSS `border-image` / Canvas 링 공통 — 페이지 `preload`와 경로 일치 */
+export const STARRY_NIGHT_SEAMLESS_BG_URL = '/art/starry-night/seamless_bg.png';
 
 function strokeOuterWavyPath(
   ctx: CanvasRenderingContext2D,
@@ -51,12 +33,15 @@ function strokeOuterWavyPath(
 
 interface StarryNightCanvasBorderProps {
   readonly containerRef: RefObject<HTMLDivElement | null>;
+  /** 부모에서 링 `clip-path` d 계산 완료 — 레이아웃·스트로크 동기 재페인트 */
+  readonly ringClipPathReady?: boolean;
   readonly motionPreference?: CanvasMotionPreference;
 }
 
 export function StarryNightCanvasBorder({
   containerRef,
-  motionPreference = 'system',
+  ringClipPathReady = false,
+  motionPreference = 'full',
 }: StarryNightCanvasBorderProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -65,17 +50,15 @@ export function StarryNightCanvasBorder({
     const canvas = canvasRef.current;
     if (!el || !canvas) return;
 
-    const img = new Image();
-    img.decoding = 'async';
-    img.src = SEAMLESS_URL;
-
     const paint = () => {
       const ctx = canvas.getContext('2d', { alpha: true });
       if (!ctx) return;
 
       const W = el.clientWidth;
       const H = el.clientHeight;
-      if (W < 2 || H < 2) return;
+      if (W < 2 || H < 2) {
+        return;
+      }
 
       const { padX, padY } = readPaddingPx(el);
 
@@ -97,80 +80,38 @@ export function StarryNightCanvasBorder({
       ctx.globalCompositeOperation = 'source-over';
       ctx.clearRect(0, 0, W, H);
 
-      const paintRingBands = () => {
-        ctx.fillStyle = FALLBACK_RING_FILL;
-        ctx.fillRect(0, 0, W, padY);
-        ctx.fillRect(0, H - padY, W, padY);
-        ctx.fillRect(0, padY, padX, Math.max(0, H - 2 * padY));
-        ctx.fillRect(W - padX, padY, padX, Math.max(0, H - 2 * padY));
-        if (img.complete && img.naturalWidth > 0) {
-          try {
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(0, 0, W, padY);
-            ctx.rect(0, H - padY, W, padY);
-            ctx.rect(0, padY, padX, Math.max(0, H - 2 * padY));
-            ctx.rect(W - padX, padY, padX, Math.max(0, H - 2 * padY));
-            ctx.clip();
-            drawImageCover(ctx, img, img.naturalWidth, img.naturalHeight, W, H);
-            ctx.restore();
-          } catch {
-            /* 단색 밴드만 */
-          }
-        }
-      };
-
       if (iw > 1 && ih > 1) {
         ctx.save();
         ctx.beginPath();
-        traceOuterWavyPath(ctx, W, H, r, waveAmp, waves);
         traceInnerRoundedRectPath(ctx, padX, padY, iw, ih, innerR);
-        ctx.clip('evenodd');
-
-        ctx.fillStyle = FALLBACK_RING_FILL;
-        ctx.fillRect(0, 0, W, H);
-
-        if (img.complete && img.naturalWidth > 0) {
-          try {
-            drawImageCover(ctx, img, img.naturalWidth, img.naturalHeight, W, H);
-          } catch {
-            /* 단색만 */
-          }
-        }
-        ctx.restore();
-
-        ctx.save();
-        ctx.beginPath();
-        traceInnerRoundedRectPath(ctx, padX, padY, iw, ih, innerR);
-        ctx.strokeStyle = 'rgba(245, 200, 66, 0.16)';
+        /* CSS 텍스처 위에서도 보이도록 대비 유지 (이전 단색 채움 대비) */
+        ctx.strokeStyle = 'rgba(245, 200, 66, 0.48)';
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.restore();
-      } else {
-        paintRingBands();
       }
 
       if (iw > 1 && ih > 1) {
         strokeOuterWavyPath(ctx, W, H, r, waveAmp, waves);
         if (reduce || waveAmp <= 0.25) {
-          ctx.strokeStyle = 'rgba(245, 200, 66, 0.22)';
-          ctx.lineWidth = 1.1;
+          ctx.strokeStyle = 'rgba(245, 200, 66, 0.58)';
+          ctx.lineWidth = 1.15;
           ctx.stroke();
         } else {
-          ctx.strokeStyle = 'rgba(245, 200, 66, 0.14)';
-          ctx.lineWidth = 3;
+          ctx.strokeStyle = 'rgba(245, 200, 66, 0.42)';
+          ctx.lineWidth = 2.75;
           ctx.lineJoin = 'round';
           ctx.lineCap = 'round';
           ctx.stroke();
           strokeOuterWavyPath(ctx, W, H, r, waveAmp, waves);
-          ctx.strokeStyle = 'rgba(255, 228, 160, 0.55)';
+          ctx.strokeStyle = 'rgba(255, 228, 160, 0.82)';
           ctx.lineWidth = 1.35;
           ctx.stroke();
         }
       } else if (waveAmp > 0.25) {
         strokeOuterWavyPath(ctx, W, H, r, waveAmp, waves);
-        ctx.strokeStyle = 'rgba(245, 200, 66, 0.22)';
-        ctx.lineWidth = 1.1;
+        ctx.strokeStyle = 'rgba(245, 200, 66, 0.58)';
+        ctx.lineWidth = 1.15;
         ctx.stroke();
       }
     };
@@ -179,24 +120,102 @@ export function StarryNightCanvasBorder({
       globalThis.requestAnimationFrame(paint);
     };
 
-    img.onload = paintSoon;
+    /** 첫 컴포지트 이후에도 스트로크가 비는 경우 대비 — 뷰포트·가시성 변화 때 한 번 더 그림 */
+    const repaintAfterViewportSignal = () => {
+      globalThis.requestAnimationFrame(() => {
+        globalThis.requestAnimationFrame(paintSoon);
+      });
+    };
+
     paintSoon();
 
-    const ro = new ResizeObserver(paintSoon);
+    let layoutRetries = 0;
+    const MAX_LAYOUT_RETRIES = 90;
+    const paintWhenSized = () => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      if (w >= 2 && h >= 2) {
+        layoutRetries = 0;
+        paintSoon();
+        return;
+      }
+      if (layoutRetries < MAX_LAYOUT_RETRIES) {
+        layoutRetries += 1;
+        globalThis.requestAnimationFrame(paintWhenSized);
+      }
+    };
+    globalThis.requestAnimationFrame(() => {
+      globalThis.requestAnimationFrame(paintWhenSized);
+    });
+
+    const ro = new ResizeObserver(() => {
+      layoutRetries = 0;
+      paintSoon();
+    });
     ro.observe(el);
 
     const mq =
       motionPreference === 'system' && typeof globalThis.matchMedia === 'function'
         ? globalThis.matchMedia('(prefers-reduced-motion: reduce)')
         : null;
-    mq?.addEventListener('change', paintSoon);
+    const onMqChange = () => {
+      paintSoon();
+    };
+    mq?.addEventListener('change', onMqChange);
+
+    let intersectionObserver: IntersectionObserver | null = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      intersectionObserver = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.target === el && entry.isIntersecting) {
+              repaintAfterViewportSignal();
+            }
+          }
+        },
+        { root: null, rootMargin: '0px', threshold: 0 }
+      );
+      intersectionObserver.observe(el);
+    }
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        repaintAfterViewportSignal();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    const vv = globalThis.visualViewport;
+    const onVisualViewportChange = () => {
+      repaintAfterViewportSignal();
+    };
+    vv?.addEventListener('resize', onVisualViewportChange);
+
+    const onPageShow = () => {
+      repaintAfterViewportSignal();
+    };
+    globalThis.addEventListener('pageshow', onPageShow);
+
+    let clipReadyTimer: number | undefined;
+    if (ringClipPathReady) {
+      repaintAfterViewportSignal();
+      clipReadyTimer = globalThis.setTimeout(() => {
+        paintSoon();
+      }, 160);
+    }
 
     return () => {
+      if (clipReadyTimer !== undefined) {
+        globalThis.clearTimeout(clipReadyTimer);
+      }
       ro.disconnect();
-      mq?.removeEventListener('change', paintSoon);
-      img.onload = null;
+      mq?.removeEventListener('change', onMqChange);
+      intersectionObserver?.disconnect();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      vv?.removeEventListener('resize', onVisualViewportChange);
+      globalThis.removeEventListener('pageshow', onPageShow);
     };
-  }, [containerRef, motionPreference]);
+  }, [containerRef, motionPreference, ringClipPathReady]);
 
   return <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />;
 }

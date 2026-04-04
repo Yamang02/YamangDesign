@@ -4,8 +4,8 @@
 export type CanvasMotionPreference = 'system' | 'full' | 'reduced';
 
 export const STARRY_RING_WAVES = 2.35;
-export const DEFAULT_PAD_X = 44;
-export const DEFAULT_PAD_Y = 36;
+export const DEFAULT_PAD_X = 48;
+export const DEFAULT_PAD_Y = 40;
 
 export function readPaddingPx(el: HTMLElement): { padX: number; padY: number } {
   const cs = getComputedStyle(el);
