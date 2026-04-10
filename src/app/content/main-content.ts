@@ -16,7 +16,7 @@ export const mainHero = {
   titleBrand: '야망',
   titleTrail: '의 워크벤치',
   subtitle:
-    '레이아웃·컴포넌트·시맨틱 매핑을 한 흐름으로 비교하고, 아트 레퍼런스를 통해 디자인시스템의 확장 가능성까지 함께 탐색하는 프로젝트 공간입니다.',
+    '레이아웃·컴포넌트·시맨틱 매핑을 한 흐름으로 비교하고, 아트 레퍼런스를 통해 디자인 시스템의 확장 가능성까지 함께 탐색하는 프로젝트 공간입니다.',
   primaryCta: { label: 'Playground 입장', target: 'playground' },
   secondaryCta: { label: 'Layouts 보기', target: 'layout-landing' },
 } as const;
@@ -31,6 +31,15 @@ export const mainSections = {
 
 export const mainModules: ReadonlyArray<MainModule> = [
   {
+    id: 'playground',
+    title: 'Playground',
+    description:
+      '토큰 조합과 UI 반응을 실시간으로 미리 보고, 결정 전에 빠르게 검증하는 샌드박스입니다.',
+    icon: 'widgets',
+    cta: '샌드박스 진입',
+    variant: 'default',
+  },
+  {
     id: 'layout-landing',
     title: 'Layouts',
     description: '정보 위계를 빠르게 검증할 수 있는 화면 구조 템플릿을 제공합니다.',
@@ -38,15 +47,6 @@ export const mainModules: ReadonlyArray<MainModule> = [
     cta: '구조 탐색',
     variant: 'feature',
     submenuBadges: ['Landing', 'Dashboard', 'Article'],
-  },
-  {
-    id: 'playground',
-    title: 'Playground',
-    description:
-      'Playground 메뉴에서는 토큰 조합과 UI 반응을 실시간으로 미리 보고, 결정 전에 빠르게 검증합니다.',
-    icon: 'widgets',
-    cta: '샌드박스 진입',
-    variant: 'default',
   },
   {
     id: 'palette',
@@ -88,7 +88,7 @@ export const mainModules: ReadonlyArray<MainModule> = [
   {
     id: 'starry-night',
     title: 'Art',
-    description: '자유로운 영감과 디자인시스템의 확장 가능성 탐색',
+    description: '자유로운 영감과 디자인 시스템의 확장 가능성을 함께 탐색합니다.',
     icon: 'image',
     cta: '갤러리 입장',
     variant: 'default',

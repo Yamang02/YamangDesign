@@ -70,6 +70,7 @@
     color: var(--ds-color-text-secondary);
     font-size: var(--ds-text-xl);
     line-height: 1.6;
+    word-break: keep-all;
   }
 
   .heroActions {
@@ -226,6 +227,7 @@
     margin: 0;
     color: var(--ds-color-text-secondary);
     line-height: 1.6;
+    word-break: keep-all;
     flex: 1;
   }
 
@@ -276,6 +278,10 @@
 
     .heroSubtitle {
       font-size: var(--ds-text-lg);
+    }
+
+    .heroTitle br {
+      display: none;
     }
   }
 }
