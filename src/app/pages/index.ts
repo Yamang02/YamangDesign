@@ -19,6 +19,7 @@ export {
 export { Atoms, Molecules, Organisms, Components } from './build';
 export { Service, Shell } from './context';
 export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';
+export { Main } from './main';
 
 export { MonetWaterLilies } from './art/MonetWaterLilies';
 export { MatisseDanceII } from './art/MatisseDanceII';

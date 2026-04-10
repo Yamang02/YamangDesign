@@ -1,0 +1,357 @@
+@layer ds {
+  .mainRoot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-16);
+    padding-bottom: var(--ds-spacing-16);
+  }
+
+  .hero,
+  .ecosystem,
+  .spotlight {
+    width: var(--app-main-content-width);
+    max-width: var(--app-main-content-max-width);
+    margin-inline: auto;
+  }
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: clamp(24rem, 52vh, 40rem);
+    border-radius: var(--ds-radius-lg);
+    background: linear-gradient(
+      145deg,
+      var(--ds-color-bg-base) 0%,
+      var(--ds-color-bg-surface-low) 52%,
+      var(--ds-color-bg-surface) 100%
+    );
+    box-shadow: var(--app-main-panel-shadow);
+    padding: clamp(var(--ds-spacing-8), 7vw, var(--ds-spacing-16));
+  }
+
+  .heroContent {
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
+  }
+
+  .heroBadge {
+    display: inline-block;
+    margin-bottom: var(--ds-spacing-4);
+    padding: var(--ds-spacing-2) var(--ds-spacing-3);
+    border-radius: var(--ds-radius-full);
+    background-color: var(--ds-color-bg-surface-brand);
+    color: var(--ds-color-text-on-action-primary);
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-font-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .heroTitle {
+    margin: 0;
+    color: var(--ds-color-text-primary);
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: var(--ds-font-weight-bold);
+    line-height: 1.08;
+  }
+
+  .heroTitleAccent {
+    background: linear-gradient(
+      145deg,
+      var(--ds-color-action-primary-default),
+      var(--ds-color-action-accent-default)
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  .heroSubtitle {
+    margin: var(--ds-spacing-5) 0 0;
+    max-width: 42rem;
+    color: var(--ds-color-text-secondary);
+    font-size: var(--ds-text-xl);
+    line-height: 1.6;
+  }
+
+  .heroActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-3);
+    margin-top: var(--ds-spacing-8);
+  }
+
+  .heroBackdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .heroOrb {
+    position: absolute;
+    border-radius: var(--ds-radius-full);
+    filter: blur(var(--app-main-hero-orb-blur));
+    opacity: var(--app-main-hero-orb-opacity);
+  }
+
+  .heroOrbPrimary {
+    top: -20%;
+    right: -8%;
+    width: clamp(16rem, 34vw, 28rem);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, var(--ds-color-action-primary-default) 0%, transparent 68%);
+  }
+
+  .heroOrbAccent {
+    bottom: -30%;
+    left: 10%;
+    width: clamp(14rem, 28vw, 22rem);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, var(--ds-color-action-accent-default) 0%, transparent 72%);
+  }
+
+  .ecosystem {
+    padding: var(--ds-spacing-10) clamp(var(--ds-spacing-4), 4vw, var(--ds-spacing-8));
+    border-radius: var(--ds-radius-lg);
+    background-color: var(--ds-color-bg-surface-low);
+  }
+
+  .sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--ds-spacing-6);
+    margin-bottom: var(--ds-spacing-8);
+  }
+
+  .sectionTitle {
+    margin: 0;
+    color: var(--ds-color-text-primary);
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .sectionSubtitle {
+    margin: var(--ds-spacing-3) 0 0;
+    max-width: 38rem;
+    color: var(--ds-color-text-secondary);
+    font-size: var(--ds-text-lg);
+    line-height: 1.5;
+  }
+
+  .sectionBar {
+    width: 7rem;
+    height: 0.3rem;
+    border-radius: var(--ds-radius-full);
+    background: linear-gradient(
+      90deg,
+      var(--ds-color-action-primary-default),
+      var(--ds-color-action-accent-default)
+    );
+    flex-shrink: 0;
+  }
+
+  .moduleGrid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--ds-spacing-5);
+  }
+
+  .moduleTile {
+    grid-column: span 4;
+    border: 0;
+    border-radius: var(--ds-radius-lg);
+    background: var(--ds-color-bg-elevated);
+    box-shadow: var(--app-main-card-shadow);
+    color: inherit;
+    padding: var(--ds-spacing-6);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+    cursor: pointer;
+    transition: var(--ds-transition-interactive-full);
+  }
+
+  .moduleTile:hover,
+  .moduleTile:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: var(--app-main-card-shadow-hover);
+  }
+
+  .moduleTile:focus-visible {
+    outline: var(--ds-focus-ring-width) solid var(--ds-focus-ring-color);
+    outline-offset: var(--ds-focus-ring-offset);
+  }
+
+  .moduleTileFeature {
+    grid-column: span 8;
+  }
+
+  .moduleTileWide {
+    grid-column: span 12;
+  }
+
+  .moduleTop {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+  }
+
+  .moduleIcon {
+    color: var(--ds-color-action-primary-default);
+  }
+
+  .moduleTitle {
+    margin: 0;
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-xl);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .moduleDescription {
+    margin: 0;
+    color: var(--ds-color-text-secondary);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .moduleCta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+    color: var(--ds-color-action-primary-default);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .spotlight {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(var(--ds-spacing-6), 5vw, var(--ds-spacing-12));
+    align-items: center;
+  }
+
+  .spotlightMedia {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--ds-radius-lg);
+    min-height: clamp(18rem, 34vw, 30rem);
+    background: linear-gradient(
+      155deg,
+      var(--ds-color-bg-surface) 0%,
+      var(--ds-color-bg-surface-brand) 100%
+    );
+    box-shadow: var(--app-main-panel-shadow);
+    display: flex;
+    align-items: end;
+    padding: var(--ds-spacing-5);
+  }
+
+  .spotlightSurface {
+    position: absolute;
+    inset: 14%;
+    border-radius: var(--ds-radius-lg);
+    background: linear-gradient(
+      155deg,
+      var(--ds-color-bg-elevated) 0%,
+      var(--ds-color-bg-surface) 100%
+    );
+    box-shadow: var(--app-main-card-shadow);
+    transform: rotate(-6deg);
+  }
+
+  .spotlightChipRow {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-2);
+  }
+
+  .spotlightChip {
+    border-radius: var(--ds-radius-full);
+    background: var(--ds-color-bg-elevated);
+    padding: var(--ds-spacing-1-5) var(--ds-spacing-3);
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-medium);
+    box-shadow: var(--app-main-chip-shadow);
+  }
+
+  .spotlightTitle {
+    margin: 0;
+    color: var(--ds-color-text-primary);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .spotlightQuote {
+    margin: var(--ds-spacing-4) 0 0;
+    color: var(--ds-color-text-secondary);
+    font-size: var(--ds-text-lg);
+    line-height: 1.7;
+  }
+
+  .spotlightMeta {
+    margin: var(--ds-spacing-4) 0 var(--ds-spacing-6);
+    color: var(--ds-color-text-muted);
+    font-size: var(--ds-text-sm);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 960px) {
+    .moduleTile,
+    .moduleTileFeature {
+      grid-column: span 6;
+    }
+
+    .moduleTileWide {
+      grid-column: span 12;
+    }
+
+    .spotlight {
+      grid-template-columns: 1fr;
+    }
+
+    .spotlightMedia {
+      min-height: 18rem;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .mainRoot {
+      gap: var(--ds-spacing-10);
+    }
+
+    .hero,
+    .ecosystem,
+    .spotlight {
+      width: min(100% - var(--ds-spacing-4), var(--app-main-content-max-width));
+    }
+
+    .sectionHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: var(--ds-spacing-6);
+    }
+
+    .sectionBar {
+      width: 5rem;
+    }
+
+    .moduleGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .moduleTile,
+    .moduleTileFeature,
+    .moduleTileWide {
+      grid-column: auto;
+    }
+
+    .heroSubtitle {
+      font-size: var(--ds-text-lg);
+    }
+  }
+}

@@ -12,6 +12,7 @@ import { loadPaletteSelection, createCustomSelection } from '@app/state/palette-
 import { findThemeById } from '@domain/palettes/presets/registry';
 import { saveComponentMappingOverrides } from '@app/infra/storage';
 import {
+  Main,
   Landing,
   PaletteLab,
   StyleLab,
@@ -57,6 +58,7 @@ import { ComponentInspectorPanel } from '@app/components/ComponentInspector/Comp
 
 /** E06 P01 + P05: Labs / Build / Context / Playground / Design Settings */
 export type PageName =
+  | 'main'
   | 'landing'
   | 'dashboard'
   | 'card-grid'
@@ -149,7 +151,7 @@ const defaultPalette = {
 } as const;
 
 function App() {
-  const [page, setPage] = useState<PageName>('landing');
+  const [page, setPage] = useState<PageName>('main');
   const [designSettingsInitialTab, setDesignSettingsInitialTab] =
     useState<DesignSettingsTabId>('preset');
   const [appliedSettings, setAppliedSettings] = useState<StoredSettings | null>(
@@ -185,6 +187,8 @@ function App() {
             initialTab={designSettingsInitialTab}
           />
         );
+      case 'main':
+        return <Main onNavigate={handleSelect} />;
       case 'palette':
         return <PaletteLab />;
       case 'style':
@@ -253,7 +257,7 @@ function App() {
         appliedSettings={appliedSettings}
       >
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <Header onLogoClick={() => setPage('landing')}>
+          <Header onLogoClick={() => setPage('main')}>
             <HeaderNav
               activePage={page}
               onSelect={handleSelect}
