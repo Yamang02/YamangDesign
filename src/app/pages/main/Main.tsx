@@ -1,6 +1,6 @@
-import { Button, Icon } from '@app/components';
+ï»¿import { Button, Icon } from '@app/components';
 import { clsx } from '@shared/utils/clsx';
-import { mainHero, mainModules, mainSpotlight } from '@app/content/main-content';
+import { mainHero, mainModules, mainSections } from '@app/content/main-content';
 import styles from './Main.module.css';
 
 export interface MainProps {
@@ -18,7 +18,12 @@ export function Main({ onNavigate }: Readonly<MainProps>) {
         <div className={styles.heroContent}>
           <span className={styles.heroBadge}>{mainHero.badge}</span>
           <h1 className={styles.heroTitle}>
-            {mainHero.titleLead} <span className={styles.heroTitleAccent}>{mainHero.titleAccent}</span>{' '}
+            <span className={styles.heroTitleAccent}>{mainHero.titleAccent}</span>
+            {mainHero.titleAccentSuffix}
+            <br />
+            {mainHero.titleLead}
+            <br />
+            <span className={styles.heroTitleBrand}>{mainHero.titleBrand}</span>
             {mainHero.titleTrail}
           </h1>
           <p className={styles.heroSubtitle}>{mainHero.subtitle}</p>
@@ -40,10 +45,8 @@ export function Main({ onNavigate }: Readonly<MainProps>) {
       <section className={styles.ecosystem}>
         <header className={styles.sectionHeader}>
           <div>
-            <h2 className={styles.sectionTitle}>The Modular Ecosystem</h2>
-            <p className={styles.sectionSubtitle}>
-              Each area is mapped to a working page so the main screen acts as an operational hub.
-            </p>
+            <h2 className={styles.sectionTitle}>{mainSections.ecosystem.title}</h2>
+            <p className={styles.sectionSubtitle}>{mainSections.ecosystem.subtitle}</p>
           </div>
           <span className={styles.sectionBar} aria-hidden="true" />
         </header>
@@ -53,17 +56,24 @@ export function Main({ onNavigate }: Readonly<MainProps>) {
             <button
               key={module.id}
               type="button"
-              className={clsx(
-                styles.moduleTile,
-                module.variant === 'feature' && styles.moduleTileFeature,
-                module.variant === 'wide' && styles.moduleTileWide,
-              )}
+              className={clsx(styles.moduleTile, module.variant === 'feature' && styles.moduleTileFeature)}
               onClick={() => navigateTo(module.id)}
             >
               <div className={styles.moduleTop}>
                 <Icon name={module.icon} size="lg" className={styles.moduleIcon} />
                 <h3 className={styles.moduleTitle}>{module.title}</h3>
               </div>
+
+              {module.submenuBadges && module.submenuBadges.length > 0 && (
+                <div className={styles.moduleBadgeList}>
+                  {module.submenuBadges.map((label) => (
+                    <span key={`${module.id}-${label}`} className={styles.moduleBadge}>
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              )}
+
               <p className={styles.moduleDescription}>{module.description}</p>
               <span className={styles.moduleCta}>
                 {module.cta}
@@ -71,30 +81,6 @@ export function Main({ onNavigate }: Readonly<MainProps>) {
               </span>
             </button>
           ))}
-        </div>
-      </section>
-
-      <section className={styles.spotlight}>
-        <div className={styles.spotlightMedia} aria-hidden="true">
-          <div className={styles.spotlightSurface} />
-          <div className={styles.spotlightChipRow}>
-            {mainSpotlight.chips.map((chip) => (
-              <span key={chip} className={styles.spotlightChip}>
-                {chip}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.spotlightContent}>
-          <h2 className={styles.spotlightTitle}>{mainSpotlight.title}</h2>
-          <blockquote className={styles.spotlightQuote}>{mainSpotlight.quote}</blockquote>
-          <p className={styles.spotlightMeta}>
-            {mainSpotlight.author} ¡¤ {mainSpotlight.role}
-          </p>
-          <Button variant="primary" size="md" onClick={() => navigateTo(mainSpotlight.cta.target)}>
-            {mainSpotlight.cta.label}
-          </Button>
         </div>
       </section>
     </div>

@@ -21,6 +21,12 @@ export interface NavCategory {
 
 export const navCategories: NavCategory[] = [
   {
+    id: 'playground',
+    icon: 'ferris-wheel',
+    iconLibrary: 'nucleo',
+    tooltip: 'Playground',
+  },
+  {
     id: 'layouts',
     icon: 'grid-view',
     iconLibrary: 'material',
@@ -81,11 +87,5 @@ export const navCategories: NavCategory[] = [
       { id: 'golconda', label: 'Golconda', icon: 'image' },
       { id: 'starry-night', label: 'Starry Night', icon: 'image' },
     ],
-  },
-  {
-    id: 'playground',
-    icon: 'ferris-wheel',
-    iconLibrary: 'nucleo',
-    tooltip: 'Playground',
   },
 ];

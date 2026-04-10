@@ -59,6 +59,7 @@ export function HeaderNav({
       >
         {navCategories.map((category) => {
           const label = category.tooltip;
+          const showDividerBefore = category.id === 'labs';
           const icon = (
             <Icon
               name={category.icon}
@@ -69,28 +70,30 @@ export function HeaderNav({
 
           if (category.items) {
             return (
-              <HeaderNavDropdown
-                key={category.id}
-                icon={icon}
-                label={label}
-                items={category.items.map((item) => ({
-                  id: item.id,
-                  label: item.label,
-                  icon: item.icon,
-                  iconLibrary: item.iconLibrary,
-                }))}
-                active={category.items.some((item) => item.id === activePage)}
-                activeItemId={activePage}
-                isOpen={openDropdown === category.id}
-                onToggle={() => setOpenDropdown((prev) => (prev === category.id ? null : category.id))}
-                onSelect={handleSelect}
-              />
+              <span key={category.id} style={{ display: 'contents' }}>
+                {showDividerBefore && <span className={styles.divider} aria-hidden />}
+                <HeaderNavDropdown
+                  icon={icon}
+                  label={label}
+                  items={category.items.map((item) => ({
+                    id: item.id,
+                    label: item.label,
+                    icon: item.icon,
+                    iconLibrary: item.iconLibrary,
+                  }))}
+                  active={category.items.some((item) => item.id === activePage)}
+                  activeItemId={activePage}
+                  isOpen={openDropdown === category.id}
+                  onToggle={() => setOpenDropdown((prev) => (prev === category.id ? null : category.id))}
+                  onSelect={handleSelect}
+                />
+              </span>
             );
           }
 
           return (
             <span key={category.id} style={{ display: 'contents' }}>
-              {category.id === 'playground' && <span className={styles.divider} aria-hidden />}
+              {showDividerBefore && <span className={styles.divider} aria-hidden />}
               <HeaderNavItem
                 icon={icon}
                 label={label}
