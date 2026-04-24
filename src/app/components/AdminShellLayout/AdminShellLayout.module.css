@@ -1,0 +1,21 @@
+@layer ds {
+  .root {
+    min-height: 100%;
+    display: flex;
+    background-color: var(--ds-color-bg-base);
+  }
+
+  .main {
+    min-width: 0;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    flex: 1 1 auto;
+    min-height: calc(100vh - var(--admin-header-height));
+    padding: var(--admin-content-padding);
+    background-color: var(--ds-color-bg-base);
+  }
+}

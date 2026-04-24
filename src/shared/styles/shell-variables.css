@@ -109,6 +109,18 @@
     /* E05: 중립 회색 (호버/포커스 링 등) */
     --shell-bg-primary-subtle: rgba(55, 65, 81, 0.08);
     --shell-focus-glow: 0 0 0 2px rgba(55, 65, 81, 0.15);
+
+    /* E32 P02: Admin shell alias tokens */
+    --admin-header-height: var(--nav-height);
+    --admin-content-padding: 48px;
+    --admin-sidebar-item-size: 40px;
+    --admin-sidebar-bg: #001529;
+    --admin-sidebar-text: rgba(255, 255, 255, 0.85);
+    --admin-sidebar-hover: rgba(255, 255, 255, 0.08);
+    --admin-sidebar-selected-bg: rgba(24, 144, 255, 0.20);
+    --admin-sidebar-selected-text: #FFFFFF;
+    --admin-nav-selected-opacity: 0.20;
+    --admin-nav-hover-opacity: 0.08;
   }
 }
 

@@ -30,6 +30,7 @@ import {
   Organisms,
   Service,
   Shell,
+  AdminShell,
   LayoutLanding,
   LayoutDashboard,
   LayoutArticle,
@@ -72,6 +73,7 @@ export type PageName =
   | 'organisms'
   | 'service'
   | 'shell'
+  | 'admin-shell'
   | 'layout-landing'
   | 'layout-dashboard'
   | 'layout-article'
@@ -219,6 +221,8 @@ function App() {
         return <Service />;
       case 'shell':
         return <Shell />;
+      case 'admin-shell':
+        return <AdminShell />;
       case 'layout-landing':
         return <LayoutLanding />;
       case 'layout-dashboard':

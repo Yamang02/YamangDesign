@@ -1,0 +1,41 @@
+@layer ds {
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--shell-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--ds-z-modal);
+    padding: var(--ds-spacing-4);
+  }
+
+  .modal {
+    width: min(100%, 32rem);
+    background-color: var(--ds-color-bg-elevated);
+    border: var(--ds-border-width) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-lg);
+    box-shadow: var(--ds-shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-4);
+    padding: var(--ds-spacing-4);
+  }
+
+  .title {
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-lg);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .body {
+    color: var(--ds-color-text-secondary);
+    font-size: var(--ds-text-sm);
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ds-spacing-2);
+  }
+}

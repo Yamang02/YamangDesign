@@ -1,0 +1,37 @@
+@layer ds {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-6);
+  }
+
+  .summaryList {
+    margin: 0;
+    padding-left: var(--ds-spacing-5);
+    color: var(--ds-color-text-primary);
+  }
+
+  .summaryList li + li {
+    margin-top: var(--ds-spacing-2);
+  }
+
+  .previewFrame {
+    border: var(--ds-border-width) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-lg);
+    overflow: hidden;
+    min-height: 32rem;
+  }
+
+  .placeholder {
+    display: grid;
+    gap: var(--ds-spacing-4);
+  }
+
+  .card {
+    padding: var(--ds-spacing-4);
+    border: var(--ds-border-width) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-md);
+    background-color: var(--ds-color-bg-surface);
+    color: var(--ds-color-text-primary);
+  }
+}

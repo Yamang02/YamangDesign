@@ -17,7 +17,7 @@ export {
 } from './labs';
 
 export { Atoms, Molecules, Organisms, Components } from './build';
-export { Service, Shell } from './context';
+export { Service, Shell, AdminShell } from './context';
 export { LayoutLanding, LayoutDashboard, LayoutArticle } from './layouts';
 export { Main } from './main';
 

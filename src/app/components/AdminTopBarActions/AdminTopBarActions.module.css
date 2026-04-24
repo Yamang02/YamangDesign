@@ -1,0 +1,41 @@
+@layer ds {
+  .container {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+  }
+
+  .environment {
+    color: var(--ds-color-text-secondary);
+  }
+
+  .identity {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 0;
+  }
+
+  .name {
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-font-weight-semibold);
+    line-height: var(--ds-leading-normal);
+  }
+
+  .email {
+    color: var(--ds-color-text-secondary);
+    font-size: var(--ds-text-xs);
+    line-height: var(--ds-leading-normal);
+  }
+
+  .logoutButton {
+    white-space: nowrap;
+  }
+}

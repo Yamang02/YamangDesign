@@ -1,0 +1,31 @@
+@layer ds {
+  .header {
+    height: var(--admin-header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--ds-spacing-4);
+    background-color: var(--ds-color-bg-elevated);
+    border-bottom: var(--ds-border-width) solid var(--ds-color-border-default);
+    position: sticky;
+    top: 0;
+    z-index: var(--ds-z-sticky);
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-spacing-3);
+    min-width: 0;
+  }
+
+  .toggle {
+    min-width: 2.5rem;
+  }
+
+  .title {
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-md);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+}

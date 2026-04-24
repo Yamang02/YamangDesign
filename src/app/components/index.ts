@@ -1,4 +1,12 @@
 export { Avatar } from './Avatar';
+export { AdminFilterBarBase } from './AdminFilterBarBase';
+export { AdminHeaderBar } from './AdminHeaderBar';
+export { AdminModalTemplate } from './AdminModalTemplate';
+export { AdminShellLayout } from './AdminShellLayout';
+export { AdminSidebarItem } from './AdminSidebarItem';
+export { AdminSidebarNav } from './AdminSidebarNav';
+export { AdminTableTemplate } from './AdminTableTemplate';
+export { AdminTopBarActions } from './AdminTopBarActions';
 export { Badge } from './Badge';
 export { Button } from './Button';
 export { Card } from './Card';
@@ -19,6 +27,14 @@ export { TokenSection } from './TokenSection';
 export { Tooltip } from './Tooltip';
 
 export type { AvatarProps } from './Avatar';
+export type { AdminFilterBarBaseProps } from './AdminFilterBarBase';
+export type { AdminHeaderBarProps } from './AdminHeaderBar';
+export type { AdminModalTemplateProps } from './AdminModalTemplate';
+export type { AdminShellLayoutProps } from './AdminShellLayout';
+export type { AdminSidebarItemProps } from './AdminSidebarItem';
+export type { AdminSidebarNavItem, AdminSidebarNavProps } from './AdminSidebarNav';
+export type { AdminTableColumn, AdminTableTemplateProps } from './AdminTableTemplate';
+export type { AdminTopBarActionsProps } from './AdminTopBarActions';
 export type { BadgeProps } from './Badge';
 export type { ButtonProps } from './Button';
 export type { CardProps, CardSectionProps } from './Card';

@@ -73,6 +73,7 @@ export const navCategories: NavCategory[] = [
     items: [
       { id: 'service', label: 'Service', icon: 'browser', iconLibrary: 'nucleo' },
       { id: 'shell', label: 'Shell', icon: 'shell', iconLibrary: 'nucleo' },
+      { id: 'admin-shell', label: 'Admin Shell', icon: 'dashboard' },
     ],
   },
   {

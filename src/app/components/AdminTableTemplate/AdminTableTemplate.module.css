@@ -1,0 +1,34 @@
+@layer ds {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-spacing-3);
+  }
+
+  .title {
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-md);
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border: var(--ds-border-width) solid var(--ds-color-border-default);
+    border-radius: var(--ds-radius-md);
+    overflow: hidden;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--ds-spacing-3);
+    border-bottom: var(--ds-border-width) solid var(--ds-color-border-subtle);
+    text-align: left;
+    color: var(--ds-color-text-primary);
+    font-size: var(--ds-text-sm);
+  }
+
+  .table thead th {
+    background-color: var(--ds-color-bg-surface);
+  }
+}
