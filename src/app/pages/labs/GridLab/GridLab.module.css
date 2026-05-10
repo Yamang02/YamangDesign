@@ -55,7 +55,63 @@
   }
 
   /* ── Preview Canvas ── */
+  .previewLegend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--ds-spacing-3) var(--ds-spacing-5);
+    margin-bottom: var(--ds-spacing-4);
+  }
+
+  .legendItem {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-spacing-2);
+  }
+
+  .legendSwatch {
+    width: 18px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    flex-shrink: 0;
+  }
+
+  .legendSwatchColumn {
+    background: color-mix(in srgb, var(--ds-color-primary-500) 12%, transparent);
+    border-color: color-mix(in srgb, var(--ds-color-primary-500) 30%, transparent);
+  }
+
+  .legendSwatchGutter {
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      color-mix(in srgb, var(--ds-color-primary-500) 15%, transparent) 3px,
+      color-mix(in srgb, var(--ds-color-primary-500) 15%, transparent) 6px
+    );
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--ds-color-primary-500) 30%, transparent);
+  }
+
+  .legendSwatchMargin {
+    background: color-mix(in srgb, var(--ds-color-accent-500) 15%, transparent);
+    border-color: color-mix(in srgb, var(--ds-color-accent-500) 35%, transparent);
+  }
+
+  .legendSwatchContent {
+    background: color-mix(in srgb, var(--ds-color-primary-500) 25%, transparent);
+    border-color: color-mix(in srgb, var(--ds-color-primary-500) 35%, transparent);
+  }
+
+  .legendText {
+    font-size: var(--ds-text-xs);
+    color: var(--shell-text-secondary);
+  }
+
   .previewCanvas {
+    --grid-gutter: 32px;
+    --grid-margin: 64px;
     position: relative;
     width: 100%;
     height: 160px;
@@ -68,6 +124,8 @@
   .overlayWrapper {
     position: absolute;
     inset: 0;
+    padding-left: var(--grid-margin);
+    padding-right: var(--grid-margin);
     pointer-events: none;
   }
 
@@ -82,10 +140,14 @@
     height: 100%;
     background: color-mix(in srgb, var(--ds-color-primary-500) 12%, transparent);
     border-left: 1px solid color-mix(in srgb, var(--ds-color-primary-500) 30%, transparent);
+  }
+
+  .overlayFlex > .overlayColumn:last-child {
     border-right: 1px solid color-mix(in srgb, var(--ds-color-primary-500) 30%, transparent);
   }
 
   .overlayGutter {
+    flex: 0 0 var(--grid-gutter);
     height: 100%;
     background: repeating-linear-gradient(
       45deg,
@@ -108,10 +170,12 @@
 
   .overlayMarginLeft {
     left: 0;
+    width: var(--grid-margin);
   }
 
   .overlayMarginRight {
     right: 0;
+    width: var(--grid-margin);
   }
 
   .canvasContent {
@@ -125,13 +189,31 @@
     display: flex;
     align-items: center;
     width: 100%;
+    padding-left: var(--grid-margin);
+    padding-right: var(--grid-margin);
+  }
+
+  .contentColumn {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .contentGutter {
+    flex: 0 0 var(--grid-gutter);
+    height: 40px;
   }
 
   .contentBlock {
-    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     height: 40px;
     background: color-mix(in srgb, var(--ds-color-primary-500) 25%, transparent);
     border-radius: var(--ds-radius-sm);
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-text-xs);
+    color: color-mix(in srgb, var(--shell-text-primary) 72%, transparent);
   }
 
   /* ── Breakpoints Table ── */

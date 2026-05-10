@@ -1,7 +1,7 @@
 /**
  * E20 P02: Grid Lab — 컬럼 그리드 / 거터 / 마진 / 브레이크포인트 시각화
  */
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { LabLayout, LabSection, LabOverview, type TocItem } from '../../../layouts';
 import { gridColumns, gridGutter, gridMargin, breakpoints } from '@domain/tokens/global/grid';
 import type { GridBreakpoint, Breakpoint } from '@domain/tokens/global/grid';
@@ -23,6 +23,22 @@ const BP_LABELS: Record<GridBreakpoint, string> = {
   desktop: 'Desktop',
 };
 
+type GridTrack = Readonly<{
+  kind: 'column' | 'gutter';
+  index: number;
+}>;
+
+function createGridTracks(columns: number): GridTrack[] {
+  const tracks: GridTrack[] = [];
+  for (let i = 0; i < columns; i++) {
+    tracks.push({ kind: 'column', index: i });
+    if (i < columns - 1) {
+      tracks.push({ kind: 'gutter', index: i });
+    }
+  }
+  return tracks;
+}
+
 function formatBreakpointRange(bp: GridBreakpoint, bpTokens: typeof breakpoints): string {
   if (bp === 'compact') return `< ${bpTokens.md}`;
   if (bp === 'tablet') return `${bpTokens.md} – ${bpTokens.lg}`;
@@ -30,29 +46,23 @@ function formatBreakpointRange(bp: GridBreakpoint, bpTokens: typeof breakpoints)
 }
 
 function GridOverlay({
-  columns,
-  gutter,
-  margin,
+  tracks,
 }: Readonly<{
-  columns: number;
-  gutter: string;
-  margin: string;
+  tracks: readonly GridTrack[];
 }>) {
-  const items: React.ReactNode[] = [];
-  for (let i = 0; i < columns; i++) {
-    items.push(<div key={`col-${i}`} className={styles.overlayColumn} />);
-    if (i < columns - 1) {
-      items.push(
-        <div key={`gut-${i}`} className={styles.overlayGutter} style={{ width: gutter, flexShrink: 0 }} />
-      );
-    }
-  }
-
   return (
-    <div className={styles.overlayWrapper} style={{ paddingLeft: margin, paddingRight: margin }}>
-      <div className={styles.overlayFlex}>{items}</div>
-      <div className={styles.overlayMarginLeft} style={{ width: margin }} />
-      <div className={styles.overlayMarginRight} style={{ width: margin }} />
+    <div className={styles.overlayWrapper}>
+      <div className={styles.overlayFlex}>
+        {tracks.map((track) =>
+          track.kind === 'column' ? (
+            <div key={`overlay-col-${track.index}`} className={styles.overlayColumn} />
+          ) : (
+            <div key={`overlay-gut-${track.index}`} className={styles.overlayGutter} aria-hidden="true" />
+          )
+        )}
+      </div>
+      <div className={styles.overlayMarginLeft} />
+      <div className={styles.overlayMarginRight} />
     </div>
   );
 }
@@ -63,6 +73,11 @@ export function GridLab() {
   const columns = gridColumns[activeBp];
   const gutter = gridGutter[activeBp];
   const margin = gridMargin[activeBp];
+  const tracks = createGridTracks(columns);
+  const previewCanvasStyle = {
+    '--grid-gutter': gutter,
+    '--grid-margin': margin,
+  } as CSSProperties;
 
   return (
     <LabLayout title="Grid Lab" tocItems={tocItems}>
@@ -105,19 +120,38 @@ export function GridLab() {
             <strong className={styles.metaValue}>{margin}</strong>
           </span>
         </div>
+        <div className={styles.previewLegend} aria-label="Grid legend">
+          <span className={styles.legendItem}>
+            <span className={`${styles.legendSwatch} ${styles.legendSwatchColumn}`} aria-hidden="true" />
+            <span className={styles.legendText}>Column</span>
+          </span>
+          <span className={styles.legendItem}>
+            <span className={`${styles.legendSwatch} ${styles.legendSwatchGutter}`} aria-hidden="true" />
+            <span className={styles.legendText}>Gutter</span>
+          </span>
+          <span className={styles.legendItem}>
+            <span className={`${styles.legendSwatch} ${styles.legendSwatchMargin}`} aria-hidden="true" />
+            <span className={styles.legendText}>Margin</span>
+          </span>
+          <span className={styles.legendItem}>
+            <span className={`${styles.legendSwatch} ${styles.legendSwatchContent}`} aria-hidden="true" />
+            <span className={styles.legendText}>Content Block</span>
+          </span>
+        </div>
 
-        <div className={styles.previewCanvas}>
-          <GridOverlay columns={columns} gutter={gutter} margin={margin} />
+        <div className={styles.previewCanvas} style={previewCanvasStyle}>
+          <GridOverlay tracks={tracks} />
           <div className={styles.canvasContent}>
-            <div className={styles.contentFlex} style={{ paddingLeft: margin, paddingRight: margin }}>
-              {Array.from({ length: columns }, (_, idx) => `col-${idx + 1}`).map((columnId, idx) => (
-                <div key={columnId}>
-                  <div className={styles.contentBlock} />
-                  {idx < columns - 1 && (
-                    <div style={{ width: gutter, flexShrink: 0 }} />
-                  )}
-                </div>
-              ))}
+            <div className={styles.contentFlex}>
+              {tracks.map((track) =>
+                track.kind === 'column' ? (
+                  <div key={`content-col-${track.index}`} className={styles.contentColumn}>
+                    <div className={styles.contentBlock}>{`C${track.index + 1}`}</div>
+                  </div>
+                ) : (
+                  <div key={`content-gut-${track.index}`} className={styles.contentGutter} aria-hidden="true" />
+                )
+              )}
             </div>
           </div>
         </div>
